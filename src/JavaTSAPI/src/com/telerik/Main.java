@@ -1,6 +1,13 @@
 package com.telerik;
 
+import static java.util.logging.Level.FINE;
+
 import java.io.*;
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.*;
 
 import javax.xml.transform.*;
@@ -29,33 +36,43 @@ public class Main {
      *            The java source files to be verified.
      */
     public static void main(String[] args) {
-//    	if (args == null || args.length == 4) {
-//    		String jdkPath = "C:\\Program Files\\Java\\jdk1.7.0_45";
-//    		String targetXml = "C:\\Work\\Git\\telerik\\Android_XMLAPI_17_JavaDoc.xml";
-//    		String[] directories =
-//    			{ "C:\\Tools\\Android Developer Tools\\sdk\\sources\\android-17\\android",
-//    			  "C:\\Tools\\Android Developer Tools\\sdk\\sources\\android-17\\java",
-//    			  "C:\\Tools\\Android Developer Tools\\sdk\\sources\\android-17\\javax",
-//    			  "C:\\Tools\\Android Developer Tools\\sdk\\sources\\android-17\\org"
-//    			};
-//    		buildFromSource(jdkPath, targetXml, directories);
-//    	} else 
-		if (args == null || args.length != 4) {
-    		System.out.print("Usage:");
-    		System.out.print(" -compile <jdk path> <target xml> < ; delimited directories list>");    		
-    	} else if (args.length == 4 && args[0].equals("-compile")) {
-    		String jdkPath = args[1];
-    		String targetXml = args[2];
-    		String[] directories = args[3].split(";");
+    	//if (args == null || args.length == 4) {
+    		String jdkPath = "C:\\Program Files\\Java\\jdk1.8.0_31";
+    		String targetXml = "C:\\Work\\xPlatCore\\Android_XMLAPI_17_JavaDoc.xml";
+    		String[] directories =
+    			{ "C:\\Dev\\adt\\sdk\\sources\\android-17\\android",
+    			  "C:\\Dev\\adt\\sdk\\sources\\android-17\\java",
+    			  "C:\\Dev\\adt\\sdk\\sources\\android-17\\javax",
+    			  "C:\\Dev\\adt\\sdk\\sources\\android-17\\org"
+    			};
     		buildFromSource(jdkPath, targetXml, directories);
-    	}
+        	HashSet<Character> c = com.telerik.javascript.api.JSToXMLPrinter.codemap;
+        	char[] a = new char[1];
+        	for (Character cc: c)
+        	{
+        		a[0] = cc;
+        		System.out.println(cc + "::" + Character.codePointAt(a, 0));
+        	}
+        	c = null;
+    	//} else 
+    	
+    	
+//		if (args == null || args.length != 4) {
+//    		System.out.print("Usage:");
+//    		System.out.print(" -compile <jdk path> <target xml> < ; delimited directories list>");    		
+//    	} else if (args.length == 4 && args[0].equals("-compile")) {
+//    		String jdkPath = args[1];
+//    		String targetXml = args[2];
+//    		String[] directories = args[3].split(";");
+//    		buildFromSource(jdkPath, targetXml, directories);
+//    	}
     }
-
+    
 	private static void buildFromSource(String javaHome, String targetXml, String[] directories) {
 		System.out.println("Collecting class files...");
     	String xml = targetXml;
     	
-    	System.setProperty("java.home", "C:\\Program Files\\Java\\jdk1.7.0_45");
+    	//System.setProperty("java.home", javaHome);
     	
         try {
             CodeAnalyzerController controller = new CodeAnalyzerController();
@@ -118,6 +135,9 @@ public class Main {
 	        if (file.isDirectory()) {
 	            inFiles.addAll(listFilesRecursively(file));
 	        } else {
+	        	String filePath = file.getAbsolutePath();
+	        	if (filePath.contains("\\tests\\"))
+	        		continue;
 	            if(file.getName().endsWith(".java")){
 	                inFiles.add(file);
 	            }
