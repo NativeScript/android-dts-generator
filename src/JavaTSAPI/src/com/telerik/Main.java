@@ -1,13 +1,6 @@
 package com.telerik;
 
-import static java.util.logging.Level.FINE;
-
 import java.io.*;
-import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.*;
 
 import javax.xml.transform.*;
@@ -16,6 +9,7 @@ import javax.xml.transform.stream.*;
 import com.telerik.java.api.*;
 import com.telerik.java.api.compiler.model.*;
 import com.telerik.java.api.compiler.processor.*;
+import com.telerik.java.api.reflection.JavaJarContext;
 import com.telerik.javascript.api.*;
 
 /**
@@ -36,28 +30,19 @@ public class Main {
      *            The java source files to be verified.
      */
     public static void main(String[] args) {
-    	//if (args == null || args.length == 4) {
-    		String jdkPath = "C:\\Program Files\\Java\\jdk1.8.0_31";
-    		String targetXml = "C:\\Work\\xPlatCore\\Android_XMLAPI_17_JavaDoc.xml";
+    	//if (args == null) {// || args.length == 4) {
+    	//System.setProperty("java.home", "C:\\Program Files\\Java\\jdk1.8.0_45");
+    		String jdkPath = "C:\\Program Files\\Java\\jdk1.8.0_45";
+    		String targetXml = "C:\\tmp1\\AppCompat_21_JavaDoc.xml";
     		String[] directories =
-    			{ "C:\\Dev\\adt\\sdk\\sources\\android-17\\android",
-    			  "C:\\Dev\\adt\\sdk\\sources\\android-17\\java",
-    			  "C:\\Dev\\adt\\sdk\\sources\\android-17\\javax",
-    			  "C:\\Dev\\adt\\sdk\\sources\\android-17\\org"
+    			{
+    				"C:\\Tools\\Android Developer Tools\\sdk\\platforms\\android-22\\android.jar",
+    				"C:\\tmp1\\android-support-v4.jar",
+    			  "C:\\tmp1\\android-support-v7-appcompat.jar"
     			};
     		buildFromSource(jdkPath, targetXml, directories);
-        	HashSet<Character> c = com.telerik.javascript.api.JSToXMLPrinter.codemap;
-        	char[] a = new char[1];
-        	for (Character cc: c)
-        	{
-        		a[0] = cc;
-        		System.out.println(cc + "::" + Character.codePointAt(a, 0));
-        	}
-        	c = null;
-    	//} else 
-    	
-    	
-//		if (args == null || args.length != 4) {
+//    	} 
+//    	else if (args == null || args.length != 4) {
 //    		System.out.print("Usage:");
 //    		System.out.print(" -compile <jdk path> <target xml> < ; delimited directories list>");    		
 //    	} else if (args.length == 4 && args[0].equals("-compile")) {
@@ -67,35 +52,37 @@ public class Main {
 //    		buildFromSource(jdkPath, targetXml, directories);
 //    	}
     }
-    
+
 	private static void buildFromSource(String javaHome, String targetXml, String[] directories) {
-		System.out.println("Collecting class files...");
+//		System.out.println("Collecting class files...");
     	String xml = targetXml;
-    	
-    	//System.setProperty("java.home", javaHome);
-    	
-        try {
-            CodeAnalyzerController controller = new CodeAnalyzerController();
-            List<File> files = new ArrayList<File>();
-            for (String dir: directories) {
-            	addFromFolder(files, dir);	
-            }
-
-            System.out.println("Java compiler processing classes to Java AST...");
-			controller.invokeProcessor(files);
-
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-        
-        System.out.println("Converting to TypeScript AST...");
-            
-        Map<String, JClass> map = ClassModelMap.getInstance().getClassInfoMap();
-        Map<String, JClass> rootMap = ClassModelMap.getInstance().getRootClassInfoMap();
+//    	
+//    	
+//    	System.setProperty("java.home", "C:\\Program Files\\Java\\jdk1.8.0_45");
+//    	
+//        try {
+//            CodeAnalyzerController controller = new CodeAnalyzerController();
+//            List<File> files = new ArrayList<File>();
+//            for (String dir: directories) {
+//            	addFromFolder(files, dir);	
+//            }
+//
+//            System.out.println("Java compiler processing classes to Java AST...");
+//			controller.invokeProcessor(files);
+//
+//        } catch (Throwable t) {
+//            t.printStackTrace();
+//        }
+//        
+//        System.out.println("Converting to TypeScript AST...");
+//            
+//        Map<String, JClass> map = ClassModelMap.getInstance().getClassInfoMap();
+//        Map<String, JClass> rootMap = ClassModelMap.getInstance().getRootClassInfoMap();
 
     	try {
 
-        	JContext root = new ContextInfo(map, rootMap); // JavaJarContext.fromFile(jar);
+//        	JContext root = new ContextInfo(map, rootMap); // JavaJarContext.fromFile(jar);
+    		JContext root = JavaJarContext.fromFile(directories);
         	
 			JToJSConverter converter = new JToJSConverter();
 			converter.setJContext(root);
@@ -135,9 +122,6 @@ public class Main {
 	        if (file.isDirectory()) {
 	            inFiles.addAll(listFilesRecursively(file));
 	        } else {
-	        	String filePath = file.getAbsolutePath();
-	        	if (filePath.contains("\\tests\\"))
-	        		continue;
 	            if(file.getName().endsWith(".java")){
 	                inFiles.add(file);
 	            }

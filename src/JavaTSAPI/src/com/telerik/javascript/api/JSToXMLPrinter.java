@@ -1,7 +1,6 @@
 package com.telerik.javascript.api;
 
 import java.io.StringWriter;
-import java.util.HashSet;
 import java.util.List;
 
 public class JSToXMLPrinter {
@@ -200,10 +199,6 @@ public class JSToXMLPrinter {
 		writer.write("<method name=\"" + jsMethod.getName() + "\"");
 		if (jsMethod.isStatic())
 			writer.write(" modifier=\"static\"");
-		if (jsMethod.isProtected())
-			writer.write(" access=\"protected\"");
-		if ((jsMethod.parent instanceof JSClass) && jsMethod.isPublic())
-			writer.write(" access=\"public\"");
 		writer.write(">");
 		printDocumentation(jsMethod.getDocumentation());
 		printTypeParameters(jsMethod.getTypeParameters());
@@ -244,8 +239,6 @@ public class JSToXMLPrinter {
 		writer.write("</param>");
 	}
 	
-	public static HashSet<Character> codemap = new HashSet<Character>();
-	
 	private void printDocumentation(String doc) {
 		if (doc != null) {
 			writer.write("<doc>");
@@ -260,30 +253,7 @@ public class JSToXMLPrinter {
 					.replace(String.valueOf((char)0xdc00), "0xdc00")
 					.replace(String.valueOf((char)0xdfff), "0xdfff");
 			
-			
-			
-			StringBuilder sb = new StringBuilder();
-			char[] arr = new char[1];
-			for (int i=0; i<escaped.length(); i++)
-			{
-				char c = escaped.charAt(i);
-				arr[0] = c;
-				int code = Character.codePointAt(arr, 0);
-				if (code > 127)
-				{
-					sb.append("0x");
-					sb.append(Integer.valueOf(String.valueOf(code), 16));
-				}
-				else
-				{
-					sb.append(arr[0]);
-				}
-				codemap.add(c);
-			}
-			
-			//writer.write(escaped);
-			writer.write(sb.toString());
-			
+			writer.write(escaped);
 //			writer.write("<![CDATA[");
 //			writer.write(doc.replace("]]>", "]]]]><![CDATA[>"));
 //			writer.write("]]>");

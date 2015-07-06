@@ -10,12 +10,6 @@ import com.telerik.java.api.JTypeVariable;
 
 public class MethodInfo extends BaseJavaClassModelInfo implements JMethod, ExecutableInfo {
 	
-	public final JavaClassInfo parent;
-	
-	public MethodInfo(JavaClassInfo parent) {
-		this.parent = parent;
-	}
-	
     public List<JParameter> parameters = new ArrayList<JParameter>();
     public List<JTypeVariable> typeParameters = new ArrayList<JTypeVariable>();
     private JType returnType;

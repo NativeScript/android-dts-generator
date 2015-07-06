@@ -41,9 +41,6 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
     	}
 
     	if (current != null) {
-    		//
-    		System.out.println("c=" + current.getQualifiedName());
-    		//
 			this.stack.push(current);
 	        
 	        Object result = super.visitClass(classTree, trees);
@@ -89,12 +86,7 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
     @Override
     public Object visitVariable(VariableTree variableTree, Trees trees) {
         TreePath path = getCurrentPath();
-        Element e = null;
-        try {
-        	e = trees.getElement(path);
-        } catch (Exception ex) {
-        	ex.printStackTrace();
-        }
+        Element e = trees.getElement(path);
 
         if (e != null) {
 	        switch(e.getKind()) {

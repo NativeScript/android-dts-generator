@@ -46,7 +46,7 @@ public class JToJSConverter {
 		jsGlobal.accept(this.new OverloadsBuilder());
 		jsGlobal.accept(this.new FilterSignatureConflicts());
 		
-		//jsGlobal.accept(this.new PropertiesBuilder());
+		jsGlobal.accept(this.new PropertiesBuilder());
 		
 		jsGlobal.accept(this.new StructuralEqualityResolve());
 	}
@@ -865,7 +865,7 @@ public class JToJSConverter {
 		
 		private void listMethods(JSNode parent, List<JSMethod> jsMethods, List<JMethod> jMethods) {
 			for (JMethod jMethod: jMethods) {
-				if (typeMap.isHidden(jMethod) || jMethod.isPrivate())
+				if (typeMap.isHidden(jMethod) || !jMethod.isPublic())
 					continue;
 
 				jsMethods.add(createMethod(parent, jMethod));
