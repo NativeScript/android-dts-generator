@@ -1,0 +1,1 @@
+Use JDK instead of JRE. Otherwise ToolProvider.getSystemJavaCompiler() returns `null`.
