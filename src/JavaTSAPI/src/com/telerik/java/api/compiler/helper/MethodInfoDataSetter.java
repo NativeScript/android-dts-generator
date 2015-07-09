@@ -60,7 +60,7 @@ public class MethodInfoDataSetter {
         	e.accept(new ExecutableInfoVisitor<ExecutableInfo>(), pairInfo);
             classInfo.constructors.add(constructorInfo);
         } else {
-            MethodInfo methodInfo = new MethodInfo();
+            MethodInfo methodInfo = new MethodInfo(classInfo);
             info = methodInfo;
             info.setComment(comment);
             ClassExecutablePair<MethodInfo> pairInfo = new ClassExecutablePair<MethodInfo>(classInfo, methodInfo);
