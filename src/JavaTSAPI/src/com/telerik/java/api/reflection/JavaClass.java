@@ -54,7 +54,7 @@ public class JavaClass extends JavaNode implements JClass, JavaType {
 	
 	@Override
 	public boolean isHidden() {
-		return isHidden || (isArray() && getComponentType().isHidden());
+		return isHidden || this.reflectedClass.isSynthetic() || this.reflectedClass.isAnonymousClass() || (isArray() && getComponentType().isHidden());
 	}
 
 	@Override
