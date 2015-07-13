@@ -187,11 +187,21 @@ public class JavaJarContext extends JavaNode implements JContext {
 		javaClass.isHidden = true;
 		return javaClass;
 	}
+	
+	private static Integer tryParse(String text) {
+		try {
+		    return Integer.parseInt(text);
+	  } catch (NumberFormatException e) {
+	    return null;
+	  }
+	}
 
 	private void createClassHierarchy(String path) throws IOException, ClassNotFoundException {
 		
 		JarFile jarFile = new JarFile(path);
 		Enumeration<JarEntry> e = jarFile.entries();
+		
+		final String classSuffix = ".class";
 		
 		while (e.hasMoreElements()) {
 		    JarEntry je = (JarEntry) e.nextElement();
@@ -199,8 +209,23 @@ public class JavaJarContext extends JavaNode implements JContext {
 		        continue;
 		    }
 		    
-		    // -6 because of .class
-		    String className = je.getName().substring(0,je.getName().length() - 6);
+		    String name = je.getName();
+		    
+		    if (name.contains("$")) {
+		    	String[] nameParts = name.split("\\$");
+		    	boolean hasAnonymousClass = false;
+		    	for (String part: nameParts) {
+		    		hasAnonymousClass = tryParse(part) != null;
+		    		if (hasAnonymousClass) {
+		    			break;
+		    		}
+		    	}
+		    	if (hasAnonymousClass) {
+		    		continue;
+		    	}
+		    }
+		    
+		    String className = name.substring(0,je.getName().length() - classSuffix.length());
 		    className = className.replace('/', '.');
 		    
 		    addClass(className);
