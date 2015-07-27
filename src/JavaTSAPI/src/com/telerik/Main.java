@@ -39,7 +39,41 @@ public class Main {
      */
 	public static void main(String[] args) {
 		
-		Input input = Input.SourceCode;
+		//
+		try
+		{
+			com.telerik.java.api.bcel.Generator.ClassCallback cc = new com.telerik.java.api.bcel.Generator.ClassCallback()
+			{
+				@Override
+				public void onVisit(org.apache.bcel.classfile.JavaClass javaClass) {
+					System.out.println(javaClass.getClassName());
+				}
+			};
+			com.telerik.java.api.bcel.Generator.MethodCallback mc = new com.telerik.java.api.bcel.Generator.MethodCallback()
+			{
+				@Override
+				public void onVisit(org.apache.bcel.classfile.Method method) {
+					System.out.println(method.getName() + " " + method.getSignature());
+					
+				}
+			};
+			com.telerik.java.api.bcel.Generator.FieldCallback fc = new com.telerik.java.api.bcel.Generator.FieldCallback()
+			{
+				@Override
+				public void onVisit(org.apache.bcel.classfile.Field field) {
+					System.out.println(field.getName() + " " + field.getSignature());
+				}
+			};
+			com.telerik.java.api.bcel.Generator g = new com.telerik.java.api.bcel.Generator(cc, mc, fc);
+			g.visit("C:/Work/NativeScript/android-metadata-generator/jars");
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		if (args.length == 0) return;
+		//
+		Input input = Input.Reflection;
 		
 		switch (input)
 		{
