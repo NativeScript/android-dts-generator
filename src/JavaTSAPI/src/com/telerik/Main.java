@@ -16,6 +16,7 @@ import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.classfile.Signature;
+import org.apache.bcel.generic.Type;
 
 import com.sun.tools.internal.ws.processor.generator.Names;
 import com.telerik.java.api.*;
@@ -43,49 +44,51 @@ public class Main {
 		private int level = 0;
 		
 		private PrintStream output;
+		private StringBuilder sb;
+		private Set<Type> references;
+		private Set<Method> methods;
+		
+		private File outDir;
 		
 		public DtsWriter() throws FileNotFoundException
 		{
-			output = new PrintStream(new File("C:/Work/TS/TypeScriptHTMLApp1/test.d.ts"));
+			sb = new StringBuilder();
+			references = new HashSet<Type>();
+			methods = new HashSet<Method>();
+			outDir = new File("C:/temp/dtsfiles");
+			if (!outDir.exists())
+			{
+				outDir.mkdirs();
+			}
+		}
+
+		@Override
+		public void onVisit(Field field)
+		{
+		}
+
+		@Override
+		public void onVisit(Method method)
+		{
+			methods.add(method);
 		}
 		
 		@Override
-		public void onEnter(String packageName) {
-			String ident = new String(new char[level++]).replace("\0", "\t");
-			if (level == 1)
-			{
-				println(ident + "declare module " + packageName + " {");				
-			}
-			else
-			{
-				println(ident + "export module " + packageName + " {");
-			}
-		}
-
-		@Override
-		public void onLeave(String packageName) {
-			String ident = new String(new char[--level]).replace("\0", "\t");
-			println(ident + "}");
-		}
-
-		@Override
-		public void onVisit(Field field) {
-			// TODO Auto-generated method stub
+		public void onEnter(JavaClass javaClass)
+		{
+			assert level == 0;
+			assert methods.size() == 0;
+			assert references.size() == 0;
 			
-		}
-
-		@Override
-		public void onVisit(Method method) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void onEnter(JavaClass javaClass) {
-			String ident;
-			String name;
 			String className = javaClass.getClassName();
+			boolean success = createOutput(className.replaceAll("\\$", "\\."));
+			assert success;
+			
 			String packageName = javaClass.getPackageName();
+			writePackageHeader(packageName);
+
+			String name;
+			String ident;
 			int lastDollarSign = className.lastIndexOf("$");
 			boolean isNested = lastDollarSign > 0;
 			String[] outerClasses = null;
@@ -129,6 +132,9 @@ public class Main {
 
 		@Override
 		public void onLeave(JavaClass javaClass) {
+			
+			processMethods();
+			
 			String ident = new String(new char[--level]).replace("\0", "\t");
 			println(ident + "}");
 
@@ -145,11 +151,213 @@ public class Main {
 					println(ident + "}");
 				}
 			}
+			
+			writeReferences();
+			
+			writePackageFooter();
+			
+			output.println(sb.toString());
+			output.flush();
+			output.close();
+			methods.clear();
+			references.clear();
+			
+			assert level == 0;
+			assert methods.size() == 0;
+			assert references.size() == 0;
+		}
+		
+		private void processMethods()
+		{
+			String ident = new String(new char[level+1]).replace("\0", "\t");
+			
+			Method[] arrMethods = new Method[methods.size()];
+			methods.toArray(arrMethods);
+			
+			for (Method m: arrMethods)
+			{
+				sb.append(ident);
+				sb.append("public ");
+				sb.append(getMethodName(m));
+				sb.append("(");
+				int idx = 0;
+				references.add(m.getReturnType());
+				for (Type t: m.getArgumentTypes())
+				{
+					references.add(t);
+					if (idx > 0)
+					{
+						sb.append(", ");
+					}
+					sb.append("param");
+					sb.append(idx++);
+					sb.append(": ");
+					sb.append(getTypeScriptTypeFromJavaType(t));
+				}
+				sb.append(")");
+				if (!isConstructor(m))
+				{
+					sb.append(": ");
+					sb.append(getTypeScriptTypeFromJavaType(m.getReturnType()));
+				}
+				sb.append(";\n");
+			}
+		}
+		
+		private boolean isConstructor(Method m)
+		{
+			return m.getName().equals("<init>");
+		}
+		
+		private String getMethodName(Method m)
+		{
+			String name = m.getName();
+			
+			if (isConstructor(m))
+			{
+				name = "constructor";
+			}
+			
+			return name;
+		}
+		
+		private String getTypeScriptTypeFromJavaType(Type t)
+		{
+			String tsType;
+			String type = t.getSignature();
+			
+			switch (type)
+			{
+			case "V":
+				tsType = "void";
+				break;
+			case "C":
+				tsType = "string";
+				break;
+			case "Z":
+				tsType = "boolean";
+				break;
+			case "B":
+			case "S":
+			case "I":
+			case "J":
+			case "F":
+			case "D":
+				tsType = "number";
+				break;
+			default:
+				int idx = type.indexOf('<');
+				if (idx > 0)
+				{
+					tsType = type.substring(1, idx).replaceAll("/", ".").replaceAll("\\$", "\\.").replaceAll(";", "");
+				}
+				else
+				{
+					tsType = type.substring(1).replaceAll("/", ".").replaceAll("\\$", "\\.").replaceAll(";", "");
+				}
+			}
+			
+			return tsType;
+		}
+		
+		private boolean createOutput(String className)
+		{
+			boolean success;
+			sb.setLength(0);
+			try
+			{
+				output = new PrintStream(new File(outDir, className + ".d.ts"));
+				success = true;
+			}
+			catch (FileNotFoundException e)
+			{
+				success = false;
+				e.printStackTrace();
+			}
+			return success;
+		}
+		
+		private void writePackageHeader(String packageName)
+		{
+			String[] packages = packageName.split("\\.");
+			String ident;
+			for (String p: packages)
+			{
+				ident = new String(new char[level++]).replace("\0", "\t");
+				if (level == 1)
+				{
+					println(ident + "declare module " + p + " {");				
+				}
+				else
+				{
+					println(ident + "export module " + p + " {");
+				}
+			}
+		}
+		
+		private void writePackageFooter()
+		{
+			while (level > 0)
+			{
+				String ident = new String(new char[--level]).replace("\0", "\t");
+				println(ident + "}");
+			}
+		}
+		
+		private void writeReferences()
+		{
+			StringBuilder refs = new StringBuilder();
+			for (Type t: references)
+			{
+				if (isPrimitiveType(t))
+				{
+					continue;
+				}
+				String refFilename = getFilenameFromType(t);
+				refs.insert(0, "///<reference path=\"" + refFilename + ".d.ts\" />\n");
+			}
+			refs.append("\n");
+			sb.insert(0, refs.toString());
+		}
+		
+		private String getFilenameFromType(Type t)
+		{
+			String signature = t.getSignature();
+			
+			String name;
+			
+			int idx = signature.indexOf('<');
+			if (idx > 0)
+			{
+				name = signature.substring(1, idx);
+			}
+			else
+			{
+				name = signature.substring(1);
+			}
+			
+			name = name.replaceAll("/", ".").replaceAll("\\$", "\\.").replaceAll(";", "");
+			
+			return name;
+		}
+		
+		private boolean isPrimitiveType(Type t)
+		{
+			String signature = t.getSignature();
+			
+			boolean isPrimitive = signature.equals("V")
+				|| signature.equals("C")
+				|| signature.equals("Z")
+				|| signature.equals("B") || signature.equals("S") || signature.equals("I") || signature.equals("J")
+				|| signature.equals("F") || signature.equals("D");
+			
+			return isPrimitive;
 		}
 		
 		private void println(String s)
 		{
-			output.println(s);
+			sb.append(s);
+			sb.append('\n');
 		}
 		
 		private String getSupperClassName(JavaClass javaClass)
@@ -204,7 +412,7 @@ public class Main {
 				}
 			}
 			
-			return name.replace("$", ".");
+			return name.replaceAll("\\$", "\\.");
 		}
 		
 		static class SignatureParser
@@ -224,18 +432,22 @@ public class Main {
 			
 			public String parse()
 			{
-				idx = 1;
-				
-				System.out.print("<");
+				if (sig.charAt(0) == '<')
 				{
-					readArgList(0);
+					idx = 1;
+					
+					System.out.print("<");
+					{
+						readArgList(0);
+					}
+					System.out.print(">");
+					
+					System.out.println();
+					System.out.println();
 				}
-				System.out.print(">");
 				
-				System.out.println();
-				System.out.println();
-				
-				return sig;
+				// TODO:
+				return "";//sig;
 			}
 			
 			private void readArgList(int paramIdx)
@@ -263,7 +475,7 @@ public class Main {
 				
 				assert sig.charAt(idx) == ':';
 				
-				readExtends2();
+				readExtends();
 				
 				assert sig.charAt(idx) != ':';
 				
@@ -282,7 +494,7 @@ public class Main {
 				}
 			}
 			
-			private void readExtends2()
+			private void readExtends()
 			{
 				while (sig.charAt(idx) == ':')
 				{
@@ -294,7 +506,7 @@ public class Main {
 			
 			private void readRefType2()
 			{
-				readTypeName2();
+				readTypeName();
 				
 				char c = sig.charAt(idx++);
 				if (c == '<')
@@ -319,7 +531,7 @@ public class Main {
 				}
 			}
 			
-			private void readTypeName2()
+			private void readTypeName()
 			{
 				char c;
 				while (((c = sig.charAt(idx)) != '*') && (c != ';') && (c != '<'))
@@ -341,7 +553,12 @@ public class Main {
 				if ((c == '+') || (c == '-') || (c == '*'))
 				{
 					//++idx;
+					if (c == '*')
+					{
+						System.out.print("any");
+					}
 				}
+
 				
 				readRefType2();
 			

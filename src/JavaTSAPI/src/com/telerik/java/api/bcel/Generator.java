@@ -31,8 +31,6 @@ public class Generator {
 	
 	public interface VisitorCallback
 	{
-		void onEnter(String packageName);
-		void onLeave(String packageName);
 		void onEnter(org.apache.bcel.classfile.JavaClass javaClass);
 		void onLeave(org.apache.bcel.classfile.JavaClass javaClass);
 		void onVisit(org.apache.bcel.classfile.Method method);
@@ -116,11 +114,7 @@ public class Generator {
 					continue;
 				}
 				
-				visitor.onEnter(packageName);
-				
 				visitDirectory(f);
-				
-				visitor.onLeave(packageName);
 			}
 			else
 			{
