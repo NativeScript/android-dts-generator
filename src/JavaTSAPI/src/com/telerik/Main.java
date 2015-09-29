@@ -45,16 +45,18 @@ public class Main {
 		
 		private PrintStream output;
 		private StringBuilder sb;
-		private Set<Type> references;
+		private Set<String> references;
 		private Set<Method> methods;
+		private Set<Field> fields;
 		
 		private File outDir;
 		
 		public DtsWriter() throws FileNotFoundException
 		{
 			sb = new StringBuilder();
-			references = new HashSet<Type>();
+			references = new HashSet<String>();
 			methods = new HashSet<Method>();
+			fields = new HashSet<Field>();
 			outDir = new File("C:/temp/dtsfiles");
 			if (!outDir.exists())
 			{
@@ -65,6 +67,7 @@ public class Main {
 		@Override
 		public void onVisit(Field field)
 		{
+			fields.add(field);
 		}
 
 		@Override
@@ -78,6 +81,7 @@ public class Main {
 		{
 			assert level == 0;
 			assert methods.size() == 0;
+			assert fields.size() == 0;
 			assert references.size() == 0;
 			
 			String className = javaClass.getClassName();
@@ -135,6 +139,8 @@ public class Main {
 			
 			processMethods();
 			
+			processFields();
+			
 			String ident = new String(new char[--level]).replace("\0", "\t");
 			println(ident + "}");
 
@@ -160,12 +166,30 @@ public class Main {
 			output.flush();
 			output.close();
 			methods.clear();
+			fields.clear();
 			references.clear();
 			
 			assert level == 0;
 			assert methods.size() == 0;
+			assert fields.size() == 0;
 			assert references.size() == 0;
 		}
+		
+		private Comparator<Method> methodCmp = new Comparator<Method>()
+		{
+			@Override
+			public int compare(Method m1, Method m2) {
+				return m1.getName().compareTo(m2.getName());
+			}
+		};
+		
+		private Comparator<Field> fieldCmp = new Comparator<Field>()
+		{
+			@Override
+			public int compare(Field f1, Field f2) {
+				return f1.getName().compareTo(f2.getName());
+			}
+		};
 		
 		private void processMethods()
 		{
@@ -173,18 +197,23 @@ public class Main {
 			
 			Method[] arrMethods = new Method[methods.size()];
 			methods.toArray(arrMethods);
+			Arrays.sort(arrMethods, methodCmp);
 			
 			for (Method m: arrMethods)
 			{
 				sb.append(ident);
 				sb.append("public ");
+				if (m.isStatic())
+				{
+					sb.append("static ");
+				}
 				sb.append(getMethodName(m));
 				sb.append("(");
 				int idx = 0;
-				references.add(m.getReturnType());
+				addReference(m.getReturnType());
 				for (Type t: m.getArgumentTypes())
 				{
-					references.add(t);
+					addReference(t);
 					if (idx > 0)
 					{
 						sb.append(", ");
@@ -200,6 +229,31 @@ public class Main {
 					sb.append(": ");
 					sb.append(getTypeScriptTypeFromJavaType(m.getReturnType()));
 				}
+				sb.append(";\n");
+			}
+		}
+		
+		private void processFields()
+		{
+			String ident = new String(new char[level+1]).replace("\0", "\t");
+			
+			Field[] arrFields = new Field[fields.size()];
+			fields.toArray(arrFields);
+			Arrays.sort(arrFields, fieldCmp);
+			
+			for (Field f: arrFields)
+			{
+				sb.append(ident);
+				sb.append("public ");
+				if (f.isStatic())
+				{
+					sb.append("static ");
+				}
+				sb.append(f.getName());
+				sb.append(": ");
+				Type t = f.getType();
+				addReference(t);
+				sb.append(getTypeScriptTypeFromJavaType(t));
 				sb.append(";\n");
 			}
 		}
@@ -245,19 +299,62 @@ public class Main {
 			case "D":
 				tsType = "number";
 				break;
+			case "Ljava/lang/String;":
+				tsType = "string";
+				break;
 			default:
-				int idx = type.indexOf('<');
-				if (idx > 0)
-				{
-					tsType = type.substring(1, idx).replaceAll("/", ".").replaceAll("\\$", "\\.").replaceAll(";", "");
-				}
-				else
-				{
-					tsType = type.substring(1).replaceAll("/", ".").replaceAll("\\$", "\\.").replaceAll(";", "");
-				}
+				StringBuilder sb = new StringBuilder();
+				convertToTypeScriptType(type, sb);
+				tsType = sb.toString();
 			}
 			
 			return tsType;
+		}
+		
+		private void convertToTypeScriptType(String type, StringBuilder tsType)
+		{
+			switch (type)
+			{
+			case "C":
+				tsType.append("string");
+				break;
+			case "Z":
+				tsType.append("boolean");
+				break;
+			case "B":
+			case "S":
+			case "I":
+			case "J":
+			case "F":
+			case "D":
+				tsType.append("number");
+				break;
+			case "java.lang.String":
+				tsType.append("string");
+				break;
+			default:
+				if (type.charAt(0) == '[')
+				{
+					tsType.append("native.Array<");
+					convertToTypeScriptType(type.substring(1), tsType);
+					tsType.append(">");
+				}
+				else
+				{
+					String ts;
+					int idx = type.indexOf('<');
+					if (idx > 0)
+					{
+						ts = type.substring(1, idx).replaceAll("/", ".").replaceAll("\\$", "\\.").replaceAll(";", "");
+						tsType.append(ts);
+					}
+					else
+					{
+						ts = type.substring(1).replaceAll("/", ".").replaceAll("\\$", "\\.").replaceAll(";", "");
+						tsType.append(ts);
+					}
+				}
+			}
 		}
 		
 		private boolean createOutput(String className)
@@ -304,36 +401,53 @@ public class Main {
 			}
 		}
 		
+		private void addReference(Type type)
+		{
+			if (isPrimitiveType(type))
+			{
+				return;
+			}
+
+			String sig = type.getSignature();
+			int idx = sig.lastIndexOf('[');
+			
+			String strippedSig = sig.substring(idx + 1);
+			
+			if (isPrimitiveType(strippedSig))
+			{
+				return;
+			}
+			
+			assert strippedSig.charAt(0) == 'L';
+			
+			String ref = getFilenameFromType(strippedSig);
+			
+			references.add(ref);
+		}
+		
 		private void writeReferences()
 		{
 			StringBuilder refs = new StringBuilder();
-			for (Type t: references)
+			for (String refFilename: references)
 			{
-				if (isPrimitiveType(t))
-				{
-					continue;
-				}
-				String refFilename = getFilenameFromType(t);
 				refs.insert(0, "///<reference path=\"" + refFilename + ".d.ts\" />\n");
 			}
 			refs.append("\n");
 			sb.insert(0, refs.toString());
 		}
 		
-		private String getFilenameFromType(Type t)
+		private String getFilenameFromType(String type)
 		{
-			String signature = t.getSignature();
-			
 			String name;
 			
-			int idx = signature.indexOf('<');
+			int idx = type.indexOf('<');
 			if (idx > 0)
 			{
-				name = signature.substring(1, idx);
+				name = type.substring(1, idx);
 			}
 			else
 			{
-				name = signature.substring(1);
+				name = type.substring(1);
 			}
 			
 			name = name.replaceAll("/", ".").replaceAll("\\$", "\\.").replaceAll(";", "");
@@ -345,11 +459,18 @@ public class Main {
 		{
 			String signature = t.getSignature();
 			
-			boolean isPrimitive = signature.equals("V")
-				|| signature.equals("C")
-				|| signature.equals("Z")
-				|| signature.equals("B") || signature.equals("S") || signature.equals("I") || signature.equals("J")
-				|| signature.equals("F") || signature.equals("D");
+			boolean isPrimitive = isPrimitiveType(signature);
+			
+			return isPrimitive;
+		}
+		
+		private boolean isPrimitiveType(String typeName)
+		{
+			boolean isPrimitive = typeName.equals("V")
+				|| typeName.equals("C")
+				|| typeName.equals("Z")
+				|| typeName.equals("B") || typeName.equals("S") || typeName.equals("I") || typeName.equals("J")
+				|| typeName.equals("F") || typeName.equals("D");
 			
 			return isPrimitive;
 		}
