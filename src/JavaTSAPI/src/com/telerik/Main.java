@@ -18,6 +18,7 @@ import org.apache.bcel.classfile.Method;
 import org.apache.bcel.classfile.Signature;
 import org.apache.bcel.generic.Type;
 
+import com.sun.codemodel.internal.JVar;
 import com.sun.tools.internal.ws.processor.generator.Names;
 import com.telerik.java.api.*;
 import com.telerik.java.api.compiler.model.*;
@@ -48,6 +49,7 @@ public class Main {
 		private Set<String> references;
 		private Set<Method> methods;
 		private Set<Field> fields;
+		private JavaClass javaClass;
 		
 		private File outDir;
 		
@@ -79,10 +81,13 @@ public class Main {
 		@Override
 		public void onEnter(JavaClass javaClass)
 		{
-			assert level == 0;
-			assert methods.size() == 0;
-			assert fields.size() == 0;
-			assert references.size() == 0;
+			assert this.level == 0;
+			assert this.methods.size() == 0;
+			assert this.fields.size() == 0;
+			assert this.references.size() == 0;
+			assert this.javaClass == null;
+			
+			this.javaClass = javaClass;
 			
 			String className = javaClass.getClassName();
 			boolean success = createOutput(className.replaceAll("\\$", "\\."));
@@ -91,14 +96,11 @@ public class Main {
 			String packageName = javaClass.getPackageName();
 			writePackageHeader(packageName);
 
-			String name;
 			String ident;
-			int lastDollarSign = className.lastIndexOf("$");
-			boolean isNested = lastDollarSign > 0;
 			String[] outerClasses = null;
-			if (isNested)
+			if (isNested(javaClass))
 			{
-				name = className.substring(lastDollarSign + 1);
+				int lastDollarSign = className.lastIndexOf("$");
 				outerClasses = className.substring(packageName.length() + 1, lastDollarSign).split("\\.");
 				for (String outer: outerClasses)
 				{
@@ -106,10 +108,7 @@ public class Main {
 					println(ident + "export module " + outer + " {");
 				}
 			}
-			else
-			{
-				name = className.substring(packageName.length() + 1);
-			}
+
 			ident = new String(new char[level++]).replace("\0", "\t");
 			
 			Attribute[] attributes = javaClass.getAttributes();
@@ -131,24 +130,54 @@ public class Main {
 			    }
 			}
 			
-			println(ident + "export class " + name + sig + " extends " + getSupperClassName(javaClass) + " {");
+			String name = getSimpleClassName(javaClass);
+			
+			if (javaClass.isInterface())
+			{
+				println(ident + "export interface " + name + sig + " {");	
+			}
+			else
+			{
+				println(ident + "export class " + name + sig + " extends " + getSupperClassName(javaClass) + " {");
+			}
 		}
-
+		
 		@Override
 		public void onLeave(JavaClass javaClass) {
 			
+			assert this.javaClass != null;
+			assert this.javaClass == javaClass;
+			
 			processMethods();
 			
-			processFields();
+			processInstanceFields();
+			
+			boolean isInterface = javaClass.isInterface();
+			
+			if (!isInterface)
+			{
+				processStaticFields();
+			}
 			
 			String ident = new String(new char[--level]).replace("\0", "\t");
 			println(ident + "}");
-
-			String className = javaClass.getClassName();
-			int lastDollarSign = className.lastIndexOf("$");
-			boolean isNested = lastDollarSign > 0;
-			if (isNested)
+			
+			if (isInterface)
 			{
+				String name = getSimpleClassName(javaClass);
+				ident = new String(new char[level]).replace("\0", "\t");
+				println(ident + "export var " + name + ": {");
+				println(ident + "\tnew(implementation: " + name + "): " + name + ";");
+				
+				processStaticFields();
+				
+				println(ident + "};");
+			}
+
+			if (isNested(javaClass))
+			{
+				String className = javaClass.getClassName();
+				int lastDollarSign = className.lastIndexOf("$");
 				String packageName = javaClass.getPackageName();
 				String[] outerClasses = className.substring(packageName.length() + 1, lastDollarSign).split("\\.");
 				for (String outer: outerClasses)
@@ -165,14 +194,34 @@ public class Main {
 			output.println(sb.toString());
 			output.flush();
 			output.close();
-			methods.clear();
-			fields.clear();
-			references.clear();
+			this.methods.clear();
+			this.fields.clear();
+			this.references.clear();
+			this.javaClass = null;
 			
-			assert level == 0;
-			assert methods.size() == 0;
-			assert fields.size() == 0;
-			assert references.size() == 0;
+			assert this.level == 0;
+			assert this.methods.size() == 0;
+			assert this.fields.size() == 0;
+			assert this.references.size() == 0;
+			assert this.javaClass == null;
+		}
+		
+		private String getSimpleClassName(JavaClass javaClass)
+		{
+			char delim = isNested(javaClass) ? '$' : '.';
+			String className = javaClass.getClassName();
+			int idx = className.lastIndexOf(delim);
+			String name = className.substring(idx + 1);
+			
+			return name; 
+		}
+		
+		private boolean isNested(JavaClass javaClass)
+		{
+			String className = javaClass.getClassName();
+			int lastDollarSign = className.lastIndexOf("$");
+			boolean isNested = lastDollarSign > 0;
+			return isNested;
 		}
 		
 		private Comparator<Method> methodCmp = new Comparator<Method>()
@@ -199,10 +248,15 @@ public class Main {
 			methods.toArray(arrMethods);
 			Arrays.sort(arrMethods, methodCmp);
 			
+			boolean isInterface = this.javaClass.isInterface();
+			
 			for (Method m: arrMethods)
 			{
 				sb.append(ident);
-				sb.append("public ");
+				if (!isInterface)
+				{
+					sb.append("public ");
+				}
 				if (m.isStatic())
 				{
 					sb.append("static ");
@@ -233,21 +287,50 @@ public class Main {
 			}
 		}
 		
-		private void processFields()
+		private void processInstanceFields()
 		{
+			processFields(false);
+		}
+		
+		private void processStaticFields()
+		{
+			processFields(true);	
+		}
+		
+		private void processFields(boolean isStatic)
+		{
+			assert this.javaClass  != null;
+			
+			ArrayList<Field> arrFields = new ArrayList<Field>();
+			for (Field f: fields)
+			{
+				if (f.isStatic() == isStatic)
+				{
+					arrFields.add(f);
+				}
+			}
+			
+			processFields(arrFields);
+		}
+		
+		private void processFields(ArrayList<Field> arrFields)
+		{
+			arrFields.sort(fieldCmp);
+			
 			String ident = new String(new char[level+1]).replace("\0", "\t");
 			
-			Field[] arrFields = new Field[fields.size()];
-			fields.toArray(arrFields);
-			Arrays.sort(arrFields, fieldCmp);
+			boolean isInterface = this.javaClass.isInterface();
 			
 			for (Field f: arrFields)
 			{
 				sb.append(ident);
-				sb.append("public ");
-				if (f.isStatic())
+				if (!isInterface)
 				{
-					sb.append("static ");
+					sb.append("public ");
+					if (f.isStatic())
+					{
+						sb.append("static ");
+					}
 				}
 				sb.append(f.getName());
 				sb.append(": ");
@@ -257,7 +340,7 @@ public class Main {
 				sb.append(";\n");
 			}
 		}
-		
+
 		private boolean isConstructor(Method m)
 		{
 			return m.getName().equals("<init>");
@@ -299,6 +382,7 @@ public class Main {
 			case "D":
 				tsType = "number";
 				break;
+			case "Ljava/lang/CharSequence;":
 			case "Ljava/lang/String;":
 				tsType = "string";
 				break;
@@ -329,6 +413,7 @@ public class Main {
 			case "D":
 				tsType.append("number");
 				break;
+			case "java.lang.CharSequence":
 			case "java.lang.String":
 				tsType.append("string");
 				break;
