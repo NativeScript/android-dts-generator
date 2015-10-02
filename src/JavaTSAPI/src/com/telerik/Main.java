@@ -1,12 +1,8 @@
 package com.telerik;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.*;
 
-import javax.management.RuntimeErrorException;
-import javax.tools.JavaCompiler;
-import javax.tools.ToolProvider;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 
@@ -18,8 +14,6 @@ import org.apache.bcel.classfile.Method;
 import org.apache.bcel.classfile.Signature;
 import org.apache.bcel.generic.Type;
 
-import com.sun.codemodel.internal.JVar;
-import com.sun.tools.internal.ws.processor.generator.Names;
 import com.telerik.java.api.*;
 import com.telerik.java.api.compiler.model.*;
 import com.telerik.java.api.compiler.processor.*;
@@ -32,7 +26,7 @@ import com.telerik.javascript.api.*;
  * argument.
  */
 public class Main {
-	
+
 	public static enum Input
 	{
 		Reflection,
@@ -40,7 +34,7 @@ public class Main {
 	}
 	
 	
-	static class DtsWriter implements com.telerik.java.api.bcel.Generator.VisitorCallback
+	static class DtsWriter extends com.telerik.java.api.bcel.Generator.VisitorCallback
 	{
 		private int level = 0;
 		
@@ -55,6 +49,7 @@ public class Main {
 		
 		public DtsWriter() throws FileNotFoundException
 		{
+			super();
 			sb = new StringBuilder();
 			references = new HashSet<String>();
 			methods = new HashSet<Method>();
@@ -66,19 +61,16 @@ public class Main {
 			}
 		}
 
-		@Override
 		public void onVisit(Field field)
 		{
 			fields.add(field);
 		}
 
-		@Override
 		public void onVisit(Method method)
 		{
 			methods.add(method);
 		}
 		
-		@Override
 		public void onEnter(JavaClass javaClass)
 		{
 			assert this.level == 0;
@@ -90,6 +82,11 @@ public class Main {
 			this.javaClass = javaClass;
 			
 			String className = javaClass.getClassName();
+			//
+			String scn = javaClass.getSuperclassName();
+			JavaClass baseClass = this.findClass(scn);
+			assert baseClass != null : "javaClass=" + javaClass.getClassName() + " scn=" + scn;
+			//
 			boolean success = createOutput(className.replaceAll("\\$", "\\."));
 			assert success;
 			
@@ -252,10 +249,15 @@ public class Main {
 			
 			for (Method m: arrMethods)
 			{
+				if ((!m.isPublic() && !m.isProtected()) || m.isSynthetic())
+				{
+					continue;
+				}
+				
 				sb.append(ident);
 				if (!isInterface)
 				{
-					sb.append("public ");
+					sb.append(m.isPublic() ? "public " : "protected ");
 				}
 				if (m.isStatic())
 				{
@@ -796,7 +798,6 @@ public class Main {
      */
 	public static void main(String[] args) {
 		
-		//
 		try
 		{
 			DtsWriter dtsWriter = new DtsWriter();

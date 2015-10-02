@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
@@ -29,13 +31,84 @@ import org.apache.commons.io.FilenameUtils;
 
 public class Generator {
 	
-	public interface VisitorCallback
+	public static abstract class VisitorCallback
 	{
-		void onEnter(org.apache.bcel.classfile.JavaClass javaClass);
-		void onLeave(org.apache.bcel.classfile.JavaClass javaClass);
-		void onVisit(org.apache.bcel.classfile.Method method);
-		void onVisit(org.apache.bcel.classfile.Field field);
+		public Map<String, JavaClass> classCache;
+		
+		protected VisitorCallback()
+		{
+			classCache = new HashMap<String, JavaClass>();
+		}
+		
+		public abstract void onEnter(org.apache.bcel.classfile.JavaClass javaClass);
+		public abstract void onLeave(org.apache.bcel.classfile.JavaClass javaClass);
+		public abstract void onVisit(org.apache.bcel.classfile.Method method);
+		public abstract void onVisit(org.apache.bcel.classfile.Field field);
+		
+		public JavaClass findClass(String className)
+		{
+			JavaClass clazz = classCache.get(className);
+			return clazz;
+		}
 	}
+	
+	private static interface ClassVisitor
+	{
+		void visit(VisitorCallback visitor, JavaClass clazz);
+	}
+	
+	private class CacheClassVisitor implements ClassVisitor
+	{
+		public CacheClassVisitor(File dir)
+		{
+			
+		}
+
+		public void visit(VisitorCallback visitor, JavaClass clazz)
+		{
+			Repository.addClass(clazz);
+			Generator.this.visitor.classCache.put(clazz.getClassName(), clazz);
+		}
+	}
+	
+	private class ForwardClassVisitor implements ClassVisitor
+	{
+		public ForwardClassVisitor(File dir)
+		{
+			
+		}
+		
+		public void visit(VisitorCallback visitor, JavaClass clazz)
+		{
+			visitor.onEnter(clazz);
+			
+			// TODO: call recursively visitClassFile(for each nested subtype)
+			
+			Method[] methods = clazz.getMethods();
+			for (Method m: methods)
+			{
+				if ((m.isPublic() || m.isProtected()) && !m.isSynthetic())
+				{
+					visitor.onVisit(m);
+				}
+			}
+
+			Field[] fields = clazz.getFields();
+			for (Field f: fields)
+			{
+				if (f.isPublic() || f.isProtected())
+				{
+					visitor.onVisit(f);
+				}
+			}
+			
+			visitor.onLeave(clazz);
+		}
+	}
+	
+	private ClassVisitor classVisitor;
+	
+	private Path tmpPath;
 	
 	public Generator(VisitorCallback visitor)
 	{
@@ -55,9 +128,34 @@ public class Generator {
 			throw new FileNotFoundException(filepath);
 		}
 		
+		try
+		{
+			tmpPath = Files.createTempDirectory("temp-");
+			
+			File tmpDir = tmpPath.toFile();
+			
+			this.classVisitor = new CacheClassVisitor(tmpDir);
+			
+			visitHelper(f);
+			
+			this.classVisitor = new ForwardClassVisitor(tmpDir);
+			
+			visitHelper(f);
+		}
+		finally
+		{
+			if (Files.exists(tmpPath))
+			{
+				FileUtils.deleteDirectory(tmpPath.toFile());
+			}
+		}
+	}
+	
+	private void visitHelper(File f) throws ClassNotFoundException, IOException
+	{
 		if (f.isFile())
 		{
-			String ext = FilenameUtils.getExtension(filepath);
+			String ext = FilenameUtils.getExtension(f.getName());
 			
 			if ("jar".equals(ext))
 			{
@@ -65,7 +163,9 @@ public class Generator {
 			}
 			else if ("class".equals(ext))
 			{
-				visitClassFile(f);
+				ClassParser cp = new ClassParser(f.getAbsolutePath());
+				JavaClass clazz = cp.parse();
+				this.classVisitor.visit(this.visitor, clazz);
 			}
 			else
 			{
@@ -134,27 +234,16 @@ public class Generator {
 	
 	private void visitJarFile(File jarFile) throws IOException, ClassNotFoundException
 	{
-		//System.out.println(jarFile.getAbsolutePath());
-				
-		Path tmpPath =  null;
+		File dir = new File(this.tmpPath.toFile(), jarFile.getName());
 		
-		try
+		if (!dir.exists())
 		{
-			tmpPath = Files.createTempDirectory("temp-");
-			
-			File tmpDir = tmpPath.toFile();
-			
-			unzip(jarFile, tmpDir);
-			
-			visitDirectory(tmpDir);
+			boolean success = dir.mkdirs();
+			assert success;
+			unzip(jarFile, dir);
 		}
-		finally
-		{
-			if (Files.exists(tmpPath))
-			{
-				FileUtils.deleteDirectory(tmpPath.toFile());
-			}
-		}
+		
+		visitDirectory(dir);
 	}
 	
 
@@ -172,29 +261,7 @@ public class Generator {
 			}
 			//System.out.println(clazz.getClassName());
 			
-			visitor.onEnter(clazz);
-			
-			// TODO: call recursively visitClassFile(for each nested subtype)
-			
-			Method[] methods = clazz.getMethods();
-			for (Method m: methods)
-			{
-				if ((m.isPublic() || m.isProtected()) && !m.isSynthetic())
-				{
-					visitor.onVisit(m);
-				}
-			}
-
-			Field[] fields = clazz.getFields();
-			for (Field f: fields)
-			{
-				if (f.isPublic() || f.isProtected())
-				{
-					visitor.onVisit(f);
-				}
-			}
-			
-			visitor.onLeave(clazz);
+			this.classVisitor.visit(visitor, clazz);
 		}
 	}
 
