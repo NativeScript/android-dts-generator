@@ -66,6 +66,11 @@ public class Generator {
 
 		public void visit(VisitorCallback visitor, JavaClass clazz)
 		{
+			if (clazz.getClassName().contains("-"))
+			{
+				return;
+			}
+			
 			Repository.addClass(clazz);
 			Generator.this.visitor.classCache.put(clazz.getClassName(), clazz);
 		}
@@ -80,29 +85,38 @@ public class Generator {
 		
 		public void visit(VisitorCallback visitor, JavaClass clazz)
 		{
-			visitor.onEnter(clazz);
-			
-			// TODO: call recursively visitClassFile(for each nested subtype)
-			
-			Method[] methods = clazz.getMethods();
-			for (Method m: methods)
+			if ( (clazz.isPublic() || clazz.isProtected()) && !clazz.isSynthetic())
 			{
-				if ((m.isPublic() || m.isProtected()) && !m.isSynthetic())
+				if (clazz.getClassName().contains("-"))
 				{
-					visitor.onVisit(m);
+					return;
 				}
-			}
+				//System.out.println(clazz.getClassName());
+				
+				visitor.onEnter(clazz);
+				
+				// TODO: call recursively visitClassFile(for each nested subtype)
+				
+				Method[] methods = clazz.getMethods();
+				for (Method m: methods)
+				{
+					if ((m.isPublic() || m.isProtected()) && !m.isSynthetic())
+					{
+						visitor.onVisit(m);
+					}
+				}
 
-			Field[] fields = clazz.getFields();
-			for (Field f: fields)
-			{
-				if (f.isPublic() || f.isProtected())
+				Field[] fields = clazz.getFields();
+				for (Field f: fields)
 				{
-					visitor.onVisit(f);
+					if (f.isPublic() || f.isProtected())
+					{
+						visitor.onVisit(f);
+					}
 				}
+				
+				visitor.onLeave(clazz);
 			}
-			
-			visitor.onLeave(clazz);
 		}
 	}
 	
@@ -253,16 +267,7 @@ public class Generator {
 		
 		JavaClass clazz = cp.parse();
 		
-		if ((clazz.isPublic() || clazz.isProtected()) && !clazz.isSynthetic())
-		{
-			if (clazz.getClassName().contains("-"))
-			{
-				return;
-			}
-			//System.out.println(clazz.getClassName());
-			
-			this.classVisitor.visit(visitor, clazz);
-		}
+		this.classVisitor.visit(this.visitor, clazz);
 	}
 
 	private void unzip(File zipFile, File outputFolder)
