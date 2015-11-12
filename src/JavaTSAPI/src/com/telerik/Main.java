@@ -1,6 +1,7 @@
 package com.telerik;
 
 import java.io.*;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 import javax.xml.transform.*;
@@ -14,6 +15,7 @@ import org.apache.bcel.classfile.Method;
 import org.apache.bcel.classfile.Signature;
 import org.apache.bcel.generic.Type;
 
+import com.sun.codemodel.internal.JVar;
 import com.telerik.java.api.*;
 import com.telerik.java.api.compiler.model.*;
 import com.telerik.java.api.compiler.processor.*;
@@ -40,6 +42,7 @@ public class Main {
 		
 		private PrintStream output;
 		private StringBuilder sb;
+		private String currentFilename;
 		private Set<String> references;
 		private Set<Method> methods;
 		private Set<Field> fields;
@@ -54,7 +57,7 @@ public class Main {
 			references = new HashSet<String>();
 			methods = new HashSet<Method>();
 			fields = new HashSet<Field>();
-			outDir = new File("C:/temp/dtsfiles");
+			outDir = new File("C:/Work/NativeScript/NativeScript/dtsfiles");
 			if (!outDir.exists())
 			{
 				outDir.mkdirs();
@@ -102,7 +105,7 @@ public class Main {
 				for (String outer: outerClasses)
 				{
 					ident = new String(new char[level++]).replace("\0", "\t");
-					println(ident + "export module " + outer + " {");
+					println(ident + "export namespace " + outer + " {");
 				}
 			}
 
@@ -131,11 +134,14 @@ public class Main {
 			
 			if (javaClass.isInterface())
 			{
-				println(ident + "export interface " + name + sig + " {");	
+				println(ident + "export interface I" + name + sig + " {");	
 			}
 			else
 			{
-				println(ident + "export class " + name + sig + " extends " + getSupperClassName(javaClass) + " {");
+				String extendClause = className.equals("java.lang.Object")
+									? ""
+									: (sig + " extends " + getSupperClassName(javaClass));
+				println(ident + "export class " + name + extendClause + " {");
 			}
 		}
 		
@@ -145,15 +151,17 @@ public class Main {
 			assert this.javaClass != null;
 			assert this.javaClass == javaClass;
 			
-			processMethods();
-			
-			processInstanceFields();
-			
 			boolean isInterface = javaClass.isInterface();
+			
+			boolean writeModifiers = !isInterface;
+			
+			writesMethods(writeModifiers);
+			
+			writesInstanceFields(writeModifiers);
 			
 			if (!isInterface)
 			{
-				processStaticFields();
+				writeStaticFields(writeModifiers);
 			}
 			
 			String ident = new String(new char[--level]).replace("\0", "\t");
@@ -163,12 +171,14 @@ public class Main {
 			{
 				String name = getSimpleClassName(javaClass);
 				ident = new String(new char[level]).replace("\0", "\t");
-				println(ident + "export var " + name + ": {");
-				println(ident + "\tnew(implementation: " + name + "): " + name + ";");
+				++this.level;
+				println(ident + "export class " + name + " implements I" + name + " {");
+				println(ident + "\tpublic constructor(implementation: I" + name + ");");
+				writesMethods(true);
+				writeStaticFields(true);
+				--this.level;
 				
-				processStaticFields();
-				
-				println(ident + "};");
+				println(ident + "}");
 			}
 
 			if (isNested(javaClass))
@@ -216,7 +226,7 @@ public class Main {
 		private boolean isNested(JavaClass javaClass)
 		{
 			String className = javaClass.getClassName();
-			int lastDollarSign = className.lastIndexOf("$");
+			int lastDollarSign = className.lastIndexOf('$');
 			boolean isNested = lastDollarSign > 0;
 			return isNested;
 		}
@@ -237,15 +247,88 @@ public class Main {
 			}
 		};
 		
-		private void processMethods()
+		private String getMethodFullSignature(Method m)
 		{
-			String ident = new String(new char[level+1]).replace("\0", "\t");
+			String sig = m.getName() + m.getSignature();
+			return sig;
+		}
+		
+		private void writesMethods(boolean writeModifiers)
+		{
+			String ident = new String(new char[level]).replace("\0", "\t");
 			
-			Method[] arrMethods = new Method[methods.size()];
-			methods.toArray(arrMethods);
+			//
+			Set<String> baseMethodNames = new HashSet<String>();
+			List<Method> baseMethods = new ArrayList<Method>();
+			String scn = this.javaClass.getSuperclassName();
+			JavaClass currClass = this.findClass(scn);
+			assert currClass != null : "javaClass=" + this.javaClass.getClassName() + " scn=" + scn;
+			
+			while (true)
+			{
+				for (Method m: currClass.getMethods())
+				{
+					if (!m.isSynthetic() && (m.isPublic() || m.isProtected()))
+					{
+						baseMethods.add(m);
+						baseMethodNames.add(m.getName());
+					}
+				}
+				
+				if (currClass.getClassName().equals("java.lang.Object"))
+					break;
+				
+				scn = currClass.getSuperclassName();
+				JavaClass baseClass = this.findClass(scn);
+				assert baseClass != null : "baseClass=" + currClass.getClassName() + " scn=" + scn;
+				currClass = baseClass;
+			}
+			
+			Map<String, Method> ms = new HashMap<String, Method>();
+			for (Method m: this.methods)
+			{
+				String currMethodSig = getMethodFullSignature(m);
+				if (!ms.containsKey(currMethodSig))
+				{
+					ms.put(currMethodSig, m);
+				}
+				String name = m.getName();
+				if (baseMethodNames.contains(name))
+				{
+					for (Method bm: baseMethods)
+					{
+						if (bm.getName().equals(name))
+						{
+							String sig = getMethodFullSignature(bm);
+							if (!ms.containsKey(sig))
+							{
+								ms.put(sig, bm);
+							}
+						}
+					}
+				}
+			}
+			
+			Method[] arrMethods = new Method[ms.size()];
+			ms.values().toArray(arrMethods);
 			Arrays.sort(arrMethods, methodCmp);
 			
-			boolean isInterface = this.javaClass.isInterface();
+			Set<String> mixedAccessors = new HashSet<String>();
+			for (int i=0; i<arrMethods.length; i++)
+			{
+				Method m1 = arrMethods[i];
+				boolean m1Public = Modifier.isPublic(m1.getModifiers());
+				for (int j=i+1; j<arrMethods.length; j++)
+				{
+					Method m2 = arrMethods[j];
+					boolean m2Public = Modifier.isPublic(m2.getModifiers());
+					if (m1.getName().equals(m2.getName()) && (m1Public != m2Public))
+					{
+						mixedAccessors.add(m1.getName());
+						break;
+					}
+				}
+			}
 			
 			for (Method m: arrMethods)
 			{
@@ -255,9 +338,16 @@ public class Main {
 				}
 				
 				sb.append(ident);
-				if (!isInterface)
+				if (writeModifiers)
 				{
-					sb.append(m.isPublic() ? "public " : "protected ");
+					if (isConstructor(m) || mixedAccessors.contains(m.getName()))
+					{
+						sb.append("public ");	
+					}
+					else
+					{
+						sb.append(m.isPublic() ? "public " : "protected ");
+					}
 				}
 				if (m.isStatic())
 				{
@@ -289,17 +379,17 @@ public class Main {
 			}
 		}
 		
-		private void processInstanceFields()
+		private void writesInstanceFields(boolean forceWriteModifiers)
 		{
-			processFields(false);
+			writeFields(forceWriteModifiers, false);
 		}
 		
-		private void processStaticFields()
+		private void writeStaticFields(boolean forceWriteModifiers)
 		{
-			processFields(true);	
+			writeFields(forceWriteModifiers, true);	
 		}
 		
-		private void processFields(boolean isStatic)
+		private void writeFields(boolean forceWriteModifiers, boolean isStatic)
 		{
 			assert this.javaClass  != null;
 			
@@ -312,21 +402,19 @@ public class Main {
 				}
 			}
 			
-			processFields(arrFields);
+			writeFields(forceWriteModifiers, arrFields);
 		}
 		
-		private void processFields(ArrayList<Field> arrFields)
+		private void writeFields(boolean forceWriteModifiers, ArrayList<Field> arrFields)
 		{
 			arrFields.sort(fieldCmp);
 			
-			String ident = new String(new char[level+1]).replace("\0", "\t");
-			
-			boolean isInterface = this.javaClass.isInterface();
+			String ident = new String(new char[level]).replace("\0", "\t");
 			
 			for (Field f: arrFields)
 			{
 				sb.append(ident);
-				if (!isInterface)
+				if (forceWriteModifiers)
 				{
 					sb.append("public ");
 					if (f.isStatic())
@@ -450,7 +538,9 @@ public class Main {
 			sb.setLength(0);
 			try
 			{
-				output = new PrintStream(new File(outDir, className + ".d.ts"));
+				currentFilename = className;
+				File file = new File(outDir, className + ".d.ts");
+				output = new PrintStream(file);
 				success = true;
 			}
 			catch (FileNotFoundException e)
@@ -470,11 +560,11 @@ public class Main {
 				ident = new String(new char[level++]).replace("\0", "\t");
 				if (level == 1)
 				{
-					println(ident + "declare module " + p + " {");				
+					println(ident + "declare namespace " + p + " {");				
 				}
 				else
 				{
-					println(ident + "export module " + p + " {");
+					println(ident + "export namespace " + p + " {");
 				}
 			}
 		}
@@ -490,17 +580,23 @@ public class Main {
 		
 		private void addReference(Type type)
 		{
-			if (isPrimitiveType(type))
+			String sig = type.getSignature();
+		
+			if (isPrimitiveType(type) || sig.equals("Ljava/lang/String;"))
+			{
+				return;
+			}
+			
+			if (this.javaClass.getClassName().equals("java.lang.Object") && sig.equals("Ljava/lang/Object;"))
 			{
 				return;
 			}
 
-			String sig = type.getSignature();
 			int idx = sig.lastIndexOf('[');
 			
 			String strippedSig = sig.substring(idx + 1);
 			
-			if (isPrimitiveType(strippedSig))
+			if (isPrimitiveType(strippedSig))	
 			{
 				return;
 			}
@@ -509,15 +605,38 @@ public class Main {
 			
 			String ref = getFilenameFromType(strippedSig);
 			
-			references.add(ref);
+			if (!ref.equals(this.currentFilename))
+			{
+				references.add(ref);
+			}
 		}
+		
+		private Comparator<String> cmpStrRev = new Comparator<String>()
+		{
+			@Override
+			public int compare(String s1, String s2) {
+				return s2.compareTo(s1);
+			}
+		}; 
 		
 		private void writeReferences()
 		{
-			StringBuilder refs = new StringBuilder();
-			for (String refFilename: references)
+			this.references.add("_helpers");
+			if (!this.javaClass.getClassName().equals("java.lang.Object"))
 			{
-				refs.insert(0, "///<reference path=\"" + refFilename + ".d.ts\" />\n");
+				String baseClassName = this.javaClass.getSuperclassName();
+				if ((baseClassName != null) && (baseClassName.length() > 0))
+				{
+					references.add(baseClassName);
+				}
+			}
+			StringBuilder refs = new StringBuilder();
+			String[] arrRefs = new String[references.size()];
+			references.toArray(arrRefs);
+			Arrays.sort(arrRefs, cmpStrRev);
+			for (String refFilename: arrRefs)
+			{
+				refs.insert(0, "///<reference path=\"./" + refFilename + ".d.ts\" />\n");
 			}
 			refs.append("\n");
 			sb.insert(0, refs.toString());
@@ -562,9 +681,14 @@ public class Main {
 			return isPrimitive;
 		}
 		
-		private void println(String s)
+		private void print(String s)
 		{
 			sb.append(s);
+		}
+
+		private void println(String s)
+		{
+			print(s);
 			sb.append('\n');
 		}
 		
