@@ -625,6 +625,12 @@ public class Main {
 			if (!this.javaClass.getClassName().equals("java.lang.Object"))
 			{
 				String baseClassName = this.javaClass.getSuperclassName();
+				JavaClass baseClass = this.findClass(baseClassName);
+				while ((baseClass != null) && !baseClass.isPublic())
+				{
+					baseClassName = baseClass.getSuperclassName();
+					baseClass = this.findClass(baseClassName);
+				}
 				if ((baseClassName != null) && (baseClassName.length() > 0))
 				{
 					references.add(baseClassName);
