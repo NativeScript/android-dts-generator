@@ -15,7 +15,6 @@ import org.apache.bcel.classfile.Method;
 import org.apache.bcel.classfile.Signature;
 import org.apache.bcel.generic.Type;
 
-import com.sun.codemodel.internal.JVar;
 import com.telerik.java.api.*;
 import com.telerik.java.api.compiler.model.*;
 import com.telerik.java.api.compiler.processor.*;
@@ -47,6 +46,7 @@ public class Main {
 		private Set<Method> methods;
 		private Set<Field> fields;
 		private JavaClass javaClass;
+		private JavaClass groupMainClass;
 		
 		private File outDir;
 		
@@ -74,7 +74,20 @@ public class Main {
 			methods.add(method);
 		}
 		
-		public void onEnter(JavaClass javaClass)
+		public void onGroupEnter(JavaClass mainJavaClass)
+		{
+			assert this.groupMainClass == null;
+			this.groupMainClass = mainJavaClass;
+		}
+		
+		public void onGroupLeave(JavaClass mainJavaClass)
+		{
+			assert this.groupMainClass != null;
+			this.groupMainClass = null;
+		}
+
+		
+		public void onClassEnter(JavaClass javaClass)
 		{
 			assert this.level == 0;
 			assert this.methods.size() == 0;
@@ -146,7 +159,7 @@ public class Main {
 		}
 		
 		@Override
-		public void onLeave(JavaClass javaClass) {
+		public void onClassLeave(JavaClass javaClass) {
 			
 			assert this.javaClass != null;
 			assert this.javaClass == javaClass;
@@ -927,7 +940,11 @@ public class Main {
      *            The java source files to be verified.
      */
 	public static void main(String[] args) {
-		
+		//mainHelper(args);
+		new com.telerik.java.api.bcel.Test().go();
+	}
+	
+	private static void mainHelper(String[] args) {
 		try
 		{
 			DtsWriter dtsWriter = new DtsWriter();

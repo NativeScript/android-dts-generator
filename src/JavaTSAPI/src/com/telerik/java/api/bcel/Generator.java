@@ -9,13 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -24,8 +19,6 @@ import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
-import org.apache.bcel.util.ClassPath;
-import org.apache.bcel.util.SyntheticRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -40,8 +33,10 @@ public class Generator {
 			classCache = new HashMap<String, JavaClass>();
 		}
 		
-		public abstract void onEnter(org.apache.bcel.classfile.JavaClass javaClass);
-		public abstract void onLeave(org.apache.bcel.classfile.JavaClass javaClass);
+		public abstract void onGroupEnter(org.apache.bcel.classfile.JavaClass mainJavaClass);
+		public abstract void onGroupLeave(org.apache.bcel.classfile.JavaClass mainJavaClass);
+		public abstract void onClassEnter(org.apache.bcel.classfile.JavaClass javaClass);
+		public abstract void onClassLeave(org.apache.bcel.classfile.JavaClass javaClass);
 		public abstract void onVisit(org.apache.bcel.classfile.Method method);
 		public abstract void onVisit(org.apache.bcel.classfile.Field field);
 		
@@ -93,7 +88,7 @@ public class Generator {
 				}
 				//System.out.println(clazz.getClassName());
 				
-				visitor.onEnter(clazz);
+				visitor.onClassEnter(clazz);
 				
 				// TODO: call recursively visitClassFile(for each nested subtype)
 				
@@ -115,7 +110,7 @@ public class Generator {
 					}
 				}
 				
-				visitor.onLeave(clazz);
+				visitor.onClassLeave(clazz);
 			}
 		}
 	}
