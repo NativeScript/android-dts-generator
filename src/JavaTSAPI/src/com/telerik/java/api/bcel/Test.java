@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +15,10 @@ import java.util.Set;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
+import org.apache.bcel.generic.ArrayType;
+import org.apache.bcel.generic.BasicType;
+import org.apache.bcel.generic.ObjectType;
+import org.apache.bcel.generic.ReferenceType;
 import org.apache.bcel.generic.Type;
 
 public class Test {
@@ -52,8 +57,16 @@ public class Test {
 	}
 
 	private PrintStream ps;
+	
+	private StringBuilder2 sbContent;
+	
+	private StringBuilder2 sbHeaders;
+	
+	private Set<String> references;
 
 	private JavaClass prevClass;
+	
+	private String currentFileClassname;
 
 	private void processFileScopes(Iterator<FileScope> it) {
 		while (it.hasNext()) {
@@ -64,10 +77,27 @@ public class Test {
 				File[] files = fs.getFiles();
 				if ((files != null) && (files.length > 0)) {
 					JavaClass clazz = ClassRepo.loadClass(files[0]);
+					sbHeaders = new StringBuilder2();
+					sbContent = new StringBuilder2();
+					references = new HashSet<String>();
+					currentFileClassname = clazz.getClassName();
 					ps = new PrintStream(new File(
 							"C:/Work/NativeScript/NativeScript/dtsfiles",
-							clazz.getClassName() + ".d.ts"));
-					processClassScopes(fs.iterator(), ps);
+							currentFileClassname + ".d.ts"));
+
+					processClassScopes(fs.iterator(), sbContent);
+					
+					String[] refs = references.toArray(new String[references.size()]);
+					Arrays.sort(refs);
+					for (String r: refs) {
+						sbHeaders.append("/// <reference path=\"./");
+						sbHeaders.append(r);
+						sbHeaders.appendln(".d.ts\" />");
+					}
+					
+					ps.println("/// <reference path=\"./_helpers.d.ts\" />");
+					ps.println(sbHeaders.toString());
+					ps.print(sbContent.toString());
 				}
 			} catch (IOException e) {
 				throw new RuntimeException(e);
@@ -81,7 +111,7 @@ public class Test {
 
 	private int ident;
 
-	private void processClassScopes(Iterator<ClassScope> it, PrintStream ps) {
+	private void processClassScopes(Iterator<ClassScope> it, StringBuilder2 sbContent) {
 		while (it.hasNext()) {
 			ClassScope cs = it.next();
 			JavaClass currClass = cs.getJavaClass();
@@ -90,10 +120,10 @@ public class Test {
 			this.ident = openPackage(this.prevClass, currClass);
 			//
 			String tabs = getTabs(this.ident);
-			ps.println(tabs + "export class " + getSimpleClassname(currClass)
+			sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass)
 					+ " {");
 			processMemberScopes(cs.iterator());
-			ps.println(tabs + "}");
+			sbContent.appendln(tabs + "}");
 			this.prevClass = currClass;
 		}
 		closePackage(prevClass, null);
@@ -123,7 +153,7 @@ public class Test {
 			ident = prevCount;
 			while (ident > 0) {
 				String tabs = getTabs(--ident);
-				ps.println(tabs + "}");
+				sbContent.appendln(tabs + "}");
 			}
 			return ident;
 		}
@@ -137,7 +167,7 @@ public class Test {
 
 		while (prevCount > currCount) {
 			String tabs = getTabs(--prevCount);
-			ps.println(tabs + "}");
+			sbContent.appendln(tabs + "}");
 		}
 
 		boolean isNested = isNested(currClass);
@@ -201,16 +231,16 @@ public class Test {
 			++ident;
 			String tabs = getTabs(idx);
 			if (idx == 0) {
-				ps.print(tabs + "declare ");
+				sbContent.append(tabs + "declare ");
 			} else {
-				ps.print(tabs + "export ");
+				sbContent.append(tabs + "export ");
 			}
-			ps.println("module " + currParts[idx] + " {");
+			sbContent.appendln("module " + currParts[idx] + " {");
 		}
 
 		if (isNested(currClass) && (prevParts.length < currParts.length)) {
 			String tabs = getTabs(prevParts.length - 1);
-			ps.println(tabs + "export module "
+			sbContent.appendln(tabs + "export module "
 					+ prevParts[prevParts.length - 1] + " {");
 		}
 
@@ -267,10 +297,11 @@ public class Test {
 	private List<Method> baseMethods;
 	private Map<String, Method> ms1;
 
-
 	private void processMethod(MethodScope ms) {
 		ClassScope cs = (ClassScope) ms.getParent();
 		assert (cs != null);
+		
+		JavaClass clazz = cs.getJavaClass();
 
 		if (cs != prevCs) {
 			ms1 = new HashMap<String, Method>();
@@ -282,7 +313,6 @@ public class Test {
 				}
 			}
 
-			JavaClass clazz = cs.getJavaClass();
 			baseMethodNames = new HashSet<String>();
 			baseMethods = new ArrayList<Method>();
 			String scn = clazz.getSuperclassName();
@@ -309,7 +339,7 @@ public class Test {
 			}
 			prevCs = cs;
 		}
-		
+
 		String tabs = getTabs(this.ident + 1);
 
 		Method m = ms.getMethod();
@@ -325,42 +355,52 @@ public class Test {
 					if (!ms1.containsKey(sig)) {
 						ms1.put(sig, bm);
 						// print
-						ps.print(tabs + "public ");
+						sbContent.append(tabs + "public ");
 						if (bm.isStatic()) {
-							ps.print("static ");
+							sbContent.append("static ");
 						}
-						ps.println(bm.getName() + "(): "
-								+ getTypeScriptTypeFromJavaType(bm.getReturnType()) + ";");
+						sbContent.append(getMethodName(bm) + getMethodParamSignature(clazz, bm));
+						String bmSig = "";
+						if (!isConstructor(bm)) {
+							bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, bm.getReturnType());
+						}
+						sbContent.appendln(bmSig + ";");
 
 					}
 				}
 			}
 		}
 
-		ps.print(tabs + "public ");
+		sbContent.append(tabs + "public ");
 		if (m.isStatic()) {
-			ps.print("static ");
+			sbContent.append("static ");
 		}
-		ps.println(m.getName() + "(): "
-				+ getTypeScriptTypeFromJavaType(m.getReturnType()) + ";");
+		sbContent.append(getMethodName(m) + getMethodParamSignature(clazz, m));
+		String mSig = "";
+		if (!isConstructor(m)) {
+			mSig += ": " + getTypeScriptTypeFromJavaType(clazz, m.getReturnType());
+		}
+		sbContent.appendln(mSig + ";");
 	}
 
 	private void processField(FieldScope fs) {
 		Field f = fs.getField();
+		ClassScope cs = (ClassScope) fs.getParent();
+		JavaClass clazz = cs.getJavaClass();
+		
 		String tabs = getTabs(this.ident + 1);
-		ps.print(tabs + "public ");
+		sbContent.append(tabs + "public ");
 		if (f.isStatic()) {
-			ps.print("static ");
+			sbContent.append("static ");
 		}
-		ps.println(f.getName() + ": "
-				+ getTypeScriptTypeFromJavaType(f.getType()) + ";");
+		sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(clazz, f.getType()) + ";");
 	}
 
-	private String getTypeScriptTypeFromJavaType(Type t) {
+	private String getTypeScriptTypeFromJavaType(JavaClass clazz, Type type) {
 		String tsType;
-		String type = t.getSignature();
+		String typeSig = type.getSignature();
 
-		switch (type) {
+		switch (typeSig) {
 		case "V":
 			tsType = "void";
 			break;
@@ -391,44 +431,57 @@ public class Test {
 		return tsType;
 	}
 
-	private void convertToTypeScriptType(String type, StringBuilder tsType) {
-		switch (type) {
-		case "C":
-			tsType.append("string");
-			break;
-		case "Z":
-			tsType.append("boolean");
-			break;
-		case "B":
-		case "S":
-		case "I":
-		case "J":
-		case "F":
-		case "D":
-			tsType.append("number");
-			break;
-		case "java.lang.CharSequence":
-		case "java.lang.String":
-			tsType.append("string");
-			break;
-		default:
-			if (type.charAt(0) == '[') {
-				tsType.append("native.Array<");
-				convertToTypeScriptType(type.substring(1), tsType);
-				tsType.append(">");
-			} else {
-				String ts;
-				int idx = type.indexOf('<');
-				if (idx > 0) {
-					ts = type.substring(1, idx).replaceAll("/", ".")
-							.replaceAll("\\$", "\\.").replaceAll(";", "");
-					tsType.append(ts);
-				} else {
-					ts = type.substring(1).replaceAll("/", ".")
-							.replaceAll("\\$", "\\.").replaceAll(";", "");
-					tsType.append(ts);
-				}
+	private void convertToTypeScriptType(Type type, StringBuilder tsType) {
+		boolean isPrimitive = type instanceof BasicType;
+		boolean isArray = type instanceof ArrayType;
+		boolean isObjectType = type instanceof ObjectType;
+		
+		if (isPrimitive)
+		{
+			if (type.equals(Type.BOOLEAN))
+			{
+				tsType.append("boolean");
 			}
+			else if (type.equals(Type.BYTE) || type.equals(Type.SHORT)
+					|| type.equals(Type.INT) || type.equals(Type.LONG)
+					|| type.equals(Type.FLOAT) || type.equals(Type.DOUBLE))
+			{
+				tsType.append("number");
+			}
+			else if (type.equals(Type.CHAR))
+			{
+				tsType.append("string");
+			}
+			else
+			{
+				throw new RuntimeException("Unexpected type=" + type.getSignature());
+			}
+		}
+		else if (isArray)
+		{
+			tsType.append("native.Array<");
+			Type elementType = ((ArrayType)type).getElementType();
+			convertToTypeScriptType(elementType, tsType);
+			tsType.append(">");
+		}
+		else if (type.equals(Type.STRING))
+		{
+			tsType.append("string");
+		}
+		else if (isObjectType)
+		{
+			ObjectType objType = (ObjectType)type;
+			String typeName = objType.getClassName();
+			if (typeName.contains("$"))
+			{
+				typeName = typeName.replaceAll("\\$", "\\.");
+			}
+			tsType.append(typeName);
+			addReference(type);
+		}
+		else
+		{
+			throw new RuntimeException("Unhandled type=" + type.getSignature());
 		}
 	}
 
@@ -436,5 +489,54 @@ public class Test {
 		String sig = m.getName() + m.getSignature();
 		return sig;
 	}
+	
+	private String getMethodParamSignature(JavaClass clazz, Method m) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("(");
+		int idx = 0;
+		for (Type type: m.getArgumentTypes()) {
+			if (idx > 0)
+			{
+				sb.append(", ");
+			}
+			sb.append("param");
+			sb.append(idx++);
+			sb.append(": ");
+			addReference(type);
+			String paramTypeName = getTypeScriptTypeFromJavaType(clazz, type);
+			sb.append(paramTypeName);
+		}
+		sb.append(")");
+		String sig = sb.toString();
+		return sig;
+	}
+	
+	private void addReference(Type type)
+	{
+		boolean isObjectType = type instanceof ObjectType;
+		if (isObjectType) {
+			ObjectType objType = (ObjectType)type;
+			String typeName = objType.getClassName();
+			if (!typeName.equals(currentFileClassname)) {
+				boolean isNested = typeName.contains("$");
+				if (!isNested) {
+					references.add(typeName);
+				}
+			}
+		}
+	}
 
+	private boolean isConstructor(Method m) {
+		return m.getName().equals("<init>");
+	}
+
+	private String getMethodName(Method m) {
+		String name = m.getName();
+
+		if (isConstructor(m)) {
+			name = "constructor";
+		}
+
+		return name;
+	}
 }
