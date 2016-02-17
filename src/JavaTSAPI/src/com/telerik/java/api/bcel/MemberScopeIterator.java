@@ -1,7 +1,9 @@
 package com.telerik.java.api.bcel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import org.apache.bcel.classfile.Field;
@@ -44,14 +46,16 @@ public class MemberScopeIterator implements Iterator<MemberScope> {
 	}
 
 	private FieldOrMethod[] getMembers() {
+		Set<String> methodNames = new HashSet<String>();
 		ArrayList<FieldOrMethod> members = new ArrayList<FieldOrMethod>();
 		for (Method m: this.javaClass.getMethods()) {
 			if ((m.isPublic() || m.isProtected()) && !m.isSynthetic()) {
 				members.add(m);
+				methodNames.add(m.getName());
 			}
 		}
 		for (Field f: this.javaClass.getFields()) {
-			if ((f.isPublic() || f.isProtected()) && !f.isSynthetic()) {
+			if ((f.isPublic() || f.isProtected()) && !f.isSynthetic() && !methodNames.contains(f.getName())) {
 				members.add(f);
 			}
 		}
