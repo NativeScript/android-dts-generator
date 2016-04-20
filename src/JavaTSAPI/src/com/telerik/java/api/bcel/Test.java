@@ -26,7 +26,7 @@ public class Test {
 		ScopeDispenser sd = null;
 		try {
 			sd = new ScopeDispenser(
-					"C:/Work/NativeScript/android-metadata-generator/jars");
+					"/home/local/PROGRESS/plpetkov/work/repos/android-metadata-generator/jars");
 			processJarScopes(sd.iterator());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class Test {
 					references = new HashSet<String>();
 					currentFileClassname = clazz.getClassName();
 					ps = new PrintStream(new File(
-							"C:/Work/NativeScript/NativeScript/dtsfiles",
+							"/home/local/PROGRESS/plpetkov/work/repos/NativeScript/dtsfiles",
 							currentFileClassname + ".d.ts"));
 
 					processClassScopes(fs.iterator(), sbContent);
