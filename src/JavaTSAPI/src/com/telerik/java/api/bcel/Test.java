@@ -11,14 +11,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.bcel.classfile.Attribute;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
+import org.apache.bcel.classfile.Signature;
+import org.apache.bcel.classfile.Utility;
 import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.ReferenceType;
+import org.apache.bcel.classfile.Utility;
 import org.apache.bcel.generic.Type;
 
 public class Test {
@@ -120,13 +126,79 @@ public class Test {
 			this.ident = openPackage(this.prevClass, currClass);
 			//
 			String tabs = getTabs(this.ident);
-			sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass)
+			sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + getGenericIfAny(currClass)
 					+ " {");
 			processMemberScopes(cs.iterator());
 			sbContent.appendln(tabs + "}");
 			this.prevClass = currClass;
 		}
 		closePackage(prevClass, null);
+	}
+
+	private String getGenericIfAny(JavaClass currClass) {
+		StringBuilder defaultGenericLine = new StringBuilder();
+		Attribute[] attributes = currClass.getAttributes();
+		for(Attribute attribute : attributes) {
+			if(attribute instanceof Signature) { 
+				String classSignature = ((Signature)attribute).getSignature();
+				String genericParamsLine = getGenericParams(classSignature);
+				if(genericParamsLine == null) {
+					continue;
+				}
+				
+				List<String> sepParams = getSeparateParams(genericParamsLine);
+				defaultGenericLine.append("<");
+				for(int i = 0; i < sepParams.size(); i++) {
+					String current = sepParams.get(i);
+					if(!current.contains("<")) {
+						String itemToAdd = current.substring(1).replaceAll("[\\/]", ".");
+						defaultGenericLine.append(itemToAdd);
+					}
+					else {
+						defaultGenericLine.append("Any");
+					}
+					if(i != sepParams.size() - 1) {
+						defaultGenericLine.append(",");
+					}
+				}
+				defaultGenericLine.append(">");
+//				System.out.println(sepParams);
+			}
+		}
+		return defaultGenericLine.toString();
+	}
+	
+	private List<String> getSeparateParams(String genericParamsLine) {
+		List<String> res = new ArrayList<String>();
+
+		String pattern = "\\w+\\:{1,2}([\\w\\/]+(([<].*[>])|));";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(genericParamsLine);
+		while(m.find()) {
+			res.add(m.group(1));
+		}
+		return res;
+	}
+
+	private String getGenericParams(String classSignature) {
+		String res = null;
+		if(classSignature.startsWith("<")) {
+			Integer sigLen = classSignature.length();
+			Integer obc = 0;
+			for(int i = 0; i < sigLen; i++) {
+				if(classSignature.charAt(i) == '<') {
+					obc ++;
+				}
+				if(classSignature.charAt(i) == '>') {
+					obc --;
+				}
+				if(obc == 0) { 
+					res = classSignature.substring(1, i);
+					break;
+				}
+			}
+		}
+		return res;
 	}
 
 	private String getSimpleClassname(JavaClass javaClass) {
@@ -344,6 +416,7 @@ public class Test {
 
 		Method m = ms.getMethod();
 		String currMethodSig = getMethodFullSignature(m);
+
 		if (!ms1.containsKey(currMethodSig)) {
 			ms1.put(currMethodSig, m);
 		}
