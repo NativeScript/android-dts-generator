@@ -32,7 +32,9 @@ public class Test {
 		ScopeDispenser sd = null;
 		try {
 			sd = new ScopeDispenser(
-					"/home/local/PROGRESS/plpetkov/work/repos/android-metadata-generator/jars");
+//					"/home/local/PROGRESS/plpetkov/work/repos/android-metadata-generator/jars"
+					"/home/plamen5kov/work/repo/android-metadata-generator/jars"
+					);
 			processJarScopes(sd.iterator());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,7 +90,9 @@ public class Test {
 					references = new HashSet<String>();
 					currentFileClassname = clazz.getClassName();
 					ps = new PrintStream(new File(
-							"/home/local/PROGRESS/plpetkov/work/repos/NativeScript/dtsfiles",
+//							"/home/local/PROGRESS/plpetkov/work/repos/NativeScript/dtsfiles"
+							"/home/plamen5kov/work/repo/NativeScript/dtsfiles"
+							,
 							currentFileClassname + ".d.ts"));
 
 					processClassScopes(fs.iterator(), sbContent);
@@ -147,22 +151,19 @@ public class Test {
 				}
 				
 				List<String> sepParams = getSeparateParams(genericParamsLine);
+				int paramSize = sepParams.size();
+				
 				defaultGenericLine.append("<");
-				for(int i = 0; i < sepParams.size(); i++) {
-					String current = sepParams.get(i);
-					if(!current.contains("<")) {
-						String itemToAdd = current.substring(1).replaceAll("[\\/]", ".");
-						defaultGenericLine.append(itemToAdd);
-					}
-					else {
-						defaultGenericLine.append("Any");
-					}
+				for(int i = 0; i < paramSize; i++) {
+					
+					String itemToAdd = sepParams.get(i);
+					defaultGenericLine.append(itemToAdd);
+					
 					if(i != sepParams.size() - 1) {
 						defaultGenericLine.append(",");
 					}
 				}
 				defaultGenericLine.append(">");
-//				System.out.println(sepParams);
 			}
 		}
 		return defaultGenericLine.toString();
@@ -171,7 +172,7 @@ public class Test {
 	private List<String> getSeparateParams(String genericParamsLine) {
 		List<String> res = new ArrayList<String>();
 
-		String pattern = "\\w+\\:{1,2}([\\w\\/]+(([<].*[>])|));";
+		String pattern = "(\\w+)\\:{1,2}([\\w\\/]+(([<].*[>])|));";
 		Pattern r = Pattern.compile(pattern);
 		Matcher m = r.matcher(genericParamsLine);
 		while(m.find()) {

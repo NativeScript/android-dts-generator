@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/usr/lib/jvm/java-8-oracle/lib/tools.jar"/>
+	<classpathentry kind="lib" path="/home/plamen5kov/tools/jdk1.8.0_77/lib/tools.jar"/>
 	<classpathentry kind="lib" path="libs/bcel-5.2.jar"/>
 	<classpathentry kind="lib" path="libs/commons-io-2.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
