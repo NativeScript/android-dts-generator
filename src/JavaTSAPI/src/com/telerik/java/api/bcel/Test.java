@@ -615,7 +615,6 @@ public class Test {
 					returnType = match.group(3);
 
 					System.out.println("=================");
-					System.out.println(clazz.getClassName());
 					System.out.println(m.getName());
 					System.out.println(genericDeclaration);
 					System.out.println(parameters);
