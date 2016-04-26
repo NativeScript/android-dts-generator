@@ -19,12 +19,9 @@ import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.classfile.Signature;
-import org.apache.bcel.classfile.Utility;
 import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ObjectType;
-import org.apache.bcel.generic.ReferenceType;
-import org.apache.bcel.classfile.Utility;
 import org.apache.bcel.generic.Type;
 
 public class Test {
@@ -130,7 +127,7 @@ public class Test {
 			this.ident = openPackage(this.prevClass, currClass);
 			//
 			String tabs = getTabs(this.ident);
-			sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + getGenericIfAny(currClass)
+			sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + getGenericClassParams(currClass)
 					+ " {");
 			processMemberScopes(cs.iterator());
 			sbContent.appendln(tabs + "}");
@@ -139,7 +136,7 @@ public class Test {
 		closePackage(prevClass, null);
 	}
 
-	private String getGenericIfAny(JavaClass currClass) {
+	private String getGenericClassParams(JavaClass currClass) {
 		StringBuilder defaultGenericLine = new StringBuilder();
 		Attribute[] attributes = currClass.getAttributes();
 		for(Attribute attribute : attributes) {
@@ -154,12 +151,13 @@ public class Test {
 				int paramSize = sepParams.size();
 				
 				defaultGenericLine.append("<");
+				
 				for(int i = 0; i < paramSize; i++) {
 					
 					String itemToAdd = sepParams.get(i);
 					defaultGenericLine.append(itemToAdd);
 					
-					if(i != sepParams.size() - 1) {
+					if(i != (sepParams.size() - 1)) {
 						defaultGenericLine.append(",");
 					}
 				}
@@ -473,6 +471,10 @@ public class Test {
 	private String getTypeScriptTypeFromJavaType(JavaClass clazz, Type type) {
 		String tsType;
 		String typeSig = type.getSignature();
+		
+		if(clazz.getClassName().equals("java.util.concurrent.ThreadPoolExecutor")) {
+			int a = 5;
+		}
 
 		switch (typeSig) {
 		case "V":
@@ -568,6 +570,7 @@ public class Test {
 		StringBuilder sb = new StringBuilder();
 		sb.append("(");
 		int idx = 0;
+		
 		for (Type type: m.getArgumentTypes()) {
 			if (idx > 0)
 			{
@@ -583,6 +586,44 @@ public class Test {
 		sb.append(")");
 		String sig = sb.toString();
 		return sig;
+	}
+	
+	// todo: plamen5kov: split to:
+	// m.getArgumentTypes() -> getGenericArgumentTypes() << pass special type parsed from generic's
+	// m.getReturnType() -> getGenericReturnType() << pass special type parsed from generic's
+	
+	private String getMethodSignatureG(Method m) {
+		Attribute[] s = m.getAttributes();
+		for(Attribute a : s) {
+			if(a instanceof Signature) {
+//				System.out.println(clazz.getClassName());
+//				System.out.println("\t" + m.getName());
+//				System.out.println("\t" + ((Signature) a).getSignature());
+	
+				
+				String methodSignature = ((Signature) a).getSignature();
+
+				String pattern = "([<>\\w/;:\\[\\]\\*\\+\\-\\$]*)(\\([<>\\w/;:\\[\\]\\*\\+\\-\\$]*\\))([<>\\w/;:\\[\\]\\*\\+\\-\\$]*)";
+				Pattern r = Pattern.compile(pattern);
+				Matcher match = r.matcher(methodSignature);
+				String genericDeclaration = "";
+				String parameters = "";
+				String returnType = "";
+				while(match.find()) {
+					genericDeclaration = match.group(1);
+					parameters = match.group(2);
+					returnType = match.group(3);
+
+					System.out.println("=================");
+					System.out.println(clazz.getClassName());
+					System.out.println(m.getName());
+					System.out.println(genericDeclaration);
+					System.out.println(parameters);
+					System.out.println(returnType);
+					System.out.println("=================");
+				}
+			}
+		}
 	}
 	
 	private void addReference(Type type)
