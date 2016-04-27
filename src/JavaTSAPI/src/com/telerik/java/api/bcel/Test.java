@@ -29,8 +29,8 @@ public class Test {
 		ScopeDispenser sd = null;
 		try {
 			sd = new ScopeDispenser(
-//					"/home/local/PROGRESS/plpetkov/work/repos/android-metadata-generator/jars"
-					"/home/plamen5kov/work/repo/android-metadata-generator/jars"
+					"/home/local/PROGRESS/plpetkov/work/repos/android-metadata-generator/jars"
+//					"/home/plamen5kov/work/repo/android-metadata-generator/jars"
 					);
 			processJarScopes(sd.iterator());
 		} catch (Exception e) {
@@ -87,8 +87,8 @@ public class Test {
 					references = new HashSet<String>();
 					currentFileClassname = clazz.getClassName();
 					ps = new PrintStream(new File(
-//							"/home/local/PROGRESS/plpetkov/work/repos/NativeScript/dtsfiles"
-							"/home/plamen5kov/work/repo/NativeScript/dtsfiles"
+							"/home/local/PROGRESS/plpetkov/work/repos/NativeScript/dtsfiles"
+//							"/home/plamen5kov/work/repo/NativeScript/dtsfiles"
 							,
 							currentFileClassname + ".d.ts"));
 
@@ -372,8 +372,9 @@ public class Test {
 		ClassScope cs = (ClassScope) ms.getParent();
 		assert (cs != null);
 		
-		JavaClass clazz = cs.getJavaClass();
-
+		JavaClass currentClass = cs.getJavaClass();
+		
+		//traverse all classes and add
 		if (cs != prevCs) {
 			ms1 = new HashMap<String, Method>();
 			ArrayList<MethodScope> currentScopeMethods = new ArrayList<MethodScope>();
@@ -386,27 +387,28 @@ public class Test {
 
 			baseMethodNames = new HashSet<String>();
 			baseMethods = new ArrayList<Method>();
-			String scn = clazz.getSuperclassName();
-			JavaClass currClass = ClassRepo.findClass(scn);
-			assert currClass != null : "javaClass=" + clazz.getClassName()
+			String scn = currentClass.getSuperclassName();
+			JavaClass parentClass = ClassRepo.findClass(scn);
+			assert parentClass != null : "javaClass=" + currentClass.getClassName()
 					+ " scn=" + scn;
 
 			while (true) {
-				for (Method m : currClass.getMethods()) {
+				for (Method m : parentClass.getMethods()) {
 					if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
 						baseMethods.add(m);
 						baseMethodNames.add(m.getName());
 					}
 				}
 
-				if (currClass.getClassName().equals("java.lang.Object"))
+				if (parentClass.getClassName().equals("java.lang.Object"))
 					break;
 
-				scn = currClass.getSuperclassName();
+				scn = parentClass.getSuperclassName();
 				JavaClass baseClass = ClassRepo.findClass(scn);
+
 				assert baseClass != null : "baseClass="
-						+ currClass.getClassName() + " scn=" + scn;
-				currClass = baseClass;
+						+ parentClass.getClassName() + " scn=" + scn;
+				parentClass = baseClass;
 			}
 			prevCs = cs;
 		}
@@ -426,31 +428,25 @@ public class Test {
 					String sig = getMethodFullSignature(bm);
 					if (!ms1.containsKey(sig)) {
 						ms1.put(sig, bm);
-						// print
-						sbContent.append(tabs + "public ");
-						if (bm.isStatic()) {
-							sbContent.append("static ");
-						}
-						sbContent.append(getMethodName(bm) + getMethodParamSignature(clazz, bm));
-						String bmSig = "";
-						if (!isConstructor(bm)) {
-							bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, bm.getReturnType());
-						}
-						sbContent.appendln(bmSig + ";");
+						writeMethod(currentClass, tabs, bm);
 
 					}
 				}
 			}
 		}
+		
+		writeMethod(currentClass, tabs, m);
+	}
 
+	private void writeMethod(JavaClass currentClass, String tabs, Method m) {
 		sbContent.append(tabs + "public ");
 		if (m.isStatic()) {
 			sbContent.append("static ");
 		}
-		sbContent.append(getMethodName(m) + getMethodParamSignature(clazz, m));
+		sbContent.append(getMethodName(m) + getMethodParamSignature(currentClass, m));
 		String mSig = "";
 		if (!isConstructor(m)) {
-			mSig += ": " + getTypeScriptTypeFromJavaType(clazz, m.getReturnType());
+			mSig += ": " + getTypeScriptTypeFromJavaType(currentClass, m.getReturnType()) + getGenericReturnType(m);
 		}
 		sbContent.appendln(mSig + ";");
 	}
@@ -467,14 +463,10 @@ public class Test {
 		}
 		sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(clazz, f.getType()) + ";");
 	}
-
+	
 	private String getTypeScriptTypeFromJavaType(JavaClass clazz, Type type) {
 		String tsType;
 		String typeSig = type.getSignature();
-		
-		if(clazz.getClassName().equals("java.util.concurrent.ThreadPoolExecutor")) {
-			int a = 5;
-		}
 
 		switch (typeSig) {
 		case "V":
@@ -577,54 +569,80 @@ public class Test {
 				sb.append(", ");
 			}
 			sb.append("param");
-			sb.append(idx++);
+			sb.append(idx);
 			sb.append(": ");
 			addReference(type);
-			String paramTypeName = getTypeScriptTypeFromJavaType(clazz, type);
+			String paramTypeName = getTypeScriptTypeFromJavaType(clazz, type) + getGenericArgumentTypes(m, idx);
 			sb.append(paramTypeName);
+			idx++;
 		}
 		sb.append(")");
 		String sig = sb.toString();
 		return sig;
 	}
 	
-	// todo: plamen5kov: split to:
-	// m.getArgumentTypes() -> getGenericArgumentTypes() << pass special type parsed from generic's
-	// m.getReturnType() -> getGenericReturnType() << pass special type parsed from generic's
+	private String getGenericReturnType(Method m) {
+		return getParsedMethodSignature(m, false/*get return type*/, -1);
+	}
 	
-	private String getMethodSignatureG(Method m) {
-		Attribute[] s = m.getAttributes();
-		for(Attribute a : s) {
-			if(a instanceof Signature) {
-//				System.out.println(clazz.getClassName());
-//				System.out.println("\t" + m.getName());
-//				System.out.println("\t" + ((Signature) a).getSignature());
+	private String getGenericArgumentTypes(Method m, int index) {
+		return getParsedMethodSignature(m, true/*get arguments*/, index);
+	}
 	
-				
-				String methodSignature = ((Signature) a).getSignature();
+	private String getParsedMethodSignature(Method m, boolean getArgumentSignature, int index) {
+		boolean getReturnStatementSignature = !getArgumentSignature;
+		String res = "";
+		Attribute[] methodAttributes = m.getAttributes();
+		for(Attribute currentAttribute : methodAttributes) {
+			if(currentAttribute instanceof Signature) {
+				String methodSignature = ((Signature) currentAttribute).getSignature();
 
 				String pattern = "([<>\\w/;:\\[\\]\\*\\+\\-\\$]*)(\\([<>\\w/;:\\[\\]\\*\\+\\-\\$]*\\))([<>\\w/;:\\[\\]\\*\\+\\-\\$]*)";
 				Pattern r = Pattern.compile(pattern);
 				Matcher match = r.matcher(methodSignature);
-				String genericDeclaration = "";
-				String parameters = "";
-				String returnType = "";
-				while(match.find()) {
-					genericDeclaration = match.group(1);
-					parameters = match.group(2);
-					returnType = match.group(3);
+				if(match.find()) {
+//					String genericDeclaration = match.group(1);
+					String parameters = match.group(2);
+					String returnType = match.group(3);
 
-					System.out.println("=================");
-					System.out.println(m.getName());
-					System.out.println(genericDeclaration);
-					System.out.println(parameters);
-					System.out.println(returnType);
-					System.out.println("=================");
+					if(getArgumentSignature) {
+						return parameters;
+					}
+					if(getReturnStatementSignature) {
+						String parsedReturnType = parseSignature(returnType);
+						return returnType;
+					}
 				}
 			}
 		}
+		return res;
 	}
 	
+	private String parseSignature(String returnTypeSignature) {
+		
+		String pattern = "([^/;<>L\\[][V|C|Z|B|S|I|J|F|D]{0})|([L\\[]+([\\w/<>\\$\\+\\-\\[\\*]+);)"; //progress so far
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(returnTypeSignature);
+		
+		System.out.println("-----" + returnTypeSignature);
+		while(m.find()) {
+			String currentElement1 = m.group(1);
+			String currentElement2 = m.group(2);
+			String currentElement3 = m.group(3);
+			if(currentElement1 != null) {
+				System.out.println("\t" + currentElement1);
+			}
+			if(currentElement2 != null) {
+				System.out.println("\t" + currentElement2);
+			}
+			if(currentElement3 != null) {
+				System.out.println("\t" + currentElement3);
+			}
+		}
+		
+		return null;
+	}
+
 	private void addReference(Type type)
 	{
 		boolean isObjectType = type instanceof ObjectType;
