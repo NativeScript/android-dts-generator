@@ -9,16 +9,14 @@ import org.apache.commons.io.FilenameUtils;
 
 public class JarScopeIterator implements Iterator<JarScope> {
 	
-	private final File jarDir;
 	private final File[] jars;
 	private final File tempDir;
 	private JarScope[] cache;
 	
 	private int idx;
 	
-	public JarScopeIterator(File jarDir, File tempDir) throws IOException {
-		this.jarDir = jarDir;
-		this.jars = this.getJarFiles();
+	public JarScopeIterator(File[] jars, File tempDir) throws IOException {
+		this.jars = jars;
 		this.idx = 0;
 		this.tempDir = tempDir;
 		this.cache = new JarScope[this.jars.length];
@@ -53,14 +51,14 @@ public class JarScopeIterator implements Iterator<JarScope> {
 		this.idx = 0;
 	}
 	
-	private File[] getJarFiles() {
-		File[] jarFiles = this.jarDir.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File pathname) {
-				return FilenameUtils.getExtension(pathname.getName()).equals("jar");
-			}
-		});
-		return jarFiles;
-	}
+//	private File[] getJarFiles() {
+//		File[] jarFiles = this.jarDir.listFiles(new FileFilter() {
+//			@Override
+//			public boolean accept(File pathname) {
+//				return FilenameUtils.getExtension(pathname.getName()).equals("jar");
+//			}
+//		});
+//		return jarFiles;
+//	}
 
 }

@@ -18,15 +18,19 @@ import org.apache.bcel.classfile.Method;
 import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ObjectType;
-import org.apache.bcel.generic.ReferenceType;
 import org.apache.bcel.generic.Type;
 
 public class Test {
-	public void go() {
+	private static File[] jarsArr;
+	private static String outputFolder;
+	
+	public void go(String output, File[] jars) {
+		jarsArr = jars;
+		outputFolder = output;
+		
 		ScopeDispenser sd = null;
 		try {
-			sd = new ScopeDispenser(
-					"C:/Work/NativeScript/android-metadata-generator/jars");
+			sd = new ScopeDispenser(jars);
 			processJarScopes(sd.iterator());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,7 +86,7 @@ public class Test {
 					references = new HashSet<String>();
 					currentFileClassname = clazz.getClassName();
 					ps = new PrintStream(new File(
-							"C:/Work/NativeScript/NativeScript/dtsfiles",
+							outputFolder,
 							currentFileClassname + ".d.ts"));
 
 					processClassScopes(fs.iterator(), sbContent);

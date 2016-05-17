@@ -12,16 +12,16 @@ import org.apache.commons.io.FilenameUtils;
 
 
 public class ScopeDispenser {
-	private final File dir;
+	private final File[] jars;
 	private final File tempDir;
 	
-	public ScopeDispenser(String dir) throws IOException {
-		this.dir = new File(dir);
+	public ScopeDispenser(File[] jars) throws IOException {
+		this.jars = jars;
 		this.tempDir = Files.createTempDirectory("temp-").toFile();
 	}
 	
 	public Iterator<JarScope> iterator() throws IOException {
-		JarScopeIterator it = new JarScopeIterator(this.dir, this.tempDir);
+		JarScopeIterator it = new JarScopeIterator(this.jars, this.tempDir);
 		while (it.hasNext()) {
 			JarScope js = it.next();
 			cacheJavaClasses(js.getOutputDir());
