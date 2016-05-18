@@ -18,8 +18,15 @@ public class JarScope extends Scope {
 		super(null);
 		this.jar = jar;
 		this.tempDir = tempDir;
-		this.outputDir = new File(this.tempDir, this.jar.getName());
-		unzip(this.jar, this.outputDir);
+		if(!jar.isDirectory()) {
+			this.outputDir = new File(this.tempDir, this.jar.getName());
+			System.out.println(this.outputDir.getAbsolutePath());
+			unzip(this.jar, this.outputDir);
+		}
+		else {
+			System.out.println(jar.getAbsolutePath());
+			this.outputDir = jar;
+		}
 	}
 
 	public Iterator<DirectoryScope> iterator() {
