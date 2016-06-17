@@ -2,6 +2,7 @@
 .gradle
 /local.properties
 /dts-generator/.idea/workspace.xml
+/dts-generator/.idea/misc.xml
 /dts-generator/.idea/libraries
 /.idea/workspace.xml
 /.idea/libraries
