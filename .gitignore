@@ -1,6 +1,8 @@
 *.iml
 .gradle
 /local.properties
+/dts-generator/.idea/workspace.xml
+/dts-generator/.idea/libraries
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
@@ -9,3 +11,4 @@
 
 /out
 /newApp
+testparams.txt
