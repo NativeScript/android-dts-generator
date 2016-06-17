@@ -1,0 +1,88 @@
+/// <reference path="./_helpers.d.ts" />
+/// <reference path="./android.os.PersistableBundle.d.ts" />
+
+declare module android {
+	export module telephony {
+		export class CarrierConfigManager {
+			public getConfigForSubId(param0: number): android.os.PersistableBundle;
+			public getConfig(): android.os.PersistableBundle;
+			public notifyConfigChangedForSubId(param0: number): void;
+			public static ACTION_CARRIER_CONFIG_CHANGED: string;
+			public static KEY_ADDITIONAL_CALL_SETTING_BOOL: string;
+			public static KEY_ALLOW_EMERGENCY_NUMBERS_IN_CALL_LOG_BOOL: string;
+			public static KEY_ALLOW_LOCAL_DTMF_TONES_BOOL: string;
+			public static KEY_APN_EXPAND_BOOL: string;
+			public static KEY_AUTO_RETRY_ENABLED_BOOL: string;
+			public static KEY_CARRIER_ALLOW_TURNOFF_IMS_BOOL: string;
+			public static KEY_CARRIER_SETTINGS_ENABLE_BOOL: string;
+			public static KEY_CARRIER_VOLTE_AVAILABLE_BOOL: string;
+			public static KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL: string;
+			public static KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL: string;
+			public static KEY_CARRIER_VT_AVAILABLE_BOOL: string;
+			public static KEY_CARRIER_VVM_PACKAGE_NAME_STRING: string;
+			public static KEY_CARRIER_WFC_IMS_AVAILABLE_BOOL: string;
+			public static KEY_CDMA_NONROAMING_NETWORKS_STRING_ARRAY: string;
+			public static KEY_CDMA_ROAMING_NETWORKS_STRING_ARRAY: string;
+			public static KEY_CSP_ENABLED_BOOL: string;
+			public static KEY_DEFAULT_SIM_CALL_MANAGER_STRING: string;
+			public static KEY_DISABLE_CDMA_ACTIVATION_CODE_BOOL: string;
+			public static KEY_DTMF_TYPE_ENABLED_BOOL: string;
+			public static KEY_ENABLE_DIALER_KEY_VIBRATION_BOOL: string;
+			public static KEY_FORCE_HOME_NETWORK_BOOL: string;
+			public static KEY_GSM_NONROAMING_NETWORKS_STRING_ARRAY: string;
+			public static KEY_GSM_ROAMING_NETWORKS_STRING_ARRAY: string;
+			public static KEY_HAS_IN_CALL_NOISE_SUPPRESSION_BOOL: string;
+			public static KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL: string;
+			public static KEY_HIDE_SIM_LOCK_SETTINGS_BOOL: string;
+			public static KEY_IGNORE_SIM_NETWORK_LOCKED_EVENTS_BOOL: string;
+			public static KEY_MMS_ALIAS_ENABLED_BOOL: string;
+			public static KEY_MMS_ALIAS_MAX_CHARS_INT: string;
+			public static KEY_MMS_ALIAS_MIN_CHARS_INT: string;
+			public static KEY_MMS_ALLOW_ATTACH_AUDIO_BOOL: string;
+			public static KEY_MMS_APPEND_TRANSACTION_ID_BOOL: string;
+			public static KEY_MMS_EMAIL_GATEWAY_NUMBER_STRING: string;
+			public static KEY_MMS_GROUP_MMS_ENABLED_BOOL: string;
+			public static KEY_MMS_HTTP_PARAMS_STRING: string;
+			public static KEY_MMS_HTTP_SOCKET_TIMEOUT_INT: string;
+			public static KEY_MMS_MAX_IMAGE_HEIGHT_INT: string;
+			public static KEY_MMS_MAX_IMAGE_WIDTH_INT: string;
+			public static KEY_MMS_MAX_MESSAGE_SIZE_INT: string;
+			public static KEY_MMS_MESSAGE_TEXT_MAX_SIZE_INT: string;
+			public static KEY_MMS_MMS_DELIVERY_REPORT_ENABLED_BOOL: string;
+			public static KEY_MMS_MMS_ENABLED_BOOL: string;
+			public static KEY_MMS_MMS_READ_REPORT_ENABLED_BOOL: string;
+			public static KEY_MMS_MULTIPART_SMS_ENABLED_BOOL: string;
+			public static KEY_MMS_NAI_SUFFIX_STRING: string;
+			public static KEY_MMS_NOTIFY_WAP_MMSC_ENABLED_BOOL: string;
+			public static KEY_MMS_RECIPIENT_LIMIT_INT: string;
+			public static KEY_MMS_SEND_MULTIPART_SMS_AS_SEPARATE_MESSAGES_BOOL: string;
+			public static KEY_MMS_SHOW_CELL_BROADCAST_APP_LINKS_BOOL: string;
+			public static KEY_MMS_SMS_DELIVERY_REPORT_ENABLED_BOOL: string;
+			public static KEY_MMS_SMS_TO_MMS_TEXT_LENGTH_THRESHOLD_INT: string;
+			public static KEY_MMS_SMS_TO_MMS_TEXT_THRESHOLD_INT: string;
+			public static KEY_MMS_SUBJECT_MAX_LENGTH_INT: string;
+			public static KEY_MMS_SUPPORT_HTTP_CHARSET_HEADER_BOOL: string;
+			public static KEY_MMS_SUPPORT_MMS_CONTENT_DISPOSITION_BOOL: string;
+			public static KEY_MMS_UA_PROF_TAG_NAME_STRING: string;
+			public static KEY_MMS_UA_PROF_URL_STRING: string;
+			public static KEY_MMS_USER_AGENT_STRING: string;
+			public static KEY_OPERATOR_SELECTION_EXPAND_BOOL: string;
+			public static KEY_PREFER_2G_BOOL: string;
+			public static KEY_SHOW_APN_SETTING_CDMA_BOOL: string;
+			public static KEY_SHOW_CDMA_CHOICES_BOOL: string;
+			public static KEY_SHOW_ONSCREEN_DIAL_BUTTON_BOOL: string;
+			public static KEY_SIM_NETWORK_UNLOCK_ALLOW_DISMISS_BOOL: string;
+			public static KEY_SUPPORT_PAUSE_IMS_VIDEO_CALLS_BOOL: string;
+			public static KEY_SUPPORT_SWAP_AFTER_MERGE_BOOL: string;
+			public static KEY_USE_HFA_FOR_PROVISIONING_BOOL: string;
+			public static KEY_USE_OTASP_FOR_PROVISIONING_BOOL: string;
+			public static KEY_VOICEMAIL_NOTIFICATION_PERSISTENT_BOOL: string;
+			public static KEY_VOICE_PRIVACY_DISABLE_UI_BOOL: string;
+			public static KEY_VOLTE_REPLACEMENT_RAT_INT: string;
+			public static KEY_VVM_DESTINATION_NUMBER_STRING: string;
+			public static KEY_VVM_PORT_NUMBER_INT: string;
+			public static KEY_VVM_TYPE_STRING: string;
+			public static KEY_WORLD_PHONE_BOOL: string;
+		}
+	}
+}

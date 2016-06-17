@@ -1,11 +1,9 @@
 package com.telerik.java.api.bcel;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.function.Consumer;
-import org.apache.commons.io.FilenameUtils;
 
 public class JarScopeIterator implements Iterator<JarScope> {
 	
