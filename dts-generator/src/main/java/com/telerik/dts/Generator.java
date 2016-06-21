@@ -21,6 +21,7 @@ public class Generator {
         this.dtsApi = new DtsApi();
 
         loadJavaClasses(jars);
+        ClassRepo.sortCachedProviders();
 
         generate();
     }

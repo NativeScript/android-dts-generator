@@ -4,12 +4,16 @@ import org.apache.bcel.classfile.JavaClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class ClassRepo {
 	private ClassRepo() {
 	}
 
 	private static ArrayList<ClassMapProvider> cachedProviders = new ArrayList<ClassMapProvider>();
+	private static List<String> allSortedClasses = new ArrayList<String>();
 
 	public static void cacheJarFile(ClassMapProvider classMapProvider) {
 		for (String className : classMapProvider.getClassMap().keySet()) {
@@ -23,6 +27,24 @@ public class ClassRepo {
 			}
 		}
 		cachedProviders.add(classMapProvider);
+	}
+
+	public static void sortCachedProviders() {
+		for(ClassMapProvider cmp : cachedProviders) {
+			allSortedClasses.addAll(cmp.getClassMap().keySet());
+		}
+		Collections.sort(allSortedClasses, new Comparator<String>() {
+			@Override
+			public int compare(String className1, String className2) {
+				if(className1.startsWith(className2)) {
+					return 1;
+				}
+				if(className2.startsWith(className1)) {
+					return  -1;
+				}
+				return className1.compareTo(className2);
+			}
+		});
 	}
 
 	public static JavaClass findClass(String className) {
