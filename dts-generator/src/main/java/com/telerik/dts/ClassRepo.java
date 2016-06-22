@@ -14,6 +14,7 @@ public class ClassRepo {
 
 	private static ArrayList<ClassMapProvider> cachedProviders = new ArrayList<ClassMapProvider>();
 	private static List<String> allSortedClasses = new ArrayList<String>();
+	private static int traversedFilesIdx = 0;
 
 	public static void cacheJarFile(ClassMapProvider classMapProvider) {
 		for (String className : classMapProvider.getClassMap().keySet()) {
@@ -58,15 +59,41 @@ public class ClassRepo {
 		return clazz;
 	}
 
-	public static String[] getClassNames() {
-		ArrayList<String> names = new ArrayList<String>();
-		for (ClassMapProvider classMapProvider : cachedProviders) {
-			for (String className : classMapProvider.getClassMap().keySet()) {
-				names.add(className);
+	public static List<JavaClass> getNextClassGroup() {
+		ArrayList<JavaClass> lst = new ArrayList<JavaClass>();
+		boolean first = true;
+
+		while ((traversedFilesIdx < allSortedClasses.size()) && keepGoing(first)) {
+			JavaClass f = getCurrentJavaClass();
+			String name = f.getClassName();
+			if (!name.contains("$0") && !name.contains("$1")
+					&& !name.contains("$2") && !name.contains("$3")
+					&& !name.contains("$4") && !name.contains("$5")
+					&& !name.contains("$6") && !name.contains("$7")
+					&& !name.contains("$8") && !name.contains("$9")
+					&& !name.contains("$string")) {
+				lst.add(f);
 			}
+			first = false;
+			++traversedFilesIdx;
 		}
-		String[] arrClassNames = names.toArray(new String[names.size()]);
-		Arrays.sort(arrClassNames);
-		return arrClassNames;
+
+		return lst;
+	}
+
+	public static boolean hasNext() {
+		return traversedFilesIdx < allSortedClasses.size();
+	}
+
+	private static JavaClass getCurrentJavaClass() {
+		String currentClassName = allSortedClasses.get(traversedFilesIdx);
+		return ClassRepo.findClass(currentClassName);
+	}
+
+	private static boolean keepGoing(boolean first) {
+		JavaClass file = getCurrentJavaClass();
+		boolean isNestedClass = file.getClassName().contains("$");
+		boolean res = first ? !isNestedClass : isNestedClass;
+		return res;
 	}
 }

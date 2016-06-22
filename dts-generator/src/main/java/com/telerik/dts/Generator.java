@@ -5,6 +5,8 @@ import org.apache.bcel.classfile.JavaClass;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by plamen5kov on 6/17/16.
@@ -27,20 +29,19 @@ public class Generator {
     }
 
     private void generate() {
-        String[] classNames = ClassRepo.getClassNames();
-        for (String className : classNames) {
-            try {
-                JavaClass clazz = ClassRepo.findClass(className);
-                generateDts(clazz);
-            } catch (Throwable e) {
-                e.printStackTrace(); //todo: fix exception
-            }
+        while(ClassRepo.hasNext()) {
+            List<JavaClass> classFiles = ClassRepo.getNextClassGroup();
+            generateDts(classFiles);
         }
     }
 
-    private void generateDts(JavaClass clazz) throws FileNotFoundException {
-        String generatedContent = this.dtsApi.generateDtsContent(clazz);
-        this.fw.write(generatedContent, clazz.getFileName());
+    private void generateDts(List<JavaClass> classes) {
+
+            String generatedContent = this.dtsApi.generateDtsContent(classes);
+        try {
+            this.fw.write(generatedContent, classes.get(0).getFileName());
+        } catch (Exception e) {
+        }
     }
 
     //HELPER FUNTIONS
