@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -68,7 +69,7 @@ public class DtsApi {
                             processField((Field)fom, currClass);
                         }
                         else if(fom instanceof Method) {
-//                            processMethod((Method)fom, currClass);
+                            processMethod((Method)fom, currClass);
                         }
                         else {
                             throw new IllegalArgumentException("fom");
@@ -103,87 +104,128 @@ public class DtsApi {
         //TODO: return sbHeaders and sbContent
         return sbHeaders.toString() + "\n" + sbContent.toString();
     }
-//    private void processMethod(Method ms, JavaClass clazz) {
-//
-//        ms1 = new HashMap<String, Method>();
-//        ArrayList<MethodScope> currentScopeMethods = new ArrayList<MethodScope>();
-//        for (Iterator<MemberScope> it = cs.iterator(); it.hasNext();) {
-//            MemberScope memberScope = it.next();
-//            if (memberScope instanceof MethodScope) {
-//                currentScopeMethods.add((MethodScope) memberScope);
-//            }
-//        }
-//
-//        baseMethodNames = new HashSet<String>();
-//        baseMethods = new ArrayList<Method>();
-//        String scn = clazz.getSuperclassName();
-//        JavaClass currClass = ClassRepo.findClass(scn);
-//        assert currClass != null : "javaClass=" + clazz.getClassName()
-//                + " scn=" + scn;
-//
-//        while (true) {
-//            for (Method m : currClass.getMethods()) {
-//                if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
-//                    baseMethods.add(m);
-//                    baseMethodNames.add(m.getName());
-//                }
-//            }
-//
-//            if (currClass.getClassName().equals("java.lang.Object"))
-//                break;
-//
-//            scn = currClass.getSuperclassName();
-//            JavaClass baseClass = ClassRepo.findClass(scn);
-//            assert baseClass != null : "baseClass="
-//                    + currClass.getClassName() + " scn=" + scn;
-//            currClass = baseClass;
-//        }
-//
-//        ///////////////////////
-//
-//        String tabs = getTabs(this.ident + 1);
-//
-//        Method m = ms.getMethod();
-//        String currMethodSig = getMethodFullSignature(m);
-//        if (!ms1.containsKey(currMethodSig)) {
-//            ms1.put(currMethodSig, m);
-//        }
-//        String name = m.getName();
-//        if (baseMethodNames.contains(name)) {
-//            for (Method bm : baseMethods) {
-//                if (bm.getName().equals(name)) {
-//                    String sig = getMethodFullSignature(bm);
-//                    if (!ms1.containsKey(sig)) {
-//                        ms1.put(sig, bm);
-//                        // print
-//                        sbContent.append(tabs + "public ");
-//                        if (bm.isStatic()) {
-//                            sbContent.append("static ");
-//                        }
-//                        sbContent.append(getMethodName(bm) + getMethodParamSignature(clazz, bm));
-//                        String bmSig = "";
-//                        if (!isConstructor(bm)) {
-//                            bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, bm.getReturnType());
-//                        }
-//                        sbContent.appendln(bmSig + ";");
-//
-//                    }
-//                }
-//            }
-//        }
-//
-//        sbContent.append(tabs + "public ");
-//        if (m.isStatic()) {
-//            sbContent.append("static ");
-//        }
-//        sbContent.append(getMethodName(m) + getMethodParamSignature(clazz, m));
-//        String mSig = "";
-//        if (!isConstructor(m)) {
-//            mSig += ": " + getTypeScriptTypeFromJavaType(clazz, m.getReturnType());
-//        }
-//        sbContent.appendln(mSig + ";");
-//    }
 
+    private Set<String> baseMethodNames;
+    private List<Method> baseMethods;
+    private Map<String, Method> mapNameMethod;
+
+    //method related
+    private void processMethod(Method m, JavaClass clazz) {
+
+        loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
+
+        String tabs = getTabs(this.ident + 1);
+
+        cacheMethodBySignature(m); //cached in "mapNameMethod"
+
+        String name = m.getName();
+
+        //generate base method content
+        if (baseMethodNames.contains(name)) {
+            for (Method bm : baseMethods) {
+                if (bm.getName().equals(name)) {
+                    String sig = getMethodFullSignature(bm);
+                    if (!mapNameMethod.containsKey(sig)) {
+                        mapNameMethod.put(sig, bm);
+                        generateMethodContent(clazz, tabs, bm);
+                    }
+                }
+            }
+        }
+
+        generateMethodContent(clazz, tabs, m);
+    }
+
+    private void generateMethodContent(JavaClass clazz, String tabs, Method bm) {
+        sbContent.append(tabs + "public ");
+        if (bm.isStatic()) {
+            sbContent.append("static ");
+        }
+        sbContent.append(getMethodName(bm) + getMethodParamSignature(clazz, bm));
+        String bmSig = "";
+        if (!isConstructor(bm)) {
+            bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, bm.getReturnType());
+        }
+        sbContent.appendln(bmSig + ";");
+    }
+
+    private void cacheMethodBySignature(Method m) {
+        mapNameMethod = new HashMap<String, Method>();
+        String currMethodSig = getMethodFullSignature(m);
+        if (!mapNameMethod.containsKey(currMethodSig)) {
+            mapNameMethod.put(currMethodSig, m);
+        }
+    }
+
+    private void loadBaseMethods(JavaClass clazz) {
+        baseMethodNames = new HashSet<String>();
+        baseMethods = new ArrayList<Method>();
+        String scn = clazz.getSuperclassName();
+        JavaClass currClass = ClassRepo.findClass(scn);
+        assert currClass != null : "javaClass=" + clazz.getClassName()
+                + " scn=" + scn;
+
+        //get all base methods and method names
+        while (true) {
+            for (Method m : currClass.getMethods()) {
+                if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
+                    baseMethods.add(m);
+                    baseMethodNames.add(m.getName());
+                }
+            }
+
+            if (currClass.getClassName().equals("java.lang.Object"))
+                break;
+
+            scn = currClass.getSuperclassName();
+            JavaClass baseClass = ClassRepo.findClass(scn);
+            assert baseClass != null : "baseClass="
+                    + currClass.getClassName() + " scn=" + scn;
+            currClass = baseClass;
+        }
+    }
+
+    private String getMethodFullSignature(Method m) {
+        String sig = m.getName() + m.getSignature();
+        return sig;
+    }
+
+    private boolean isConstructor(Method m) {
+        return m.getName().equals("<init>");
+    }
+
+    private String getMethodName(Method m) {
+        String name = m.getName();
+
+        if (isConstructor(m)) {
+            name = "constructor";
+        }
+
+        return name;
+    }
+
+    private String getMethodParamSignature(JavaClass clazz, Method m) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        int idx = 0;
+        for (Type type: m.getArgumentTypes()) {
+            if (idx > 0)
+            {
+                sb.append(", ");
+            }
+            sb.append("param");
+            sb.append(idx++);
+            sb.append(": ");
+            addReference(type);
+            String paramTypeName = getTypeScriptTypeFromJavaType(clazz, type);
+            sb.append(paramTypeName);
+        }
+        sb.append(")");
+        String sig = sb.toString();
+        return sig;
+    }
+
+    //field related
     private void processField(Field f, JavaClass clazz) {
         String tabs = getTabs(this.ident + 1);
         sbContent.append(tabs + "public ");
