@@ -29,11 +29,18 @@ public class FileWriter {
         try {
             if(this.writeMultipleFiles) {
                 this.ps = new PrintStream(new File(this.outDir.getAbsolutePath(), fileName + ".d.ts"));
+                ps.print("/// <reference path=\"./_helpers.d.ts\" />");
                 this.ps.print(content);
             }
             else {
                 String outFile = this.outDir.getAbsolutePath() + File.separator + this.defaultDtsFileName + ".d.ts";
                 this.ps = new PrintStream(new FileOutputStream(outFile, /*append*/true));
+
+                //add helpers reference to the top of the file
+                if(!new File(outFile).exists()) {
+                    ps.print("/// <reference path=\"./_helpers.d.ts\" />");
+                }
+
                 this.ps.print(content);
                 this.ps.println();
             }

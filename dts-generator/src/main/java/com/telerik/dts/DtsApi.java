@@ -1,14 +1,18 @@
 package com.telerik.dts;
 
-import com.telerik.java.api.bcel.*;
-
+import org.apache.bcel.classfile.Field;
+import org.apache.bcel.classfile.FieldOrMethod;
 import org.apache.bcel.classfile.JavaClass;
-import org.omg.CORBA.StringSeqHelper;
+import org.apache.bcel.classfile.Method;
+import org.apache.bcel.generic.ArrayType;
+import org.apache.bcel.generic.BasicType;
+import org.apache.bcel.generic.ObjectType;
+import org.apache.bcel.generic.Type;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +50,7 @@ public class DtsApi {
                 for(int i = 0; i < javaClasses.size(); i++) {
 
                     JavaClass currClass = javaClasses.get(i);
+                    currentFileClassname = currClass.getClassName();
                     //
                     this.ident = closePackage(this.prevClass, currClass);
                     this.ident = openPackage(this.prevClass, currClass);
@@ -57,6 +62,19 @@ public class DtsApi {
 //                    processMemberScopes(cs.iterator());
                     // process member scope
                     //.....
+                    List<FieldOrMethod> foms = getMembers(currClass);
+                    for(FieldOrMethod fom : foms) {
+                        if(fom instanceof Field) {
+                            processField((Field)fom, currClass);
+                        }
+                        else if(fom instanceof Method) {
+//                            processMethod((Method)fom, currClass);
+                        }
+                        else {
+                            throw new IllegalArgumentException("fom");
+                        }
+                    }
+
                     // process member scope
 
                     sbContent.appendln(tabs + "}");
@@ -68,7 +86,6 @@ public class DtsApi {
                 String[] refs = references.toArray(new String[references.size()]);
                 Arrays.sort(refs);
 
-                sbHeaders.appendln("/// <reference path=\"./_helpers.d.ts\" />");
                 for (String r: refs) {
                     sbHeaders.append("/// <reference path=\"./");
                     sbHeaders.append(r);
@@ -85,6 +102,215 @@ public class DtsApi {
 
         //TODO: return sbHeaders and sbContent
         return sbHeaders.toString() + "\n" + sbContent.toString();
+    }
+//    private void processMethod(Method ms, JavaClass clazz) {
+//
+//        ms1 = new HashMap<String, Method>();
+//        ArrayList<MethodScope> currentScopeMethods = new ArrayList<MethodScope>();
+//        for (Iterator<MemberScope> it = cs.iterator(); it.hasNext();) {
+//            MemberScope memberScope = it.next();
+//            if (memberScope instanceof MethodScope) {
+//                currentScopeMethods.add((MethodScope) memberScope);
+//            }
+//        }
+//
+//        baseMethodNames = new HashSet<String>();
+//        baseMethods = new ArrayList<Method>();
+//        String scn = clazz.getSuperclassName();
+//        JavaClass currClass = ClassRepo.findClass(scn);
+//        assert currClass != null : "javaClass=" + clazz.getClassName()
+//                + " scn=" + scn;
+//
+//        while (true) {
+//            for (Method m : currClass.getMethods()) {
+//                if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
+//                    baseMethods.add(m);
+//                    baseMethodNames.add(m.getName());
+//                }
+//            }
+//
+//            if (currClass.getClassName().equals("java.lang.Object"))
+//                break;
+//
+//            scn = currClass.getSuperclassName();
+//            JavaClass baseClass = ClassRepo.findClass(scn);
+//            assert baseClass != null : "baseClass="
+//                    + currClass.getClassName() + " scn=" + scn;
+//            currClass = baseClass;
+//        }
+//
+//        ///////////////////////
+//
+//        String tabs = getTabs(this.ident + 1);
+//
+//        Method m = ms.getMethod();
+//        String currMethodSig = getMethodFullSignature(m);
+//        if (!ms1.containsKey(currMethodSig)) {
+//            ms1.put(currMethodSig, m);
+//        }
+//        String name = m.getName();
+//        if (baseMethodNames.contains(name)) {
+//            for (Method bm : baseMethods) {
+//                if (bm.getName().equals(name)) {
+//                    String sig = getMethodFullSignature(bm);
+//                    if (!ms1.containsKey(sig)) {
+//                        ms1.put(sig, bm);
+//                        // print
+//                        sbContent.append(tabs + "public ");
+//                        if (bm.isStatic()) {
+//                            sbContent.append("static ");
+//                        }
+//                        sbContent.append(getMethodName(bm) + getMethodParamSignature(clazz, bm));
+//                        String bmSig = "";
+//                        if (!isConstructor(bm)) {
+//                            bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, bm.getReturnType());
+//                        }
+//                        sbContent.appendln(bmSig + ";");
+//
+//                    }
+//                }
+//            }
+//        }
+//
+//        sbContent.append(tabs + "public ");
+//        if (m.isStatic()) {
+//            sbContent.append("static ");
+//        }
+//        sbContent.append(getMethodName(m) + getMethodParamSignature(clazz, m));
+//        String mSig = "";
+//        if (!isConstructor(m)) {
+//            mSig += ": " + getTypeScriptTypeFromJavaType(clazz, m.getReturnType());
+//        }
+//        sbContent.appendln(mSig + ";");
+//    }
+
+    private void processField(Field f, JavaClass clazz) {
+        String tabs = getTabs(this.ident + 1);
+        sbContent.append(tabs + "public ");
+        if (f.isStatic()) {
+            sbContent.append("static ");
+        }
+        sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(clazz, f.getType()) + ";");
+    }
+
+    private String getTypeScriptTypeFromJavaType(JavaClass clazz, Type type) {
+        String tsType;
+        String typeSig = type.getSignature();
+
+        switch (typeSig) {
+            case "V":
+                tsType = "void";
+                break;
+            case "C":
+                tsType = "string";
+                break;
+            case "Z":
+                tsType = "boolean";
+                break;
+            case "B":
+            case "S":
+            case "I":
+            case "J":
+            case "F":
+            case "D":
+                tsType = "number";
+                break;
+            case "Ljava/lang/CharSequence;":
+            case "Ljava/lang/String;":
+                tsType = "string";
+                break;
+            default:
+                StringBuilder sb = new StringBuilder();
+                convertToTypeScriptType(type, sb);
+                tsType = sb.toString();
+        }
+
+        return tsType;
+    }
+
+    private void convertToTypeScriptType(Type type, StringBuilder tsType) {
+        boolean isPrimitive = type instanceof BasicType;
+        boolean isArray = type instanceof ArrayType;
+        boolean isObjectType = type instanceof ObjectType;
+
+        if (isPrimitive)
+        {
+            if (type.equals(Type.BOOLEAN))
+            {
+                tsType.append("boolean");
+            }
+            else if (type.equals(Type.BYTE) || type.equals(Type.SHORT)
+                    || type.equals(Type.INT) || type.equals(Type.LONG)
+                    || type.equals(Type.FLOAT) || type.equals(Type.DOUBLE))
+            {
+                tsType.append("number");
+            }
+            else if (type.equals(Type.CHAR))
+            {
+                tsType.append("string");
+            }
+            else
+            {
+                throw new RuntimeException("Unexpected type=" + type.getSignature());
+            }
+        }
+        else if (isArray)
+        {
+            tsType.append("native.Array<");
+            Type elementType = ((ArrayType)type).getElementType();
+            convertToTypeScriptType(elementType, tsType);
+            tsType.append(">");
+        }
+        else if (type.equals(Type.STRING))
+        {
+            tsType.append("string");
+        }
+        else if (isObjectType)
+        {
+            ObjectType objType = (ObjectType)type;
+            String typeName = objType.getClassName();
+            if (typeName.contains("$"))
+            {
+                typeName = typeName.replaceAll("\\$", "\\.");
+            }
+            tsType.append(typeName);
+            addReference(type);
+        }
+        else
+        {
+            throw new RuntimeException("Unhandled type=" + type.getSignature());
+        }
+    }
+
+    private void addReference(Type type) {
+        boolean isObjectType = type instanceof ObjectType;
+        if (isObjectType) {
+            ObjectType objType = (ObjectType)type;
+            String typeName = objType.getClassName();
+            if (!typeName.equals(currentFileClassname)) {
+                boolean isNested = typeName.contains("$");
+                if (!isNested) {
+                    references.add(typeName);
+                }
+            }
+        }
+    }
+
+    private List<FieldOrMethod> getMembers(JavaClass javaClass) {
+        Set<String> methodNames = new HashSet<String>();
+        ArrayList<FieldOrMethod> members = new ArrayList<FieldOrMethod>();
+        for (Method m: javaClass.getMethods()) {
+            if ((m.isPublic() || m.isProtected()) && !m.isSynthetic()) {
+                members.add(m);
+                methodNames.add(m.getName());
+            }
+        }
+        for (Field f: javaClass.getFields()) {
+            if ((f.isPublic() || f.isProtected()) && !f.isSynthetic() && !methodNames.contains(f.getName())) {
+                members.add(f);
+            }
+        }
+        return members;
     }
 
     private int closePackage(JavaClass prevClass, JavaClass currClass) {

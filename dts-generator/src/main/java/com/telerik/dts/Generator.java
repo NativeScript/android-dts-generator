@@ -37,11 +37,8 @@ public class Generator {
 
     private void generateDts(List<JavaClass> classes) {
 
-            String generatedContent = this.dtsApi.generateDtsContent(classes);
-        try {
-            this.fw.write(generatedContent, classes.get(0).getFileName());
-        } catch (Exception e) {
-        }
+        String generatedContent = this.dtsApi.generateDtsContent(classes);
+        this.fw.write(generatedContent, classes.get(0).getFileName());
     }
 
     //HELPER FUNTIONS
