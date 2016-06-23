@@ -81,11 +81,12 @@ public class Main {
         }
 
 		File outputDir = new File(nextParam);
+
 		if (!outputDir.exists()) {
 			System.out.println(String
 					.format("We didn't find the folder you specified ( %s ), so it's going to be created!",
 							inputParameters.getOutputDir().getAbsolutePath()));
-			inputParameters.setOutputDir(outputDir);
         }
+		inputParameters.setOutputDir(outputDir);
 	}
 }
