@@ -9,12 +9,10 @@ import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.Type;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,16 +21,16 @@ import java.util.Set;
  * Created by plamen5kov on 6/17/16.
  */
 public class DtsApi {
-    private StringBuilder dtsContent;
-    private int indent;
-    private final String DefaultIndentCharacter = "\t";
-    private PrintStream ps;
     private StringBuilder2 sbContent;
     private StringBuilder2 sbHeaders;
     private Set<String> references;
     private JavaClass prevClass;
-    private int ident = 0; //TODO: rename to indent
     private String currentFileClassname;
+    private Set<String> baseMethodNames;
+    private List<Method> baseMethods;
+    private Map<String, Method> mapNameMethod;
+    private int indent = 0;
+
 
     public DtsApi() {
         this.indent = 0;
@@ -40,81 +38,161 @@ public class DtsApi {
 
     public String generateDtsContent(List<JavaClass> javaClasses) {
         this.prevClass = null;
-        try {
-            if ((javaClasses != null) && (javaClasses.size() > 0)) {
-                sbHeaders = new StringBuilder2();
-                sbContent = new StringBuilder2();
-                references = new HashSet<String>();
 
-//                    processClassScopes(fs.iterator(), sbContent);
-                // process class scope
-                for(int i = 0; i < javaClasses.size(); i++) {
+        if ((javaClasses != null) && (javaClasses.size() > 0)) {
+            references = new HashSet<String>();
+            sbHeaders = new StringBuilder2(); // <reference path=" ...
+            sbContent = new StringBuilder2();
 
-                    JavaClass currClass = javaClasses.get(i);
-                    currentFileClassname = currClass.getClassName();
-                    //
-                    this.ident = closePackage(this.prevClass, currClass);
-                    this.ident = openPackage(this.prevClass, currClass);
-                    //
-                    String tabs = getTabs(this.ident);
-                    sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass)
-                            + " {");
+            // process class scope
+            for(int i = 0; i < javaClasses.size(); i++) {
 
-//                    processMemberScopes(cs.iterator());
-                    // process member scope
-                    //.....
-                    List<FieldOrMethod> foms = getMembers(currClass);
-                    for(FieldOrMethod fom : foms) {
-                        if(fom instanceof Field) {
-                            processField((Field)fom, currClass);
-                        }
-                        else if(fom instanceof Method) {
-                            processMethod((Method)fom, currClass);
-                        }
-                        else {
-                            throw new IllegalArgumentException("fom");
-                        }
+                JavaClass currClass = javaClasses.get(i);
+                currentFileClassname = currClass.getClassName();
+
+                this.indent = closePackage(this.prevClass, currClass);
+                this.indent = openPackage(this.prevClass, currClass);
+
+                String tabs = getTabs(this.indent);
+                sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + " {");
+
+                // process member scope
+                List<FieldOrMethod> foms = getMembers(currClass);
+                for(FieldOrMethod fom : foms) {
+                    if(fom instanceof Field) {
+                        processField((Field)fom, currClass);
                     }
-
-                    // process member scope
-
-                    sbContent.appendln(tabs + "}");
-                    this.prevClass = currClass;
+                    else if(fom instanceof Method) {
+                        processMethod((Method)fom, currClass);
+                    }
+                    else {
+                        throw new IllegalArgumentException("Argument is not method or field");
+                    }
                 }
-                closePackage(prevClass, null);
-                // process class scope
+                // process member scope end
 
-                String[] refs = references.toArray(new String[references.size()]);
-                Arrays.sort(refs);
-
-                for (String r: refs) {
-                    sbHeaders.append("/// <reference path=\"./");
-                    sbHeaders.append(r);
-                    sbHeaders.appendln(".d.ts\" />");
-                }
+                sbContent.appendln(tabs + "}");
+                this.prevClass = currClass;
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (ps != null) {
-                ps.close();
+            closePackage(prevClass, null);
+            // process class scope end
+
+            String[] refs = references.toArray(new String[references.size()]);
+            Arrays.sort(refs);
+
+            for (String r: refs) {
+                sbHeaders.append("/// <reference path=\"./");
+                sbHeaders.append(r);
+                sbHeaders.appendln(".d.ts\" />");
             }
         }
 
-        //TODO: return sbHeaders and sbContent
-        return sbHeaders.toString() + "\n" + sbContent.toString();
+        return sbHeaders.toString() + sbContent.toString();
     }
 
-    private Set<String> baseMethodNames;
-    private List<Method> baseMethods;
-    private Map<String, Method> mapNameMethod;
+    private int closePackage(JavaClass prevClass, JavaClass currClass) {
+        int indent = 0;
+
+        if (prevClass == null) {
+            return indent;
+        }
+
+        String prevClassName = prevClass.getClassName();
+        int prevDotCount = prevClassName.length() - prevClassName.replace(".", "").length();
+        int prevDollarCount = prevClassName.length() - prevClassName.replace("$", "").length();
+        int prevCount = prevDotCount + prevDollarCount;
+
+        if (currClass == null) {
+            indent = prevCount;
+            while (indent > 0) {
+                String tabs = getTabs(--indent);
+                sbContent.appendln(tabs + "}");
+            }
+            return indent;
+        }
+
+        String currClassName = currClass.getClassName();
+        int currDotCount = currClassName.length() - currClassName.replace(".", "").length();
+        int currDollarCount = currClassName.length() - currClassName.replace("$", "").length();
+        int currCount = currDotCount + currDollarCount;
+
+        while (prevCount > currCount) {
+            String tabs = getTabs(--prevCount);
+            sbContent.appendln(tabs + "}");
+        }
+
+        boolean isNested = isNested(currClass);
+
+        if (!isNested) {
+            throw new UnsupportedOperationException("TODO: implement");
+            // String prevClassName = prevClass.getClassName();
+            // int dotCount = prevClassName.length() -
+            // prevClassName.replace(".", "").length();
+            // int dollarCount = prevClassName.length() -
+            // prevClassName.replace("$", "").length();
+            // indent = dotCount + dollarCount;
+            //
+            // String[] prevParts = prevClassName.replace('$',
+            // '.').split("\\.");
+            // String[] currParts = currClass.getClassName().replace('$',
+            // '.').split("\\.");
+            //
+            // int diffIdx = 0;
+            // while ((diffIdx < prevParts.length) && (diffIdx <
+            // currParts.length) &&
+            // prevParts[diffIdx].equals(currParts[diffIdx])) {
+            // ++diffIdx;
+            // }
+            //
+            // int count = prevParts.length - diffIdx - 1;
+            // while (count-- > 0) {
+            // String tabs = getTabs(--indent);
+            // ps.println(tabs + "}");
+            // }
+        }
+
+        return indent;
+    }
+
+    private int openPackage(JavaClass prevClass, JavaClass currClass) {
+        int indent = 0;
+
+        String prevClassName = (prevClass != null) ? prevClass.getClassName() : "";
+        String[] prevParts = prevClassName.replace('$', '.').split("\\.");
+        String[] currParts = currClass.getClassName().replace('$', '.').split("\\.");
+
+        int diffIdx = 0;
+        while ((diffIdx < prevParts.length) && (diffIdx < currParts.length)
+                && prevParts[diffIdx].equals(currParts[diffIdx])) {
+            ++diffIdx;
+        }
+
+        indent = diffIdx;
+        for (int idx = diffIdx; idx < currParts.length - 1; idx++) {
+            ++indent;
+            String tabs = getTabs(idx);
+            if (idx == 0) {
+                sbContent.append(tabs + "declare ");
+            } else {
+                sbContent.append(tabs + "export ");
+            }
+            sbContent.appendln("module " + currParts[idx] + " {");
+        }
+
+        if (isNested(currClass) && (prevParts.length < currParts.length)) {
+            String tabs = getTabs(prevParts.length - 1);
+            sbContent.appendln(tabs + "export module " + prevParts[prevParts.length - 1] + " {");
+        }
+
+        return indent;
+    }
 
     //method related
     private void processMethod(Method m, JavaClass clazz) {
 
         loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
 
-        String tabs = getTabs(this.ident + 1);
+        String tabs = getTabs(this.indent + 1);
 
         cacheMethodBySignature(m); //cached in "mapNameMethod"
 
@@ -136,15 +214,15 @@ public class DtsApi {
         generateMethodContent(clazz, tabs, m);
     }
 
-    private void generateMethodContent(JavaClass clazz, String tabs, Method bm) {
+    private void generateMethodContent(JavaClass clazz, String tabs, Method m) {
         sbContent.append(tabs + "public ");
-        if (bm.isStatic()) {
+        if (m.isStatic()) {
             sbContent.append("static ");
         }
-        sbContent.append(getMethodName(bm) + getMethodParamSignature(clazz, bm));
+        sbContent.append(getMethodName(m) + getMethodParamSignature(clazz, m));
         String bmSig = "";
-        if (!isConstructor(bm)) {
-            bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, bm.getReturnType());
+        if (!isConstructor(m)) {
+            bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, m.getReturnType());
         }
         sbContent.appendln(bmSig + ";");
     }
@@ -162,8 +240,7 @@ public class DtsApi {
         baseMethods = new ArrayList<Method>();
         String scn = clazz.getSuperclassName();
         JavaClass currClass = ClassRepo.findClass(scn);
-        assert currClass != null : "javaClass=" + clazz.getClassName()
-                + " scn=" + scn;
+        assert currClass != null : "javaClass=" + clazz.getClassName() + " scn=" + scn;
 
         //get all base methods and method names
         while (true) {
@@ -174,13 +251,13 @@ public class DtsApi {
                 }
             }
 
-            if (currClass.getClassName().equals("java.lang.Object"))
+            if (currClass.getClassName().equals("java.lang.Object")) {
                 break;
+            }
 
             scn = currClass.getSuperclassName();
             JavaClass baseClass = ClassRepo.findClass(scn);
-            assert baseClass != null : "baseClass="
-                    + currClass.getClassName() + " scn=" + scn;
+            assert baseClass != null : "baseClass=" + currClass.getClassName() + " scn=" + scn;
             currClass = baseClass;
         }
     }
@@ -227,7 +304,7 @@ public class DtsApi {
 
     //field related
     private void processField(Field f, JavaClass clazz) {
-        String tabs = getTabs(this.ident + 1);
+        String tabs = getTabs(this.indent + 1);
         sbContent.append(tabs + "public ");
         if (f.isStatic()) {
             sbContent.append("static ");
@@ -355,141 +432,7 @@ public class DtsApi {
         return members;
     }
 
-    private int closePackage(JavaClass prevClass, JavaClass currClass) {
-        int ident = 0;
-
-        if (prevClass == null) {
-            return ident;
-        }
-
-        String prevClassName = prevClass.getClassName();
-        int prevDotCount = prevClassName.length()
-                - prevClassName.replace(".", "").length();
-        int prevDollarCount = prevClassName.length()
-                - prevClassName.replace("$", "").length();
-        int prevCount = prevDotCount + prevDollarCount;
-
-        if (currClass == null) {
-            ident = prevCount;
-            while (ident > 0) {
-                String tabs = getTabs(--ident);
-                sbContent.appendln(tabs + "}");
-            }
-            return ident;
-        }
-
-        String currClassName = currClass.getClassName();
-        int currDotCount = currClassName.length()
-                - currClassName.replace(".", "").length();
-        int currDollarCount = currClassName.length()
-                - currClassName.replace("$", "").length();
-        int currCount = currDotCount + currDollarCount;
-
-        while (prevCount > currCount) {
-            String tabs = getTabs(--prevCount);
-            sbContent.appendln(tabs + "}");
-        }
-
-        boolean isNested = isNested(currClass);
-
-        if (!isNested) {
-            throw new UnsupportedOperationException("TODO: implement");
-            // String prevClassName = prevClass.getClassName();
-            // int dotCount = prevClassName.length() -
-            // prevClassName.replace(".", "").length();
-            // int dollarCount = prevClassName.length() -
-            // prevClassName.replace("$", "").length();
-            // ident = dotCount + dollarCount;
-            //
-            // String[] prevParts = prevClassName.replace('$',
-            // '.').split("\\.");
-            // String[] currParts = currClass.getClassName().replace('$',
-            // '.').split("\\.");
-            //
-            // int diffIdx = 0;
-            // while ((diffIdx < prevParts.length) && (diffIdx <
-            // currParts.length) &&
-            // prevParts[diffIdx].equals(currParts[diffIdx])) {
-            // ++diffIdx;
-            // }
-            //
-            // int count = prevParts.length - diffIdx - 1;
-            // while (count-- > 0) {
-            // String tabs = getTabs(--ident);
-            // ps.println(tabs + "}");
-            // }
-        }
-
-        return ident;
-    }
-
-    private int openPackage(JavaClass prevClass, JavaClass currClass) {
-        int ident = 0;
-        // String prevPackage = getPackageName(prevClass);
-        // String currPackage = getPackageName(currClass);
-        //
-        String prevClassName = (prevClass != null) ? prevClass.getClassName()
-                : "";
-        // int countDots = prevClassName.length() - prevClassName.replace(".",
-        // "").length();
-        // int countDollars = prevClassName.length() -
-        // prevClassName.replace("$", "").length();
-        // int count = countDots + countDollars;
-        //
-        String[] prevParts = prevClassName.replace('$', '.').split("\\.");
-        String[] currParts = currClass.getClassName().replace('$', '.')
-                .split("\\.");
-
-        int diffIdx = 0;
-        while ((diffIdx < prevParts.length) && (diffIdx < currParts.length)
-                && prevParts[diffIdx].equals(currParts[diffIdx])) {
-            ++diffIdx;
-        }
-
-        ident = diffIdx;
-        for (int idx = diffIdx; idx < currParts.length - 1; idx++) {
-            ++ident;
-            String tabs = getTabs(idx);
-            if (idx == 0) {
-                sbContent.append(tabs + "declare ");
-            } else {
-                sbContent.append(tabs + "export ");
-            }
-            sbContent.appendln("module " + currParts[idx] + " {");
-        }
-
-        if (isNested(currClass) && (prevParts.length < currParts.length)) {
-            String tabs = getTabs(prevParts.length - 1);
-            sbContent.appendln(tabs + "export module "
-                    + prevParts[prevParts.length - 1] + " {");
-        }
-
-        // boolean isNested = currPackage.startsWith(prevPackage);
-        //
-        // if (isNested) {
-        //
-        // } else {
-        // String[] prevParts = prevPackage.split("\\.");
-        // String[] currParts = prevPackage.split("\\.");
-        // int diffIdx = 0;
-        // while ((diffIdx < prevParts.length) && (diffIdx < currParts.length)
-        // && prevParts[diffIdx].equals(currParts[diffIdx])) {
-        // ++diffIdx;
-        // }
-        // }
-        return ident;
-    }
-
-    private String getTabs(int count) {
-        String tabs = new String(new char[count]).replace("\0", "\t");
-        return tabs;
-    }
-
     // HELPER METHODS
-    public static String repeat(int count, String with) {
-        return new String(new char[count]).replace("\0", with);
-    }
-
     private boolean isNested(JavaClass javaClass) {
         boolean isNested = javaClass.getClassName().contains("$");
         return isNested;
@@ -499,5 +442,10 @@ public class DtsApi {
         String[] parts = javaClass.getClassName().replace('$', '.')
                 .split("\\.");
         return parts[parts.length - 1];
+    }
+
+    private String getTabs(int count) {
+        String tabs = new String(new char[count]).replace("\0", "\t");
+        return tabs;
     }
 }

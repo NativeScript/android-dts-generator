@@ -18,6 +18,7 @@ public class FileWriter {
     private boolean writeMultipleFiles;
     private PrintStream ps;
     private File outDir;
+    private boolean isFirstRun = true;
 
     public FileWriter(File outDir, boolean writeMultipleFiles) {
         this.writeMultipleFiles = writeMultipleFiles;
@@ -37,8 +38,9 @@ public class FileWriter {
                 this.ps = new PrintStream(new FileOutputStream(outFile, /*append*/true));
 
                 //add helpers reference to the top of the file
-                if(!new File(outFile).exists()) {
+                if(this.isFirstRun) {
                     ps.print("/// <reference path=\"./_helpers.d.ts\" />");
+                    this.isFirstRun = false;
                 }
 
                 this.ps.print(content);

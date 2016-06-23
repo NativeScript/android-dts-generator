@@ -37,13 +37,10 @@ public class JarFile implements ClassMapProvider {
 
 			jar = new JarFile(path);
 
-			for (ZipEntry ze = jis.getNextEntry(); ze != null; ze = jis
-					.getNextEntry()) {
+			for (ZipEntry ze = jis.getNextEntry(); ze != null; ze = jis.getNextEntry()) {
 				String name = ze.getName();
 				if (name.endsWith(CLASS_EXT)) {
-					name = name
-							.substring(0, name.length() - CLASS_EXT.length())
-							.replace('/', '.');
+					name = name.substring(0, name.length() - CLASS_EXT.length()).replace('/', '.');
 					ClassParser cp = new ClassParser(jis, name);
 					JavaClass clazz = cp.parse();
 					jar.classMap.put(name, clazz);

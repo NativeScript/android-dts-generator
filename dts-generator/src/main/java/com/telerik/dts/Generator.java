@@ -25,23 +25,18 @@ public class Generator {
         loadJavaClasses(jars);
         ClassRepo.sortCachedProviders();
 
-        generate();
+        generateDts();
     }
 
-    private void generate() {
+    private void generateDts() {
         while(ClassRepo.hasNext()) {
             List<JavaClass> classFiles = ClassRepo.getNextClassGroup();
-            generateDts(classFiles);
+            String generatedContent = this.dtsApi.generateDtsContent(classFiles);
+
+            this.fw.write(generatedContent, classFiles.get(0).getFileName()/*fileName*/);
         }
     }
 
-    private void generateDts(List<JavaClass> classes) {
-
-        String generatedContent = this.dtsApi.generateDtsContent(classes);
-        this.fw.write(generatedContent, classes.get(0).getFileName());
-    }
-
-    //HELPER FUNTIONS
     private void loadJavaClasses(File[] jars) throws IOException {
         for (File file : jars) {
             if (file.exists()) {

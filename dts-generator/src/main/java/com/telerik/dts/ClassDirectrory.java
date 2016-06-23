@@ -34,8 +34,7 @@ public class ClassDirectrory implements ClassMapProvider {
 		return dir;
 	}
 
-	public static void readDirectory(ClassDirectrory dir, String path)
-			throws IOException {
+	public static void readDirectory(ClassDirectrory dir, String path) throws IOException {
 		List<File> subDirs = new ArrayList<File>();
 		File currentDir = new File(path);
 		for (File file : currentDir.listFiles()) {
