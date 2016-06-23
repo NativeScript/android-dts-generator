@@ -1,11 +1,11 @@
 package com.telerik.dts;
 
+import com.telerik.InputParameters;
+
 import org.apache.bcel.classfile.JavaClass;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +17,12 @@ public class Generator {
     private FileWriter fw;
     private DtsApi dtsApi;
 
-    public void start(File outDir, File[] jars, boolean multipleFiles) throws IOException {
-        outFolder = outDir;
-        this.fw = new FileWriter(outDir, multipleFiles);
+    public void start(InputParameters inputParameters) throws IOException {
+        outFolder = inputParameters.getOutputDir();
+        this.fw = new FileWriter(inputParameters.getOutputDir(), inputParameters.isGenerateMultipleFiles());
         this.dtsApi = new DtsApi();
 
-        loadJavaClasses(jars);
+        loadJavaClasses(inputParameters.getInputJars());
         ClassRepo.sortCachedProviders();
 
         generateDts();
@@ -37,7 +37,7 @@ public class Generator {
         }
     }
 
-    private void loadJavaClasses(File[] jars) throws IOException {
+    private void loadJavaClasses(List<File> jars) throws IOException {
         for (File file : jars) {
             if (file.exists()) {
                 if (file.isFile() && file.getName().endsWith(".jar")) {
