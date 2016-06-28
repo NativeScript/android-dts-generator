@@ -67,10 +67,10 @@ public class Main {
 		helpMessage.appendln("usage: java -jar dts-generator.jar <flag> [<args>]");
 		helpMessage.appendln("flags:\t\t");
 		helpMessage.appendln("\t(Optional)");
-		helpMessage.appendln("\t\t[-output <path>]:\t\tThe direcory the d.ts files will be generated in.");
-		helpMessage.appendln("\t\t[-input]:\t\t\t\tThe input jars or class directories from which the d.ts files will be generated");
+		helpMessage.appendln("\t\t[-output <path>]:\tThe direcory the d.ts files will be generated in.");
+		helpMessage.appendln("\t\t[-input]:\t\tThe input jars or class directories from which the d.ts files will be generated");
 		helpMessage.appendln("\t\t[-generate-multiple]:\tPass this flag if you want multiple d.ts files to be generated instead of one.");
-		helpMessage.appendln("\t\t[-help]:\t\t\t\tPrints this help message.");
+		helpMessage.appendln("\t\t[-help]:\t\tPrints this help message.");
 
 		System.out.println(helpMessage);
 	}
