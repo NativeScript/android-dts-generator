@@ -54,7 +54,11 @@ public class DtsApi {
                 this.indent = openPackage(this.prevClass, currClass);
 
                 String tabs = getTabs(this.indent);
-                sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + " {");
+
+                JavaClass superClass = getSuperClass(currClass);
+                String extendsLine = getExtendsLine(superClass);
+
+                sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + extendsLine + " {");
 
                 // process member scope
                 List<FieldOrMethod> foms = getMembers(currClass);
@@ -88,6 +92,13 @@ public class DtsApi {
         }
 
         return sbHeaders.toString() + sbContent.toString();
+    }
+
+    private String getExtendsLine(JavaClass superClass) {
+        if(superClass == null) {
+            return "";
+        }
+        return " exports " + superClass.getClassName();
     }
 
     private int closePackage(JavaClass prevClass, JavaClass currClass) {
@@ -190,12 +201,7 @@ public class DtsApi {
     //method related
     private void processMethod(Method m, JavaClass clazz) {
 
-        try {
-            loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
 
         String tabs = getTabs(this.indent + 1);
 
@@ -240,34 +246,47 @@ public class DtsApi {
         }
     }
 
-    private void loadBaseMethods(JavaClass clazz) throws ClassNotFoundException {
+    private void loadBaseMethods(JavaClass clazz) {
         baseMethodNames = new HashSet<String>();
         baseMethods = new ArrayList<Method>();
+
+        JavaClass currClass = getSuperClass(clazz);
+
+        if(currClass != null) {
+            //get all base methods and method names
+            while (true) {
+                for (Method m : currClass.getMethods()) {
+                    if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
+                        baseMethods.add(m);
+                        baseMethodNames.add(m.getName());
+                    }
+                }
+
+                if (currClass.getClassName().equals("java.lang.Object")) {
+                    break;
+                }
+
+                String scn = currClass.getSuperclassName();
+                JavaClass baseClass = ClassRepo.findClass(scn);
+                assert baseClass != null : "baseClass=" + currClass.getClassName() + " scn=" + scn;
+                currClass = baseClass;
+            }
+        }
+    }
+
+    private JavaClass getSuperClass(JavaClass clazz) {
+        if(clazz.getClassName().equals("java.lang.Object")) {
+            return  null;
+        }
+
         String scn = clazz.getSuperclassName();
         JavaClass currClass = ClassRepo.findClass(scn);
-        assert currClass != null : "javaClass=" + clazz.getClassName() + " scn=" + scn;
 
         if(currClass == null) {
-            throw new ClassNotFoundException("Couldn't find class: " + scn + " required by class: " + clazz.getClassName() + ". You need to provide the jar containing the missing class: " + scn);
+            throw new NoClassDefFoundError("Couldn't find class: " + scn + " required by class: " + clazz.getClassName() + ". You need to provide the jar containing the missing class: " + scn);
         }
-        //get all base methods and method names
-        while (true) {
-            for (Method m : currClass.getMethods()) {
-                if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
-                    baseMethods.add(m);
-                    baseMethodNames.add(m.getName());
-                }
-            }
 
-            if (currClass.getClassName().equals("java.lang.Object")) {
-                break;
-            }
-
-            scn = currClass.getSuperclassName();
-            JavaClass baseClass = ClassRepo.findClass(scn);
-            assert baseClass != null : "baseClass=" + currClass.getClassName() + " scn=" + scn;
-            currClass = baseClass;
-        }
+        return currClass;
     }
 
     private String getMethodFullSignature(Method m) {
