@@ -190,7 +190,12 @@ public class DtsApi {
     //method related
     private void processMethod(Method m, JavaClass clazz) {
 
-        loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
+        try {
+            loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         String tabs = getTabs(this.indent + 1);
 
@@ -235,13 +240,16 @@ public class DtsApi {
         }
     }
 
-    private void loadBaseMethods(JavaClass clazz) {
+    private void loadBaseMethods(JavaClass clazz) throws ClassNotFoundException {
         baseMethodNames = new HashSet<String>();
         baseMethods = new ArrayList<Method>();
         String scn = clazz.getSuperclassName();
         JavaClass currClass = ClassRepo.findClass(scn);
         assert currClass != null : "javaClass=" + clazz.getClassName() + " scn=" + scn;
 
+        if(currClass == null) {
+            throw new ClassNotFoundException("Couldn't find class: " + scn + " required by class: " + clazz.getClassName() + ". You need to provide the jar containing the missing class: " + scn);
+        }
         //get all base methods and method names
         while (true) {
             for (Method m : currClass.getMethods()) {

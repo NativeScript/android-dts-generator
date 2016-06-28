@@ -30,7 +30,7 @@ public class FileWriter {
         try {
             if(this.writeMultipleFiles) {
                 this.ps = new PrintStream(new File(this.outDir.getAbsolutePath(), fileName + ".d.ts"));
-                ps.print("/// <reference path=\"./_helpers.d.ts\" />");
+                ps.println("/// <reference path=\"./_helpers.d.ts\" />");
                 this.ps.print(content);
             }
             else {
@@ -39,7 +39,7 @@ public class FileWriter {
 
                 //add helpers reference to the top of the file
                 if(this.isFirstRun) {
-                    ps.print("/// <reference path=\"./_helpers.d.ts\" />");
+                    ps.println("/// <reference path=\"./_helpers.d.ts\" />");
                     this.isFirstRun = false;
                 }
 
