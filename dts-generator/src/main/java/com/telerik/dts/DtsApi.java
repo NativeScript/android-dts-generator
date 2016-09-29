@@ -58,8 +58,12 @@ public class DtsApi {
                 JavaClass superClass = getSuperClass(currClass);
                 String extendsLine = getExtendsLine(superClass);
 
-                sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + extendsLine + " {");
-
+                if(getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
+                    sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + extendsLine + " {");
+                }
+                else {
+                    sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + extendsLine + " {");
+                }
                 // process member scope
                 List<FieldOrMethod> foms = getMembers(currClass);
                 for(FieldOrMethod fom : foms) {
@@ -76,6 +80,10 @@ public class DtsApi {
                 // process member scope end
 
                 sbContent.appendln(tabs + "}");
+                if(getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
+                    String innerClassAlias =  "export type " + getSimpleClassname(currClass) + " = " +  getFullClassNameConcatenated(currClass);
+                    sbContent.appendln(tabs +  innerClassAlias);
+                }
                 this.prevClass = currClass;
             }
             closePackage(prevClass, null);
@@ -98,7 +106,8 @@ public class DtsApi {
         if(superClass == null) {
             return "";
         }
-        return " exports " + superClass.getClassName();
+
+        return " extends " + superClass.getClassName().replaceAll("\\$", "\\.");
     }
 
     private int closePackage(JavaClass prevClass, JavaClass currClass) {
@@ -254,7 +263,8 @@ public class DtsApi {
 
         if(currClass != null) {
             //get all base methods and method names
-            while (true) {
+            while (true && currClass != null) {
+
                 for (Method m : currClass.getMethods()) {
                     if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
                         baseMethods.add(m);
@@ -469,6 +479,11 @@ public class DtsApi {
         String[] parts = javaClass.getClassName().replace('$', '.')
                 .split("\\.");
         return parts[parts.length - 1];
+    }
+
+    private String getFullClassNameConcatenated(JavaClass javaClass) {
+        String fullName = javaClass.getClassName().replaceAll("[$.]", "");
+        return fullName;
     }
 
     private String getTabs(int count) {
