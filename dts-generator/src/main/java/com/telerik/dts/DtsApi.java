@@ -51,6 +51,7 @@ public class DtsApi {
 
             // process class scope
             for(int i = 0; i < javaClasses.size(); i++) {
+                Set<String> methodsSet = new HashSet<>();
 
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
@@ -84,7 +85,7 @@ public class DtsApi {
                     processInterfaceConstructor(currClass, allInterfacesMethods);
 
                     for(Method m : allInterfacesMethods) {
-                        processMethod(m, currClass);
+                        processMethod(m, currClass, methodsSet);
                     }
 
                     for(Field f : allInterfaceFields) {
@@ -96,7 +97,7 @@ public class DtsApi {
                         if (fom instanceof Field) {
                             processField((Field) fom, currClass);
                         } else if (fom instanceof Method) {
-                            processMethod((Method) fom, currClass);
+                            processMethod((Method) fom, currClass, methodsSet);
                         } else {
                             throw new IllegalArgumentException("Argument is not method or field");
                         }
@@ -108,9 +109,11 @@ public class DtsApi {
                     List<JavaClass> allInterfaces = getAllInterfaces(currClass);
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
                     for(Method m : allInterfacesMethods) {
-                        processMethod(m, currClass);
+                        processMethod(m, currClass, methodsSet);
                     }
                 }
+
+                writeMethods(methodsSet);
 
                 sbContent.appendln(tabs + "}");
                 if(getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
@@ -341,7 +344,7 @@ public class DtsApi {
         return allInterfacesFields;
     }
     //method related
-    private void processMethod(Method m, JavaClass clazz) {
+    private void processMethod(Method m, JavaClass clazz, Set<String> methodsSet) {
         String name = m.getName();
 
         // TODO: Pete: won't generate static initializers as invalid typescript properties
@@ -355,7 +358,6 @@ public class DtsApi {
 
         cacheMethodBySignature(m); //cached in "mapNameMethod"
 
-
         //generate base method content
         if (baseMethodNames.contains(name)) {
             for (Method bm : baseMethods) {
@@ -363,26 +365,36 @@ public class DtsApi {
                     String sig = getMethodFullSignature(bm);
                     if (!mapNameMethod.containsKey(sig)) {
                         mapNameMethod.put(sig, bm);
-                        generateMethodContent(clazz, tabs, bm);
+                        methodsSet.add(generateMethodContent(clazz, tabs, bm));
                     }
                 }
             }
         }
 
-        generateMethodContent(clazz, tabs, m);
+        methodsSet.add(generateMethodContent(clazz, tabs, m));
     }
 
-    private void generateMethodContent(JavaClass clazz, String tabs, Method m) {
-        sbContent.append(tabs + "public ");
+    private String generateMethodContent(JavaClass clazz, String tabs, Method m) {
+        StringBuilder2 sbTemp = new StringBuilder2();
+        sbTemp.append(tabs + "public ");
         if (m.isStatic()) {
-            sbContent.append("static ");
+            sbTemp.append("static ");
         }
-        sbContent.append(getMethodName(m) + getMethodParamSignature(clazz, m));
+        sbTemp.append(getMethodName(m) + getMethodParamSignature(clazz, m));
         String bmSig = "";
         if (!isConstructor(m)) {
             bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, m.getReturnType());
         }
-        sbContent.appendln(bmSig + ";");
+
+        sbTemp.append(bmSig + ";");
+
+        return sbTemp.toString();
+    }
+
+    private void writeMethods(Set<String> methodsSet) {
+        for(String m : methodsSet) {
+            sbContent.appendln(m);
+        }
     }
 
     private void cacheMethodBySignature(Method m) {
