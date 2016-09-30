@@ -55,6 +55,7 @@ public class DtsApi {
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
                 boolean isInterface = currClass.isInterface();
+                boolean isAbstract = currClass.isAbstract();
 
                 this.indent = closePackage(this.prevClass, currClass);
                 this.indent = openPackage(this.prevClass, currClass);
@@ -62,13 +63,14 @@ public class DtsApi {
                 String tabs = getTabs(this.indent);
 
                 JavaClass superClass = getSuperClass(currClass);
-                String extendsLine = getExtendsLine(superClass);
+                List<JavaClass> interfaces = getInterfaces(currClass);
+                String extendsLine = getExtendsLine(superClass, interfaces);
 
                 if(getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
                     sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + extendsLine + " {");
                 }
                 else {
-                    sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + extendsLine + " {");
+                    sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + getSimpleClassname(currClass) + extendsLine + " {");
                 }
                 // process member scope
 
@@ -78,6 +80,7 @@ public class DtsApi {
 
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
                     Set<Field> allInterfaceFields = getAllInterfacesFields(allInterfaces);
+
                     processInterfaceConstructor(currClass, allInterfacesMethods);
 
                     for(Method m : allInterfacesMethods) {
@@ -99,6 +102,14 @@ public class DtsApi {
                         }
                     }
                     // process member scope end
+                }
+
+                if(isAbstract && !isInterface) {
+                    List<JavaClass> allInterfaces = getAllInterfaces(currClass);
+                    List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
+                    for(Method m : allInterfacesMethods) {
+                        processMethod(m, currClass);
+                    }
                 }
 
                 sbContent.appendln(tabs + "}");
@@ -124,12 +135,24 @@ public class DtsApi {
         return sbHeaders.toString() + sbContent.toString();
     }
 
-    private String getExtendsLine(JavaClass superClass) {
+    private String getExtendsLine(JavaClass superClass, List<JavaClass> interfaces) {
         if(superClass == null) {
             return "";
         }
 
-        return " extends " + superClass.getClassName().replaceAll("\\$", "\\.");
+        StringBuilder implementsSegmentSb = new StringBuilder();
+        String implementsSegment = "";
+        if(interfaces.size() > 0) {
+            implementsSegmentSb.append(" implements ");
+
+            for(JavaClass clazz : interfaces) {
+                implementsSegmentSb.append(clazz.getClassName().replaceAll("\\$", "\\.") + ", ");
+            }
+
+            implementsSegment = implementsSegmentSb.substring(0, implementsSegmentSb.lastIndexOf(","));
+        }
+
+        return " extends " + superClass.getClassName().replaceAll("\\$", "\\.") + implementsSegment;
     }
 
     private int closePackage(JavaClass prevClass, JavaClass currClass) {
@@ -255,7 +278,7 @@ public class DtsApi {
     private void generateInterfaceConstructorCommentBlock(JavaClass classInterface, String tabs) {
         sbContent.appendln(tabs + "/**");
         sbContent.appendln(tabs + " * Constructs a new instance of the " + classInterface.getClassName() + " interface with the provided implementation.");
-        sbContent.appendln(tabs + " * @param implementation - allows implementor to define their own logic for all public methods.");
+        // sbContent.appendln(tabs + " * @param implementation - allows implementor to define their own logic for all public methods."); // <- causes too much noise
         sbContent.appendln(tabs + " */");
     }
 
@@ -270,13 +293,28 @@ public class DtsApi {
 
             interfaces.add(clazz);
 
-            String[] interfaceNames = clazz.getInterfaceNames();
+            classQueue.addAll(getInterfaces(clazz));
+        }
 
-            for(String intface : interfaceNames) {
-                JavaClass clazz1 = ClassRepo.findClass(intface);
+        return interfaces;
+    }
 
-                classQueue.add(clazz1);
+    private List<JavaClass> getInterfaces(JavaClass classInterface) {
+        List<JavaClass> interfaces = new ArrayList<>();
+
+        String[] interfaceNames = classInterface.getInterfaceNames();
+        for(String intface : interfaceNames) {
+            JavaClass clazz1 = ClassRepo.findClass(intface);
+            String className = clazz1.getClassName();
+
+            // TODO: Pete: Hardcoded until we figure out how to go around the 'type incompatible with Object' issue
+            if (className.equals("java.util.Iterator") ||
+                    className.equals("android.animation.TypeEvaluator") ||
+                    className.equals("java.lang.Comparable")) {
+                continue;
             }
+
+            interfaces.add(clazz1);
         }
 
         return interfaces;
@@ -304,6 +342,12 @@ public class DtsApi {
     }
     //method related
     private void processMethod(Method m, JavaClass clazz) {
+        String name = m.getName();
+
+        // TODO: Pete: won't generate static initializers as invalid typescript properties
+        if(clazz.isInterface() && name.equals("<clinit>")) {
+            return;
+        }
 
         loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
 
@@ -311,7 +355,6 @@ public class DtsApi {
 
         cacheMethodBySignature(m); //cached in "mapNameMethod"
 
-        String name = m.getName();
 
         //generate base method content
         if (baseMethodNames.contains(name)) {
