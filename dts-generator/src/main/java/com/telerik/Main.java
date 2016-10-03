@@ -16,7 +16,13 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		InputParameters inputParameters = parseCommand(args);
 
+		long startTime = System.currentTimeMillis();
+
 		new Generator().start(inputParameters);
+
+		long stopTime = System.currentTimeMillis();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("Generation of definitions took " + elapsedTime + "ms.");
 	}
 
 	public static InputParameters parseCommand(String[] args) {

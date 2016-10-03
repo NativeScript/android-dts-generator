@@ -8,13 +8,16 @@ import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.Type;
+import org.apache.bcel.util.BCELComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -34,6 +37,8 @@ public class DtsApi {
 
     public DtsApi() {
         this.indent = 0;
+
+        overrideFieldComparator();
     }
 
     public String generateDtsContent(List<JavaClass> javaClasses) {
@@ -49,6 +54,8 @@ public class DtsApi {
 
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
+                boolean isInterface = currClass.isInterface();
+                boolean isAbstract = currClass.isAbstract();
 
                 this.indent = closePackage(this.prevClass, currClass);
                 this.indent = openPackage(this.prevClass, currClass);
@@ -56,28 +63,54 @@ public class DtsApi {
                 String tabs = getTabs(this.indent);
 
                 JavaClass superClass = getSuperClass(currClass);
-                String extendsLine = getExtendsLine(superClass);
+                List<JavaClass> interfaces = getInterfaces(currClass);
+                String extendsLine = getExtendsLine(superClass, interfaces);
 
                 if(getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
                     sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + extendsLine + " {");
                 }
                 else {
-                    sbContent.appendln(tabs + "export class " + getSimpleClassname(currClass) + extendsLine + " {");
+                    sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + getSimpleClassname(currClass) + extendsLine + " {");
                 }
                 // process member scope
-                List<FieldOrMethod> foms = getMembers(currClass);
-                for(FieldOrMethod fom : foms) {
-                    if(fom instanceof Field) {
-                        processField((Field)fom, currClass);
+
+                // process constructors for interfaces
+                if(isInterface) {
+                    List<JavaClass> allInterfaces = getAllInterfaces(currClass);
+
+                    List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
+                    Set<Field> allInterfaceFields = getAllInterfacesFields(allInterfaces);
+
+                    processInterfaceConstructor(currClass, allInterfacesMethods);
+
+                    for(Method m : allInterfacesMethods) {
+                        processMethod(m, currClass);
                     }
-                    else if(fom instanceof Method) {
-                        processMethod((Method)fom, currClass);
+
+                    for(Field f : allInterfaceFields) {
+                        processField(f, currClass);
                     }
-                    else {
-                        throw new IllegalArgumentException("Argument is not method or field");
+                } else {
+                    List<FieldOrMethod> foms = getMembers(currClass);
+                    for (FieldOrMethod fom : foms) {
+                        if (fom instanceof Field) {
+                            processField((Field) fom, currClass);
+                        } else if (fom instanceof Method) {
+                            processMethod((Method) fom, currClass);
+                        } else {
+                            throw new IllegalArgumentException("Argument is not method or field");
+                        }
+                    }
+                    // process member scope end
+                }
+
+                if(isAbstract && !isInterface) {
+                    List<JavaClass> allInterfaces = getAllInterfaces(currClass);
+                    List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
+                    for(Method m : allInterfacesMethods) {
+                        processMethod(m, currClass);
                     }
                 }
-                // process member scope end
 
                 sbContent.appendln(tabs + "}");
                 if(getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
@@ -102,12 +135,24 @@ public class DtsApi {
         return sbHeaders.toString() + sbContent.toString();
     }
 
-    private String getExtendsLine(JavaClass superClass) {
+    private String getExtendsLine(JavaClass superClass, List<JavaClass> interfaces) {
         if(superClass == null) {
             return "";
         }
 
-        return " extends " + superClass.getClassName().replaceAll("\\$", "\\.");
+        StringBuilder implementsSegmentSb = new StringBuilder();
+        String implementsSegment = "";
+        if(interfaces.size() > 0) {
+            implementsSegmentSb.append(" implements ");
+
+            for(JavaClass clazz : interfaces) {
+                implementsSegmentSb.append(clazz.getClassName().replaceAll("\\$", "\\.") + ", ");
+            }
+
+            implementsSegment = implementsSegmentSb.substring(0, implementsSegmentSb.lastIndexOf(","));
+        }
+
+        return " extends " + superClass.getClassName().replaceAll("\\$", "\\.") + implementsSegment;
     }
 
     private int closePackage(JavaClass prevClass, JavaClass currClass) {
@@ -207,8 +252,102 @@ public class DtsApi {
         return indent;
     }
 
+    private void processInterfaceConstructor(JavaClass classInterface, List<Method> allInterfacesMethods) {
+        String tabs = getTabs(this.indent + 1);
+
+        generateInterfaceConstructorContent(classInterface, tabs, allInterfacesMethods);
+    }
+
+    private void generateInterfaceConstructorContent(JavaClass classInterface, String tabs, List<Method> methods) {
+        generateInterfaceConstructorCommentBlock(classInterface, tabs);
+
+        sbContent.appendln(tabs + "public constructor(implementation: {");
+
+        for (Method m : methods) {
+            sbContent.append(getTabs(this.indent +  2) + getMethodName(m) + getMethodParamSignature(classInterface, m));
+            String bmSig = "";
+            if (!isConstructor(m)) {
+                bmSig += ": " + getTypeScriptTypeFromJavaType(classInterface, m.getReturnType());
+            }
+            sbContent.appendln(bmSig + ";");
+        }
+
+        sbContent.appendln(tabs + "});");
+    }
+
+    private void generateInterfaceConstructorCommentBlock(JavaClass classInterface, String tabs) {
+        sbContent.appendln(tabs + "/**");
+        sbContent.appendln(tabs + " * Constructs a new instance of the " + classInterface.getClassName() + " interface with the provided implementation.");
+        // sbContent.appendln(tabs + " * @param implementation - allows implementor to define their own logic for all public methods."); // <- causes too much noise
+        sbContent.appendln(tabs + " */");
+    }
+
+    private List<JavaClass> getAllInterfaces(JavaClass classInterface) {
+        ArrayList<JavaClass> interfaces = new ArrayList<>();
+
+        Queue<JavaClass> classQueue = new LinkedList<>();
+        classQueue.add(classInterface);
+
+        while(!classQueue.isEmpty()) {
+            JavaClass clazz = classQueue.poll();
+
+            interfaces.add(clazz);
+
+            classQueue.addAll(getInterfaces(clazz));
+        }
+
+        return interfaces;
+    }
+
+    private List<JavaClass> getInterfaces(JavaClass classInterface) {
+        List<JavaClass> interfaces = new ArrayList<>();
+
+        String[] interfaceNames = classInterface.getInterfaceNames();
+        for(String intface : interfaceNames) {
+            JavaClass clazz1 = ClassRepo.findClass(intface);
+            String className = clazz1.getClassName();
+
+            // TODO: Pete: Hardcoded until we figure out how to go around the 'type incompatible with Object' issue
+            if (className.equals("java.util.Iterator") ||
+                    className.equals("android.animation.TypeEvaluator") ||
+                    className.equals("java.lang.Comparable")) {
+                continue;
+            }
+
+            interfaces.add(clazz1);
+        }
+
+        return interfaces;
+    }
+
+    private List<Method> getAllInterfacesMethods(List<JavaClass> interfaces) {
+        ArrayList<Method> allInterfacesMethods = new ArrayList<>();
+
+        for(JavaClass clazz : interfaces) {
+            Method[] intfaceMethods = clazz.getMethods();
+            allInterfacesMethods.addAll(Arrays.asList(intfaceMethods));
+        }
+
+        return allInterfacesMethods;
+    }
+
+    private Set<Field> getAllInterfacesFields(List<JavaClass> interfaces) {
+        HashSet<Field> allInterfacesFields = new HashSet<>();
+
+        for(JavaClass clazz : interfaces) {
+            allInterfacesFields.addAll(Arrays.asList(clazz.getFields()));
+        }
+
+        return allInterfacesFields;
+    }
     //method related
     private void processMethod(Method m, JavaClass clazz) {
+        String name = m.getName();
+
+        // TODO: Pete: won't generate static initializers as invalid typescript properties
+        if(clazz.isInterface() && name.equals("<clinit>")) {
+            return;
+        }
 
         loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
 
@@ -216,7 +355,6 @@ public class DtsApi {
 
         cacheMethodBySignature(m); //cached in "mapNameMethod"
 
-        String name = m.getName();
 
         //generate base method content
         if (baseMethodNames.contains(name)) {
@@ -489,5 +627,21 @@ public class DtsApi {
     private String getTabs(int count) {
         String tabs = new String(new char[count]).replace("\0", "\t");
         return tabs;
+    }
+
+    private void overrideFieldComparator() {
+        BCELComparator cmp = Field.getComparator();
+
+        Field.setComparator(new BCELComparator() {
+            @Override
+            public boolean equals(Object o, Object o1) {
+                return ((Field)o).getName().equals(((Field) o1).getName());
+            }
+
+            @Override
+            public int hashCode(Object o) {
+                return cmp.hashCode(o);
+            }
+        });
     }
 }
