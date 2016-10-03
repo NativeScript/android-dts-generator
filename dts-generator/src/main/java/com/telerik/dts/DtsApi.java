@@ -55,6 +55,13 @@ public class DtsApi {
 
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
+
+                if(currentFileClassname.startsWith("java.util.function") ||
+                        currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr1") ||
+                        currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr2")) {
+                    continue;
+                }
+
                 boolean isInterface = currClass.isInterface();
                 boolean isAbstract = currClass.isAbstract();
 
@@ -346,6 +353,10 @@ public class DtsApi {
     //method related
     private void processMethod(Method m, JavaClass clazz, Set<String> methodsSet) {
         String name = m.getName();
+
+        if (m.isSynthetic() || (!m.isPublic() && !m.isProtected())) {
+            return;
+        }
 
         // TODO: Pete: won't generate static initializers as invalid typescript properties
         if(clazz.isInterface() && name.equals("<clinit>")) {
