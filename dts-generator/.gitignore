@@ -4,3 +4,5 @@ local.properties
 .idea/modules.xml
 /out
 *.jar
+/**/*.d.ts
+/jars/**/*.jar

@@ -99,7 +99,7 @@ public class DtsApi {
                         processField(f, currClass);
                     }
                 } else {
-                    List<FieldOrMethod> foms = getMembers(currClass);
+                    List<FieldOrMethod> foms = getMembers(currClass, getAllInterfaces(currClass));
                     for (FieldOrMethod fom : foms) {
                         if (fom instanceof Field) {
                             processField((Field) fom, currClass);
@@ -320,7 +320,8 @@ public class DtsApi {
             // TODO: Pete: Hardcoded until we figure out how to go around the 'type incompatible with Object' issue
             if (className.equals("java.util.Iterator") ||
                     className.equals("android.animation.TypeEvaluator") ||
-                    className.equals("java.lang.Comparable")) {
+                    className.equals("java.lang.Comparable") ||
+                    className.startsWith("java.util.function")) {
                 continue;
             }
 
@@ -491,9 +492,16 @@ public class DtsApi {
             sb.append("param");
             sb.append(idx++);
             sb.append(": ");
-            addReference(type);
+
             String paramTypeName = getTypeScriptTypeFromJavaType(clazz, type);
-            sb.append(paramTypeName);
+
+            // TODO: Pete:
+            if(paramTypeName.startsWith("java.util.function")) {
+                sb.append("any /* " + paramTypeName + "*/");
+            } else {
+                addReference(type);
+                sb.append(paramTypeName);
+            }
         }
         sb.append(")");
         String sig = sb.toString();
@@ -590,8 +598,14 @@ public class DtsApi {
             {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
-            tsType.append(typeName);
-            addReference(type);
+
+            // TODO: Pete:
+            if(typeName.startsWith("java.util.function")) {
+                tsType.append("any /*" + typeName + "*/");
+            } else {
+                tsType.append(typeName);
+                addReference(type);
+            }
         }
         else
         {
@@ -613,10 +627,16 @@ public class DtsApi {
         }
     }
 
-    private List<FieldOrMethod> getMembers(JavaClass javaClass) {
+    private List<FieldOrMethod> getMembers(JavaClass javaClass, List<JavaClass> interfaces) {
         Set<String> methodNames = new HashSet<String>();
         ArrayList<FieldOrMethod> members = new ArrayList<FieldOrMethod>();
-        for (Method m: javaClass.getMethods()) {
+
+        List<Method> allInterfacesMethods = getAllInterfacesMethods(interfaces);
+        List<Method> methods = new ArrayList<>();
+        methods.addAll(Arrays.asList(javaClass.getMethods()));
+        methods.addAll(allInterfacesMethods);
+
+        for (Method m: methods) {
             if ((m.isPublic() || m.isProtected()) && !m.isSynthetic()) {
                 members.add(m);
                 methodNames.add(m.getName());
@@ -627,6 +647,7 @@ public class DtsApi {
                 members.add(f);
             }
         }
+
         return members;
     }
 
