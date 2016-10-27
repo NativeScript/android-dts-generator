@@ -12,6 +12,7 @@ import org.apache.bcel.util.BCELComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -92,7 +93,7 @@ public class DtsApi {
                     processInterfaceConstructor(currClass, allInterfacesMethods);
 
                     for(Method m : allInterfacesMethods) {
-                        processMethod(m, currClass, methodsSet);
+                        processMethod(m, currClass, isInterface, methodsSet);
                     }
 
                     for(Field f : allInterfaceFields) {
@@ -104,7 +105,7 @@ public class DtsApi {
                         if (fom instanceof Field) {
                             processField((Field) fom, currClass);
                         } else if (fom instanceof Method) {
-                            processMethod((Method) fom, currClass, methodsSet);
+                            processMethod((Method) fom, currClass, isInterface, methodsSet);
                         } else {
                             throw new IllegalArgumentException("Argument is not method or field");
                         }
@@ -112,11 +113,20 @@ public class DtsApi {
                     // process member scope end
                 }
 
-                if(isAbstract && !isInterface) {
-                    List<JavaClass> allInterfaces = getAllInterfaces(currClass);
+                if(!isInterface) {
+                    HashSet<JavaClass> allInterfaces = new HashSet<>(getAllInterfaces(currClass));
+
+                    List<JavaClass> allClasses = getAllSuperClasses(currClass);
+
+                    // Include interfaces of extended classes
+                    for(JavaClass jclass: allClasses) {
+                        allInterfaces.addAll(getInterfaces(jclass));
+                    }
+
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
+
                     for(Method m : allInterfacesMethods) {
-                        processMethod(m, currClass, methodsSet);
+                        processMethod(m, currClass, isInterface, methodsSet);
                     }
                 }
 
@@ -309,6 +319,27 @@ public class DtsApi {
         return interfaces;
     }
 
+    private List<JavaClass> getAllSuperClasses(JavaClass clazz) {
+        ArrayList<JavaClass> classes = new ArrayList<>();
+
+        Queue<JavaClass> classQueue = new LinkedList<>();
+        classQueue.add(clazz);
+
+        while(!classQueue.isEmpty()) {
+            JavaClass currClazz = classQueue.poll();
+
+            if (currClazz.getClassName().equals("java.lang.Object")) {
+                break;
+            }
+
+            classes.add(currClazz);
+
+            classQueue.add(getSuperClass(currClazz));
+        }
+
+        return classes;
+    }
+
     private List<JavaClass> getInterfaces(JavaClass classInterface) {
         List<JavaClass> interfaces = new ArrayList<>();
 
@@ -331,7 +362,7 @@ public class DtsApi {
         return interfaces;
     }
 
-    private List<Method> getAllInterfacesMethods(List<JavaClass> interfaces) {
+    private List<Method> getAllInterfacesMethods(Collection<JavaClass> interfaces) {
         ArrayList<Method> allInterfacesMethods = new ArrayList<>();
 
         for(JavaClass clazz : interfaces) {
@@ -352,7 +383,7 @@ public class DtsApi {
         return allInterfacesFields;
     }
     //method related
-    private void processMethod(Method m, JavaClass clazz, Set<String> methodsSet) {
+    private void processMethod(Method m, JavaClass clazz, boolean isInterface, Set<String> methodsSet) {
         String name = m.getName();
 
         if (m.isSynthetic() || (!m.isPublic() && !m.isProtected())) {
@@ -377,21 +408,23 @@ public class DtsApi {
                     String sig = getMethodFullSignature(bm);
                     if (!mapNameMethod.containsKey(sig)) {
                         mapNameMethod.put(sig, bm);
-                        methodsSet.add(generateMethodContent(clazz, tabs, bm));
+                        methodsSet.add(generateMethodContent(clazz, isInterface, tabs, bm));
                     }
                 }
             }
         }
 
-        methodsSet.add(generateMethodContent(clazz, tabs, m));
+        methodsSet.add(generateMethodContent(clazz, isInterface, tabs, m));
     }
 
-    private String generateMethodContent(JavaClass clazz, String tabs, Method m) {
+    private String generateMethodContent(JavaClass clazz, boolean isInterface, String tabs, Method m) {
         StringBuilder2 sbTemp = new StringBuilder2();
         sbTemp.append(tabs + "public ");
+
         if (m.isStatic()) {
             sbTemp.append("static ");
         }
+
         sbTemp.append(getMethodName(m) + getMethodParamSignature(clazz, m));
         String bmSig = "";
         if (!isConstructor(m)) {
