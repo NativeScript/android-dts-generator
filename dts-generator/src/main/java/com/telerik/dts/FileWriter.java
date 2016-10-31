@@ -55,4 +55,21 @@ public class FileWriter {
             }
         }
     }
+
+    public void writeHelperTypings(String content) {
+        try {
+                String outFile = this.outDir.getAbsolutePath() + File.separator + "_helpers.d.ts";
+                this.ps = new PrintStream(new FileOutputStream(outFile, true));
+
+                this.ps.print(content);
+                this.ps.println();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(this.ps != null) {
+                this.ps.close();
+            }
+        }
+    }
 }

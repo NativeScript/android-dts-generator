@@ -6,6 +6,7 @@ import org.apache.bcel.classfile.JavaClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,11 +30,27 @@ public class Generator {
     }
 
     private void generateDts() {
-        while(ClassRepo.hasNext()) {
+        writeHelperTypings();
+
+        while (ClassRepo.hasNext()) {
             List<JavaClass> classFiles = ClassRepo.getNextClassGroup();
             String generatedContent = this.dtsApi.generateDtsContent(classFiles);
 
             this.fw.write(generatedContent, classFiles.get(0).getFileName()/*fileName*/);
+        }
+    }
+
+    private void writeHelperTypings() {
+
+        List<String> helperTypings = new ArrayList<>();
+        helperTypings.add("declare module native {\n" +
+                "\texport class Array<T> {\n" +
+                "\t\tpublic constructor();\n" +
+                "\t}\n" +
+                "}\n");
+
+        for (String helper : helperTypings) {
+            this.fw.writeHelperTypings(helper);
         }
     }
 
