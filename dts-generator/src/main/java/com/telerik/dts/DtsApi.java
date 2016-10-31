@@ -51,13 +51,13 @@ public class DtsApi {
             sbContent = new StringBuilder2();
 
             // process class scope
-            for(int i = 0; i < javaClasses.size(); i++) {
+            for (int i = 0; i < javaClasses.size(); i++) {
                 Set<String> methodsSet = new HashSet<>();
 
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
 
-                if(currentFileClassname.startsWith("java.util.function") ||
+                if (currentFileClassname.startsWith("java.util.function") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr1") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr2")) {
                     continue;
@@ -75,16 +75,15 @@ public class DtsApi {
                 List<JavaClass> interfaces = getInterfaces(currClass);
                 String extendsLine = getExtendsLine(superClass, interfaces);
 
-                if(getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
+                if (getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
                     sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + extendsLine + " {");
-                }
-                else {
+                } else {
                     sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + getSimpleClassname(currClass) + extendsLine + " {");
                 }
                 // process member scope
 
                 // process constructors for interfaces
-                if(isInterface) {
+                if (isInterface) {
                     List<JavaClass> allInterfaces = getAllInterfaces(currClass);
 
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
@@ -92,11 +91,11 @@ public class DtsApi {
 
                     processInterfaceConstructor(currClass, allInterfacesMethods);
 
-                    for(Method m : allInterfacesMethods) {
+                    for (Method m : allInterfacesMethods) {
                         processMethod(m, currClass, isInterface, methodsSet);
                     }
 
-                    for(Field f : allInterfaceFields) {
+                    for (Field f : allInterfaceFields) {
                         processField(f, currClass);
                     }
                 } else {
@@ -113,19 +112,19 @@ public class DtsApi {
                     // process member scope end
                 }
 
-                if(!isInterface) {
+                if (!isInterface) {
                     HashSet<JavaClass> allInterfaces = new HashSet<>(getAllInterfaces(currClass));
 
                     List<JavaClass> allClasses = getAllSuperClasses(currClass);
 
                     // Include interfaces of extended classes
-                    for(JavaClass jclass: allClasses) {
+                    for (JavaClass jclass : allClasses) {
                         allInterfaces.addAll(getInterfaces(jclass));
                     }
 
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
 
-                    for(Method m : allInterfacesMethods) {
+                    for (Method m : allInterfacesMethods) {
                         processMethod(m, currClass, isInterface, methodsSet);
                     }
                 }
@@ -133,9 +132,9 @@ public class DtsApi {
                 writeMethods(methodsSet);
 
                 sbContent.appendln(tabs + "}");
-                if(getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
-                    String innerClassAlias =  "export type " + getSimpleClassname(currClass) + " = " +  getFullClassNameConcatenated(currClass);
-                    sbContent.appendln(tabs +  innerClassAlias);
+                if (getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
+                    String innerClassAlias = "export type " + getSimpleClassname(currClass) + " = " + getFullClassNameConcatenated(currClass);
+                    sbContent.appendln(tabs + innerClassAlias);
                 }
                 this.prevClass = currClass;
             }
@@ -145,7 +144,7 @@ public class DtsApi {
             String[] refs = references.toArray(new String[references.size()]);
             Arrays.sort(refs);
 
-            for (String r: refs) {
+            for (String r : refs) {
                 sbHeaders.append("/// <reference path=\"./");
                 sbHeaders.append(r);
                 sbHeaders.appendln(".d.ts\" />");
@@ -156,16 +155,16 @@ public class DtsApi {
     }
 
     private String getExtendsLine(JavaClass superClass, List<JavaClass> interfaces) {
-        if(superClass == null) {
+        if (superClass == null) {
             return "";
         }
 
         StringBuilder implementsSegmentSb = new StringBuilder();
         String implementsSegment = "";
-        if(interfaces.size() > 0) {
+        if (interfaces.size() > 0) {
             implementsSegmentSb.append(" implements ");
 
-            for(JavaClass clazz : interfaces) {
+            for (JavaClass clazz : interfaces) {
                 implementsSegmentSb.append(clazz.getClassName().replaceAll("\\$", "\\.") + ", ");
             }
 
@@ -284,7 +283,7 @@ public class DtsApi {
         sbContent.appendln(tabs + "public constructor(implementation: {");
 
         for (Method m : methods) {
-            sbContent.append(getTabs(this.indent +  2) + getMethodName(m) + getMethodParamSignature(classInterface, m));
+            sbContent.append(getTabs(this.indent + 2) + getMethodName(m) + getMethodParamSignature(classInterface, m));
             String bmSig = "";
             if (!isConstructor(m)) {
                 bmSig += ": " + getTypeScriptTypeFromJavaType(classInterface, m.getReturnType());
@@ -308,7 +307,7 @@ public class DtsApi {
         Queue<JavaClass> classQueue = new LinkedList<>();
         classQueue.add(classInterface);
 
-        while(!classQueue.isEmpty()) {
+        while (!classQueue.isEmpty()) {
             JavaClass clazz = classQueue.poll();
 
             interfaces.add(clazz);
@@ -325,7 +324,7 @@ public class DtsApi {
         Queue<JavaClass> classQueue = new LinkedList<>();
         classQueue.add(clazz);
 
-        while(!classQueue.isEmpty()) {
+        while (!classQueue.isEmpty()) {
             JavaClass currClazz = classQueue.poll();
 
             if (currClazz.getClassName().equals("java.lang.Object")) {
@@ -334,7 +333,11 @@ public class DtsApi {
 
             classes.add(currClazz);
 
-            classQueue.add(getSuperClass(currClazz));
+            JavaClass sClass = getSuperClass(currClazz);
+
+            if (sClass != null) {
+                classQueue.add(getSuperClass(currClazz));
+            }
         }
 
         return classes;
@@ -344,7 +347,7 @@ public class DtsApi {
         List<JavaClass> interfaces = new ArrayList<>();
 
         String[] interfaceNames = classInterface.getInterfaceNames();
-        for(String intface : interfaceNames) {
+        for (String intface : interfaceNames) {
             JavaClass clazz1 = ClassRepo.findClass(intface);
             String className = clazz1.getClassName();
 
@@ -365,7 +368,7 @@ public class DtsApi {
     private List<Method> getAllInterfacesMethods(Collection<JavaClass> interfaces) {
         ArrayList<Method> allInterfacesMethods = new ArrayList<>();
 
-        for(JavaClass clazz : interfaces) {
+        for (JavaClass clazz : interfaces) {
             Method[] intfaceMethods = clazz.getMethods();
             allInterfacesMethods.addAll(Arrays.asList(intfaceMethods));
         }
@@ -376,12 +379,13 @@ public class DtsApi {
     private Set<Field> getAllInterfacesFields(List<JavaClass> interfaces) {
         HashSet<Field> allInterfacesFields = new HashSet<>();
 
-        for(JavaClass clazz : interfaces) {
+        for (JavaClass clazz : interfaces) {
             allInterfacesFields.addAll(Arrays.asList(clazz.getFields()));
         }
 
         return allInterfacesFields;
     }
+
     //method related
     private void processMethod(Method m, JavaClass clazz, boolean isInterface, Set<String> methodsSet) {
         String name = m.getName();
@@ -391,7 +395,7 @@ public class DtsApi {
         }
 
         // TODO: Pete: won't generate static initializers as invalid typescript properties
-        if(clazz.isInterface() && name.equals("<clinit>")) {
+        if (clazz.isInterface() && name.equals("<clinit>")) {
             return;
         }
 
@@ -437,7 +441,7 @@ public class DtsApi {
     }
 
     private void writeMethods(Set<String> methodsSet) {
-        for(String m : methodsSet) {
+        for (String m : methodsSet) {
             sbContent.appendln(m);
         }
     }
@@ -456,19 +460,34 @@ public class DtsApi {
 
         JavaClass currClass = getSuperClass(clazz);
 
-        if(currClass != null) {
+        if (currClass != null) {
+
             //get all base methods and method names
             while (true && currClass != null) {
+                boolean isJavaLangObject = currClass.getClassName().equals("java.lang.Object");
 
-                for (Method m : currClass.getMethods()) {
-                    if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
-                        baseMethods.add(m);
-                        baseMethodNames.add(m.getName());
+                // two similar code blocks, split up so that checks if method is constructor isnt done on objects that are not java.lang.Object
+                if (isJavaLangObject) {
+                    for (Method m : currClass.getMethods()) {
+                        if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
+                            // don't write empty constructor typings for java objects
+                            if(isConstructor(m)) {
+                                continue;
+                            }
+
+                            baseMethods.add(m);
+                            baseMethodNames.add(m.getName());
+                        }
                     }
-                }
 
-                if (currClass.getClassName().equals("java.lang.Object")) {
                     break;
+                } else {
+                    for (Method m : currClass.getMethods()) {
+                        if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
+                            baseMethods.add(m);
+                            baseMethodNames.add(m.getName());
+                        }
+                    }
                 }
 
                 String scn = currClass.getSuperclassName();
@@ -480,15 +499,16 @@ public class DtsApi {
     }
 
     private JavaClass getSuperClass(JavaClass clazz) {
-        if(clazz.getClassName().equals("java.lang.Object")) {
-            return  null;
+        if (clazz.getClassName().equals("java.lang.Object")) {
+            return null;
         }
 
         String scn = clazz.getSuperclassName();
         JavaClass currClass = ClassRepo.findClass(scn);
 
-        if(currClass == null) {
-            throw new NoClassDefFoundError("Couldn't find class: " + scn + " required by class: " + clazz.getClassName() + ". You need to provide the jar containing the missing class: " + scn);
+        if (currClass == null) {
+            return null;
+//            throw new NoClassDefFoundError("Couldn't find class: " + scn + " required by class: " + clazz.getClassName() + ". You need to provide the jar containing the missing class: " + scn);
         }
 
         return currClass;
@@ -517,9 +537,8 @@ public class DtsApi {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         int idx = 0;
-        for (Type type: m.getArgumentTypes()) {
-            if (idx > 0)
-            {
+        for (Type type : m.getArgumentTypes()) {
+            if (idx > 0) {
                 sb.append(", ");
             }
             sb.append("param");
@@ -529,7 +548,7 @@ public class DtsApi {
             String paramTypeName = getTypeScriptTypeFromJavaType(clazz, type);
 
             // TODO: Pete:
-            if(paramTypeName.startsWith("java.util.function")) {
+            if (paramTypeName.startsWith("java.util.function")) {
                 sb.append("any /* " + paramTypeName + "*/");
             } else {
                 addReference(type);
@@ -581,6 +600,10 @@ public class DtsApi {
                 StringBuilder sb = new StringBuilder();
                 convertToTypeScriptType(type, sb);
                 tsType = sb.toString();
+
+                if (tsType.startsWith("java.util.function")) {
+                    tsType = "any /* " + tsType + "*/";
+                }
         }
 
         return tsType;
@@ -591,57 +614,36 @@ public class DtsApi {
         boolean isArray = type instanceof ArrayType;
         boolean isObjectType = type instanceof ObjectType;
 
-        if (isPrimitive)
-        {
-            if (type.equals(Type.BOOLEAN))
-            {
+        if (isPrimitive) {
+            if (type.equals(Type.BOOLEAN)) {
                 tsType.append("boolean");
-            }
-            else if (type.equals(Type.BYTE) || type.equals(Type.SHORT)
+            } else if (type.equals(Type.BYTE) || type.equals(Type.SHORT)
                     || type.equals(Type.INT) || type.equals(Type.LONG)
-                    || type.equals(Type.FLOAT) || type.equals(Type.DOUBLE))
-            {
+                    || type.equals(Type.FLOAT) || type.equals(Type.DOUBLE)) {
                 tsType.append("number");
-            }
-            else if (type.equals(Type.CHAR))
-            {
+            } else if (type.equals(Type.CHAR)) {
                 tsType.append("string");
-            }
-            else
-            {
+            } else {
                 throw new RuntimeException("Unexpected type=" + type.getSignature());
             }
-        }
-        else if (isArray)
-        {
+        } else if (isArray) {
             tsType.append("native.Array<");
-            Type elementType = ((ArrayType)type).getElementType();
+            Type elementType = ((ArrayType) type).getElementType();
             convertToTypeScriptType(elementType, tsType);
             tsType.append(">");
-        }
-        else if (type.equals(Type.STRING))
-        {
+        } else if (type.equals(Type.STRING)) {
             tsType.append("string");
-        }
-        else if (isObjectType)
-        {
-            ObjectType objType = (ObjectType)type;
+        } else if (isObjectType) {
+            ObjectType objType = (ObjectType) type;
             String typeName = objType.getClassName();
-            if (typeName.contains("$"))
-            {
+            if (typeName.contains("$")) {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
 
             // TODO: Pete:
-            if(typeName.startsWith("java.util.function")) {
-                tsType.append("any /*" + typeName + "*/");
-            } else {
-                tsType.append(typeName);
-                addReference(type);
-            }
-        }
-        else
-        {
+            tsType.append(typeName);
+            addReference(type);
+        } else {
             throw new RuntimeException("Unhandled type=" + type.getSignature());
         }
     }
@@ -649,7 +651,7 @@ public class DtsApi {
     private void addReference(Type type) {
         boolean isObjectType = type instanceof ObjectType;
         if (isObjectType) {
-            ObjectType objType = (ObjectType)type;
+            ObjectType objType = (ObjectType) type;
             String typeName = objType.getClassName();
             if (!typeName.equals(currentFileClassname)) {
                 boolean isNested = typeName.contains("$");
@@ -669,13 +671,13 @@ public class DtsApi {
         methods.addAll(Arrays.asList(javaClass.getMethods()));
         methods.addAll(allInterfacesMethods);
 
-        for (Method m: methods) {
+        for (Method m : methods) {
             if ((m.isPublic() || m.isProtected()) && !m.isSynthetic()) {
                 members.add(m);
                 methodNames.add(m.getName());
             }
         }
-        for (Field f: javaClass.getFields()) {
+        for (Field f : javaClass.getFields()) {
             if ((f.isPublic() || f.isProtected()) && !f.isSynthetic() && !methodNames.contains(f.getName())) {
                 members.add(f);
             }
@@ -712,7 +714,7 @@ public class DtsApi {
         Field.setComparator(new BCELComparator() {
             @Override
             public boolean equals(Object o, Object o1) {
-                return ((Field)o).getName().equals(((Field) o1).getName());
+                return ((Field) o).getName().equals(((Field) o1).getName());
             }
 
             @Override

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 public class ClassRepo {
@@ -13,7 +14,8 @@ public class ClassRepo {
 	}
 
 	private static ArrayList<ClassMapProvider> cachedProviders = new ArrayList<ClassMapProvider>();
-	private static List<String> allSortedClasses = new ArrayList<String>();
+	private static HashSet<String> classesSet = new HashSet<>();
+	private static List<String> sortedClasses;
 	private static int traversedFilesIdx = 0;
 
 	public static void cacheJarFile(ClassMapProvider classMapProvider) {
@@ -21,20 +23,25 @@ public class ClassRepo {
 			for (ClassMapProvider cachedProvider : cachedProviders) {
 				JavaClass clazz = cachedProvider.getClassMap().get(className);
 				if (clazz != null) {
-					String errMsg = "Class " + className + " conflict: "
-							+ classMapProvider.getPath() + " and " + cachedProvider.getPath();
-					throw new IllegalArgumentException(errMsg);
+//					return;
+//					String errMsg = "Class " + className + " conflict: "
+//							+ classMapProvider.getPath() + " and " + cachedProvider.getPath();
+//					throw new IllegalArgumentException(errMsg);
 				}
 			}
 		}
+
 		cachedProviders.add(classMapProvider);
 	}
 
 	public static void sortCachedProviders() {
 		for(ClassMapProvider cmp : cachedProviders) {
-			allSortedClasses.addAll(cmp.getClassMap().keySet());
+			classesSet.addAll(cmp.getClassMap().keySet());
 		}
-		Collections.sort(allSortedClasses, new Comparator<String>() {
+
+		sortedClasses = new ArrayList<>(classesSet);
+
+		Collections.sort(sortedClasses, new Comparator<String>() {
 			@Override
 			public int compare(String className1, String className2) {
 				if(className1.startsWith(className2)) {
@@ -63,7 +70,7 @@ public class ClassRepo {
 		ArrayList<JavaClass> lst = new ArrayList<JavaClass>();
 		boolean first = true;
 
-		while ((traversedFilesIdx < allSortedClasses.size()) && keepGoing(first)) {
+		while ((traversedFilesIdx < sortedClasses.size()) && keepGoing(first)) {
 			JavaClass f = getCurrentJavaClass();
 			String name = f.getClassName();
 			if (!name.contains("$0") && !name.contains("$1")
@@ -82,11 +89,11 @@ public class ClassRepo {
 	}
 
 	public static boolean hasNext() {
-		return traversedFilesIdx < allSortedClasses.size();
+		return traversedFilesIdx < sortedClasses.size();
 	}
 
 	private static JavaClass getCurrentJavaClass() {
-		String currentClassName = allSortedClasses.get(traversedFilesIdx);
+		String currentClassName = sortedClasses.get(traversedFilesIdx);
 		return ClassRepo.findClass(currentClassName);
 	}
 
