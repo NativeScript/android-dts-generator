@@ -12,7 +12,7 @@ import java.io.PrintStream;
  * Created by plamen5kov on 6/17/16.
  */
 public class FileWriter {
-    private final String DEFAULT_DTS_FILE_NAME = "base";
+    private final String DEFAULT_DTS_FILE_NAME = "android";
 
     private String defaultDtsFileName;
     private boolean writeMultipleFiles;
