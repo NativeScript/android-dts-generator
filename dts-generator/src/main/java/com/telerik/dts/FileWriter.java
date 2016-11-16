@@ -56,10 +56,10 @@ public class FileWriter {
         }
     }
 
-    public void writeHelperTypings(String content) {
+    public void writeHelperTypings(String content, boolean append) {
         try {
                 String outFile = this.outDir.getAbsolutePath() + File.separator + "_helpers.d.ts";
-                this.ps = new PrintStream(new FileOutputStream(outFile, true));
+                this.ps = new PrintStream(new FileOutputStream(outFile, append));
 
                 this.ps.print(content);
                 this.ps.println();

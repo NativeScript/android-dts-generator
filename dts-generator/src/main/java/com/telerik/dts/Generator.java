@@ -41,7 +41,6 @@ public class Generator {
     }
 
     private void writeHelperTypings() {
-
         List<String> helperTypings = new ArrayList<>();
         helperTypings.add("declare module native {\n" +
                 "\texport class Array<T> {\n" +
@@ -49,8 +48,11 @@ public class Generator {
                 "\t}\n" +
                 "}\n");
 
+        boolean append = false;
+        
         for (String helper : helperTypings) {
-            this.fw.writeHelperTypings(helper);
+            this.fw.writeHelperTypings(helper, append);
+            append = true;
         }
     }
 
