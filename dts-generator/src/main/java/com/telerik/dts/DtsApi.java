@@ -33,13 +33,16 @@ public class DtsApi {
     private Set<String> baseMethodNames;
     private List<Method> baseMethods;
     private Map<String, Method> mapNameMethod;
+    private Map<String, String> aliasedTypes;
+    private String[] namespaceParts;
     private int indent = 0;
-
 
     public DtsApi() {
         this.indent = 0;
 
         overrideFieldComparator();
+
+        this.aliasedTypes = new HashMap<>();
     }
 
     public String generateDtsContent(List<JavaClass> javaClasses) {
@@ -63,6 +66,11 @@ public class DtsApi {
                         currentFileClassname.endsWith("package-info")) {
                     continue;
                 }
+
+                // check if processed class hijacks a namespace
+                // TODO: optimize
+
+                this.namespaceParts = currentFileClassname.split("\\.");
 
                 boolean isInterface = currClass.isInterface();
                 boolean isAbstract = currClass.isAbstract();
@@ -166,13 +174,48 @@ public class DtsApi {
             implementsSegmentSb.append(" implements ");
 
             for (JavaClass clazz : interfaces) {
-                implementsSegmentSb.append(clazz.getClassName().replaceAll("\\$", "\\.") + ", ");
+                String implementedInterface = clazz.getClassName().replaceAll("\\$", "\\.");
+                if(!typeBelongsInCurrentTopLevelNamespace(implementedInterface)) {
+                    implementedInterface = getAliasedClassName(implementedInterface);
+                }
+
+                implementsSegmentSb.append(implementedInterface + ", ");
             }
 
             implementsSegment = implementsSegmentSb.substring(0, implementsSegmentSb.lastIndexOf(","));
+
         }
 
-        return " extends " + superClass.getClassName().replaceAll("\\$", "\\.") + implementsSegment;
+        String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
+        if(!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
+            extendedClass = getAliasedClassName(extendedClass);
+        }
+
+        return " extends " + extendedClass + implementsSegment;
+    }
+
+    private String getAliasedClassName(String className) {
+        String aliasedType = aliasedTypes.get(className);
+        if (aliasedType == null) {
+            aliasedType = mangleClassname(className);
+            aliasedTypes.put(className, aliasedType);
+
+            sbHeaders.append("import ");
+            sbHeaders.append(aliasedType);
+            sbHeaders.append(" = ");
+            sbHeaders.append(className);
+            sbHeaders.appendln(";");
+        }
+
+        return aliasedType;
+    }
+
+    private boolean typeBelongsInCurrentTopLevelNamespace(String className) {
+        return className.startsWith(this.namespaceParts[0] + ".");
+    }
+
+    private String mangleClassname(String className) {
+        return className.replaceAll("\\.", "");
     }
 
     private int closePackage(JavaClass prevClass, JavaClass currClass) {
@@ -641,8 +684,12 @@ public class DtsApi {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
 
-            // TODO: Pete:
-            tsType.append(typeName);
+            if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.")) {
+                tsType.append(getAliasedClassName(typeName));
+            } else {
+                tsType.append(typeName);
+            }
+
             addReference(type);
         } else {
             throw new RuntimeException("Unhandled type=" + type.getSignature());
