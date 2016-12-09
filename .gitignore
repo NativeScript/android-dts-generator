@@ -1,11 +1,15 @@
 *.iml
 .gradle
 /local.properties
-.idea/**
+/dts-generator/.idea/workspace.xml
+/dts-generator/.idea/misc.xml
+/dts-generator/.idea/libraries
+/.idea/workspace.xml
+/.idea/libraries
 .DS_Store
 /build
 /captures
-sources
+
 /out
 /output
 /newApp

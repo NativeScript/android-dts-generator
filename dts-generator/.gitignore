@@ -1,7 +1,7 @@
 /build
 local.properties
-
-.idea
+.idea/gradle.xml
+.idea/modules.xml
 /out
 *.jar
 /**/*.d.ts
