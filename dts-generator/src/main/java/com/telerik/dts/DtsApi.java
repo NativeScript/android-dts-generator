@@ -393,6 +393,13 @@ public class DtsApi {
         String[] interfaceNames = classInterface.getInterfaceNames();
         for (String intface : interfaceNames) {
             JavaClass clazz1 = ClassRepo.findClass(intface);
+
+            // Added guard to prevent NullPointerExceptions in case libs are not provided - the dev can choose to include it and rerun the generator
+            if (clazz1 == null) {
+                System.out.println("ignoring definitions in missing dependency: " + intface);
+                continue;
+            }
+
             String className = clazz1.getClassName();
 
             // TODO: Pete: Hardcoded until we figure out how to go around the 'type incompatible with Object' issue
