@@ -22,7 +22,7 @@ public class FileWriter {
 
     public FileWriter(File outDir, boolean writeMultipleFiles) {
         this.writeMultipleFiles = writeMultipleFiles;
-        this.defaultDtsFileName = DEFAULT_DTS_FILE_NAME;
+        this.defaultDtsFileName = DEFAULT_DTS_FILE_NAME + java.util.UUID.randomUUID().toString();
         this.outDir = outDir;
     }
 
@@ -37,7 +37,7 @@ public class FileWriter {
                 String outFile = this.outDir.getAbsolutePath() + File.separator + this.defaultDtsFileName + ".d.ts";
                 this.ps = new PrintStream(new FileOutputStream(outFile, /*append*/true));
 
-                //add helpers reference to the top of the file
+                // add helpers reference to the top of the file
                 if(this.isFirstRun) {
                     ps.println("/// <reference path=\"./_helpers.d.ts\" />");
                     this.isFirstRun = false;
