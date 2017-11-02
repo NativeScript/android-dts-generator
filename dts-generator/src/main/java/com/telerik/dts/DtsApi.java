@@ -60,6 +60,8 @@ public class DtsApi {
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
 
+                String simpleClassName = getSimpleClassname(currClass);
+
                 if (currentFileClassname.startsWith("java.util.function") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr1") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr2") ||
@@ -84,12 +86,14 @@ public class DtsApi {
                 List<JavaClass> interfaces = getInterfaces(currClass);
                 String extendsLine = getExtendsLine(superClass, interfaces);
 
-                if (getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
+                if (simpleClassName.equals("AccessibilityDelegate")) {
                     sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + extendsLine + " {");
                 } else {
-                    sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + getSimpleClassname(currClass) + extendsLine + " {");
+                    sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + simpleClassName + extendsLine + " {");
                 }
                 // process member scope
+
+                mapNameMethod = new HashMap<String, Method>();
 
                 // process constructors for interfaces
                 if (isInterface) {
@@ -175,7 +179,7 @@ public class DtsApi {
 
             for (JavaClass clazz : interfaces) {
                 String implementedInterface = clazz.getClassName().replaceAll("\\$", "\\.");
-                if(!typeBelongsInCurrentTopLevelNamespace(implementedInterface)) {
+                if (!typeBelongsInCurrentTopLevelNamespace(implementedInterface)) {
                     implementedInterface = getAliasedClassName(implementedInterface);
                 }
 
@@ -187,7 +191,7 @@ public class DtsApi {
         }
 
         String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
-        if(!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
+        if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
             extendedClass = getAliasedClassName(extendedClass);
         }
 
@@ -441,6 +445,8 @@ public class DtsApi {
     private void processMethod(Method m, JavaClass clazz, boolean isInterface, Set<String> methodsSet) {
         String name = m.getName();
 
+        if (name.startsWith("zz")) return;
+
         if (m.isSynthetic() || (!m.isPublic() && !m.isProtected())) {
             return;
         }
@@ -498,8 +504,7 @@ public class DtsApi {
     }
 
     private void cacheMethodBySignature(Method m) {
-        mapNameMethod = new HashMap<String, Method>();
-        String currMethodSig = getMethodFullSignature(m);
+        String currMethodSig = m.getName();//getMethodFullSignature(m);
         if (!mapNameMethod.containsKey(currMethodSig)) {
             mapNameMethod.put(currMethodSig, m);
         }
@@ -613,6 +618,10 @@ public class DtsApi {
 
     //field related
     private void processField(Field f, JavaClass clazz) {
+        String fieldName = f.getName();
+
+        if (fieldName.startsWith("zz")) return;
+
         String tabs = getTabs(this.indent + 1);
         sbContent.append(tabs + "public ");
         if (f.isStatic()) {
@@ -652,7 +661,7 @@ public class DtsApi {
                 convertToTypeScriptType(type, sb);
                 tsType = sb.toString();
 
-                if (tsType.startsWith("java.util.function")) {
+                if (tsType.startsWith("java.util.function") || tsType.contains("zz")) {
                     tsType = "any /* " + tsType + "*/";
                 }
         }
@@ -691,7 +700,7 @@ public class DtsApi {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
 
-            if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.")) {
+            if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.") && !typeName.contains("zz")) {
                 tsType.append(getAliasedClassName(typeName));
             } else {
                 tsType.append(typeName);
