@@ -445,7 +445,7 @@ public class DtsApi {
     private void processMethod(Method m, JavaClass clazz, boolean isInterface, Set<String> methodsSet) {
         String name = m.getName();
 
-        if (name.startsWith("zz")) return;
+        if (isPrivateGoogleApiMember(name)) return;
 
         if (m.isSynthetic() || (!m.isPublic() && !m.isProtected())) {
             return;
@@ -504,9 +504,9 @@ public class DtsApi {
     }
 
     private void cacheMethodBySignature(Method m) {
-        String currMethodSig = m.getName();//getMethodFullSignature(m);
-        if (!mapNameMethod.containsKey(currMethodSig)) {
-            mapNameMethod.put(currMethodSig, m);
+        String methodName = m.getName();
+        if (!mapNameMethod.containsKey(methodName)) {
+            mapNameMethod.put(methodName, m);
         }
     }
 
@@ -620,7 +620,7 @@ public class DtsApi {
     private void processField(Field f, JavaClass clazz) {
         String fieldName = f.getName();
 
-        if (fieldName.startsWith("zz")) return;
+        if (isPrivateGoogleApiMember(fieldName)) return;
 
         String tabs = getTabs(this.indent + 1);
         sbContent.append(tabs + "public ");
@@ -661,7 +661,7 @@ public class DtsApi {
                 convertToTypeScriptType(type, sb);
                 tsType = sb.toString();
 
-                if (tsType.startsWith("java.util.function") || tsType.contains("zz")) {
+                if (tsType.startsWith("java.util.function") || isPrivateGoogleApiClass(tsType)) {
                     tsType = "any /* " + tsType + "*/";
                 }
         }
@@ -700,7 +700,7 @@ public class DtsApi {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
 
-            if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.") && !typeName.contains("zz")) {
+            if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.") && !isPrivateGoogleApiClass(typeName)) {
                 tsType.append(getAliasedClassName(typeName));
             } else {
                 tsType.append(typeName);
@@ -770,6 +770,15 @@ public class DtsApi {
     private String getTabs(int count) {
         String tabs = new String(new char[count]).replace("\0", "\t");
         return tabs;
+    }
+
+    private boolean isPrivateGoogleApiMember(String memberName) {
+        return memberName.startsWith("zz");
+    }
+
+    private boolean isPrivateGoogleApiClass(String name) {
+        String[] classNameParts = name.replace('$', '.').split("\\.");
+        return classNameParts.length > 0 && classNameParts[classNameParts.length - 1].startsWith("zz");
     }
 
     private void overrideFieldComparator() {
