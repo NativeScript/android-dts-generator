@@ -49,7 +49,7 @@ public class Generator {
                 "}\n");
 
         boolean append = false;
-        
+
         for (String helper : helperTypings) {
             this.fw.writeHelperTypings(helper, append);
             append = true;
