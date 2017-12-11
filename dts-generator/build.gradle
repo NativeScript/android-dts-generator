@@ -13,3 +13,10 @@ jar {
         attributes 'Main-Class': 'com.telerik.Main'
     }
 }
+
+task copyJarToBuildTools (type: Copy) {
+    from "$projectDir/build/libs/dts-generator.jar"
+    into "$rootDir/build-tools"
+}
+
+jar.finalizedBy(copyJarToBuildTools)
