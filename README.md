@@ -12,7 +12,7 @@ A tool that generates TypeScript declaration files (.d.ts) from Jars
 
 
 ## Prerequisites
-- [Gradle](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper)
+- [Gradle](https://docs.gradle.org/current/userguide/gradle_wrapper.html)
 - Built gradle wrapper. [Read more](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper)
 
 
