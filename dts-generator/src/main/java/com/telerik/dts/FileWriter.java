@@ -22,7 +22,7 @@ public class FileWriter {
 
     public FileWriter(File outDir, boolean writeMultipleFiles) {
         this.writeMultipleFiles = writeMultipleFiles;
-        this.defaultDtsFileName = DEFAULT_DTS_FILE_NAME + java.util.UUID.randomUUID().toString();
+        this.defaultDtsFileName = DEFAULT_DTS_FILE_NAME; // + java.util.UUID.randomUUID().toString();
         this.outDir = outDir;
     }
 
