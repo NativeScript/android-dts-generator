@@ -9,6 +9,7 @@ A tool that generates TypeScript declaration files (.d.ts) from Jars
  - Classes returning values of Type in the package `java.util.function` will return `any` instead
  - Classes using methods with parameters of Type in the package `java.util.function` will take `any` instead
  - Classes implementing `java.util.Iterator`, `android.animation.TypeEvaluator`, `java.lang.Comparable` do not implement those interfaces in the generated definitions for compatibility-related issues
+ - On OSX you need to run ```./gradlew jar``` and change "\" to "/"
 
 
 ## Prerequisites
