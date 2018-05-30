@@ -21,7 +21,7 @@ public class Generator {
     public void start(InputParameters inputParameters) throws IOException {
         outFolder = inputParameters.getOutputDir();
         this.fw = new FileWriter(inputParameters.getOutputDir(), inputParameters.isGenerateMultipleFiles());
-        this.dtsApi = new DtsApi();
+        this.dtsApi = new DtsApi(inputParameters.isGenerateMultipleFiles());
 
         loadJavaClasses(inputParameters.getInputJars());
         ClassRepo.sortCachedProviders();
