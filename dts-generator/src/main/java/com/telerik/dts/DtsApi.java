@@ -36,8 +36,10 @@ public class DtsApi {
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
     private int indent = 0;
+    private boolean writeMultipleFiles;
 
-    public DtsApi() {
+    public DtsApi(boolean writeMultipleFiles) {
+        this.writeMultipleFiles = writeMultipleFiles;
         this.indent = 0;
 
         overrideFieldComparator();
@@ -157,10 +159,12 @@ public class DtsApi {
             String[] refs = references.toArray(new String[references.size()]);
             Arrays.sort(refs);
 
-            for (String r : refs) {
-                sbHeaders.append("/// <reference path=\"./");
-                sbHeaders.append(r);
-                sbHeaders.appendln(".d.ts\" />");
+            if(this.writeMultipleFiles) {
+                for (String r : refs) {
+                    sbHeaders.append("/// <reference path=\"./");
+                    sbHeaders.append(r);
+                    sbHeaders.appendln(".d.ts\" />");
+                }
             }
         }
 

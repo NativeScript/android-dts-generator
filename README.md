@@ -47,3 +47,9 @@ Rename classes.jar if necessary
 ```shell
 java -jar build\libs\dts-generator.jar -input classes.jar dependency-of-classes-jar.jar
 ```
+
+## Support libraries
+In the [lib](lib) folder there are android support libraries jars which are get from the following git repos:
+* [android-support-v4](https://github.com/dandar3/android-support-v4/tree/master/libs)
+* [android-support-v7-appcompat](https://github.com/dandar3/android-support-v7-appcompat/tree/master/libs)
+* [android-support-design](https://github.com/dandar3/android-support-design/tree/master/libs)

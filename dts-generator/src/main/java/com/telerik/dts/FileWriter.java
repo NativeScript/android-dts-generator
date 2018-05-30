@@ -18,7 +18,6 @@ public class FileWriter {
     private boolean writeMultipleFiles;
     private PrintStream ps;
     private File outDir;
-    private boolean isFirstRun = true;
 
     public FileWriter(File outDir, boolean writeMultipleFiles) {
         this.writeMultipleFiles = writeMultipleFiles;
@@ -37,12 +36,6 @@ public class FileWriter {
                 String outFile = this.outDir.getAbsolutePath() + File.separator + this.defaultDtsFileName + ".d.ts";
                 this.ps = new PrintStream(new FileOutputStream(outFile, /*append*/true));
 
-                // add helpers reference to the top of the file
-                if(this.isFirstRun) {
-                    ps.println("/// <reference path=\"./_helpers.d.ts\" />");
-                    this.isFirstRun = false;
-                }
-
                 this.ps.print(content);
                 this.ps.println();
             }
@@ -58,11 +51,12 @@ public class FileWriter {
 
     public void writeHelperTypings(String content, boolean append) {
         try {
-                String outFile = this.outDir.getAbsolutePath() + File.separator + "_helpers.d.ts";
-                this.ps = new PrintStream(new FileOutputStream(outFile, append));
+            String outFile = this.outDir.getAbsolutePath() + File.separator +
+                (this.writeMultipleFiles ? "_helpers.d.ts": (this.defaultDtsFileName + ".d.ts"));
+            this.ps = new PrintStream(new FileOutputStream(outFile, append));
 
-                this.ps.print(content);
-                this.ps.println();
+            this.ps.print(content);
+            this.ps.println();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
