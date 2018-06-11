@@ -1,12 +1,15 @@
 package com.telerik.dts;
 
+import org.apache.bcel.classfile.Attribute;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.FieldOrMethod;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
+import org.apache.bcel.classfile.Signature;
 import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ObjectType;
+import org.apache.bcel.generic.ReferenceType;
 import org.apache.bcel.generic.Type;
 import org.apache.bcel.util.BCELComparator;
 
@@ -20,6 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import edu.umd.cs.findbugs.ba.generic.GenericObjectType;
+import edu.umd.cs.findbugs.ba.generic.GenericUtilities;
 
 /**
  * Created by plamen5kov on 6/17/16.
@@ -37,6 +45,7 @@ public class DtsApi {
     private String[] namespaceParts;
     private int indent = 0;
     private boolean writeMultipleFiles;
+    private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
 
     public DtsApi(boolean writeMultipleFiles) {
         this.writeMultipleFiles = writeMultipleFiles;
@@ -47,7 +56,7 @@ public class DtsApi {
         this.aliasedTypes = new HashMap<>();
     }
 
-    public String generateDtsContent(List<JavaClass> javaClasses) {
+    public String generateDtsContent(List<JavaClass> javaClasses){
         this.prevClass = null;
 
         if ((javaClasses != null) && (javaClasses.size() > 0)) {
@@ -63,6 +72,12 @@ public class DtsApi {
                 currentFileClassname = currClass.getClassName();
 
                 String simpleClassName = getSimpleClassname(currClass);
+
+                Signature signature = this.getSignature(currClass);
+                TypeDefinition typeDefinition = null;
+                if(signature != null) {
+                    typeDefinition = new TypeDefinition(signature.getSignature(), currentFileClassname);
+                }
 
                 if (currentFileClassname.startsWith("java.util.function") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr1") ||
@@ -84,12 +99,10 @@ public class DtsApi {
 
                 String tabs = getTabs(this.indent);
 
-                JavaClass superClass = getSuperClass(currClass);
-                List<JavaClass> interfaces = getInterfaces(currClass);
-                String extendsLine = getExtendsLine(superClass, interfaces);
+                String extendsLine = getExtendsLine(currClass, typeDefinition);
 
                 if (simpleClassName.equals("AccessibilityDelegate")) {
-                    sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + extendsLine + " {");
+                    sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass, typeDefinition) + extendsLine + " {");
                 } else {
                     sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + simpleClassName + extendsLine + " {");
                 }
@@ -148,7 +161,7 @@ public class DtsApi {
 
                 sbContent.appendln(tabs + "}");
                 if (getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
-                    String innerClassAlias = "export type " + getSimpleClassname(currClass) + " = " + getFullClassNameConcatenated(currClass);
+                    String innerClassAlias = "export type " + getSimpleClassname(currClass) + " = " + getFullClassNameConcatenated(currClass, typeDefinition);
                     sbContent.appendln(tabs + innerClassAlias);
                 }
                 this.prevClass = currClass;
@@ -171,11 +184,31 @@ public class DtsApi {
         return sbHeaders.toString() + sbContent.toString();
     }
 
-    private String getExtendsLine(JavaClass superClass, List<JavaClass> interfaces) {
-        if (superClass == null) {
-            return "";
-        }
+    private String getExtendsLine(JavaClass currClass, TypeDefinition typeDefinition) {
+        if (typeDefinition != null) {
+            StringBuilder result = new StringBuilder();
+            ReferenceType parent = typeDefinition.getParent();
+            if(parent != null) {
+                result.append(" extends ");
+                result.append(getTypeScriptTypeFromJavaType(parent));
+            }
+            List<ReferenceType> interfaces = typeDefinition.getInterfaces();
+            if(interfaces.size() > 0) {
+                result.append(" implements ");
 
+                for (ReferenceType referenceType : interfaces) {
+                    result.append(getTypeScriptTypeFromJavaType(referenceType) + ", ");
+                }
+                result.deleteCharAt(result.lastIndexOf(","));
+            }
+            return result.toString();
+        }
+        JavaClass superClass = getSuperClass(currClass);
+        List<JavaClass> interfaces = getInterfaces(currClass);
+        return getExtendsLine(superClass, interfaces);
+    }
+
+    private String getExtendsLine(JavaClass superClass, List<JavaClass> interfaces) {
         StringBuilder implementsSegmentSb = new StringBuilder();
         String implementsSegment = "";
         if (interfaces.size() > 0) {
@@ -194,7 +227,9 @@ public class DtsApi {
 
         }
 
-        String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
+        String extendedClass = superClass != null ?
+                superClass.getClassName().replaceAll("\\$", "\\.") : "java.lang.Object";
+
         if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
             extendedClass = getAliasedClassName(extendedClass);
         }
@@ -338,7 +373,7 @@ public class DtsApi {
             sbContent.append(getTabs(this.indent + 2) + getMethodName(m) + getMethodParamSignature(classInterface, m));
             String bmSig = "";
             if (!isConstructor(m)) {
-                bmSig += ": " + getTypeScriptTypeFromJavaType(classInterface, m.getReturnType());
+                bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(m));
             }
             sbContent.appendln(bmSig + ";");
         }
@@ -424,6 +459,18 @@ public class DtsApi {
         return interfaces;
     }
 
+//    private List<String> getSignatureInterfaces(Signature signature) {
+//        if(signature == null) {
+//            return null;
+//        }
+//
+//        List<String> interfaces = new ArrayList<>();
+//        Matcher matcher = typeSignature.matcher(signature.getSignature());
+//        if(!matcher.matches()) {
+//            return  null;
+//        }
+//    }
+
     private List<Method> getAllInterfacesMethods(Collection<JavaClass> interfaces) {
         ArrayList<Method> allInterfacesMethods = new ArrayList<>();
 
@@ -493,12 +540,67 @@ public class DtsApi {
         sbTemp.append(getMethodName(m) + getMethodParamSignature(clazz, m));
         String bmSig = "";
         if (!isConstructor(m)) {
-            bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, m.getReturnType());
+            bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(m));
         }
 
         sbTemp.append(bmSig + ";");
 
         return sbTemp.toString();
+    }
+
+    private Signature getSignature(FieldOrMethod fieldOrMethod) {
+        for (Attribute attribute : fieldOrMethod.getAttributes()) {
+            if (attribute instanceof Signature) {
+                return (Signature) attribute;
+            }
+        }
+        return null;
+    }
+
+    private Signature getSignature(JavaClass clazz) {
+        for (Attribute attribute : clazz.getAttributes()) {
+            if (attribute instanceof Signature) {
+                return (Signature) attribute;
+            }
+        }
+        return null;
+    }
+
+    private Type[] getArgumentTypes(Method m) {
+        Signature signature = this.getSignature(m);
+        if(signature != null) {
+            Matcher matcher = methodSignature.matcher(signature.getSignature());
+            if(matcher.matches()) {
+                String argumentsSignature = matcher.group(1);
+                if(argumentsSignature.equals("")){
+                    return m.getArgumentTypes();
+                }
+                try {
+                    List<ReferenceType> referenceTypes = GenericUtilities.getTypeParameters(argumentsSignature);
+                    Type[] types = new Type[referenceTypes.size()];
+                    types = referenceTypes.toArray(types);
+                    return types;
+                } catch (ClassCastException classCast) {
+                    return m.getArgumentTypes();
+                }
+            }
+        }
+        return m.getArgumentTypes();
+    }
+
+    private Type getReturnType(Method m) {
+        Signature signature = this.getSignature(m);
+        if(signature != null) {
+            Matcher matcher = methodSignature.matcher(signature.getSignature());
+            if(matcher.matches()) {
+                String returnSignature = matcher.group(2);
+                if(returnSignature.equals("V")){
+                    return m.getReturnType(); // returning void
+                }
+                return GenericUtilities.getType(returnSignature);
+            }
+        }
+        return m.getReturnType();
     }
 
     private void writeMethods(Set<String> methodsSet) {
@@ -595,9 +697,10 @@ public class DtsApi {
 
     private String getMethodParamSignature(JavaClass clazz, Method m) {
         StringBuilder sb = new StringBuilder();
+        Signature signature = this.getSignature(m);
         sb.append("(");
         int idx = 0;
-        for (Type type : m.getArgumentTypes()) {
+        for (Type type : this.getArgumentTypes(m)) {
             if (idx > 0) {
                 sb.append(", ");
             }
@@ -605,7 +708,7 @@ public class DtsApi {
             sb.append(idx++);
             sb.append(": ");
 
-            String paramTypeName = getTypeScriptTypeFromJavaType(clazz, type);
+            String paramTypeName = getTypeScriptTypeFromJavaType(type);
 
             // TODO: Pete:
             if (paramTypeName.startsWith("java.util.function")) {
@@ -631,10 +734,10 @@ public class DtsApi {
         if (f.isStatic()) {
             sbContent.append("static ");
         }
-        sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(clazz, f.getType()) + ";");
+        sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(f.getType()) + ";");
     }
 
-    private String getTypeScriptTypeFromJavaType(JavaClass clazz, Type type) {
+    private String getTypeScriptTypeFromJavaType(Type type) {
         String tsType;
         String typeSig = type.getSignature();
 
@@ -710,6 +813,19 @@ public class DtsApi {
                 tsType.append(typeName);
             }
 
+            if(type instanceof GenericObjectType) {
+                GenericObjectType genericType = (GenericObjectType) type;
+                if (genericType.getNumParameters() > 0) {
+                    tsType.append("<");
+                    for (ReferenceType refType: genericType.getParameters()){
+                        this.convertToTypeScriptType(refType, tsType);
+                        tsType.append(',');
+                    }
+                    tsType.deleteCharAt(tsType.lastIndexOf(","));
+                    tsType.append(">");
+                }
+            }
+
             addReference(type);
         } else {
             throw new RuntimeException("Unhandled type=" + type.getSignature());
@@ -766,8 +882,13 @@ public class DtsApi {
         return parts[parts.length - 1];
     }
 
-    private String getFullClassNameConcatenated(JavaClass javaClass) {
+    private String getFullClassNameConcatenated(JavaClass javaClass, TypeDefinition typeDefinition) {
         String fullName = javaClass.getClassName().replaceAll("[$.]", "");
+        if(typeDefinition != null) {
+            for (TypeDefinition.GenericDefinition definition: typeDefinition.getGenericDefinitions()) {
+
+            }
+        }
         return fullName;
     }
 
