@@ -1,5 +1,10 @@
 apply plugin: 'java'
 
+repositories {
+    google()
+    jcenter()
+}
+
 dependencies {
     compile 'org.apache.bcel:bcel:6.2'
     compile 'commons-io:commons-io:2.6'
