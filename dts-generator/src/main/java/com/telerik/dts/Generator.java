@@ -6,6 +6,7 @@ import org.apache.bcel.classfile.JavaClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +18,13 @@ public class Generator {
     private static File outFolder;
     private FileWriter fw;
     private DtsApi dtsApi;
+    private boolean usingMultipleFiles;
 
     public void start(InputParameters inputParameters) throws IOException {
         outFolder = inputParameters.getOutputDir();
-        this.fw = new FileWriter(inputParameters.getOutputDir(), inputParameters.isGenerateMultipleFiles());
-        this.dtsApi = new DtsApi(inputParameters.isGenerateMultipleFiles());
+        usingMultipleFiles = inputParameters.isGenerateMultipleFiles();
+        this.fw = new FileWriter(inputParameters.getOutputDir(), usingMultipleFiles);
+        this.dtsApi = new DtsApi(usingMultipleFiles);
 
         loadJavaClasses(inputParameters.getInputJars());
         ClassRepo.sortCachedProviders();
@@ -32,11 +35,33 @@ public class Generator {
     private void generateDts() {
         writeHelperTypings();
 
+        List<String> outputFiles = new ArrayList<>();
+
         while (ClassRepo.hasNext()) {
             List<JavaClass> classFiles = ClassRepo.getNextClassGroup();
             String generatedContent = this.dtsApi.generateDtsContent(classFiles);
 
             this.fw.write(generatedContent, classFiles.get(0).getFileName()/*fileName*/);
+
+            outputFiles.add(classFiles.get(0).getFileName());
+        }
+
+        if(!usingMultipleFiles) {
+            outputFiles = new ArrayList<>();
+            outputFiles.add(FileWriter.DEFAULT_DTS_FILE_NAME);
+        }
+
+
+        // look for generics which are used without passing generic types and add javalangObject as their generic type
+        for(String fileName: outputFiles) {
+            String fullName = fileName + ".d.ts";
+            String content = this.fw.readFileContent(fullName);
+            if(content != null) {
+                String replacedContent = DtsApi.replaceGenericsInText(content);
+                if(!content.equals(replacedContent)) {
+                    this.fw.writeToFile(replacedContent, fileName, false);
+                }
+            }
         }
     }
 

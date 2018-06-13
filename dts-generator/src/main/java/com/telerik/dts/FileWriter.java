@@ -6,13 +6,16 @@ import org.omg.CORBA.Environment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.util.List;
 
 /**
  * Created by plamen5kov on 6/17/16.
  */
 public class FileWriter {
-    private final String DEFAULT_DTS_FILE_NAME = "android";
+    public static final String DEFAULT_DTS_FILE_NAME = "android";
 
     private String defaultDtsFileName;
     private boolean writeMultipleFiles;
@@ -26,26 +29,48 @@ public class FileWriter {
     }
 
     public void write(String content, String fileName) {
-        try {
-            if(this.writeMultipleFiles) {
+        if(this.writeMultipleFiles) {
+            try {
+
                 this.ps = new PrintStream(new File(this.outDir.getAbsolutePath(), fileName + ".d.ts"));
                 ps.println("/// <reference path=\"./_helpers.d.ts\" />");
                 this.ps.print(content);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                if (this.ps != null) {
+                    this.ps.close();
+                }
             }
-            else {
-                String outFile = this.outDir.getAbsolutePath() + File.separator + this.defaultDtsFileName + ".d.ts";
-                this.ps = new PrintStream(new FileOutputStream(outFile, /*append*/true));
+        } else {
+            this.writeToFile(content, this.defaultDtsFileName, true);
+        }
+    }
 
-                this.ps.print(content);
-                this.ps.println();
-            }
+    public void writeToFile(String content, String fileName, Boolean append) {
+        try {
+            String outFile = this.outDir.getAbsolutePath() + File.separator + fileName + ".d.ts";
+            this.ps = new PrintStream(new FileOutputStream(outFile, /*append*/append));
+
+            this.ps.print(content);
+            this.ps.println();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         finally {
             if(this.ps != null) {
                 this.ps.close();
             }
+        }
+    }
+
+    public String readFileContent(String fileName) {
+        try {
+            List<String> lines = Files.readAllLines(new File(this.outDir.getAbsolutePath(), fileName).toPath());
+            return String.join("\n", lines.toArray(new String[lines.size()]));
+        } catch (IOException ex) {
+            return null;
         }
     }
 

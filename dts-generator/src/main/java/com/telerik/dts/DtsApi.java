@@ -33,6 +33,8 @@ import edu.umd.cs.findbugs.ba.generic.GenericUtilities;
  * Created by plamen5kov on 6/17/16.
  */
 public class DtsApi {
+    public static List<Tuple<String, Integer>> generics = new ArrayList<>();
+
     private StringBuilder2 sbContent;
     private StringBuilder2 sbHeaders;
     private Set<String> references;
@@ -102,9 +104,9 @@ public class DtsApi {
                 String extendsLine = getExtendsLine(currClass, typeDefinition);
 
                 if (simpleClassName.equals("AccessibilityDelegate")) {
-                    sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass, typeDefinition) + extendsLine + " {");
+                    sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + getTypeSuffix(currentFileClassname, typeDefinition) + extendsLine + " {");
                 } else {
-                    sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + simpleClassName + extendsLine + " {");
+                    sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + simpleClassName + getTypeSuffix(currentFileClassname, typeDefinition) + extendsLine + " {");
                 }
                 // process member scope
 
@@ -161,7 +163,7 @@ public class DtsApi {
 
                 sbContent.appendln(tabs + "}");
                 if (getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
-                    String innerClassAlias = "export type " + getSimpleClassname(currClass) + " = " + getFullClassNameConcatenated(currClass, typeDefinition);
+                    String innerClassAlias = "export type " + getSimpleClassname(currClass) + " = " + getFullClassNameConcatenated(currClass);
                     sbContent.appendln(tabs + innerClassAlias);
                 }
                 this.prevClass = currClass;
@@ -182,6 +184,35 @@ public class DtsApi {
         }
 
         return sbHeaders.toString() + sbContent.toString();
+    }
+
+    // Adds javalangObject types to all generics which are used without types
+    public static String replaceGenericsInText(String content) {
+        String javalangObject = "javalangObject";
+        String javalangObjectImport = "import javalangObject = java.lang.Object;";
+        String result = content;
+        if(result.indexOf(javalangObjectImport) < 0) {
+            result = javalangObjectImport + "\n" + result;
+        }
+
+        for(Tuple<String, Integer> generic: generics) {
+            Pattern usedAsNonGenericPattern = Pattern.compile("(?<Prefix>[^a-zA-Z\\d\\s:]*)" + generic.x.replace(".", "\\.") + "(?<Suffix>[^\\.^\\$^\\<])");
+            Matcher matcher = usedAsNonGenericPattern.matcher(result);
+            if(matcher.find()) {
+                List<String> arguments = new ArrayList<>();
+                for (int i = 0; i < generic.y; i++) {
+                    arguments.add(javalangObject);
+                }
+                String classSuffix = "<" + String.join(",", arguments) + ">";
+
+                System.out.println(String.format("Appending %s to occurrences of class %s without passed generic types", classSuffix, generic.x));
+
+                String replaceString = String.format("$1%s%s$2", generic.x, classSuffix);
+                result = matcher.replaceAll(replaceString);
+            }
+        }
+
+        return result;
     }
 
     private String getExtendsLine(JavaClass currClass, TypeDefinition typeDefinition) {
@@ -459,18 +490,6 @@ public class DtsApi {
         return interfaces;
     }
 
-//    private List<String> getSignatureInterfaces(Signature signature) {
-//        if(signature == null) {
-//            return null;
-//        }
-//
-//        List<String> interfaces = new ArrayList<>();
-//        Matcher matcher = typeSignature.matcher(signature.getSignature());
-//        if(!matcher.matches()) {
-//            return  null;
-//        }
-//    }
-
     private List<Method> getAllInterfacesMethods(Collection<JavaClass> interfaces) {
         ArrayList<Method> allInterfacesMethods = new ArrayList<>();
 
@@ -588,6 +607,24 @@ public class DtsApi {
         return m.getArgumentTypes();
     }
 
+    // gets the full field type including generic types
+    private Type getFieldType(Field f) {
+        Signature signature = this.getSignature(f);
+        if(signature != null) {
+            String typeSignature = signature.getSignature();
+            if(typeSignature.equals("")){
+                return f.getType();
+            }
+            try {
+                return GenericUtilities.getType(typeSignature);
+            } catch (ClassCastException classCast) {
+                return f.getType();
+            }
+        }
+        return f.getType();
+    }
+
+    // gets the full method return type including generic types
     private Type getReturnType(Method m) {
         Signature signature = this.getSignature(m);
         if(signature != null) {
@@ -697,7 +734,6 @@ public class DtsApi {
 
     private String getMethodParamSignature(JavaClass clazz, Method m) {
         StringBuilder sb = new StringBuilder();
-        Signature signature = this.getSignature(m);
         sb.append("(");
         int idx = 0;
         for (Type type : this.getArgumentTypes(m)) {
@@ -734,7 +770,7 @@ public class DtsApi {
         if (f.isStatic()) {
             sbContent.append("static ");
         }
-        sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(f.getType()) + ";");
+        sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f)) + ";");
     }
 
     private String getTypeScriptTypeFromJavaType(Type type) {
@@ -882,14 +918,31 @@ public class DtsApi {
         return parts[parts.length - 1];
     }
 
-    private String getFullClassNameConcatenated(JavaClass javaClass, TypeDefinition typeDefinition) {
+    private String getFullClassNameConcatenated(JavaClass javaClass) {
         String fullName = javaClass.getClassName().replaceAll("[$.]", "");
-        if(typeDefinition != null) {
-            for (TypeDefinition.GenericDefinition definition: typeDefinition.getGenericDefinitions()) {
-
-            }
-        }
         return fullName;
+    }
+
+    // gets the suffix like <T extends javalangComparable<T>>
+    private String getTypeSuffix(String fullClassName, TypeDefinition typeDefinition) {
+        if(typeDefinition == null) {
+            return "";
+        }
+        List<TypeDefinition.GenericDefinition> genericDefinitions = typeDefinition.getGenericDefinitions();
+        if(genericDefinitions != null) {
+            List<String> parts = new ArrayList<>();
+            this.generics.add(new Tuple<>(fullClassName, genericDefinitions.size()));
+            for (TypeDefinition.GenericDefinition definition: genericDefinitions) {
+                ObjectType genericObjectType = (ObjectType)definition.getType();
+                String baseClassName = getAliasedClassName(genericObjectType.getClassName());
+                String resultType = definition.getType().toString();
+                String typeToExtend = resultType.replace(genericObjectType.getClassName(), baseClassName);
+                parts.add(String.format("%s extends %s", definition.getLabel(), typeToExtend));
+            }
+            return "<" + String.join(", ", parts) + "> ";
+        } else {
+            return "";
+        }
     }
 
     private String getTabs(int count) {

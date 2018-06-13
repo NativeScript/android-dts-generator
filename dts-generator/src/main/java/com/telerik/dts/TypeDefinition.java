@@ -29,6 +29,14 @@ public class TypeDefinition {
             this.label = label;
             this.type = type;
         }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public Type getType() {
+            return type;
+        }
     }
 
     public TypeDefinition(String signature, String className) {
