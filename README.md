@@ -20,14 +20,14 @@ Generate definitions following any of the approaches described below. Once you h
 ## Generate definitons for Android SDK
 ```shell
 cd dts-generator
-gradlew jar
+./gradlew jar
 java -jar build\libs\dts-generator.jar -input %ANDROID_HOME%\platforms\android-<Platform Level (21/22/23/24)>\android.jar
 ```
 
 ## Generate definitions for any Jar
 ```shell
 cd dts-generator
-gradlew jar
+./gradlew jar
 java -jar build\libs\dts-generator.jar -input <Path to your Jar>
 ```
 
