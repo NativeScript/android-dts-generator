@@ -34,7 +34,7 @@ java -jar build\libs\dts-generator.jar -input <Path to your Jar>
 ## Pass multiple jars to generator
 ```shell
 cd dts-generator
-gradlew jar
+./gradlew jar
 java -jar build\libs\dts-generator.jar -input <jar1> <jar2> <jar3>
 ```
 
