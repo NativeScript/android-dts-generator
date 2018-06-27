@@ -13,7 +13,8 @@ import edu.umd.cs.findbugs.ba.generic.GenericUtilities;
 
 public class TypeDefinition {
     private static Pattern typeSignature = Pattern.compile("^(<(?<TypeGenerics>.*)>)?(?<Interfaces>L.*)$");
-    private static Pattern extendsGenericType = Pattern.compile("(?<GenericLetter>\\w+)\\:+(?<GenericType>L.*?(?=;\\w+|;$))");
+    //private static Pattern extendsGenericType = Pattern.compile("(?<GenericLetter>\\w+)\\:+(?<GenericType>L.*?(?=;\\w+|;$))");
+    private static Pattern extendsGenericType = Pattern.compile("(?<GenericLetter>\\w+)\\:+(?<GenericType>L.*?(?=(?=;\\w+|;$)|(?=<.*>)))");
 
     private String signature;
     private String className;

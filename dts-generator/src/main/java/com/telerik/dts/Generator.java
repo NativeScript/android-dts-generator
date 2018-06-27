@@ -16,15 +16,21 @@ import java.util.List;
 public class Generator {
 
     private static File outFolder;
+    private static File inputGenericsFile;
     private FileWriter fw;
     private DtsApi dtsApi;
     private boolean usingMultipleFiles;
+    private boolean generateGenericImplements;
+    private boolean useClassAliases;
 
-    public void start(InputParameters inputParameters) throws IOException {
+    public void start(InputParameters inputParameters) throws Exception {
         outFolder = inputParameters.getOutputDir();
+        inputGenericsFile = inputParameters.getInputGenerics();
         usingMultipleFiles = inputParameters.isGenerateMultipleFiles();
+        generateGenericImplements = inputParameters.isGenerateGenericImplementsEnabled();
+        useClassAliases = inputParameters.isUseClassAliasesEnabled();
         this.fw = new FileWriter(inputParameters.getOutputDir(), usingMultipleFiles);
-        this.dtsApi = new DtsApi(usingMultipleFiles);
+        this.dtsApi = new DtsApi(usingMultipleFiles, generateGenericImplements, useClassAliases);
 
         loadJavaClasses(inputParameters.getInputJars());
         ClassRepo.sortCachedProviders();
@@ -32,8 +38,12 @@ public class Generator {
         generateDts();
     }
 
-    private void generateDts() {
+    private void generateDts() throws Exception {
         writeHelperTypings();
+
+        if(inputGenericsFile != null){
+            DtsApi.loadGenerics(inputGenericsFile);
+        }
 
         List<String> outputFiles = new ArrayList<>();
 
@@ -51,17 +61,22 @@ public class Generator {
             outputFiles.add(FileWriter.DEFAULT_DTS_FILE_NAME);
         }
 
-
         // look for generics which are used without passing generic types and add javalangObject as their generic type
         for(String fileName: outputFiles) {
             String fullName = fileName + ".d.ts";
             String content = this.fw.readFileContent(fullName);
             if(content != null) {
-                String replacedContent = DtsApi.replaceGenericsInText(content);
+                String replacedContent = DtsApi.replaceGenericsInText(content, this.useClassAliases);
                 if(!content.equals(replacedContent)) {
                     this.fw.writeToFile(replacedContent, fileName, false);
                 }
+
+                String serializedGenerics = DtsApi.serializeGenerics();
+                if(!serializedGenerics.equals("")) {
+                    this.fw.writeToFile(serializedGenerics, fileName, true);
+                }
             }
+
         }
     }
 
@@ -91,6 +106,8 @@ public class Generator {
                     ClassDirectrory dir = ClassDirectrory.readDirectory(file.getAbsolutePath());
                     ClassRepo.cacheJarFile(dir);
                 }
+            } else {
+                throw new IOException(String.format("File %s does not exist", file.getName()));
             }
         }
     }
