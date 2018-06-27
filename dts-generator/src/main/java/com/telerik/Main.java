@@ -15,12 +15,9 @@ public class Main {
     // to know how many generic types uses a given generic
 	private static final String INPUT_GENERICS = "-input-generics";
 
-	private static final String GENERATE_MULTIPLE_FILES = "-generate-multiple";
-
-    // whether to generate implements for all interfaces implemented by the generic types
+	// whether to generate implements for all interfaces implemented by the generic types
     private static final String GENERATE_GENERIC_IMPLEMENTS = "-generate-generic-implements";
 
-	private static final String USE_CLASS_ALIASES = "-use-class-aliases";
 	private static final String HELP = "-help";
 
 	public static void main(String[] args) throws Exception {
@@ -46,16 +43,8 @@ public class Main {
 					printHelpMessage();
 				}
 
-				if (commandArg.equals(GENERATE_MULTIPLE_FILES)) {
-					inputParameters.setGenerateMultipleFiles(true);
-				}
-
 				if (commandArg.equals(GENERATE_GENERIC_IMPLEMENTS)) {
 					inputParameters.setGenerateGenericImplements(true);
-				}
-
-				if (commandArg.equals(USE_CLASS_ALIASES)) {
-					inputParameters.setUseClassAliases(true);
 				}
 
 				if (commandArg.equals(OUT_DIR)) {
@@ -99,8 +88,8 @@ public class Main {
 		helpMessage.appendln("flags:\t\t");
 		helpMessage.appendln("\t(Optional)");
 		helpMessage.appendln("\t\t[-output <path>]:\tThe direcory the d.ts files will be generated in.");
-		helpMessage.appendln("\t\t[-input]:\t\tThe input jars or class directories from which the d.ts files will be generated");
-		helpMessage.appendln("\t\t[-generate-multiple]:\tPass this flag if you want multiple d.ts files to be generated instead of one.");
+		helpMessage.appendln("\t\t[-input]:\t\tThe input jars or class directories from which the d.ts files will be generated.");
+		helpMessage.appendln("\t\t[-input-generics]:\tProvide a file with information for number of generic types per given generic class name.");
 		helpMessage.appendln("\t\t[-help]:\t\tPrints this help message.");
 
 		System.out.println(helpMessage);
@@ -112,12 +101,6 @@ public class Main {
 		}
 
 		File outputDir = new File(nextParam);
-
-		if (!outputDir.exists()) {
-//			System.out.println(String
-//					.format("We didn't find the folder you specified ( %s ), so it's going to be created!",
-//							inputParameters.getOutputDir().getAbsolutePath()));
-		}
 
 		inputParameters.setOutputDir(outputDir);
 	}

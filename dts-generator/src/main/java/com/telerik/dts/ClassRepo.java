@@ -22,12 +22,6 @@ public class ClassRepo {
 		for (String className : classMapProvider.getClassMap().keySet()) {
 			for (ClassMapProvider cachedProvider : cachedProviders) {
 				JavaClass clazz = cachedProvider.getClassMap().get(className);
-				if (clazz != null) {
-//					return;
-//					String errMsg = "Class " + className + " conflict: "
-//							+ classMapProvider.getPath() + " and " + cachedProvider.getPath();
-//					throw new IllegalArgumentException(errMsg);
-				}
 			}
 		}
 
@@ -41,9 +35,7 @@ public class ClassRepo {
 
 		sortedClasses = new ArrayList<>(classesSet);
 
-		Collections.sort(sortedClasses, new Comparator<String>() {
-			@Override
-			public int compare(String className1, String className2) {
+		Collections.sort(sortedClasses, (className1, className2) -> {
 				if(className1.startsWith(className2)) {
 					return 1;
 				}
@@ -51,8 +43,7 @@ public class ClassRepo {
 					return  -1;
 				}
 				return className1.compareTo(className2);
-			}
-		});
+			});
 	}
 
 	public static JavaClass findClass(String className) {

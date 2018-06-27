@@ -44,12 +44,12 @@ import edu.umd.cs.findbugs.ba.generic.GenericUtilities;
 public class DtsApi {
     public static List<Tuple<String, Integer>> externalGenerics = new ArrayList<>();
     public static List<Tuple<String, Integer>> generics = new ArrayList<>();
+    public static List<String> imports = new ArrayList<>();
     private static Map<String, String> globalAliases = new HashMap<>();
 
     private Map<String, String> extendsOverrides = new HashMap<>();
 
     private StringBuilder2 sbContent;
-    private StringBuilder2 sbHeaders;
     private Set<String> references;
     private JavaClass prevClass;
     private String currentFileClassname;
@@ -59,18 +59,12 @@ public class DtsApi {
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
     private int indent = 0;
-    private boolean writeMultipleFiles;
     private boolean generateGenericImplements;
-    private boolean useClassAliases;
-    private boolean useRootAliases;
     private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
     private Pattern isWordPattern = Pattern.compile("^[\\w\\d]+$");
 
-    public DtsApi(boolean writeMultipleFiles, boolean generateGenericImplements, boolean useClassAliases) {
-        this.writeMultipleFiles = writeMultipleFiles;
+    public DtsApi(boolean generateGenericImplements) {
         this.generateGenericImplements = generateGenericImplements;
-        this.useClassAliases = useClassAliases;
-        this.useRootAliases = true;
         this.indent = 0;
 
         overrideFieldComparator();
@@ -84,8 +78,7 @@ public class DtsApi {
         this.prevClass = null;
 
         if ((javaClasses != null) && (javaClasses.size() > 0)) {
-            references = new HashSet<String>();
-            sbHeaders = new StringBuilder2(); // <reference path=" ...
+            references = new HashSet<>();
             sbContent = new StringBuilder2();
 
             // process class scope
@@ -132,7 +125,7 @@ public class DtsApi {
                 }
                 // process member scope
 
-                mapNameMethod = new HashMap<String, Method>();
+                mapNameMethod = new HashMap<>();
 
                 // process constructors for interfaces
                 if (isInterface) {
@@ -195,19 +188,11 @@ public class DtsApi {
 
             String[] refs = references.toArray(new String[references.size()]);
             Arrays.sort(refs);
-
-            if(this.writeMultipleFiles) {
-                for (String r : refs) {
-                    sbHeaders.append("/// <reference path=\"./");
-                    sbHeaders.append(r);
-                    sbHeaders.appendln(".d.ts\" />");
-                }
-            }
         }
 
         String conent = replaceIgnoredNamespaces(sbContent.toString());
 
-        return sbHeaders.toString() + conent;
+        return conent;
     }
 
     private String replaceIgnoredNamespaces(String content) {
@@ -220,9 +205,6 @@ public class DtsApi {
         }
 
         String javalangObject = "java.lang.Object";
-        if(useClassAliases) {
-            javalangObject = "javalangObject";
-        }
 
         // replace "extends any" with "extends java.lang.Object"
         content = content.replace(" extends any ", " extends " + javalangObject );
@@ -255,16 +237,9 @@ public class DtsApi {
     }
 
     // Adds javalangObject types to all generics which are used without types
-    public static String replaceGenericsInText(String content, boolean useClassAliases) {
+    public static String replaceGenericsInText(String content) {
         String javalangObject = "java.lang.Object";
         String result = content;
-        if(useClassAliases) {
-            javalangObject = "javalangObject";
-            String javalangObjectImport = "import javalangObject = java.lang.Object;";
-            if(result.indexOf(javalangObjectImport) < 0) {
-                result = javalangObjectImport + "\n" + result;
-            }
-        }
 
         List<Tuple<String, Integer>> allGenerics = Stream.concat(generics.stream(), externalGenerics.stream()).collect(Collectors.toList());
 
@@ -366,25 +341,7 @@ public class DtsApi {
     }
 
     private String getAliasedClassName(String className) {
-        if(this.useClassAliases) {
-            String aliasedType = aliasedTypes.get(className);
-            if (aliasedType == null) {
-                aliasedType = mangleClassname(className);
-                aliasedTypes.put(className, aliasedType);
-
-                sbHeaders.append("import ");
-                sbHeaders.append(aliasedType);
-                sbHeaders.append(" = ");
-                sbHeaders.append(className);
-                sbHeaders.appendln(";");
-            }
-            return aliasedType;
-        } else if(useRootAliases) {
-            return mangleRootClassname(className);
-        }
-        else {
-            return className;
-        }
+        return mangleRootClassname(className);
     }
 
     private boolean typeBelongsInCurrentTopLevelNamespace(String className) {
@@ -407,6 +364,12 @@ public class DtsApi {
         }
     }
 
+    private static void addImport(String importToAdd) {
+        if(!imports.stream().anyMatch(x -> x.equals(importToAdd))){
+            imports.add(importToAdd);
+        }
+    }
+
     private String mangleRootClassname(String className) {
         String[] parts = className.split("\\.");
         String rootNamespace = parts[0];
@@ -415,12 +378,7 @@ public class DtsApi {
             String aliasedType = aliasedTypes.get(rootNamespace);
             if(aliasedType == null) {
                 aliasedTypes.put(rootNamespace, aliasedNamespace);
-
-                sbHeaders.append("import ");
-                sbHeaders.append(aliasedNamespace);
-                sbHeaders.append(" = ");
-                sbHeaders.append(rootNamespace);
-                sbHeaders.appendln(";");
+                addImport(String.format("import %s = %s;\n", aliasedNamespace, rootNamespace));
             }
 
             parts = Arrays.copyOfRange(parts, 1, parts.length);
@@ -431,10 +389,6 @@ public class DtsApi {
             return result;
         }
         return className;
-    }
-
-    private String mangleClassname(String className) {
-        return className.replaceAll("\\.", "");
     }
 
     private int closePackage(JavaClass prevClass, JavaClass currClass) {

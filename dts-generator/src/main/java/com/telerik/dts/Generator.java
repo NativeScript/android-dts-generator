@@ -15,22 +15,20 @@ import java.util.List;
  */
 public class Generator {
 
-    private static File outFolder;
     private static File inputGenericsFile;
     private FileWriter fw;
     private DtsApi dtsApi;
-    private boolean usingMultipleFiles;
     private boolean generateGenericImplements;
-    private boolean useClassAliases;
+    private String outFileName;
+    private String declarationsFileName;
 
     public void start(InputParameters inputParameters) throws Exception {
-        outFolder = inputParameters.getOutputDir();
         inputGenericsFile = inputParameters.getInputGenerics();
-        usingMultipleFiles = inputParameters.isGenerateMultipleFiles();
         generateGenericImplements = inputParameters.isGenerateGenericImplementsEnabled();
-        useClassAliases = inputParameters.isUseClassAliasesEnabled();
-        this.fw = new FileWriter(inputParameters.getOutputDir(), usingMultipleFiles);
-        this.dtsApi = new DtsApi(usingMultipleFiles, generateGenericImplements, useClassAliases);
+        this.fw = new FileWriter(inputParameters.getOutputDir());
+        this.dtsApi = new DtsApi(generateGenericImplements);
+        this.outFileName = FileWriter.DEFAULT_DTS_FILE_NAME;
+        this.declarationsFileName = FileWriter.DEFAULT_DECLARATIONS_FILE_NAME;
 
         loadJavaClasses(inputParameters.getInputJars());
         ClassRepo.sortCachedProviders();
@@ -39,60 +37,47 @@ public class Generator {
     }
 
     private void generateDts() throws Exception {
-        writeHelperTypings();
 
         if(inputGenericsFile != null){
             DtsApi.loadGenerics(inputGenericsFile);
         }
 
-        List<String> outputFiles = new ArrayList<>();
+        this.fw.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, false);
 
         while (ClassRepo.hasNext()) {
             List<JavaClass> classFiles = ClassRepo.getNextClassGroup();
             String generatedContent = this.dtsApi.generateDtsContent(classFiles);
 
-            this.fw.write(generatedContent, classFiles.get(0).getFileName()/*fileName*/);
-
-            outputFiles.add(classFiles.get(0).getFileName());
+            this.fw.writeToFile(generatedContent, this.outFileName, true);
         }
 
-        if(!usingMultipleFiles) {
-            outputFiles = new ArrayList<>();
-            outputFiles.add(FileWriter.DEFAULT_DTS_FILE_NAME);
-        }
-
-        // look for generics which are used without passing generic types and add javalangObject as their generic type
-        for(String fileName: outputFiles) {
-            String fullName = fileName + ".d.ts";
-            String content = this.fw.readFileContent(fullName);
-            if(content != null) {
-                String replacedContent = DtsApi.replaceGenericsInText(content, this.useClassAliases);
-                if(!content.equals(replacedContent)) {
-                    this.fw.writeToFile(replacedContent, fileName, false);
-                }
-
-                String serializedGenerics = DtsApi.serializeGenerics();
-                if(!serializedGenerics.equals("")) {
-                    this.fw.writeToFile(serializedGenerics, fileName, true);
-                }
+        String content = this.fw.readFileContent(this.outFileName);
+        if(content != null) {
+            String replacedContent = DtsApi.replaceGenericsInText(content);
+            if(!content.equals(replacedContent)) {
+                this.fw.writeToFile(replacedContent, this.outFileName, false);
             }
 
+            String serializedGenerics = DtsApi.serializeGenerics();
+            if(!serializedGenerics.equals("")) {
+                this.fw.writeToFile(serializedGenerics, this.outFileName, true);
+            }
         }
+
+        this.writeDeclarations();
     }
 
-    private void writeHelperTypings() {
-        List<String> helperTypings = new ArrayList<>();
-        helperTypings.add("declare module native {\n" +
-                "\texport class Array<T> {\n" +
-                "\t\tpublic constructor();\n" +
-                "\t}\n" +
-                "}\n");
+    private void writeDeclarations() {
+        List<String> imports = this.dtsApi.imports;
+        imports.add(0, "declare module native {\texport class Array<T> {\tpublic constructor(); } }\n");
 
-        boolean append = false;
+        String existingContent = this.fw.readFileContent(this.declarationsFileName);
+        existingContent = existingContent != null ? existingContent : "";
 
-        for (String helper : helperTypings) {
-            this.fw.writeHelperTypings(helper, append);
-            append = true;
+        for (String item : imports) {
+            if(!existingContent.contains(item)) {
+                this.fw.writeToFile(item, this.declarationsFileName, true);
+            }
         }
     }
 
