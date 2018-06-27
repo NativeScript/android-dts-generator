@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by plamen5kov on 6/17/16.
  */
-public class FileWriter {
+public class FileHelper {
     public static final String DEFAULT_DTS_FILE_NAME = "android.d.ts";
     public static final String DEFAULT_DECLARATIONS_FILE_NAME = "android-declarations.d.ts";
 
@@ -22,7 +22,7 @@ public class FileWriter {
     private PrintStream ps;
     private File outDir;
 
-    public FileWriter(File outDir) {
+    public FileHelper(File outDir) {
         this.defaultDtsFileName = DEFAULT_DTS_FILE_NAME; // + java.util.UUID.randomUUID().toString();
         this.outDir = outDir;
     }
