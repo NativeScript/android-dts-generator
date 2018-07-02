@@ -193,13 +193,13 @@ public class DtsApi {
     }
 
     private String replaceIgnoredNamespaces(String content) {
-        String regexFormat = "%s((\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>]*>)+";
+        String regexFormat = "(?<Replace>%s(?:(?:\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>]*>)*)(?<Suffix>[^a-zA-Z\\d]+)";
         // these namespaces are not known in some android api levels, so we cannot use them in android-support for instance, so we are replacing them with any
         for (String ignoredNamespace: this.getIgnoredNamespaces()) {
             String regexString = String.format(regexFormat, ignoredNamespace.replace(".", "\\."));
-            content = content.replaceAll(regexString, "any");
+            content = content.replaceAll(regexString, "any$2");
             regexString = String.format(regexFormat, getGlobalAliasedClassName(ignoredNamespace).replace(".", "\\."));
-            content = content.replaceAll(regexString, "any");
+            content = content.replaceAll(regexString, "any$2");
         }
 
         String javalangObject = "java.lang.Object";
