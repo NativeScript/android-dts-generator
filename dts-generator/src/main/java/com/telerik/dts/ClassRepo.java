@@ -13,7 +13,8 @@ public class ClassRepo {
 	private ClassRepo() {
 	}
 
-	private static ArrayList<ClassMapProvider> cachedProviders = new ArrayList<ClassMapProvider>();
+	private static ArrayList<ClassMapProvider> cachedProviders = new ArrayList<>();
+	private static ArrayList<ClassMapProvider> cachedSuperProviders = new ArrayList<>();
 	private static HashSet<String> classesSet = new HashSet<>();
 	private static List<String> sortedClasses;
 	private static int traversedFilesIdx = 0;
@@ -26,6 +27,16 @@ public class ClassRepo {
 		}
 
 		cachedProviders.add(classMapProvider);
+	}
+
+	public static void cacheSuperJarFile(ClassMapProvider classMapProvider) {
+		for (String className : classMapProvider.getClassMap().keySet()) {
+			for (ClassMapProvider cachedProvider : cachedProviders) {
+				JavaClass clazz = cachedProvider.getClassMap().get(className);
+			}
+		}
+
+		cachedSuperProviders.add(classMapProvider);
 	}
 
 	public static void sortCachedProviders() {
@@ -49,6 +60,20 @@ public class ClassRepo {
 	public static JavaClass findClass(String className) {
 		JavaClass clazz = null;
 		for (ClassMapProvider classMapProvider : cachedProviders) {
+			clazz = classMapProvider.getClassMap().get(className);
+			if (clazz != null) {
+				break;
+			}
+		}
+		if(clazz == null) {
+			return findSuperClass(className);
+		}
+		return clazz;
+	}
+
+	public static JavaClass findSuperClass(String className) {
+		JavaClass clazz = null;
+		for (ClassMapProvider classMapProvider : cachedSuperProviders) {
 			clazz = classMapProvider.getClassMap().get(className);
 			if (clazz != null) {
 				break;

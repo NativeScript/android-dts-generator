@@ -11,12 +11,14 @@ public class InputParameters {
 
     private File outputDir;
     private List<File> inputJars;
+    private List<File> superJars;
     private File inputGenerics;
     private boolean generateGenericImplements;
 
     public InputParameters() {
         this.outputDir = new File("out");
-        this.inputJars = new ArrayList<File>();
+        this.inputJars = new ArrayList<>();
+        this.superJars = new ArrayList<>();
         this.generateGenericImplements = false;
     }
 
@@ -32,8 +34,8 @@ public class InputParameters {
         return inputJars;
     }
 
-    public void setInputJars(List<File> inputJars) {
-        this.inputJars = inputJars;
+    public List<File> getSuperJars() {
+        return superJars;
     }
 
     public File getInputGenerics() {

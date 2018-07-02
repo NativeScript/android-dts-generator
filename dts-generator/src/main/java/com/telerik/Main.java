@@ -10,6 +10,7 @@ public class Main {
 
 	private static final String OUT_DIR = "-output";
 	private static final String INPUT_JARS = "-input";
+	private static final String SUPER_JARS = "-super";
 
     // provide a file with rows in the following format - com.telerik.android.data.SelectionService:1
     // to know how many generic types uses a given generic
@@ -73,6 +74,16 @@ public class Main {
 						throw new IllegalArgumentException("You need to pass input jars to: " + OUT_DIR + " flag");
 					}
 				}
+
+				if (commandArg.equals(SUPER_JARS)) {
+					for (int jarIndex = i + 1; jarIndex < args.length; jarIndex++) {
+						String currentArgument = args[jarIndex];
+						if (currentArgument.startsWith("-")) {
+							break;
+						}
+						inputParameters.getSuperJars().add(new File(currentArgument));
+					}
+				}
 			}
 
 			inputParameters.getOutputDir().mkdir();
@@ -89,6 +100,7 @@ public class Main {
 		helpMessage.appendln("\t(Optional)");
 		helpMessage.appendln("\t\t[-output <path>]:\tThe direcory the d.ts files will be generated in.");
 		helpMessage.appendln("\t\t[-input]:\t\tThe input jars or class directories from which the d.ts files will be generated.");
+        helpMessage.appendln("\t\t[-super]:\t\tProvide jar files from which to search for super classes.");
 		helpMessage.appendln("\t\t[-input-generics]:\tProvide a file with information for number of generic types per given generic class name.");
 		helpMessage.appendln("\t\t[-help]:\t\tPrints this help message.");
 

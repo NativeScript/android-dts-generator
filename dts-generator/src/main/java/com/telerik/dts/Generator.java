@@ -31,6 +31,7 @@ public class Generator {
         this.declarationsFileName = FileHelper.DEFAULT_DECLARATIONS_FILE_NAME;
 
         loadJavaClasses(inputParameters.getInputJars());
+        loadSuperClasses(inputParameters.getSuperJars());
         ClassRepo.sortCachedProviders();
 
         generateDts();
@@ -90,6 +91,22 @@ public class Generator {
                 } else if (file.isDirectory()) {
                     ClassDirectrory dir = ClassDirectrory.readDirectory(file.getAbsolutePath());
                     ClassRepo.cacheJarFile(dir);
+                }
+            } else {
+                throw new IOException(String.format("File %s does not exist", file.getName()));
+            }
+        }
+    }
+
+    private void loadSuperClasses(List<File> jars) throws IOException {
+        for (File file : jars) {
+            if (file.exists()) {
+                if (file.isFile() && file.getName().endsWith(".jar")) {
+                    JarFile jar = JarFile.readJar(file.getAbsolutePath());
+                    ClassRepo.cacheSuperJarFile(jar);
+                } else if (file.isDirectory()) {
+                    ClassDirectrory dir = ClassDirectrory.readDirectory(file.getAbsolutePath());
+                    ClassRepo.cacheSuperJarFile(dir);
                 }
             } else {
                 throw new IOException(String.format("File %s does not exist", file.getName()));

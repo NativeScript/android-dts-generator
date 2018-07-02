@@ -43,6 +43,7 @@ public class DtsApi {
     private static Map<String, String> globalAliases = new HashMap<>();
 
     private Map<String, String> extendsOverrides = new HashMap<>();
+    private Map<String, String> typeOverrides = new HashMap<>();
 
     private StringBuilder2 sbContent;
     private Set<String> references;
@@ -64,6 +65,7 @@ public class DtsApi {
 
         overrideFieldComparator();
         setOverrides();
+        setTypeOverrides();
         setGlobalAliases();
 
         this.aliasedTypes = new HashMap<>();
@@ -800,13 +802,10 @@ public class DtsApi {
         }
 
         String scn = clazz.getSuperclassName();
-        JavaClass currClass = ClassRepo.findClass(scn);
-
-        if (currClass == null) {
+        if(scn.equals("") || scn == null) {
             return null;
-//            throw new NoClassDefFoundError("Couldn't find class: " + scn + " required by class: " + clazz.getClassName() + ". You need to provide the jar containing the missing class: " + scn);
         }
-
+        JavaClass currClass = ClassRepo.findClass(scn);
         return currClass;
     }
 
@@ -972,8 +971,8 @@ public class DtsApi {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
 
-            if(typeName.equals("java.lang.Object")) {
-                typeName = "any";
+            if(this.typeOverrides.containsKey(typeName)){
+                typeName = this.typeOverrides.get(typeName);
             }
 
             if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.") && !isPrivateGoogleApiClass(typeName)) {
@@ -1027,8 +1026,8 @@ public class DtsApi {
     }
 
     private List<FieldOrMethod> getMembers(JavaClass javaClass, List<JavaClass> interfaces) {
-        Set<String> methodNames = new HashSet<String>();
-        ArrayList<FieldOrMethod> members = new ArrayList<FieldOrMethod>();
+        Set<String> methodNames = new HashSet<>();
+        ArrayList<FieldOrMethod> members = new ArrayList<>();
 
         List<Method> allInterfacesMethods = getAllInterfacesMethods(interfaces);
         List<Method> methods = new ArrayList<>();
@@ -1126,9 +1125,21 @@ public class DtsApi {
     }
 
     private void setOverrides() {
+        this.setTypeOverrides();
+        this.setExtendsOverrides();
+    }
+
+    private void setExtendsOverrides() {
         // here we put extends overrides to avoid manual work to fix the generated .d.ts file
         this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
         this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
+        this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+    }
+
+    private void setTypeOverrides() {
+        // here we put type overrides if we want to change return types of java.lang.Object for instance to any
+        this.typeOverrides.put("java.lang.Object", "any");
+        this.typeOverrides.put("java.lang.CharSequence", "string");
     }
 
     private void setGlobalAliases() {
