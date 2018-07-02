@@ -12,13 +12,8 @@ import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.ReferenceType;
 import org.apache.bcel.generic.Type;
 import org.apache.bcel.util.BCELComparator;
-import org.omg.CORBA.Environment;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,6 +121,8 @@ public class DtsApi {
                 // process member scope
 
                 mapNameMethod = new HashMap<>();
+
+                addClassField(currClass);
 
                 // process constructors for interfaces
                 if (isInterface) {
@@ -239,16 +236,16 @@ public class DtsApi {
 
     // Adds javalangObject types to all generics which are used without types
     public static String replaceGenericsInText(String content) {
-        String javalangObject = "java.lang.Object";
+        String any = "any";
         String result = content;
 
         List<Tuple<String, Integer>> allGenerics = Stream.concat(generics.stream(), externalGenerics.stream()).collect(Collectors.toList());
 
         for(Tuple<String, Integer> generic: allGenerics) {
-            result = replaceNonGenericUsage(result, generic.x, generic.y, javalangObject);
+            result = replaceNonGenericUsage(result, generic.x, generic.y, any);
             String globalAliasedClassName = getGlobalAliasedClassName(generic.x);
             if(!generic.x.equals(globalAliasedClassName)) {
-                result = replaceNonGenericUsage(result, globalAliasedClassName, generic.y, javalangObject);
+                result = replaceNonGenericUsage(result, globalAliasedClassName, generic.y, any);
             }
         }
 
@@ -873,6 +870,11 @@ public class DtsApi {
         sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition) + ";");
     }
 
+    private void addClassField(JavaClass clazz) {
+        String tabs = getTabs(this.indent + 1);
+        sbContent.append(String.format("%spublic static class: java.lang.Class<%s>;\n", tabs, clazz.getClassName().replace("$", ".")));
+    }
+
     private boolean isPrimitiveTSType(String tsType) {
         switch (tsType) {
             case "void":
@@ -945,7 +947,7 @@ public class DtsApi {
         } else if (isArray) {
             tsType.append("native.Array<");
             Type elementType = ((ArrayType) type).getElementType();
-            convertToTypeScriptType(elementType, typeDefinition, tsType);
+            useAnyInsteadOfJavaLangObject(elementType, typeDefinition, tsType);
             tsType.append(">");
         } else if (type.equals(Type.STRING)) {
             tsType.append("string");
@@ -970,6 +972,10 @@ public class DtsApi {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
 
+            if(typeName.equals("java.lang.Object")) {
+                typeName = "any";
+            }
+
             if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.") && !isPrivateGoogleApiClass(typeName)) {
                 tsType.append(getAliasedClassName(typeName));
             } else {
@@ -981,7 +987,7 @@ public class DtsApi {
                 if (genericType.getNumParameters() > 0) {
                     tsType.append("<");
                     for (ReferenceType refType: genericType.getParameters()){
-                        this.convertToTypeScriptType(refType, typeDefinition, tsType);
+                        useAnyInsteadOfJavaLangObject(refType, typeDefinition, tsType);
                         tsType.append(',');
                     }
                     tsType.deleteCharAt(tsType.lastIndexOf(","));
@@ -993,6 +999,17 @@ public class DtsApi {
         } else {
             throw new RuntimeException("Unhandled type=" + type.getSignature());
         }
+    }
+
+    private void useAnyInsteadOfJavaLangObject(Type refType, TypeDefinition typeDefinition, StringBuilder tsType) {
+//        if (refType instanceof ObjectType) {
+//            ObjectType currentType = (ObjectType)refType;
+//            if (currentType.getClassName().equals("java.lang.Object")) {
+//                tsType.append("any");
+//                return;
+//            }
+//        }
+        this.convertToTypeScriptType(refType, typeDefinition, tsType);
     }
 
     private void addReference(Type type) {
@@ -1120,6 +1137,7 @@ public class DtsApi {
     }
 
     private List<String> getIgnoredNamespaces(){
+        // for some reason these namespaces are references but not existing, so we are replacing all types from these namespaces with "any"
         List<String> result = new ArrayList<>();
 
         result.add("android.app.job");

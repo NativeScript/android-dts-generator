@@ -69,7 +69,7 @@ public class Generator {
 
     private void writeDeclarations() {
         List<String> imports = this.dtsApi.imports;
-        imports.add(0, "declare module native {\texport class Array<T> {\tpublic constructor(); } }\n");
+        imports.add(0, "declare module native {\texport class Array<T> {\tconstructor(); length: number; [index: number]: T; } }\n");
 
         String existingContent = this.fileHelper.readFileContent(this.declarationsFileName);
         existingContent = existingContent != null ? existingContent : "";
