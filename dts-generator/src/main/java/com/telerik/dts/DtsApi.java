@@ -305,6 +305,10 @@ public class DtsApi {
         }
         JavaClass superClass = getSuperClass(currClass);
         List<JavaClass> interfaces = getInterfaces(currClass);
+        if(interfaces.size() == 1 && superClass == null && currClass.getSuperclassName().equals("java.lang.Object")) {
+            superClass = interfaces.get(0);
+            interfaces.clear();
+        }
         return getExtendsLine(superClass, interfaces);
     }
 
@@ -1131,9 +1135,9 @@ public class DtsApi {
 
     private void setExtendsOverrides() {
         // here we put extends overrides to avoid manual work to fix the generated .d.ts file
-        this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
-        this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
-        this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+        // this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
+        // this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
+        // this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
     }
 
     private void setTypeOverrides() {
