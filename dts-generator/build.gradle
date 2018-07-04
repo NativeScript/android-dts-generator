@@ -5,6 +5,14 @@ repositories {
     jcenter()
 }
 
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:all" << "-Werror"
+        }
+    }
+}
+
 dependencies {
     compile 'org.apache.bcel:bcel:6.2'
     compile 'commons-io:commons-io:2.6'
