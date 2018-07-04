@@ -287,30 +287,21 @@ public class DtsApi {
             ReferenceType parent = typeDefinition.getParent();
 
             List<ReferenceType> interfaces = typeDefinition.getInterfaces();
-            // if the object parent is java.lang.Object or any and it has exactly one interface
-            // this means that this is actually a super class but not interface
-//            if(interfaces.size() == 1 && parent != null
-//                    && (getTypeScriptTypeFromJavaType(parent, typeDefinition).equals("java.lang.Object")
-//                        || getTypeScriptTypeFromJavaType(parent, typeDefinition).equals("any"))) {
-//                result.append(" extends ");
-//                result.append(getTypeScriptTypeFromJavaType(interfaces.get(0), typeDefinition));
-//            } else {
-                if(parent != null) {
-                    result.append(" extends ");
-                    result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
-                }
-                if(interfaces.size() == 1 || (this.allGenericImplements && interfaces.size() > 0)) {
-                    result.append(" implements ");
+            if(parent != null) {
+                result.append(" extends ");
+                result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
+            }
+            if(interfaces.size() == 1 || (this.allGenericImplements && interfaces.size() > 0)) {
+                result.append(" implements ");
 
-                    for (ReferenceType referenceType : interfaces) {
-                        String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
-                        if(!this.isPrimitiveTSType(tsType)) {
-                            result.append(tsType + ", ");
-                        }
+                for (ReferenceType referenceType : interfaces) {
+                    String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
+                    if(!this.isPrimitiveTSType(tsType)) {
+                        result.append(tsType + ", ");
                     }
-                    result.deleteCharAt(result.lastIndexOf(","));
                 }
-            //}
+                result.deleteCharAt(result.lastIndexOf(","));
+            }
             return result.toString();
         } else {
             JavaClass superClass = getSuperClass(currClass);

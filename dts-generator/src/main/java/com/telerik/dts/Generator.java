@@ -19,12 +19,14 @@ public class Generator {
     private FileHelper fileHelper;
     private DtsApi dtsApi;
     private boolean allGenericImplements;
+    private boolean skipDeclarations;
     private String outFileName;
     private String declarationsFileName;
 
     public void start(InputParameters inputParameters) throws Exception {
         Generator.inputGenericsFile = inputParameters.getInputGenerics();
         this.allGenericImplements = inputParameters.isAllGenericImplementsEnabled();
+        this.skipDeclarations = inputParameters.getSkipDeclarations();
         this.fileHelper = new FileHelper(inputParameters.getOutputDir());
         this.dtsApi = new DtsApi(allGenericImplements);
         this.outFileName = FileHelper.DEFAULT_DTS_FILE_NAME;
@@ -43,7 +45,9 @@ public class Generator {
             DtsApi.loadGenerics(inputGenericsFile);
         }
 
-        this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, false);
+        if(!this.skipDeclarations) {
+            this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, false);
+        }
 
         while (ClassRepo.hasNext()) {
             List<JavaClass> classFiles = ClassRepo.getNextClassGroup();
@@ -65,7 +69,9 @@ public class Generator {
             }
         }
 
-        this.writeDeclarations();
+        if(!this.skipDeclarations) {
+            this.writeDeclarations();
+        }
     }
 
     private void writeDeclarations() {

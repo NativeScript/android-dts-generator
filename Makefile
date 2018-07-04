@@ -54,7 +54,7 @@ android-support-17:
 	libs/android-support/27.0.1/android-support-core-utils.jar libs/android-support/27.0.1/android-support-animated-vector-drawable.jar \
 	libs/android-support/27.0.1/android-support-vector-drawable.jar libs/android-support/27.0.1/android-support-compat.jar \
 	libs/android-support/27.0.1/android-support-annotations.jar libs/android-support/27.0.1/android-support-multidex.jar \
-	-all-generic-implements -input-generics libs/generics.txt -super /Users/trifonov/Library/Android/sdk/platforms/android-17/android.jar
+	-input-generics libs/generics.txt -super /Users/trifonov/Library/Android/sdk/platforms/android-17/android.jar
 	mv out/android.d.ts out/android-support-17.d.ts
 
 android-support-23:
@@ -66,7 +66,7 @@ android-support-23:
 	libs/android-support/27.0.1/android-support-core-utils.jar libs/android-support/27.0.1/android-support-animated-vector-drawable.jar \
 	libs/android-support/27.0.1/android-support-vector-drawable.jar libs/android-support/27.0.1/android-support-compat.jar \
 	libs/android-support/27.0.1/android-support-annotations.jar libs/android-support/27.0.1/android-support-multidex.jar \
-	-all-generic-implements -input-generics libs/generics.txt -super /Users/trifonov/Library/Android/sdk/platforms/android-23/android.jar
+	-input-generics libs/generics.txt -super /Users/trifonov/Library/Android/sdk/platforms/android-23/android.jar
 	mv out/android.d.ts out/android-support-23.d.ts
 
 android-support-26:
@@ -78,7 +78,7 @@ android-support-26:
 	libs/android-support/27.0.1/android-support-core-utils.jar libs/android-support/27.0.1/android-support-animated-vector-drawable.jar \
 	libs/android-support/27.0.1/android-support-vector-drawable.jar libs/android-support/27.0.1/android-support-compat.jar \
 	libs/android-support/27.0.1/android-support-annotations.jar libs/android-support/27.0.1/android-support-multidex.jar \
-	-all-generic-implements -input-generics libs/generics.txt -super /Users/trifonov/Library/Android/sdk/platforms/android-26/android.jar
+	-input-generics libs/generics.txt -super /Users/trifonov/Library/Android/sdk/platforms/android-26/android.jar
 	mv out/android.d.ts out/android-support-26.d.ts
 
 android-support-all: android-support-17 android-support-23 android-support-26

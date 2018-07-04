@@ -19,6 +19,9 @@ public class Main {
 	// whether to generate implements for all interfaces implemented by the generic types
     private static final String ALL_GENERIC_IMPLEMENTS = "-all-generic-implements";
 
+	// whether to skip the declarations file generation
+	private static final String SKIP_DECLARATIONS = "-skip-declarations";
+
 	private static final String HELP = "-help";
 
 	public static void main(String[] args) throws Exception {
@@ -46,6 +49,10 @@ public class Main {
 
 				if (commandArg.equals(ALL_GENERIC_IMPLEMENTS)) {
 					inputParameters.setAllGenericImplements(true);
+				}
+
+				if (commandArg.equals(SKIP_DECLARATIONS)) {
+					inputParameters.setSkipDeclarations(true);
 				}
 
 				if (commandArg.equals(OUT_DIR)) {
@@ -104,6 +111,7 @@ public class Main {
 		helpMessage.appendln("\t\t[-input-generics]:\tProvide a file with information for number of generic types per given generic class name.");
 		helpMessage.appendln("\t\t[-all-generic-implements]:\tAdd this flag to generate implements for all interfaces implemented by the generic types." +
 			" It is not enabled by default as when there are more than one implementation most probably one of them needs to be changed to extends, but this have to be made manually");
+		helpMessage.appendln("\t\t[-skip-declarations]:\t\tProvide this flag if you don't want android-declarations.d.ts file to be generated and referenced.");
 		helpMessage.appendln("\t\t[-help]:\t\tPrints this help message.");
 
 		System.out.println(helpMessage);

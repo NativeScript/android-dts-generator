@@ -14,12 +14,14 @@ public class InputParameters {
     private List<File> superJars;
     private File inputGenerics;
     private boolean allGenericImplements;
+    private boolean skipDeclarations;
 
     public InputParameters() {
         this.outputDir = new File("out");
         this.inputJars = new ArrayList<>();
         this.superJars = new ArrayList<>();
         this.allGenericImplements = false;
+        this.skipDeclarations = false;
     }
 
     public File getOutputDir() {
@@ -49,6 +51,10 @@ public class InputParameters {
     public boolean isAllGenericImplementsEnabled() {
         return allGenericImplements;
     }
+
+    public void setSkipDeclarations(boolean skipDeclarations) { this.skipDeclarations = skipDeclarations; }
+
+    public boolean getSkipDeclarations() { return skipDeclarations; }
 
     public void setAllGenericImplements(boolean allGenericImplements) {
         this.allGenericImplements = allGenericImplements;
