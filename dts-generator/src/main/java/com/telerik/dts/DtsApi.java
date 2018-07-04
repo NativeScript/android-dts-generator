@@ -57,12 +57,12 @@ public class DtsApi {
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
     private int indent = 0;
-    private boolean generateGenericImplements;
+    private boolean allGenericImplements;
     private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
     private Pattern isWordPattern = Pattern.compile("^[\\w\\d]+$");
 
-    public DtsApi(boolean generateGenericImplements) {
-        this.generateGenericImplements = generateGenericImplements;
+    public DtsApi(boolean allGenericImplements) {
+        this.allGenericImplements = allGenericImplements;
         this.indent = 0;
 
         overrideFieldComparator();
@@ -286,34 +286,31 @@ public class DtsApi {
             StringBuilder result = new StringBuilder();
             ReferenceType parent = typeDefinition.getParent();
 
-            if(!this.generateGenericImplements) {
+            List<ReferenceType> interfaces = typeDefinition.getInterfaces();
+            // if the object parent is java.lang.Object or any and it has exactly one interface
+            // this means that this is actually a super class but not interface
+//            if(interfaces.size() == 1 && parent != null
+//                    && (getTypeScriptTypeFromJavaType(parent, typeDefinition).equals("java.lang.Object")
+//                        || getTypeScriptTypeFromJavaType(parent, typeDefinition).equals("any"))) {
+//                result.append(" extends ");
+//                result.append(getTypeScriptTypeFromJavaType(interfaces.get(0), typeDefinition));
+//            } else {
                 if(parent != null) {
                     result.append(" extends ");
                     result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
                 }
-            } else {
-                List<ReferenceType> interfaces = typeDefinition.getInterfaces();
-                if(interfaces.size() == 1 && parent == null && getTypeScriptTypeFromJavaType(parent, typeDefinition).equals("java.lang.Object")) {
-                    result.append(" extends ");
-                    result.append(getTypeScriptTypeFromJavaType(interfaces.get(0), typeDefinition));
-                } else {
-                    if(parent != null) {
-                        result.append(" extends ");
-                        result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
-                    }
-                    if(interfaces.size() > 0) {
-                        result.append(" implements ");
+                if(interfaces.size() == 1 || (this.allGenericImplements && interfaces.size() > 0)) {
+                    result.append(" implements ");
 
-                        for (ReferenceType referenceType : interfaces) {
-                            String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
-                            if(!this.isPrimitiveTSType(tsType)) {
-                                result.append(tsType + ", ");
-                            }
+                    for (ReferenceType referenceType : interfaces) {
+                        String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
+                        if(!this.isPrimitiveTSType(tsType)) {
+                            result.append(tsType + ", ");
                         }
-                        result.deleteCharAt(result.lastIndexOf(","));
                     }
+                    result.deleteCharAt(result.lastIndexOf(","));
                 }
-            }
+            //}
             return result.toString();
         } else {
             JavaClass superClass = getSuperClass(currClass);
@@ -1167,9 +1164,13 @@ public class DtsApi {
 
     private void setExtendsOverrides() {
         // here we put extends overrides to avoid manual work to fix the generated .d.ts file
-         this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
-         this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
-         this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+        this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
+        this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
+        this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+
+//        this.extendsOverrides.put("android.net.wifi.SupplicantState", "android.os.Parcelable");
+//        this.extendsOverrides.put("java.util.concurrent.ScheduledFuture", "java.util.concurrent.Delayed implements java.util.concurrent.Future<V>"); // android-17
+//        this.extendsOverrides.put("java.util.concurrent.RunnableScheduledFuture", "java.util.concurrent.ScheduledFuture<V> implements java.util.concurrent.RunnableFuture<V>"); // android-17
     }
 
     private void setTypeOverrides() {
@@ -1203,6 +1204,7 @@ public class DtsApi {
         result.add("android.media.Rating");
         result.add("android.service.media");
         result.add("android.print");
+        result.add("java.util.function");
 
         return result;
     }

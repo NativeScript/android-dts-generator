@@ -18,15 +18,15 @@ public class Generator {
     private static File inputGenericsFile;
     private FileHelper fileHelper;
     private DtsApi dtsApi;
-    private boolean generateGenericImplements;
+    private boolean allGenericImplements;
     private String outFileName;
     private String declarationsFileName;
 
     public void start(InputParameters inputParameters) throws Exception {
         Generator.inputGenericsFile = inputParameters.getInputGenerics();
-        this.generateGenericImplements = inputParameters.isGenerateGenericImplementsEnabled();
+        this.allGenericImplements = inputParameters.isAllGenericImplementsEnabled();
         this.fileHelper = new FileHelper(inputParameters.getOutputDir());
-        this.dtsApi = new DtsApi(generateGenericImplements);
+        this.dtsApi = new DtsApi(allGenericImplements);
         this.outFileName = FileHelper.DEFAULT_DTS_FILE_NAME;
         this.declarationsFileName = FileHelper.DEFAULT_DECLARATIONS_FILE_NAME;
 

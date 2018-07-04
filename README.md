@@ -59,6 +59,9 @@ There are two type of dependencies that can be passed:
 2. Input generics - When trying to get the type of a parameter which is a generic class we cannot really get the generic types of that class, so we cannot generate working typings. To fix this we are adding information about the generics of each package at the end of the file with comments starting with `//Generics information:`.
   So to fix this we need to provide a file with all the generic information for the packages the current jar relies on. You need to create a file and copy all the generic informations of the related packages and provide it in the **input-generics** argument. This will make all the generic classes referenced without passing types to pass **any** so that the ouput will be valid.
 
+## Adding all implements for generic types
+There is an option **all-generic-implements** which is disabled by default which controls whether to add implements for all interfaces (if they are more than one) to generic type declarations. The problem is that in most of the cases one of those interfaces is actually an extend, so it should be manual reviewed and fixed after generation.
+
 ## Android support specifics
 One of the ways to get the android support jar files is to follow the steps bellow:
 

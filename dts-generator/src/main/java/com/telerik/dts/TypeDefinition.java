@@ -1,5 +1,6 @@
 package com.telerik.dts;
 
+import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.ReferenceType;
 import org.apache.bcel.generic.Type;
 
@@ -69,9 +70,20 @@ public class TypeDefinition {
             if (interfacesSignature != null) {
                 this.interfaces = GenericUtilities.getTypeParameters(interfacesSignature);
                 if(this.interfaces.size() > 0){
+                    // we assume that the first type parameter is the base class and the others are interfaces
                     parent = this.interfaces.get(0);
-                    if ((parent instanceof GenericObjectType) && ((GenericObjectType)parent).getClassName().equals("java.lang.Enum")){
-                        parent = null; // we don't need extends for enum
+                    if ((parent instanceof ObjectType) &&
+                            (((ObjectType)parent).getClassName().equals("java.lang.Enum")
+                            || ((ObjectType)parent).getClassName().equals("java.lang.Object"))){
+                        if(((ObjectType)parent).getClassName().equals("java.lang.Enum")) {
+                            parent = null; // we don't need extends for enum
+                        }
+                        // if we have only one another interface set it as a parent
+                        // otherwise we don't know which one to set as a parent
+                        if(this.interfaces.size() == 2) {
+                            parent = this.interfaces.get(1);
+                            this.interfaces.remove(1);
+                        }
                     }
                     this.interfaces.remove(0);
                 }

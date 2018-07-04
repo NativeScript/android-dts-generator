@@ -17,7 +17,7 @@ public class Main {
 	private static final String INPUT_GENERICS = "-input-generics";
 
 	// whether to generate implements for all interfaces implemented by the generic types
-    private static final String GENERATE_GENERIC_IMPLEMENTS = "-generate-generic-implements";
+    private static final String ALL_GENERIC_IMPLEMENTS = "-all-generic-implements";
 
 	private static final String HELP = "-help";
 
@@ -44,8 +44,8 @@ public class Main {
 					printHelpMessage();
 				}
 
-				if (commandArg.equals(GENERATE_GENERIC_IMPLEMENTS)) {
-					inputParameters.setGenerateGenericImplements(true);
+				if (commandArg.equals(ALL_GENERIC_IMPLEMENTS)) {
+					inputParameters.setAllGenericImplements(true);
 				}
 
 				if (commandArg.equals(OUT_DIR)) {
@@ -102,6 +102,8 @@ public class Main {
 		helpMessage.appendln("\t\t[-input]:\t\tThe input jars or class directories from which the d.ts files will be generated.");
         helpMessage.appendln("\t\t[-super]:\t\tProvide jar files from which to search for super classes.");
 		helpMessage.appendln("\t\t[-input-generics]:\tProvide a file with information for number of generic types per given generic class name.");
+		helpMessage.appendln("\t\t[-all-generic-implements]:\tAdd this flag to generate implements for all interfaces implemented by the generic types." +
+			" It is not enabled by default as when there are more than one implementation most probably one of them needs to be changed to extends, but this have to be made manually");
 		helpMessage.appendln("\t\t[-help]:\t\tPrints this help message.");
 
 		System.out.println(helpMessage);
