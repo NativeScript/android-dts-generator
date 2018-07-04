@@ -48,8 +48,41 @@ Rename classes.jar if necessary
 java -jar build\libs\dts-generator.jar -input classes.jar dependency-of-classes-jar.jar
 ```
 
-## Support libraries
-In the [lib](lib) folder there are android support libraries jars which are get from the following git repos:
-* [android-support-v4](https://github.com/dandar3/android-support-v4/tree/master/libs)
-* [android-support-v7-appcompat](https://github.com/dandar3/android-support-v7-appcompat/tree/master/libs)
-* [android-support-design](https://github.com/dandar3/android-support-design/tree/master/libs)
+## Complex typings generation
+Generating the typings corresponding to the android and android-support jar files is a bit tricky operation, so here's a detailed explanation how to do it.
+There are different andoid support versions and they depend on main android classes it is a little bit complicated to generate those typings. One option is to generate a big **d.ts** file with all the libraries inside. The downside of this approach is that you have to generate a big file for every API level and if the android support version is changed all those **d.ts** files need to be regenerated.
+To avoid this there's some functionality in the tool for passing dependencies when generating typings.
+There are two type of dependencies that can be passed:
+
+1. Super class jars - this is needed when the current jar has classes which are extending classes from another jar file, but we don't want to have all that jar files' typings in a single output file. To achieve this we can provide the super class jar with the **super** argument(which works the same way as **input** for multiple files).
+  For instance if we want to generate typings for **android.support.v4.view.ViewPager** and we don't pass the super classes jar the generated typings won't extend any class as there's no information in the jar that contains the ViewPager. However this class extends **android.view.ViewGroup** class which is a part of the android jar file(any of the API levels). So if we pass one of the android.jar files as a super class jar file the generated typing will contain `extends android.view.ViewGroup`.
+2. Input generics - When trying to get the type of a parameter which is a generic class we cannot really get the generic types of that class, so we cannot generate working typings. To fix this we are adding information about the generics of each package at the end of the file with comments starting with `//Generics information:`.
+  So to fix this we need to provide a file with all the generic information for the packages the current jar relies on. You need to create a file and copy all the generic informations of the related packages and provide it in the **input-generics** argument. This will make all the generic classes referenced without passing types to pass **any** so that the ouput will be valid.
+
+## Android support specifics
+One of the ways to get the android support jar files is to follow the steps bellow:
+
+1. Create a NativeScript application - `tns create android-support-files`
+2. Add android platform - `tns platform add android`
+3. Open **platforms/android/app/build.graddle** file and locate the **explodeAar** task
+4. Add a print on the first line of the task `println "${compileDependency} copied to ${outputDir}"`
+5. Run `tns build android` and look for the lines from the output above
+6. Search for all files containing **android/support** or **android.support** in their path and get their corresponding jar files from the **platform/android/app/build/exploded-dependencies** folder
+7. To generate android support typings run the tool passing all the files from above
+8. You can find the **jar** files for android support 27.0.1 in [the current repository](libs/android-support/27.0.1)
+
+As the android support needs the base android jar file to create its typings you need to pass the android.jar file as a **super** parameter to the generator. To avoid having typings for every different API level you can reuse typings built with API level 17 for all API levels until 23. It's quite easy to test this:
+
+1. Run the typings generator for android support passing **android-17/android.jar** as a supper jar
+2. Add `/// <reference path="android-17.d.ts"/>` at the top of the generated typings file where android-17.d.ts is the typings file of the android API level 17
+3. Run `tsc` passing the generated typings file and there shouldn't be errors
+4. Now start replacing the reference file with the files from other API level while the `tsc` execution completes with no error
+5. If there's an error this means that you need to generate the android support typings with the same android API level super jar
+
+By repeating the steps above we've found that:
+
+- Android support 17 typings(built with supper jar from android API 17) can be reused until android API 22
+- Android support 23 typings(built with supper jar from android API 23) can be reused until android API 25
+- Android support 26 typings(built with supper jar from android API 26) can be reused for API 26 and 27
+
+The corresponding typings files can be found in the [tns-platform-declarations](https://github.com/NativeScript/NativeScript/tree/master/tns-platform-declarations) package. The repo's [Makefile](Makefile) can be used as a reference for creating these typings files
