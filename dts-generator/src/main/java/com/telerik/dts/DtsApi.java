@@ -209,7 +209,7 @@ public class DtsApi {
         String javalangObject = "java.lang.Object";
 
         // replace "extends any" with "extends java.lang.Object"
-        content = content.replace(" extends any ", " extends " + javalangObject );
+        content = content.replace(" extends any ", String.format(" extends %s ", javalangObject));
 
         return content;
     }
@@ -285,34 +285,45 @@ public class DtsApi {
         if (typeDefinition != null) {
             StringBuilder result = new StringBuilder();
             ReferenceType parent = typeDefinition.getParent();
-            if(parent != null) {
-                result.append(" extends ");
-                result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
-            }
-            if(!this.generateGenericImplements) {
-                return result.toString();
-            }
-            List<ReferenceType> interfaces = typeDefinition.getInterfaces();
-            if(interfaces.size() > 0) {
-                result.append(" implements ");
 
-                for (ReferenceType referenceType : interfaces) {
-                    String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
-                    if(!this.isPrimitiveTSType(tsType)) {
-                        result.append(tsType + ", ");
+            if(!this.generateGenericImplements) {
+                if(parent != null) {
+                    result.append(" extends ");
+                    result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
+                }
+            } else {
+                List<ReferenceType> interfaces = typeDefinition.getInterfaces();
+                if(interfaces.size() == 1 && parent == null && getTypeScriptTypeFromJavaType(parent, typeDefinition).equals("java.lang.Object")) {
+                    result.append(" extends ");
+                    result.append(getTypeScriptTypeFromJavaType(interfaces.get(0), typeDefinition));
+                } else {
+                    if(parent != null) {
+                        result.append(" extends ");
+                        result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
+                    }
+                    if(interfaces.size() > 0) {
+                        result.append(" implements ");
+
+                        for (ReferenceType referenceType : interfaces) {
+                            String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
+                            if(!this.isPrimitiveTSType(tsType)) {
+                                result.append(tsType + ", ");
+                            }
+                        }
+                        result.deleteCharAt(result.lastIndexOf(","));
                     }
                 }
-                result.deleteCharAt(result.lastIndexOf(","));
             }
             return result.toString();
+        } else {
+            JavaClass superClass = getSuperClass(currClass);
+            List<JavaClass> interfaces = getInterfaces(currClass);
+            if(interfaces.size() == 1 && superClass == null && currClass.getSuperclassName().equals("java.lang.Object")) {
+                superClass = interfaces.get(0);
+                interfaces.clear();
+            }
+            return getExtendsLine(superClass, interfaces);
         }
-        JavaClass superClass = getSuperClass(currClass);
-        List<JavaClass> interfaces = getInterfaces(currClass);
-        if(interfaces.size() == 1 && superClass == null && currClass.getSuperclassName().equals("java.lang.Object")) {
-            superClass = interfaces.get(0);
-            interfaces.clear();
-        }
-        return getExtendsLine(superClass, interfaces);
     }
 
     private String getExtendsLine(JavaClass superClass, List<JavaClass> interfaces) {

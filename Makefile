@@ -1,48 +1,49 @@
-android-17:
+android-platform-17:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-17/android.jar
-	mv out/android.d.ts out/android-17.d.ts
+	mv out/android.d.ts out/android-platform-17.d.ts
 
-android-18:
+android-platform-18:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-18/android.jar
-	mv out/android.d.ts out/android-18.d.ts
+	mv out/android.d.ts out/android-platform-18.d.ts
 
-android-19:
+android-platform-19:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-19/android.jar
-	mv out/android.d.ts out/android-19.d.ts
+	mv out/android.d.ts out/android-platform-19.d.ts
 
-android-20:
+android-platform-20:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-20/android.jar
-	mv out/android.d.ts out/android-20.d.ts
+	mv out/android.d.ts out/android-platform-20.d.ts
 
-android-21:
+android-platform-21:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-21/android.jar
-	mv out/android.d.ts out/android-21.d.ts
+	mv out/android.d.ts out/android-platform-21.d.ts
 
-android-22:
+android-platform-22:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-22/android.jar
-	mv out/android.d.ts out/android-22.d.ts
+	mv out/android.d.ts out/android-platform-22.d.ts
 
-android-23:
+android-platform-23:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-23/android.jar
-	mv out/android.d.ts out/android-23.d.ts
+	mv out/android.d.ts out/android-platform-23.d.ts
 
-android-24:
+android-platform-24:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-24/android.jar
-	mv out/android.d.ts out/android-24.d.ts
+	mv out/android.d.ts out/android-platform-24.d.ts
 
-android-25:
+android-platform-25:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-25/android.jar
-	mv out/android.d.ts out/android-25.d.ts
+	mv out/android.d.ts out/android-platform-25.d.ts
 
-android-26:
+android-platform-26:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-26/android.jar
-	mv out/android.d.ts out/android-26.d.ts
+	mv out/android.d.ts out/android-platform-26.d.ts
 
-android-27:
+android-platform-27:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ~/Library/Android/sdk/platforms/android-27/android.jar
-	mv out/android.d.ts out/android-27.d.ts
+	mv out/android.d.ts out/android-platform-27.d.ts
 
-android-all: android-17 android-18 android-19 android-20 android-21 android-22 android-23 android-24 android-25 android-26 android-27
+android-platform-all: android-platform-17 android-platform-18 android-platform-19 android-platform-20 android-platform-21 \
+	android-platform-22 android-platform-23 android-platform-24 android-platform-25 android-platform-26 android-platform-27
 
 android-support-17:
 	java -jar dts-generator/build/libs/dts-generator.jar \
