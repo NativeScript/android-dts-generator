@@ -23,7 +23,7 @@ public class Generator {
     private String declarationsFileName;
 
     public void start(InputParameters inputParameters) throws Exception {
-        this.inputGenericsFile = inputParameters.getInputGenerics();
+        Generator.inputGenericsFile = inputParameters.getInputGenerics();
         this.generateGenericImplements = inputParameters.isGenerateGenericImplementsEnabled();
         this.fileHelper = new FileHelper(inputParameters.getOutputDir());
         this.dtsApi = new DtsApi(generateGenericImplements);
@@ -69,7 +69,7 @@ public class Generator {
     }
 
     private void writeDeclarations() {
-        List<String> imports = this.dtsApi.imports;
+        List<String> imports = DtsApi.imports;
         imports.add(0, "declare module native {\texport class Array<T> {\tconstructor(); length: number; [index: number]: T; } }\n");
 
         String existingContent = this.fileHelper.readFileContent(this.declarationsFileName);

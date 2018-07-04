@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import edu.umd.cs.findbugs.ba.generic.GenericObjectType;
+import edu.umd.cs.findbugs.ba.generic.GenericSignatureParser;
 import edu.umd.cs.findbugs.ba.generic.GenericUtilities;
 
 /**
@@ -214,6 +216,7 @@ public class DtsApi {
 
     public static String serializeGenerics() {
         StringBuilder sb = new StringBuilder();
+        sb.append("//Generics information:\n");
         for(Tuple<String, Integer> generic: generics) {
             sb.append(String.format("//%s:%s\n", generic.x, generic.y));
         }
@@ -378,7 +381,7 @@ public class DtsApi {
         String[] parts = className.split("\\.");
         String rootNamespace = parts[0];
         if(globalAliases.containsKey(parts[0])) {
-            String aliasedNamespace = this.globalAliases.get(rootNamespace);
+            String aliasedNamespace = DtsApi.globalAliases.get(rootNamespace);
             String aliasedType = aliasedTypes.get(rootNamespace);
             if(aliasedType == null) {
                 aliasedTypes.put(rootNamespace, aliasedNamespace);
@@ -698,7 +701,7 @@ public class DtsApi {
                     return m.getArgumentTypes();
                 }
                 try {
-                    List<ReferenceType> referenceTypes = GenericUtilities.getTypeParameters(argumentsSignature);
+                    List<Type> referenceTypes = DtsApi.getTypeParameters(argumentsSignature);
                     Type[] types = new Type[referenceTypes.size()];
                     types = referenceTypes.toArray(types);
                     return types;
@@ -708,6 +711,24 @@ public class DtsApi {
             }
         }
         return m.getArgumentTypes();
+    }
+
+    private static List<Type> getTypeParameters(String signature) {
+        GenericSignatureParser parser = new GenericSignatureParser("(" + signature + ")V");
+        List<Type> types = new ArrayList<>();
+        Iterator<String> iter = parser.parameterSignatureIterator();
+
+        while(iter.hasNext()) {
+            String parameterString = iter.next();
+            Type t = GenericUtilities.getType(parameterString);
+            if (t == null) {
+                return null;
+            }
+
+            types.add(t);
+        }
+
+        return types;
     }
 
     // gets the full field type including generic types
@@ -1135,9 +1156,9 @@ public class DtsApi {
 
     private void setExtendsOverrides() {
         // here we put extends overrides to avoid manual work to fix the generated .d.ts file
-        // this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
-        // this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
-        // this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+         this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
+         this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
+         this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
     }
 
     private void setTypeOverrides() {
@@ -1162,6 +1183,7 @@ public class DtsApi {
         result.add("android.graphics.drawable.Icon");
         result.add("android.graphics.Outline");
         result.add("android.view.SearchEvent");
+        result.add("android.view.KeyboardShortcutGroup");
         result.add("android.view.ViewStructure");
         result.add("android.media.browse");
         result.add("android.media.session");
