@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class Generator {
     private DtsApi dtsApi;
     private boolean allGenericImplements;
     private boolean skipDeclarations;
+    private boolean classMode;
     private String outFileName;
     private String declarationsFileName;
 
@@ -27,6 +29,7 @@ public class Generator {
         Generator.inputGenericsFile = inputParameters.getInputGenerics();
         this.allGenericImplements = inputParameters.isAllGenericImplementsEnabled();
         this.skipDeclarations = inputParameters.getSkipDeclarations();
+        this.classMode = inputParameters.getClassMode();
         this.fileHelper = new FileHelper(inputParameters.getOutputDir());
         this.dtsApi = new DtsApi(allGenericImplements);
         this.outFileName = FileHelper.DEFAULT_DTS_FILE_NAME;
@@ -95,8 +98,12 @@ public class Generator {
                     JarFile jar = JarFile.readJar(file.getAbsolutePath());
                     ClassRepo.cacheJarFile(jar);
                 } else if (file.isDirectory()) {
-                    ClassDirectrory dir = ClassDirectrory.readDirectory(file.getAbsolutePath());
-                    ClassRepo.cacheJarFile(dir);
+                    if(this.classMode) {
+                        ClassDirectrory dir = ClassDirectrory.readDirectory(file.getAbsolutePath());
+                        ClassRepo.cacheJarFile(dir);
+                    } else {
+                        loadJavaClasses(Arrays.asList(file.listFiles()));
+                    }
                 }
             } else {
                 throw new IOException(String.format("File %s does not exist", file.getName()));

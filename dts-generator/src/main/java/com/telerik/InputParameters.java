@@ -15,6 +15,7 @@ public class InputParameters {
     private File inputGenerics;
     private boolean allGenericImplements;
     private boolean skipDeclarations;
+    private boolean classMode;
 
     public InputParameters() {
         this.outputDir = new File("out");
@@ -22,6 +23,7 @@ public class InputParameters {
         this.superJars = new ArrayList<>();
         this.allGenericImplements = false;
         this.skipDeclarations = false;
+        this.classMode = false;
     }
 
     public File getOutputDir() {
@@ -56,7 +58,9 @@ public class InputParameters {
 
     public boolean getSkipDeclarations() { return skipDeclarations; }
 
-    public void setAllGenericImplements(boolean allGenericImplements) {
-        this.allGenericImplements = allGenericImplements;
-    }
+    public void setAllGenericImplements(boolean allGenericImplements) { this.allGenericImplements = allGenericImplements; }
+
+    public boolean getClassMode() { return this.classMode; }
+
+    public void setClassMode(boolean classMode) { this.classMode = classMode; }
 }

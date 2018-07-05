@@ -11,6 +11,7 @@ public class Main {
 	private static final String OUT_DIR = "-output";
 	private static final String INPUT_JARS = "-input";
 	private static final String SUPER_JARS = "-super";
+	private static final String CLASS_MODE = "-class-mode";
 
     // provide a file with rows in the following format - com.telerik.android.data.SelectionService:1
     // to know how many generic types uses a given generic
@@ -53,6 +54,10 @@ public class Main {
 
 				if (commandArg.equals(SKIP_DECLARATIONS)) {
 					inputParameters.setSkipDeclarations(true);
+				}
+
+				if (commandArg.equals(CLASS_MODE)) {
+					inputParameters.setClassMode(true);
 				}
 
 				if (commandArg.equals(OUT_DIR)) {
@@ -105,13 +110,14 @@ public class Main {
 		helpMessage.appendln("usage: java -jar dts-generator.jar <flag> [<args>]");
 		helpMessage.appendln("flags:\t\t");
 		helpMessage.appendln("\t(Optional)");
-		helpMessage.appendln("\t\t[-output <path>]:\tThe direcory the d.ts files will be generated in.");
+		helpMessage.appendln("\t\t[-output <path>]:\t\tThe direcory the d.ts files will be generated in.");
 		helpMessage.appendln("\t\t[-input]:\t\tThe input jars or class directories from which the d.ts files will be generated.");
         helpMessage.appendln("\t\t[-super]:\t\tProvide jar files from which to search for super classes.");
 		helpMessage.appendln("\t\t[-input-generics]:\tProvide a file with information for number of generic types per given generic class name.");
-		helpMessage.appendln("\t\t[-all-generic-implements]:\tAdd this flag to generate implements for all interfaces implemented by the generic types." +
+		helpMessage.appendln("\t\t[-all-generic-implements]:\t\tAdd this flag to generate implements for all interfaces implemented by the generic types." +
 			" It is not enabled by default as when there are more than one implementation most probably one of them needs to be changed to extends, but this have to be made manually");
 		helpMessage.appendln("\t\t[-skip-declarations]:\t\tProvide this flag if you don't want android-declarations.d.ts file to be generated and referenced.");
+		helpMessage.appendln("\t\t[--class-mode]:\t\tPass this argument if you want folders to be processed as class folders.");
 		helpMessage.appendln("\t\t[-help]:\t\tPrints this help message.");
 
 		System.out.println(helpMessage);
