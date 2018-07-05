@@ -1169,7 +1169,7 @@ public class DtsApi {
 
     private void setSuperOverrides() {
         // here we put super overrides
-        this.superOverrides.put("android.support.v4.view.GestureDetectorCompat", "android.view.GestureDetector"); // android-17
+        this.superOverrides.put("android.support.v4.view.GestureDetectorCompat", "android.view.GestureDetector"); // android-support
     }
 
     private void setTypeOverrides() {
