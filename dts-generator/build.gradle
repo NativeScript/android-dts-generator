@@ -1,5 +1,10 @@
 apply plugin: 'java'
 
+project.ext.extractedDependenciesDir = "jar-files"
+if(project.hasProperty("jarsOutput")) {
+    project.ext.extractedDependenciesDir = project.ext.jarsOutput
+}
+
 repositories {
     google()
     jcenter()
@@ -14,9 +19,12 @@ allprojects {
 }
 
 dependencies {
-    compile 'org.apache.bcel:bcel:6.2'
-    compile 'commons-io:commons-io:2.6'
-    compile 'com.google.code.findbugs:findbugs:3.0.1'
+    implementation 'org.apache.bcel:bcel:6.2'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'com.google.code.findbugs:findbugs:3.0.1'
+
+    // add your dependency here as the example bellow
+    // testCompileOnly  "com.android.support:support-v4:27.0.1"
 }
 
 jar {
@@ -35,3 +43,51 @@ task copyJarToBuildTools (type: Copy) {
 }
 
 jar.finalizedBy(copyJarToBuildTools)
+
+task extractAllJars {
+
+    outputs.dir extractedDependenciesDir
+
+    doLast {
+        def iter = configurations.testCompileOnly.resolvedConfiguration.resolvedArtifacts.iterator()
+        def dependencyCounter = 0
+        while (iter.hasNext()) {
+            //declaring variable as specific class for getting code completion in Android Studio
+            org.gradle.api.internal.artifacts.DefaultResolvedArtifact nextDependency = iter.next()
+
+            def outputDir = java.nio.file.Paths.get(extractedDependenciesDir, nextDependency.toString()).normalize().toString()
+            explodeAar(nextDependency.file, outputDir)
+            dependencyCounter++
+        }
+    }
+}
+
+def explodeAar(File compileDependency, String outputDir) {
+    if (compileDependency.name.endsWith(".aar")) {
+        java.util.jar.JarFile jar = new java.util.jar.JarFile(compileDependency)
+        Enumeration enumEntries = jar.entries()
+        while (enumEntries.hasMoreElements()) {
+            java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement()
+            if (file.name.endsWith(".jar")) {
+                def f = new File(outputDir, file.name)
+                new File(f.parent).mkdirs()
+                InputStream is = jar.getInputStream(file)
+                FileOutputStream fos = new FileOutputStream(f)
+                while (is.available() > 0) {
+                    fos.write(is.read())
+                }
+                fos.close()
+                is.close()
+            }
+            if (file.isDirectory()) {
+                continue
+            }
+        }
+        jar.close()
+    } else if (compileDependency.name.endsWith(".jar")) {
+        copy {
+            from compileDependency.absolutePath
+            into outputDir
+        }
+    }
+}

@@ -89,3 +89,36 @@ By repeating the steps above we've found that:
 - Android support 26 typings(built with supper jar from android API 26) can be reused for API 26 and 27
 
 The corresponding typings files can be found in the [tns-platform-declarations](https://github.com/NativeScript/NativeScript/tree/master/tns-platform-declarations) package. The repo's [Makefile](Makefile) can be used as a reference for creating these typings files
+
+## Finding package dependencies
+If you want to generate typings of a package but you are not sure how you can get all the needed dependencies you can follow the steps bellow:
+
+1. Open [dts-generator/build.gradle](dts-generator/build.gradle) file and locate `dependencies` part.
+2. Add as a `testCompileOnly` dependency the one that you want to generate typings for:
+
+    ```groovy
+    dependencies {
+        implementation 'org.apache.bcel:bcel:6.2'
+        implementation 'commons-io:commons-io:2.6'
+        implementation 'com.google.code.findbugs:findbugs:3.0.1'
+
+        // add your dependency bellow
+        testCompileOnly  "com.android.support:support-v4:27.0.1"
+    }
+    ```
+
+3. Open the [dts-generator](dts-generator) folder in your terminal
+4. Run the following command:
+
+    ```
+    ./gradlew extractAllJars
+    ```
+
+5. The command above will get the needed jar files for your dependency and will output them in the [dts-generator/jar-files](dts-generator/jar-files) folder
+6. You can run the following command to check what are the dependencies between the packages:
+
+    ```
+    ./gradlew dependencies --configuration testCompileOnly
+    ```
+
+7. Run the dts-generator tool passing as **input** arguments the jar files for the needed package from the [dts-generator/jar-files](dts-generator/jar-files) folder
