@@ -45,6 +45,7 @@ public class DtsApi {
     private static Map<String, String> globalAliases = new HashMap<>();
 
     private Map<String, String> extendsOverrides = new HashMap<>();
+    private Map<String, String> superOverrides = new HashMap<>();
     private Map<String, String> typeOverrides = new HashMap<>();
 
     private StringBuilder2 sbContent;
@@ -826,6 +827,11 @@ public class DtsApi {
         }
 
         String scn = clazz.getSuperclassName();
+        String override = this.superOverrides.get(clazz.getClassName());
+        if(override != null) {
+            scn = override;
+        }
+
         if(scn.equals("") || scn == null) {
             return null;
         }
@@ -1151,6 +1157,7 @@ public class DtsApi {
     private void setOverrides() {
         this.setTypeOverrides();
         this.setExtendsOverrides();
+        this.setSuperOverrides();
     }
 
     private void setExtendsOverrides() {
@@ -1158,10 +1165,11 @@ public class DtsApi {
         this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
         this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
         this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+    }
 
-//        this.extendsOverrides.put("android.net.wifi.SupplicantState", "android.os.Parcelable");
-//        this.extendsOverrides.put("java.util.concurrent.ScheduledFuture", "java.util.concurrent.Delayed implements java.util.concurrent.Future<V>"); // android-17
-//        this.extendsOverrides.put("java.util.concurrent.RunnableScheduledFuture", "java.util.concurrent.ScheduledFuture<V> implements java.util.concurrent.RunnableFuture<V>"); // android-17
+    private void setSuperOverrides() {
+        // here we put super overrides
+        this.superOverrides.put("android.support.v4.view.GestureDetectorCompat", "android.view.GestureDetector"); // android-17
     }
 
     private void setTypeOverrides() {
