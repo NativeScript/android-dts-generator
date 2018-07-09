@@ -516,11 +516,13 @@ public class DtsApi {
         }
 
         sbContent.appendln(tabs + "});");
+
+        sbContent.appendln(tabs + "public constructor();");
     }
 
     private void generateInterfaceConstructorCommentBlock(JavaClass classInterface, String tabs) {
         sbContent.appendln(tabs + "/**");
-        sbContent.appendln(tabs + " * Constructs a new instance of the " + classInterface.getClassName() + " interface with the provided implementation.");
+        sbContent.appendln(tabs + " * Constructs a new instance of the " + classInterface.getClassName() + " interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.");
         // sbContent.appendln(tabs + " * @param implementation - allows implementor to define their own logic for all public methods."); // <- causes too much noise
         sbContent.appendln(tabs + " */");
     }
