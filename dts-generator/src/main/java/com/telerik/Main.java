@@ -30,6 +30,10 @@ public class Main {
 
 		long startTime = System.currentTimeMillis();
 
+		Package p = Main.class.getPackage();
+		System.out.println("Android d.ts Generator Version : "
+				+ p.getSpecificationVersion());
+
 		new Generator().start(inputParameters);
 
 		long stopTime = System.currentTimeMillis();

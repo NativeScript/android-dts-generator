@@ -1,5 +1,7 @@
 apply plugin: 'java-library'
 
+def version = "2.0.0"
+
 project.ext.extractedDependenciesDir = "jar-files"
 if(project.hasProperty("jarsOutput")) {
     project.ext.extractedDependenciesDir = project.ext.jarsOutput
@@ -34,6 +36,8 @@ jar {
     //set main class for the jar
     manifest {
         attributes 'Main-Class': 'com.telerik.Main'
+        attributes 'Specification-Version': version
+        attributes 'Manifest-Version': version
     }
 }
 
