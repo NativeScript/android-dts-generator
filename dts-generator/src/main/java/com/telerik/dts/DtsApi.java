@@ -1,32 +1,54 @@
 package com.telerik.dts;
 
+import org.apache.bcel.classfile.Attribute;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.FieldOrMethod;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
+import org.apache.bcel.classfile.Signature;
 import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ObjectType;
+import org.apache.bcel.generic.ReferenceType;
 import org.apache.bcel.generic.Type;
 import org.apache.bcel.util.BCELComparator;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import edu.umd.cs.findbugs.ba.generic.GenericObjectType;
+import edu.umd.cs.findbugs.ba.generic.GenericSignatureParser;
+import edu.umd.cs.findbugs.ba.generic.GenericUtilities;
 
 /**
  * Created by plamen5kov on 6/17/16.
  */
 public class DtsApi {
+    public static List<Tuple<String, Integer>> externalGenerics = new ArrayList<>();
+    public static List<Tuple<String, Integer>> generics = new ArrayList<>();
+    public static List<String> imports = new ArrayList<>();
+    private static Map<String, String> globalAliases = new HashMap<>();
+
+    private Map<String, String> extendsOverrides = new HashMap<>();
+    private Map<String, String> superOverrides = new HashMap<>();
+    private Map<String, String> typeOverrides = new HashMap<>();
+
     private StringBuilder2 sbContent;
-    private StringBuilder2 sbHeaders;
     private Set<String> references;
     private JavaClass prevClass;
     private String currentFileClassname;
@@ -36,23 +58,27 @@ public class DtsApi {
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
     private int indent = 0;
-    private boolean writeMultipleFiles;
+    private boolean allGenericImplements;
+    private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
+    private Pattern isWordPattern = Pattern.compile("^[\\w\\d]+$");
 
-    public DtsApi(boolean writeMultipleFiles) {
-        this.writeMultipleFiles = writeMultipleFiles;
+    public DtsApi(boolean allGenericImplements) {
+        this.allGenericImplements = allGenericImplements;
         this.indent = 0;
 
         overrideFieldComparator();
+        setOverrides();
+        setTypeOverrides();
+        setGlobalAliases();
 
         this.aliasedTypes = new HashMap<>();
     }
 
-    public String generateDtsContent(List<JavaClass> javaClasses) {
+    public String generateDtsContent(List<JavaClass> javaClasses){
         this.prevClass = null;
 
         if ((javaClasses != null) && (javaClasses.size() > 0)) {
-            references = new HashSet<String>();
-            sbHeaders = new StringBuilder2(); // <reference path=" ...
+            references = new HashSet<>();
             sbContent = new StringBuilder2();
 
             // process class scope
@@ -63,6 +89,12 @@ public class DtsApi {
                 currentFileClassname = currClass.getClassName();
 
                 String simpleClassName = getSimpleClassname(currClass);
+
+                Signature signature = this.getSignature(currClass);
+                TypeDefinition typeDefinition = null;
+                if(signature != null) {
+                    typeDefinition = new TypeDefinition(signature.getSignature(), currentFileClassname);
+                }
 
                 if (currentFileClassname.startsWith("java.util.function") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr1") ||
@@ -84,18 +116,18 @@ public class DtsApi {
 
                 String tabs = getTabs(this.indent);
 
-                JavaClass superClass = getSuperClass(currClass);
-                List<JavaClass> interfaces = getInterfaces(currClass);
-                String extendsLine = getExtendsLine(superClass, interfaces);
+                String extendsLine = getExtendsLine(currClass, typeDefinition);
 
                 if (simpleClassName.equals("AccessibilityDelegate")) {
-                    sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + extendsLine + " {");
+                    sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + getTypeSuffix(currentFileClassname, typeDefinition, extendsLine) + extendsLine + " {");
                 } else {
-                    sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + simpleClassName + extendsLine + " {");
+                    sbContent.appendln(tabs + "export" + (isAbstract && !isInterface ? " abstract " : " ") + "class " + simpleClassName + getTypeSuffix(currentFileClassname, typeDefinition, extendsLine) + extendsLine + " {");
                 }
                 // process member scope
 
-                mapNameMethod = new HashMap<String, Method>();
+                mapNameMethod = new HashMap<>();
+
+                addClassField(currClass);
 
                 // process constructors for interfaces
                 if (isInterface) {
@@ -104,22 +136,22 @@ public class DtsApi {
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
                     Set<Field> allInterfaceFields = getAllInterfacesFields(allInterfaces);
 
-                    processInterfaceConstructor(currClass, allInterfacesMethods);
+                    processInterfaceConstructor(currClass, typeDefinition, allInterfacesMethods);
 
                     for (Method m : allInterfacesMethods) {
-                        processMethod(m, currClass, isInterface, methodsSet);
+                        processMethod(m, currClass, typeDefinition, isInterface, methodsSet);
                     }
 
                     for (Field f : allInterfaceFields) {
-                        processField(f, currClass);
+                        processField(f, currClass, typeDefinition);
                     }
                 } else {
                     List<FieldOrMethod> foms = getMembers(currClass, getAllInterfaces(currClass));
                     for (FieldOrMethod fom : foms) {
                         if (fom instanceof Field) {
-                            processField((Field) fom, currClass);
+                            processField((Field) fom, currClass, typeDefinition);
                         } else if (fom instanceof Method) {
-                            processMethod((Method) fom, currClass, isInterface, methodsSet);
+                            processMethod((Method) fom, currClass, typeDefinition, isInterface, methodsSet);
                         } else {
                             throw new IllegalArgumentException("Argument is not method or field");
                         }
@@ -140,7 +172,7 @@ public class DtsApi {
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
 
                     for (Method m : allInterfacesMethods) {
-                        processMethod(m, currClass, isInterface, methodsSet);
+                        processMethod(m, currClass, typeDefinition, isInterface, methodsSet);
                     }
                 }
 
@@ -158,24 +190,132 @@ public class DtsApi {
 
             String[] refs = references.toArray(new String[references.size()]);
             Arrays.sort(refs);
+        }
 
-            if(this.writeMultipleFiles) {
-                for (String r : refs) {
-                    sbHeaders.append("/// <reference path=\"./");
-                    sbHeaders.append(r);
-                    sbHeaders.appendln(".d.ts\" />");
+        String conent = replaceIgnoredNamespaces(sbContent.toString());
+
+        return conent;
+    }
+
+    private String replaceIgnoredNamespaces(String content) {
+        String regexFormat = "(?<Replace>%s(?:(?:\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>]*>)*)(?<Suffix>[^a-zA-Z\\d]+)";
+        // these namespaces are not known in some android api levels, so we cannot use them in android-support for instance, so we are replacing them with any
+        for (String ignoredNamespace: this.getIgnoredNamespaces()) {
+            String regexString = String.format(regexFormat, ignoredNamespace.replace(".", "\\."));
+            content = content.replaceAll(regexString, "any$2");
+            regexString = String.format(regexFormat, getGlobalAliasedClassName(ignoredNamespace).replace(".", "\\."));
+            content = content.replaceAll(regexString, "any$2");
+        }
+
+        String javalangObject = "java.lang.Object";
+
+        // replace "extends any" with "extends java.lang.Object"
+        content = content.replace(" extends any ", String.format(" extends %s ", javalangObject));
+
+        return content;
+    }
+
+    public static String serializeGenerics() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("//Generics information:\n");
+        for(Tuple<String, Integer> generic: generics) {
+            sb.append(String.format("//%s:%s\n", generic.x, generic.y));
+        }
+        return sb.toString();
+    }
+
+    public static void loadGenerics(File inputFile) throws Exception {
+        List<String> lines = Files.readAllLines(inputFile.toPath());
+        for(String line: lines) {
+            if(!line.equals("")) {
+                while(line.startsWith("/")){
+                    line = line.substring(1, line.length());
                 }
+                String[] parts = line.split(":");
+                if (parts.length != 2) {
+                    throw new Exception(String.format("Invalid generic info(%s) in file %s", line, inputFile));
+                }
+                externalGenerics.add(new Tuple<>(parts[0], Integer.parseInt(parts[1])));
+            }
+        }
+    }
+
+    // Adds javalangObject types to all generics which are used without types
+    public static String replaceGenericsInText(String content) {
+        String any = "any";
+        String result = content;
+
+        List<Tuple<String, Integer>> allGenerics = Stream.concat(generics.stream(), externalGenerics.stream()).collect(Collectors.toList());
+
+        for(Tuple<String, Integer> generic: allGenerics) {
+            result = replaceNonGenericUsage(result, generic.x, generic.y, any);
+            String globalAliasedClassName = getGlobalAliasedClassName(generic.x);
+            if(!generic.x.equals(globalAliasedClassName)) {
+                result = replaceNonGenericUsage(result, globalAliasedClassName, generic.y, any);
             }
         }
 
-        return sbHeaders.toString() + sbContent.toString();
+        return result;
+    }
+
+    private static String replaceNonGenericUsage(String content, String className, Integer occurencies, String javalangObject) {
+        String result = content;
+        Pattern usedAsNonGenericPattern = Pattern.compile("(?<Prefix>[^a-zA-Z\\d\\s:]*)" + className.replace(".", "\\.") + "(?<Suffix>[^a-zA-Z\\d^\\.^\\$^\\<])");
+        Matcher matcher = usedAsNonGenericPattern.matcher(result);
+        if(matcher.find()) {
+            List<String> arguments = new ArrayList<>();
+            for (int i = 0; i < occurencies; i++) {
+                arguments.add(javalangObject);
+            }
+            String classSuffix = "<" + String.join(",", arguments) + ">";
+
+            System.out.println(String.format("Appending %s to occurrences of class %s without passed generic types", classSuffix, className));
+
+            String replaceString = String.format("$1%s%s$2", className, classSuffix);
+            result = matcher.replaceAll(replaceString);
+        }
+        return result;
+    }
+
+    private String getExtendsLine(JavaClass currClass, TypeDefinition typeDefinition) {
+        String override = this.extendsOverrides.get(currClass.getClassName());
+        if(override != null) {
+            System.out.println(String.format("Found extends override for class %s - %s", currClass.getClassName(), override));
+            return " extends " + override;
+        }
+        if (typeDefinition != null) {
+            StringBuilder result = new StringBuilder();
+            ReferenceType parent = typeDefinition.getParent();
+
+            List<ReferenceType> interfaces = typeDefinition.getInterfaces();
+            if(parent != null) {
+                result.append(" extends ");
+                result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
+            }
+            if(interfaces.size() == 1 || (this.allGenericImplements && interfaces.size() > 0)) {
+                result.append(" implements ");
+
+                for (ReferenceType referenceType : interfaces) {
+                    String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
+                    if(!this.isPrimitiveTSType(tsType)) {
+                        result.append(tsType + ", ");
+                    }
+                }
+                result.deleteCharAt(result.lastIndexOf(","));
+            }
+            return result.toString();
+        } else {
+            JavaClass superClass = getSuperClass(currClass);
+            List<JavaClass> interfaces = getInterfaces(currClass);
+            if(interfaces.size() == 1 && superClass == null && currClass.getSuperclassName().equals("java.lang.Object")) {
+                superClass = interfaces.get(0);
+                interfaces.clear();
+            }
+            return getExtendsLine(superClass, interfaces);
+        }
     }
 
     private String getExtendsLine(JavaClass superClass, List<JavaClass> interfaces) {
-        if (superClass == null) {
-            return "";
-        }
-
         StringBuilder implementsSegmentSb = new StringBuilder();
         String implementsSegment = "";
         if (interfaces.size() > 0) {
@@ -194,36 +334,68 @@ public class DtsApi {
 
         }
 
-        String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
-        if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
-            extendedClass = getAliasedClassName(extendedClass);
-        }
+        if(superClass != null) {
+            String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
 
-        return " extends " + extendedClass + implementsSegment;
+            if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
+                extendedClass = getAliasedClassName(extendedClass);
+            }
+
+            return " extends " + extendedClass + implementsSegment;
+        } else {
+            return implementsSegment;
+        }
     }
 
     private String getAliasedClassName(String className) {
-        String aliasedType = aliasedTypes.get(className);
-        if (aliasedType == null) {
-            aliasedType = mangleClassname(className);
-            aliasedTypes.put(className, aliasedType);
-
-            sbHeaders.append("import ");
-            sbHeaders.append(aliasedType);
-            sbHeaders.append(" = ");
-            sbHeaders.append(className);
-            sbHeaders.appendln(";");
-        }
-
-        return aliasedType;
+        return mangleRootClassname(className);
     }
 
     private boolean typeBelongsInCurrentTopLevelNamespace(String className) {
         return className.startsWith(this.namespaceParts[0] + ".");
     }
 
-    private String mangleClassname(String className) {
-        return className.replaceAll("\\.", "");
+    private static String getGlobalAliasedClassName(String className) {
+        String[] parts = className.split("\\.");
+        String rootNamespace = parts[0];
+        if(globalAliases.containsKey(parts[0])) {
+            String aliasedNamespace = globalAliases.get(rootNamespace);
+            parts = Arrays.copyOfRange(parts, 1, parts.length);
+            String result = aliasedNamespace;
+            if(parts.length > 0) {
+                result += "." + String.join(".", parts);
+            }
+            return result;
+        } else {
+            return className;
+        }
+    }
+
+    private static void addImport(String importToAdd) {
+        if(!imports.stream().anyMatch(x -> x.equals(importToAdd))){
+            imports.add(importToAdd);
+        }
+    }
+
+    private String mangleRootClassname(String className) {
+        String[] parts = className.split("\\.");
+        String rootNamespace = parts[0];
+        if(globalAliases.containsKey(parts[0])) {
+            String aliasedNamespace = DtsApi.globalAliases.get(rootNamespace);
+            String aliasedType = aliasedTypes.get(rootNamespace);
+            if(aliasedType == null) {
+                aliasedTypes.put(rootNamespace, aliasedNamespace);
+                addImport(String.format("import %s = %s;\n", aliasedNamespace, rootNamespace));
+            }
+
+            parts = Arrays.copyOfRange(parts, 1, parts.length);
+            String result = aliasedNamespace;
+            if(parts.length > 0) {
+                result += "." + String.join(".", parts);
+            }
+            return result;
+        }
+        return className;
     }
 
     private int closePackage(JavaClass prevClass, JavaClass currClass) {
@@ -323,32 +495,34 @@ public class DtsApi {
         return indent;
     }
 
-    private void processInterfaceConstructor(JavaClass classInterface, List<Method> allInterfacesMethods) {
+    private void processInterfaceConstructor(JavaClass classInterface, TypeDefinition typeDefinition, List<Method> allInterfacesMethods) {
         String tabs = getTabs(this.indent + 1);
 
-        generateInterfaceConstructorContent(classInterface, tabs, allInterfacesMethods);
+        generateInterfaceConstructorContent(classInterface, typeDefinition, tabs, allInterfacesMethods);
     }
 
-    private void generateInterfaceConstructorContent(JavaClass classInterface, String tabs, List<Method> methods) {
+    private void generateInterfaceConstructorContent(JavaClass classInterface, TypeDefinition typeDefinition, String tabs, List<Method> methods) {
         generateInterfaceConstructorCommentBlock(classInterface, tabs);
 
         sbContent.appendln(tabs + "public constructor(implementation: {");
 
         for (Method m : methods) {
-            sbContent.append(getTabs(this.indent + 2) + getMethodName(m) + getMethodParamSignature(classInterface, m));
+            sbContent.append(getTabs(this.indent + 2) + getMethodName(m) + getMethodParamSignature(classInterface, typeDefinition, m));
             String bmSig = "";
             if (!isConstructor(m)) {
-                bmSig += ": " + getTypeScriptTypeFromJavaType(classInterface, m.getReturnType());
+                bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(m), typeDefinition);
             }
             sbContent.appendln(bmSig + ";");
         }
 
         sbContent.appendln(tabs + "});");
+
+        sbContent.appendln(tabs + "public constructor();");
     }
 
     private void generateInterfaceConstructorCommentBlock(JavaClass classInterface, String tabs) {
         sbContent.appendln(tabs + "/**");
-        sbContent.appendln(tabs + " * Constructs a new instance of the " + classInterface.getClassName() + " interface with the provided implementation.");
+        sbContent.appendln(tabs + " * Constructs a new instance of the " + classInterface.getClassName() + " interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.");
         // sbContent.appendln(tabs + " * @param implementation - allows implementor to define their own logic for all public methods."); // <- causes too much noise
         sbContent.appendln(tabs + " */");
     }
@@ -446,7 +620,7 @@ public class DtsApi {
     }
 
     //method related
-    private void processMethod(Method m, JavaClass clazz, boolean isInterface, Set<String> methodsSet) {
+    private void processMethod(Method m, JavaClass clazz, TypeDefinition typeDefinition, boolean isInterface, Set<String> methodsSet) {
         String name = m.getName();
 
         if (isPrivateGoogleApiMember(name)) return;
@@ -473,16 +647,16 @@ public class DtsApi {
                     String sig = getMethodFullSignature(bm);
                     if (!mapNameMethod.containsKey(sig)) {
                         mapNameMethod.put(sig, bm);
-                        methodsSet.add(generateMethodContent(clazz, isInterface, tabs, bm));
+                        methodsSet.add(generateMethodContent(clazz, typeDefinition, isInterface, tabs, bm));
                     }
                 }
             }
         }
 
-        methodsSet.add(generateMethodContent(clazz, isInterface, tabs, m));
+        methodsSet.add(generateMethodContent(clazz, typeDefinition, isInterface, tabs, m));
     }
 
-    private String generateMethodContent(JavaClass clazz, boolean isInterface, String tabs, Method m) {
+    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, boolean isInterface, String tabs, Method m) {
         StringBuilder2 sbTemp = new StringBuilder2();
         sbTemp.append(tabs + "public ");
 
@@ -490,15 +664,106 @@ public class DtsApi {
             sbTemp.append("static ");
         }
 
-        sbTemp.append(getMethodName(m) + getMethodParamSignature(clazz, m));
+        sbTemp.append(getMethodName(m) + getMethodParamSignature(clazz, typeDefinition, m));
         String bmSig = "";
         if (!isConstructor(m)) {
-            bmSig += ": " + getTypeScriptTypeFromJavaType(clazz, m.getReturnType());
+            bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(m), typeDefinition);
         }
 
         sbTemp.append(bmSig + ";");
 
         return sbTemp.toString();
+    }
+
+    private Signature getSignature(FieldOrMethod fieldOrMethod) {
+        for (Attribute attribute : fieldOrMethod.getAttributes()) {
+            if (attribute instanceof Signature) {
+                return (Signature) attribute;
+            }
+        }
+        return null;
+    }
+
+    private Signature getSignature(JavaClass clazz) {
+        for (Attribute attribute : clazz.getAttributes()) {
+            if (attribute instanceof Signature) {
+                return (Signature) attribute;
+            }
+        }
+        return null;
+    }
+
+    private Type[] getArgumentTypes(Method m) {
+        Signature signature = this.getSignature(m);
+        if(signature != null) {
+            Matcher matcher = methodSignature.matcher(signature.getSignature());
+            if(matcher.matches()) {
+                String argumentsSignature = matcher.group(1);
+                if(argumentsSignature.equals("")){
+                    return m.getArgumentTypes();
+                }
+                try {
+                    List<Type> referenceTypes = DtsApi.getTypeParameters(argumentsSignature);
+                    Type[] types = new Type[referenceTypes.size()];
+                    types = referenceTypes.toArray(types);
+                    return types;
+                } catch (ClassCastException classCast) {
+                    return m.getArgumentTypes();
+                }
+            }
+        }
+        return m.getArgumentTypes();
+    }
+
+    private static List<Type> getTypeParameters(String signature) {
+        GenericSignatureParser parser = new GenericSignatureParser("(" + signature + ")V");
+        List<Type> types = new ArrayList<>();
+        Iterator<String> iter = parser.parameterSignatureIterator();
+
+        while(iter.hasNext()) {
+            String parameterString = iter.next();
+            Type t = GenericUtilities.getType(parameterString);
+            if (t == null) {
+                return null;
+            }
+
+            types.add(t);
+        }
+
+        return types;
+    }
+
+    // gets the full field type including generic types
+    private Type getFieldType(Field f) {
+        Signature signature = this.getSignature(f);
+        if(signature != null) {
+            String typeSignature = signature.getSignature();
+            if(typeSignature.equals("")){
+                return f.getType();
+            }
+            try {
+                return GenericUtilities.getType(typeSignature);
+            } catch (ClassCastException classCast) {
+                return f.getType();
+            }
+        }
+        return f.getType();
+    }
+
+    // gets the full method return type including generic types
+    private Type getReturnType(Method m) {
+        Signature signature = this.getSignature(m);
+        if(signature != null) {
+            Matcher matcher = methodSignature.matcher(signature.getSignature());
+            if(matcher.matches()) {
+                String returnSignature = matcher.group(2);
+                if(returnSignature.equals("V")){
+                    return m.getReturnType(); // returning void
+                }
+                return GenericUtilities.getType(returnSignature);
+            }
+        }
+        return m.getReturnType();
     }
 
     private void writeMethods(Set<String> methodsSet) {
@@ -564,13 +829,15 @@ public class DtsApi {
         }
 
         String scn = clazz.getSuperclassName();
-        JavaClass currClass = ClassRepo.findClass(scn);
-
-        if (currClass == null) {
-            return null;
-//            throw new NoClassDefFoundError("Couldn't find class: " + scn + " required by class: " + clazz.getClassName() + ". You need to provide the jar containing the missing class: " + scn);
+        String override = this.superOverrides.get(clazz.getClassName());
+        if(override != null) {
+            scn = override;
         }
 
+        if(scn.equals("") || scn == null) {
+            return null;
+        }
+        JavaClass currClass = ClassRepo.findClass(scn);
         return currClass;
     }
 
@@ -593,11 +860,11 @@ public class DtsApi {
         return name;
     }
 
-    private String getMethodParamSignature(JavaClass clazz, Method m) {
+    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         int idx = 0;
-        for (Type type : m.getArgumentTypes()) {
+        for (Type type : this.getArgumentTypes(m)) {
             if (idx > 0) {
                 sb.append(", ");
             }
@@ -605,7 +872,7 @@ public class DtsApi {
             sb.append(idx++);
             sb.append(": ");
 
-            String paramTypeName = getTypeScriptTypeFromJavaType(clazz, type);
+            String paramTypeName = getTypeScriptTypeFromJavaType(type, typeDefinition);
 
             // TODO: Pete:
             if (paramTypeName.startsWith("java.util.function")) {
@@ -621,7 +888,7 @@ public class DtsApi {
     }
 
     //field related
-    private void processField(Field f, JavaClass clazz) {
+    private void processField(Field f, JavaClass clazz, TypeDefinition typeDefinition) {
         String fieldName = f.getName();
 
         if (isPrivateGoogleApiMember(fieldName)) return;
@@ -631,10 +898,27 @@ public class DtsApi {
         if (f.isStatic()) {
             sbContent.append("static ");
         }
-        sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(clazz, f.getType()) + ";");
+        sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition) + ";");
     }
 
-    private String getTypeScriptTypeFromJavaType(JavaClass clazz, Type type) {
+    private void addClassField(JavaClass clazz) {
+        String tabs = getTabs(this.indent + 1);
+        sbContent.append(String.format("%spublic static class: java.lang.Class<%s>;\n", tabs, clazz.getClassName().replace("$", ".")));
+    }
+
+    private boolean isPrimitiveTSType(String tsType) {
+        switch (tsType) {
+            case "void":
+            case "string":
+            case "boolean":
+            case "number":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private String getTypeScriptTypeFromJavaType(Type type, TypeDefinition typeDefinition) {
         String tsType;
         String typeSig = type.getSignature();
 
@@ -662,7 +946,7 @@ public class DtsApi {
                 break;
             default:
                 StringBuilder sb = new StringBuilder();
-                convertToTypeScriptType(type, sb);
+                convertToTypeScriptType(type, typeDefinition, sb);
                 tsType = sb.toString();
 
                 if (tsType.startsWith("java.util.function") || isPrivateGoogleApiClass(tsType)) {
@@ -673,10 +957,11 @@ public class DtsApi {
         return tsType;
     }
 
-    private void convertToTypeScriptType(Type type, StringBuilder tsType) {
+    private void convertToTypeScriptType(Type type, TypeDefinition typeDefinition, StringBuilder tsType) {
         boolean isPrimitive = type instanceof BasicType;
         boolean isArray = type instanceof ArrayType;
         boolean isObjectType = type instanceof ObjectType;
+        boolean isGenericObjectType = type instanceof GenericObjectType;
 
         if (isPrimitive) {
             if (type.equals(Type.BOOLEAN)) {
@@ -693,15 +978,33 @@ public class DtsApi {
         } else if (isArray) {
             tsType.append("native.Array<");
             Type elementType = ((ArrayType) type).getElementType();
-            convertToTypeScriptType(elementType, tsType);
+            useAnyInsteadOfJavaLangObject(elementType, typeDefinition, tsType);
             tsType.append(">");
         } else if (type.equals(Type.STRING)) {
             tsType.append("string");
         } else if (isObjectType) {
+            if(isGenericObjectType) {
+                GenericObjectType genericObjectType = (GenericObjectType)type;
+                String genericVariable = genericObjectType.getVariable();
+                if(genericVariable != null && isWordPattern.matcher(genericVariable).matches()) {
+                    if(typeDefinition != null && typeDefinition.getGenericDefinitions() != null
+                            && typeDefinition.getGenericDefinitions().stream()
+                                .filter(definition -> definition.getLabel().equals(genericVariable)).count() > 0
+                            && ((ObjectType) typeDefinition.getParent()).getClassName().equals("java.lang.Object")){
+                        tsType.append(genericObjectType.getVariable());
+                        addReference(type);
+                        return;
+                    }
+                }
+            }
             ObjectType objType = (ObjectType) type;
             String typeName = objType.getClassName();
             if (typeName.contains("$")) {
                 typeName = typeName.replaceAll("\\$", "\\.");
+            }
+
+            if(this.typeOverrides.containsKey(typeName)){
+                typeName = this.typeOverrides.get(typeName);
             }
 
             if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.") && !isPrivateGoogleApiClass(typeName)) {
@@ -710,10 +1013,34 @@ public class DtsApi {
                 tsType.append(typeName);
             }
 
+            if(type instanceof GenericObjectType) {
+                GenericObjectType genericType = (GenericObjectType) type;
+                if (genericType.getNumParameters() > 0) {
+                    tsType.append("<");
+                    for (ReferenceType refType: genericType.getParameters()){
+                        useAnyInsteadOfJavaLangObject(refType, typeDefinition, tsType);
+                        tsType.append(',');
+                    }
+                    tsType.deleteCharAt(tsType.lastIndexOf(","));
+                    tsType.append(">");
+                }
+            }
+
             addReference(type);
         } else {
             throw new RuntimeException("Unhandled type=" + type.getSignature());
         }
+    }
+
+    private void useAnyInsteadOfJavaLangObject(Type refType, TypeDefinition typeDefinition, StringBuilder tsType) {
+//        if (refType instanceof ObjectType) {
+//            ObjectType currentType = (ObjectType)refType;
+//            if (currentType.getClassName().equals("java.lang.Object")) {
+//                tsType.append("any");
+//                return;
+//            }
+//        }
+        this.convertToTypeScriptType(refType, typeDefinition, tsType);
     }
 
     private void addReference(Type type) {
@@ -731,8 +1058,8 @@ public class DtsApi {
     }
 
     private List<FieldOrMethod> getMembers(JavaClass javaClass, List<JavaClass> interfaces) {
-        Set<String> methodNames = new HashSet<String>();
-        ArrayList<FieldOrMethod> members = new ArrayList<FieldOrMethod>();
+        Set<String> methodNames = new HashSet<>();
+        ArrayList<FieldOrMethod> members = new ArrayList<>();
 
         List<Method> allInterfacesMethods = getAllInterfacesMethods(interfaces);
         List<Method> methods = new ArrayList<>();
@@ -771,6 +1098,34 @@ public class DtsApi {
         return fullName;
     }
 
+    // gets the suffix like <T extends javalangComparable<T>>
+    private String getTypeSuffix(String fullClassName, TypeDefinition typeDefinition, String extendsLine) {
+        if(typeDefinition == null) {
+            return "";
+        }
+        List<TypeDefinition.GenericDefinition> genericDefinitions = typeDefinition.getGenericDefinitions();
+        if(genericDefinitions != null) {
+            List<String> parts = new ArrayList<>();
+            String genericClassName = fullClassName.replace("$", ".");
+
+            // remove the current class name if it already exists
+            generics = generics.stream().filter(generic -> generic.x != genericClassName).collect(Collectors.toList());
+
+            generics.add(new Tuple<>(fullClassName.replace("$", "."), genericDefinitions.size()));
+            for (TypeDefinition.GenericDefinition definition: genericDefinitions) {
+                ObjectType genericObjectType = (ObjectType)definition.getType();
+                String baseClassName = getAliasedClassName(genericObjectType.getClassName());
+                String resultType = definition.getType().toString();
+                String typeToExtend = resultType.replace(genericObjectType.getClassName(), baseClassName);
+                //parts.add(String.format("%s extends %s", definition.getLabel(), typeToExtend));
+                parts.add(definition.getLabel());
+            }
+            return "<" + String.join(", ", parts) + "> ";
+        } else {
+            return "";
+        }
+    }
+
     private String getTabs(int count) {
         String tabs = new String(new char[count]).replace("\0", "\t");
         return tabs;
@@ -799,5 +1154,59 @@ public class DtsApi {
                 return cmp.hashCode(o);
             }
         });
+    }
+
+    private void setOverrides() {
+        this.setTypeOverrides();
+        this.setExtendsOverrides();
+        this.setSuperOverrides();
+    }
+
+    private void setExtendsOverrides() {
+        // here we put extends overrides to avoid manual work to fix the generated .d.ts file
+        this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
+        this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
+        this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+    }
+
+    private void setSuperOverrides() {
+        // here we put super overrides
+        this.superOverrides.put("android.support.v4.view.GestureDetectorCompat", "android.view.GestureDetector"); // android-support
+    }
+
+    private void setTypeOverrides() {
+        // here we put type overrides if we want to change return types of java.lang.Object for instance to any
+        this.typeOverrides.put("java.lang.Object", "any");
+        this.typeOverrides.put("java.lang.CharSequence", "string");
+    }
+
+    private void setGlobalAliases() {
+        // here we put extends overrides to avoid manual work to fix the generated .d.ts file
+        globalAliases.put("android", "globalAndroid");
+    }
+
+    private List<String> getIgnoredNamespaces(){
+        // for some reason these namespaces are references but not existing, so we are replacing all types from these namespaces with "any"
+        List<String> result = new ArrayList<>();
+
+        result.add("android.app.job");
+        result.add("android.app.SharedElementCallback");
+        result.add("android.arch");
+        result.add("android.content.pm.ShortcutInfo");
+        result.add("android.graphics.drawable.Icon");
+        result.add("android.graphics.Outline");
+        result.add("android.view.SearchEvent");
+        result.add("android.view.KeyboardShortcutGroup");
+        result.add("android.view.ViewStructure");
+        result.add("android.media.browse");
+        result.add("android.media.session");
+        result.add("android.media.AudioAttributes");
+        result.add("android.media.MediaMetadata");
+        result.add("android.media.Rating");
+        result.add("android.service.media");
+        result.add("android.print");
+        result.add("java.util.function");
+
+        return result;
     }
 }

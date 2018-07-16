@@ -11,12 +11,19 @@ public class InputParameters {
 
     private File outputDir;
     private List<File> inputJars;
-    private boolean generateMultipleFiles;
+    private List<File> superJars;
+    private File inputGenerics;
+    private boolean allGenericImplements;
+    private boolean skipDeclarations;
+    private boolean classMode;
 
     public InputParameters() {
         this.outputDir = new File("out");
-        this.inputJars = new ArrayList<File>();
-        this.generateMultipleFiles = false;
+        this.inputJars = new ArrayList<>();
+        this.superJars = new ArrayList<>();
+        this.allGenericImplements = false;
+        this.skipDeclarations = false;
+        this.classMode = false;
     }
 
     public File getOutputDir() {
@@ -31,15 +38,29 @@ public class InputParameters {
         return inputJars;
     }
 
-    public void setInputJars(List<File> inputJars) {
-        this.inputJars = inputJars;
+    public List<File> getSuperJars() {
+        return superJars;
     }
 
-    public boolean isGenerateMultipleFiles() {
-        return generateMultipleFiles;
+    public File getInputGenerics() {
+        return inputGenerics;
     }
 
-    public void setGenerateMultipleFiles(boolean generateMultipleFiles) {
-        this.generateMultipleFiles = generateMultipleFiles;
+    public void setInputGenerics(File inputGenerics) {
+        this.inputGenerics = inputGenerics;
     }
+
+    public boolean isAllGenericImplementsEnabled() {
+        return allGenericImplements;
+    }
+
+    public void setSkipDeclarations(boolean skipDeclarations) { this.skipDeclarations = skipDeclarations; }
+
+    public boolean getSkipDeclarations() { return skipDeclarations; }
+
+    public void setAllGenericImplements(boolean allGenericImplements) { this.allGenericImplements = allGenericImplements; }
+
+    public boolean getClassMode() { return this.classMode; }
+
+    public void setClassMode(boolean classMode) { this.classMode = classMode; }
 }

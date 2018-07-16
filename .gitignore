@@ -9,9 +9,11 @@
 .DS_Store
 /build
 /captures
+.idea
 
 /out
 /output
 /newApp
 /dts_gen_app
 testparams.txt
+/jars
