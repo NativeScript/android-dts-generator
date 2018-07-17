@@ -48,19 +48,19 @@ android-platform-all: android-platform-17 android-platform-18 android-platform-1
 android-support-17:
 	java -jar dts-generator/build/libs/dts-generator.jar \
 	-input libs/android-support/27.0.1 -input-generics libs/generics.txt \
-	-super /Users/trifonov/Library/Android/sdk/platforms/android-17/android.jar -skip-declarations
+	-super ${ANDROID_HOME}/platforms/android-17/android.jar -skip-declarations
 	mv out/android.d.ts out/android-support-17.d.ts
 
 android-support-23:
 	java -jar dts-generator/build/libs/dts-generator.jar \
 	-input libs/android-support/27.0.1 -input-generics libs/generics.txt \
-	-super /Users/trifonov/Library/Android/sdk/platforms/android-23/android.jar -skip-declarations
+	-super ${ANDROID_HOME}/platforms/android-23/android.jar -skip-declarations
 	mv out/android.d.ts out/android-support-23.d.ts
 
 android-support-26:
 	java -jar dts-generator/build/libs/dts-generator.jar \
 	-input libs/android-support/27.0.1 -input-generics libs/generics.txt \
-	-super /Users/trifonov/Library/Android/sdk/platforms/android-26/android.jar -skip-declarations
+	-super ${ANDROID_HOME}/platforms/android-26/android.jar -skip-declarations
 	mv out/android.d.ts out/android-support-26.d.ts
 
 android-support-all: android-support-17 android-support-23 android-support-26
