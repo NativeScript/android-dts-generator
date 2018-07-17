@@ -16,26 +16,26 @@ A tool that generates TypeScript declaration files (.d.ts) from Jars
 - Built gradle wrapper. [Read more](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper)
 
 
-Generate definitions following any of the approaches described below. Once you have run any of commands, you can find the generated typings in `dts-generator\out` directory.
+Generate definitions following any of the approaches described below. Once you have run any of commands, you can find the generated typings in `dts-generator/out` directory.
 ## Generate definitons for Android SDK
 ```shell
 cd dts-generator
 ./gradlew jar
-java -jar build\libs\dts-generator.jar -input %ANDROID_HOME%\platforms\android-<Platform Level (21/22/23/24)>\android.jar
+java -jar build/libs/dts-generator.jar -input %ANDROID_HOME%/platforms/android-<Platform Level (21/22/23/24)>/android.jar
 ```
 
 ## Generate definitions for any Jar
 ```shell
 cd dts-generator
 ./gradlew jar
-java -jar build\libs\dts-generator.jar -input <Path to your Jar>
+java -jar build/libs/dts-generator.jar -input <Path to your Jar>
 ```
 
 ## Pass multiple jars to generator
 ```shell
 cd dts-generator
 ./gradlew jar
-java -jar build\libs\dts-generator.jar -input <jar1> <jar2> <jar3>
+java -jar build/libs/dts-generator.jar -input <jar1> <jar2> <jar3>
 ```
 
 ## Generate definitions for .aar
@@ -45,7 +45,7 @@ Extract the classes.jar and any dependencies it may have inside libs/
 Rename classes.jar if necessary
 ```
 ```shell
-java -jar build\libs\dts-generator.jar -input classes.jar dependency-of-classes-jar.jar
+java -jar build/libs/dts-generator.jar -input classes.jar dependency-of-classes-jar.jar
 ```
 
 ## Complex typings generation
