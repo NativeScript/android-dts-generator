@@ -37,6 +37,12 @@ cd dts-generator
 ./gradlew jar
 java -jar build/libs/dts-generator.jar -input <jar1> <jar2> <jar3>
 ```
+Another option is to pass the folder containing the jars you want to pass
+```shell
+cd dts-generator
+./gradlew jar
+java -jar build/libs/dts-generator.jar -input <jarFolder>
+```
 
 ## Generate definitions for .aar
 ```
