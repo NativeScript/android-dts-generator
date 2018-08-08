@@ -1167,6 +1167,7 @@ public class DtsApi {
         this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
         this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
         this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+        this.extendsOverrides.put("com.telerik.widget.autocomplete.RadAutoCompleteTextView$SavedState", "com.telerik.widget.primitives.panels.RadScrollView.SavedState"); // nativescript-ui-autocomplete
     }
 
     private void setSuperOverrides() {

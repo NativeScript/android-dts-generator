@@ -1,8 +1,5 @@
 package com.telerik.dts;
 
-import org.apache.bcel.classfile.JavaClass;
-import org.omg.CORBA.Environment;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

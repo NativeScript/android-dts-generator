@@ -118,8 +118,12 @@ public class Generator {
                     JarFile jar = JarFile.readJar(file.getAbsolutePath());
                     ClassRepo.cacheSuperJarFile(jar);
                 } else if (file.isDirectory()) {
-                    ClassDirectrory dir = ClassDirectrory.readDirectory(file.getAbsolutePath());
-                    ClassRepo.cacheSuperJarFile(dir);
+                    if(this.classMode) {
+                        ClassDirectrory dir = ClassDirectrory.readDirectory(file.getAbsolutePath());
+                        ClassRepo.cacheSuperJarFile(dir);
+                    } else {
+                        loadSuperClasses(Arrays.asList(file.listFiles()));
+                    }
                 }
             } else {
                 throw new IOException(String.format("File %s does not exist", file.getName()));
