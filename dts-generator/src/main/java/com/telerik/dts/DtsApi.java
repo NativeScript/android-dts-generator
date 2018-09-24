@@ -757,7 +757,7 @@ public class DtsApi {
             Matcher matcher = methodSignature.matcher(signature.getSignature());
             if(matcher.matches()) {
                 String returnSignature = matcher.group(2);
-                if(returnSignature.equals("V")){
+                if(returnSignature.equals("V") || returnSignature.contains("^")){
                     return m.getReturnType(); // returning void
                 }
                 return GenericUtilities.getType(returnSignature);
