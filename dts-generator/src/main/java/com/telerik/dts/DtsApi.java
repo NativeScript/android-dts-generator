@@ -99,6 +99,7 @@ public class DtsApi {
                 if (currentFileClassname.startsWith("java.util.function") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr1") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr2") ||
+                        currentFileClassname.contains(".debugger.") ||
                         currentFileClassname.endsWith("package-info")) {
                     continue;
                 }
