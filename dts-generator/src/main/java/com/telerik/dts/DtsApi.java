@@ -1212,6 +1212,8 @@ public class DtsApi {
         result.add("android.print");
         result.add("java.util.function");
 
+        result.add("com.tom_roush.pdfbox.pdmodel.common.function"); // com.tom_roush:pdfbox-android:1.8.10.0
+
         return result;
     }
 
