@@ -108,6 +108,9 @@ public class DtsApi {
                 // TODO: optimize
 
                 this.namespaceParts = currentFileClassname.split("\\.");
+                if(isIgnoredNamespace()) {
+                    continue;
+                }
 
                 boolean isInterface = currClass.isInterface();
                 boolean isAbstract = currClass.isAbstract();
@@ -1209,6 +1212,19 @@ public class DtsApi {
         result.add("android.print");
         result.add("java.util.function");
 
+        result.add("com.tom_roush.pdfbox.pdmodel.common.function"); // com.tom_roush:pdfbox-android:1.8.10.0
+
         return result;
+    }
+
+    private boolean isIgnoredNamespace() {
+        String[] namespaceOnlyParts = Arrays.copyOf(namespaceParts, namespaceParts.length-1);
+        String namespace = String.join(".", namespaceOnlyParts);
+        for (String ignoredNamespace : getIgnoredNamespaces()) {
+            if(ignoredNamespace.equals(namespace) || namespace.startsWith(ignoredNamespace + ".")) {
+                return true;
+            }
+        }
+        return false;
     }
 }
