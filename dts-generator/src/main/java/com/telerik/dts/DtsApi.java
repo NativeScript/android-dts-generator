@@ -61,6 +61,7 @@ public class DtsApi {
     private boolean allGenericImplements;
     private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
     private Pattern isWordPattern = Pattern.compile("^[\\w\\d]+$");
+    private Pattern isVoid = Pattern.compile("V(\\^.*\\;)?");
 
     public DtsApi(boolean allGenericImplements) {
         this.allGenericImplements = allGenericImplements;
@@ -757,7 +758,7 @@ public class DtsApi {
             Matcher matcher = methodSignature.matcher(signature.getSignature());
             if(matcher.matches()) {
                 String returnSignature = matcher.group(2);
-                if(returnSignature.equals("V") || returnSignature.contains("^")){
+                if(isVoid.matcher(returnSignature).matches()){
                     return m.getReturnType(); // returning void
                 }
                 return GenericUtilities.getType(returnSignature);
