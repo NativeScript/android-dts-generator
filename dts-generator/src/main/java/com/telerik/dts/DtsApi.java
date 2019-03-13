@@ -42,6 +42,8 @@ public class DtsApi {
     public static List<Tuple<String, Integer>> externalGenerics = new ArrayList<>();
     public static List<Tuple<String, Integer>> generics = new ArrayList<>();
     public static List<String> imports = new ArrayList<>();
+    public static String JavaLangObject = "java.lang.Object";
+
     private static Map<String, String> globalAliases = new HashMap<>();
 
     private Map<String, String> extendsOverrides = new HashMap<>();
@@ -212,10 +214,8 @@ public class DtsApi {
             content = content.replaceAll(regexString, "any$2");
         }
 
-        String javalangObject = "java.lang.Object";
-
         // replace "extends any" with "extends java.lang.Object"
-        content = content.replace(" extends any ", String.format(" extends %s ", javalangObject));
+        content = content.replace(" extends any ", String.format(" extends %s ", DtsApi.JavaLangObject));
 
         return content;
     }
@@ -312,7 +312,7 @@ public class DtsApi {
         } else {
             JavaClass superClass = getSuperClass(currClass);
             List<JavaClass> interfaces = getInterfaces(currClass);
-            if(interfaces.size() == 1 && superClass == null && currClass.getSuperclassName().equals("java.lang.Object")) {
+            if(interfaces.size() == 1 && superClass == null && currClass.getSuperclassName().equals(DtsApi.JavaLangObject)) {
                 superClass = interfaces.get(0);
                 interfaces.clear();
             }
@@ -341,6 +341,15 @@ public class DtsApi {
 
         if(superClass != null) {
             String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
+
+            if(!extendedClass.equals(DtsApi.JavaLangObject)) {
+                // check for type override
+                String override = this.typeOverrides.get(extendedClass);
+                if(override != null) {
+                    System.out.println(String.format("Found type override for class %s - %s", extendedClass, override));
+                    extendedClass = override;
+                }
+            }
 
             if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
                 extendedClass = getAliasedClassName(extendedClass);
@@ -558,7 +567,7 @@ public class DtsApi {
         while (!classQueue.isEmpty()) {
             JavaClass currClazz = classQueue.poll();
 
-            if (currClazz.getClassName().equals("java.lang.Object")) {
+            if (currClazz.getClassName().equals(DtsApi.JavaLangObject)) {
                 break;
             }
 
@@ -794,7 +803,7 @@ public class DtsApi {
 
             //get all base methods and method names
             while (true && currClass != null) {
-                boolean isJavaLangObject = currClass.getClassName().equals("java.lang.Object");
+                boolean isJavaLangObject = currClass.getClassName().equals(DtsApi.JavaLangObject);
 
                 // two similar code blocks, split up so that checks if method is constructor isnt done on objects that are not java.lang.Object
                 if (isJavaLangObject) {
@@ -829,7 +838,7 @@ public class DtsApi {
     }
 
     private JavaClass getSuperClass(JavaClass clazz) {
-        if (clazz.getClassName().equals("java.lang.Object")) {
+        if (clazz.getClassName().equals(DtsApi.JavaLangObject)) {
             return null;
         }
 
@@ -995,7 +1004,7 @@ public class DtsApi {
                     if(typeDefinition != null && typeDefinition.getGenericDefinitions() != null
                             && typeDefinition.getGenericDefinitions().stream()
                                 .filter(definition -> definition.getLabel().equals(genericVariable)).count() > 0
-                            && ((ObjectType) typeDefinition.getParent()).getClassName().equals("java.lang.Object")){
+                            && ((ObjectType) typeDefinition.getParent()).getClassName().equals(DtsApi.JavaLangObject)){
                         tsType.append(genericObjectType.getVariable());
                         addReference(type);
                         return;
@@ -1040,7 +1049,7 @@ public class DtsApi {
     private void useAnyInsteadOfJavaLangObject(Type refType, TypeDefinition typeDefinition, StringBuilder tsType) {
 //        if (refType instanceof ObjectType) {
 //            ObjectType currentType = (ObjectType)refType;
-//            if (currentType.getClassName().equals("java.lang.Object")) {
+//            if (currentType.getClassName().equals(DtsApi.JavaLangObject)) {
 //                tsType.append("any");
 //                return;
 //            }
@@ -1182,8 +1191,9 @@ public class DtsApi {
 
     private void setTypeOverrides() {
         // here we put type overrides if we want to change return types of java.lang.Object for instance to any
-        this.typeOverrides.put("java.lang.Object", "any");
+        this.typeOverrides.put(DtsApi.JavaLangObject, "any");
         this.typeOverrides.put("java.lang.CharSequence", "string");
+        this.typeOverrides.put("android.view.View.AccessibilityDelegate", "any");
     }
 
     private void setGlobalAliases() {

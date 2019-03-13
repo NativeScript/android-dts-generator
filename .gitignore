@@ -10,6 +10,9 @@
 /build
 /captures
 .idea
+.classpath
+.settings
+.project
 
 /out
 /output
@@ -17,3 +20,4 @@
 /dts_gen_app
 testparams.txt
 /jars
+bin/

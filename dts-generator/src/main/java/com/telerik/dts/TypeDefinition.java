@@ -74,7 +74,7 @@ public class TypeDefinition {
                     parent = this.interfaces.get(0);
                     if ((parent instanceof ObjectType) &&
                             (((ObjectType)parent).getClassName().equals("java.lang.Enum")
-                            || ((ObjectType)parent).getClassName().equals("java.lang.Object"))){
+                            || ((ObjectType)parent).getClassName().equals(DtsApi.JavaLangObject))){
                         if(((ObjectType)parent).getClassName().equals("java.lang.Enum")) {
                             parent = null; // we don't need extends for enum
                         }
