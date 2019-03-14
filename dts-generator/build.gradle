@@ -27,6 +27,11 @@ dependencies {
 
     // add your dependency here as the example bellow, make sure you are using testCompileOnly
     // testCompileOnly  "com.android.support:support-v4:27.0.1"
+
+    //AndroidX
+    //testCompileOnly  "androidx.legacy:legacy-support-v4:1.0.0"
+    //testCompileOnly  "androidx.appcompat:appcompat:1.1.0-alpha01"
+    //testCompileOnly   "com.google.android.material:material:1.1.0-alpha01"
 }
 
 jar {

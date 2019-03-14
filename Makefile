@@ -75,3 +75,29 @@ android-support-28:
 	mv out/android.d.ts out/android-support-28.d.ts
 
 android-support-all: android-support-17 android-support-23 android-support-26 android-support-28
+
+androidx-17:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-17/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-17.d.ts
+
+androidx-23:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-23/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-23.d.ts
+
+androidx-26:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-26/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-26.d.ts
+
+androidx-28:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-28/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-28.d.ts
+
+androidx-all: androidx-17 androidx-23 androidx-26 androidx-28
