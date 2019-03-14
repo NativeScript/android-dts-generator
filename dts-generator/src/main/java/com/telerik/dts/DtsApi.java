@@ -1178,10 +1178,20 @@ public class DtsApi {
 
     private void setExtendsOverrides() {
         // here we put extends overrides to avoid manual work to fix the generated .d.ts file
-        this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder", "android.renderscript.Program.BaseProgramBuilder"); // android-17
-        this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder", "android.renderscript.ProgramVertex.Builder"); // android-17
-        this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl", "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
-        this.extendsOverrides.put("com.telerik.widget.autocomplete.RadAutoCompleteTextView$SavedState", "com.telerik.widget.primitives.panels.RadScrollView.SavedState"); // nativescript-ui-autocomplete
+        this.extendsOverrides.put("android.renderscript.ProgramFragmentFixedFunction$Builder",
+                "android.renderscript.Program.BaseProgramBuilder"); // android-17
+        this.extendsOverrides.put("android.renderscript.ProgramVertexFixedFunction$Builder",
+                "android.renderscript.ProgramVertex.Builder"); // android-17
+        this.extendsOverrides.put("android.support.v4.app.JobIntentService$JobServiceEngineImpl",
+                "android.support.v4.app.JobIntentService.CompatJobEngine"); // android-support
+        this.extendsOverrides.put("com.telerik.widget.autocomplete.RadAutoCompleteTextView$SavedState",
+                "com.telerik.widget.primitives.panels.RadScrollView.SavedState"); // nativescript-ui-autocomplete
+
+        this.extendsOverrides.put("androidx.core.app.JobIntentService$JobServiceEngineImpl",
+                "androidx.core.app.JobIntentService.CompatJobEngine"); // androidx
+
+        this.extendsOverrides.put("androidx.core.text.PrecomputedTextCompat", "android.text.Spannable"); // androidx
+        this.extendsOverrides.put("androidx.collection.ArrayMap", "java.util.Map"); // androidx
     }
 
     private void setSuperOverrides() {
@@ -1194,6 +1204,14 @@ public class DtsApi {
         this.typeOverrides.put(DtsApi.JavaLangObject, "any");
         this.typeOverrides.put("java.lang.CharSequence", "string");
         this.typeOverrides.put("android.view.View.AccessibilityDelegate", "any");
+        this.typeOverrides.put("android.view.PointerIcon", "any");
+        this.typeOverrides.put("android.app.Person", "any");
+        this.typeOverrides.put("android.app.RemoteAction", "any");
+        this.typeOverrides.put("android.os.PersistableBundle", "any");
+        this.typeOverrides.put("android.os.LocaleList", "any");
+        this.typeOverrides.put("android.text.TextDirectionHeuristic", "any");
+        this.typeOverrides.put("android.util.SizeF", "any");
+        this.typeOverrides.put("android.util.Size", "any");
     }
 
     private void setGlobalAliases() {
@@ -1214,6 +1232,9 @@ public class DtsApi {
         result.add("android.view.SearchEvent");
         result.add("android.view.KeyboardShortcutGroup");
         result.add("android.view.ViewStructure");
+        result.add("android.view.textclassifier");
+        result.add("android.telephony.mbms");
+        result.add("android.text.PrecomputedText");
         result.add("android.media.browse");
         result.add("android.media.session");
         result.add("android.media.AudioAttributes");
