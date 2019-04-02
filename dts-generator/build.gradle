@@ -21,9 +21,9 @@ allprojects {
 }
 
 dependencies {
-    compile 'org.apache.bcel:bcel:6.2'
-    compile 'commons-io:commons-io:2.6'
-    compile 'com.google.code.findbugs:findbugs:3.0.1'
+    implementation 'org.apache.bcel:bcel:6.2'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'com.google.code.findbugs:findbugs:3.0.1'
 
     // add your dependency here as the example bellow, make sure you are using testCompileOnly
     // testCompileOnly  "com.android.support:support-v4:27.0.1"
