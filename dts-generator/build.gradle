@@ -64,7 +64,7 @@ task extractAllJars {
             //declaring variable as specific class for getting code completion in Android Studio
             org.gradle.api.internal.artifacts.DefaultResolvedArtifact nextDependency = iter.next()
 
-            def outputDir = java.nio.file.Paths.get(extractedDependenciesDir, nextDependency.toString()).normalize().toString()
+            def outputDir = java.nio.file.Paths.get(extractedDependenciesDir, nextDependency.toString()).normalize().toString().replace(':', '_')
             explodeAar(nextDependency.file, outputDir)
             dependencyCounter++
         }
