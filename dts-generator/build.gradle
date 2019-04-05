@@ -1,5 +1,8 @@
 apply plugin: 'java-library'
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 def version = "2.0.0"
 
 project.ext.extractedDependenciesDir = "jar-files"
@@ -36,7 +39,8 @@ dependencies {
 
 jar {
     //pack jar dependencies into the final jar
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    configurations.implementation.setCanBeResolved(true)
+    from configurations.implementation.collect { it.isDirectory() ? it : zipTree(it) }
 
     //set main class for the jar
     manifest {
