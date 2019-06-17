@@ -145,20 +145,20 @@ public class DtsApi {
 
                     processInterfaceConstructor(currClass, typeDefinition, allInterfacesMethods);
 
-                    for (Method m : allInterfacesMethods) {
-                        processMethod(m, currClass, typeDefinition, isInterface, methodsSet);
+                    for (Method method : allInterfacesMethods) {
+                        processMethod(method, currClass, typeDefinition, methodsSet);
                     }
 
                     for (Field f : allInterfaceFields) {
                         processField(f, currClass, typeDefinition);
                     }
                 } else {
-                    List<FieldOrMethod> foms = getMembers(currClass, getAllInterfaces(currClass));
-                    for (FieldOrMethod fom : foms) {
-                        if (fom instanceof Field) {
-                            processField((Field) fom, currClass, typeDefinition);
-                        } else if (fom instanceof Method) {
-                            processMethod((Method) fom, currClass, typeDefinition, isInterface, methodsSet);
+                    List<FieldOrMethod> members = getMembers(currClass, getAllInterfaces(currClass));
+                    for (FieldOrMethod fieldOrMethod : members) {
+                        if (fieldOrMethod instanceof Field) {
+                            processField((Field) fieldOrMethod, currClass, typeDefinition);
+                        } else if (fieldOrMethod instanceof Method) {
+                            processMethod((Method) fieldOrMethod, currClass, typeDefinition, methodsSet);
                         } else {
                             throw new IllegalArgumentException("Argument is not method or field");
                         }
@@ -178,8 +178,8 @@ public class DtsApi {
 
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
 
-                    for (Method m : allInterfacesMethods) {
-                        processMethod(m, currClass, typeDefinition, isInterface, methodsSet);
+                    for (Method method : allInterfacesMethods) {
+                        processMethod(method, currClass, typeDefinition, methodsSet);
                     }
                 }
 
@@ -634,12 +634,12 @@ public class DtsApi {
     }
 
     //method related
-    private void processMethod(Method m, JavaClass clazz, TypeDefinition typeDefinition, boolean isInterface, Set<String> methodsSet) {
-        String name = m.getName();
+    private void processMethod(Method method, JavaClass clazz, TypeDefinition typeDefinition, Set<String> methodsSet) {
+        String name = method.getName();
 
         if (isPrivateGoogleApiMember(name)) return;
 
-        if (m.isSynthetic() || (!m.isPublic() && !m.isProtected())) {
+        if (method.isSynthetic() || (!method.isPublic() && !method.isProtected())) {
             return;
         }
 
@@ -652,36 +652,49 @@ public class DtsApi {
 
         String tabs = getTabs(this.indent + 1);
 
-        cacheMethodBySignature(m); //cached in "mapNameMethod"
+        cacheMethodBySignature(method); //cached in "mapNameMethod"
 
         //generate base method content
         if (baseMethodNames.contains(name)) {
-            for (Method bm : baseMethods) {
-                if (bm.getName().equals(name)) {
-                    String sig = getMethodFullSignature(bm);
+            for (Method baseMethod : baseMethods) {
+                if (baseMethod.getName().equals(name)) {
+                    String sig = getMethodFullSignature(baseMethod);
                     if (!mapNameMethod.containsKey(sig)) {
-                        mapNameMethod.put(sig, bm);
-                        methodsSet.add(generateMethodContent(clazz, typeDefinition, isInterface, tabs, bm));
+                        mapNameMethod.put(sig, baseMethod);
+                        methodsSet.add(generateMethodContent(clazz, typeDefinition, tabs, baseMethod));
                     }
                 }
             }
         }
 
-        methodsSet.add(generateMethodContent(clazz, typeDefinition, isInterface, tabs, m));
+        methodsSet.add(generateMethodContent(clazz, typeDefinition, tabs, method));
     }
 
-    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, boolean isInterface, String tabs, Method m) {
+    private boolean methodIsDeprecated(Method method) {
+        return Arrays.stream(
+                        method
+                        .getAttributes())
+                        .anyMatch(x ->
+                            x.getClass()
+                            .isAssignableFrom(org.apache.bcel.classfile.Deprecated.class));
+    }
+
+    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
         StringBuilder2 sbTemp = new StringBuilder2();
+        if(methodIsDeprecated(method)) {
+            sbTemp.appendln(tabs + "/** @deprecated */");
+        }
+
         sbTemp.append(tabs + "public ");
 
-        if (m.isStatic()) {
+        if (method.isStatic()) {
             sbTemp.append("static ");
         }
 
-        sbTemp.append(getMethodName(m) + getMethodParamSignature(clazz, typeDefinition, m));
+        sbTemp.append(getMethodName(method) + getMethodParamSignature(clazz, typeDefinition, method));
         String bmSig = "";
-        if (!isConstructor(m)) {
-            bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(m), typeDefinition);
+        if (!isConstructor(method)) {
+            bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(method), typeDefinition);
         }
 
         sbTemp.append(bmSig + ";");
