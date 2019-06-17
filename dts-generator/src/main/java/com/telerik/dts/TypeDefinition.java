@@ -59,6 +59,8 @@ public class TypeDefinition {
         return genericDefinitions;
     }
 
+    public String getClassName() { return this.className; }
+
     private void checkSignature() {
         Matcher matcher = typeSignature.matcher(this.signature);
         if(matcher.matches()){

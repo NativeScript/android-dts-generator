@@ -33,8 +33,8 @@ dependencies {
 
     //AndroidX
     //testCompileOnly  "androidx.legacy:legacy-support-v4:1.0.0"
-    //testCompileOnly  "androidx.appcompat:appcompat:1.1.0-alpha01"
-    //testCompileOnly   "com.google.android.material:material:1.1.0-alpha01"
+    //testCompileOnly  "androidx.appcompat:appcompat:1.0.0"
+    //testCompileOnly   "com.google.android.material:material:1.0.0"
 }
 
 jar {
