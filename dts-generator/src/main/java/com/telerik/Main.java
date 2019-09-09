@@ -25,20 +25,26 @@ public class Main {
 
 	private static final String HELP = "-help";
 
-	public static void main(String[] args) throws Exception {
-		InputParameters inputParameters = parseCommand(args);
+	public static void main(String[] args) {
+		try {
+			InputParameters inputParameters = parseCommand(args);
 
-		long startTime = System.currentTimeMillis();
+			long startTime = System.currentTimeMillis();
 
-		Package p = Main.class.getPackage();
-		System.out.println("Android d.ts Generator Version : "
-				+ p.getSpecificationVersion());
+			Package p = Main.class.getPackage();
+			System.out.println("Android d.ts Generator Version : "
+					+ p.getSpecificationVersion());
 
-		new Generator().start(inputParameters);
+			new Generator().start(inputParameters);
 
-		long stopTime = System.currentTimeMillis();
-		long elapsedTime = stopTime - startTime;
-		System.out.println("Generation of definitions took " + elapsedTime + "ms.");
+			long stopTime = System.currentTimeMillis();
+			long elapsedTime = stopTime - startTime;
+			System.out.println("Generation of definitions took " + elapsedTime + "ms.");
+		} catch (Exception ex) {
+			System.err.println(String.format("Error executing Typescript Definitions Generator: %s", ex.getMessage()));
+			ex.printStackTrace(System.out);
+			System.exit(1);
+		}
 	}
 
 	public static InputParameters parseCommand(String[] args) throws Exception {
