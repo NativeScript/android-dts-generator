@@ -40,7 +40,7 @@ public class Main {
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
 			System.out.println("Generation of definitions took " + elapsedTime + "ms.");
-		} catch (Exception ex) {
+		} catch (Throwable ex) {
 			System.err.println(String.format("Error executing Typescript Definitions Generator: %s", ex.getMessage()));
 			ex.printStackTrace(System.out);
 			System.exit(1);
