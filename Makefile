@@ -100,4 +100,10 @@ androidx-28:
 	-super ${ANDROID_HOME}/platforms/android-28/android.jar -skip-declarations
 	mv out/android.d.ts out/androidx-28.d.ts
 
-androidx-all: androidx-17 androidx-23 androidx-26 androidx-28
+androidx-29:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-29/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-29.d.ts
+
+androidx-all: androidx-17 androidx-23 androidx-26 androidx-28 androidx-29
