@@ -101,11 +101,11 @@ If you want to generate typings of a package but you are not sure how you can ge
 
 7. Run the dts-generator tool passing as **input** arguments the path to the output jars folder
 
-## Android support specifics
-To get all the jar files for android support follow the steps above. You can find the **jar** files for android support 27.0.1 in [the current repository](libs/android-support/27.0.1)
-As the android support needs the base android jar file to create its typings you need to pass the android.jar file as a **super** parameter to the generator. To avoid having typings for every different API level you can reuse typings built with API level 17 for all API levels until 23. It's quite easy to test this:
+## Androidx specifics
+To get all the jar files for androidx follow the steps above. You can find the **jar** files for androidx 1.0.0 in [the current repository](libs/androidx/1.0.0)
+As androidx needs the base android jar file to create its typings you need to pass the android.jar file as a **super** parameter to the generator. To avoid having typings for every different API level you can reuse typings built with API level 17 for all API levels until 23. It's quite easy to test this:
 
-1. Run the typings generator for android support passing **android-17/android.jar** as a supper jar
+1. Run the typings generator for androidx passing **android-17/android.jar** as a supper jar
 2. Add `/// <reference path="android-17.d.ts"/>` at the top of the generated typings file where android-17.d.ts is the typings file of the android API level 17
 3. Run `tsc` passing the generated typings file and there shouldn't be errors
 4. Now start replacing the reference file with the files from other API level while the `tsc` execution completes with no error
@@ -113,8 +113,8 @@ As the android support needs the base android jar file to create its typings you
 
 By repeating the steps above we've found that:
 
-- Android support 17 typings(built with supper jar from android API 17) can be reused until android API 22
-- Android support 23 typings(built with supper jar from android API 23) can be reused until android API 25
-- Android support 26 typings(built with supper jar from android API 26) can be reused for API 26 and 27
+- Androidx 17 typings(built with supper jar from android API 17) can be reused until android API 22
+- Androidx 23 typings(built with supper jar from android API 23) can be reused until android API 25
+- Androidx 26 typings(built with supper jar from android API 26) can be reused for API 26 and 27
 
 The corresponding typings files can be found in the [tns-platform-declarations](https://github.com/NativeScript/NativeScript/tree/master/tns-platform-declarations) package. The repo's [Makefile](Makefile) can be used as a reference for creating these typings files
