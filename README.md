@@ -44,6 +44,8 @@ cd dts-generator
 java -jar build/libs/dts-generator.jar -input <jarFolder>
 ```
 
+> Note: Check the [Makefile](Makefile) for sample usage
+
 ## Generate definitions for .aar
 ```
 Open the .aar archive
@@ -102,6 +104,7 @@ If you want to generate typings of a package but you are not sure how you can ge
 7. Run the dts-generator tool passing as **input** arguments the path to the output jars folder
 
 ## Androidx specifics
+
 To get all the jar files for androidx follow the steps above. You can find the **jar** files for androidx 1.0.0 in [the current repository](libs/androidx/1.0.0)
 As androidx needs the base android jar file to create its typings you need to pass the android.jar file as a **super** parameter to the generator. To avoid having typings for every different API level you can reuse typings built with API level 17 for all API levels until 23. It's quite easy to test this:
 
