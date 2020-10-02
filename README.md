@@ -46,6 +46,19 @@ java -jar build/libs/dts-generator.jar -input <jarFolder>
 
 > Note: Check the [Makefile](Makefile) for sample usage
 
+## Test
+
+In order to test the tool there are some predefined androuidx packages. We are running the tool and comparing the output with the expected output commited in the repo.
+To run the test:
+
+```shell
+make test-compare-output
+```
+
+Then check whether the make command will return an error comparing the files.
+
+> Note: If the libs folder content is changed, the expected output should also be changed
+
 ## Generate definitions for .aar
 ```
 Open the .aar archive

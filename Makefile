@@ -84,4 +84,10 @@ androidx-29:
 	-super ${ANDROID_HOME}/platforms/android-29/android.jar -skip-declarations
 	mv out/android.d.ts out/androidx-29.d.ts
 
+test-compare-output:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input libs
+	cmp out/android.d.ts test/expected-output/android.d.ts
+	cmp out/android-declarations.d.ts test/expected-output/android-declarations.d.ts
+
 androidx-all: androidx-17 androidx-23 androidx-26 androidx-28 androidx-29
