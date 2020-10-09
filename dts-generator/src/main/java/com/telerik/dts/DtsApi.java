@@ -44,6 +44,7 @@ public class DtsApi {
     public static List<String> imports = new ArrayList<>();
     public static String JavaLangObject = "java.lang.Object";
 
+    private static List<String> reservedWords = Arrays.asList("arguments", "break", "case", "catch", "class", "const", "continue", "debugger", "default", "delete", "do", "else", "eval", "export", "extends", "false", "finally", "for", "function", "if", "implements", "import", "in", "instanceof", "interface", "let", "new", "null", "package", "private", "protected", "public", "return", "static", "super", "switch", "this", "throw", "true", "try", "typeof", "var", "void", "while", "with", "yield");
     private static Map<String, String> globalAliases = new HashMap<>();
 
     private Map<String, String> extendsOverrides = new HashMap<>();
@@ -888,6 +889,18 @@ public class DtsApi {
     }
 
     private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
+        Pattern pattern = Pattern.compile("\\s" + Pattern.quote(m.getName()) + "\\((.*)\\)\\s");
+        Matcher matcher = pattern.matcher(m.toString() + " ");
+        List<String> params = Arrays.asList();
+        if (matcher.find()) {
+            params = Arrays.asList(matcher.group(1).split("\\,\\s"));
+            if (matcher.find()) {
+                System.out.println("🆘 getMethodParamSignature: Second matcher.find() -> " + m.toString());
+            }
+        } else {
+            System.out.println("🆘 getMethodParamSignature: !matcher.find() -> " + m.toString());
+        }
+
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         int idx = 0;
@@ -895,8 +908,24 @@ public class DtsApi {
             if (idx > 0) {
                 sb.append(", ");
             }
-            sb.append("param");
-            sb.append(idx++);
+            if (params.size() > idx) {
+                String param = params.get(idx);
+                List<String> parts = Arrays.asList(param.split("\\s"));
+                if (parts.size() == 2) {
+                    param = parts.get(1);
+                    param = param.replaceFirst(Pattern.quote("$this$"), "");
+                    if (DtsApi.reservedWords.contains(param)) {
+                        param = param + idx;
+                    }
+                } else  {
+                    param = "param" + idx;
+                }
+                sb.append(param);
+                idx++;
+            } else {
+                sb.append("param");
+                sb.append(idx++);
+            }
             sb.append(": ");
 
             String paramTypeName = getTypeScriptTypeFromJavaType(type, typeDefinition);
