@@ -1003,7 +1003,7 @@ public class DtsApi {
                 throw new RuntimeException("Unexpected type=" + type.getSignature());
             }
         } else if (isArray) {
-            tsType.append("native.Array<");
+            tsType.append("androidNative.Array<");
             Type elementType = ((ArrayType) type).getElementType();
             useAnyInsteadOfJavaLangObject(elementType, typeDefinition, tsType);
             tsType.append(">");
