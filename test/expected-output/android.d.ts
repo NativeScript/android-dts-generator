@@ -3262,11 +3262,11 @@ declare module androidx {
 			 * Constructs a new instance of the androidx.annotation.IntDef interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 			 */
 			public constructor(implementation: {
-				value(): native.Array<number>;
+				value(): androidNative.Array<number>;
 				flag(): boolean;
 			});
 			public constructor();
-			public value(): native.Array<number>;
+			public value(): androidNative.Array<number>;
 			public flag(): boolean;
 		}
 	}
@@ -3354,11 +3354,11 @@ declare module androidx {
 			 * Constructs a new instance of the androidx.annotation.LongDef interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 			 */
 			public constructor(implementation: {
-				value(): native.Array<number>;
+				value(): androidNative.Array<number>;
 				flag(): boolean;
 			});
 			public constructor();
-			public value(): native.Array<number>;
+			public value(): androidNative.Array<number>;
 			public flag(): boolean;
 		}
 	}
@@ -3521,15 +3521,15 @@ declare module androidx {
 			 */
 			public constructor(implementation: {
 				value(): string;
-				allOf(): native.Array<string>;
-				anyOf(): native.Array<string>;
+				allOf(): androidNative.Array<string>;
+				anyOf(): androidNative.Array<string>;
 				conditional(): boolean;
 			});
 			public constructor();
-			public anyOf(): native.Array<string>;
+			public anyOf(): androidNative.Array<string>;
 			public conditional(): boolean;
 			public value(): string;
-			public allOf(): native.Array<string>;
+			public allOf(): androidNative.Array<string>;
 		}
 		export module RequiresPermission {
 			export class Read {
@@ -3566,10 +3566,10 @@ declare module androidx {
 			 * Constructs a new instance of the androidx.annotation.RestrictTo interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 			 */
 			public constructor(implementation: {
-				value(): native.Array<androidx.annotation.RestrictTo.Scope>;
+				value(): androidNative.Array<androidx.annotation.RestrictTo.Scope>;
 			});
 			public constructor();
-			public value(): native.Array<androidx.annotation.RestrictTo.Scope>;
+			public value(): androidNative.Array<androidx.annotation.RestrictTo.Scope>;
 		}
 		export module RestrictTo {
 			export class Scope {
@@ -3579,7 +3579,7 @@ declare module androidx {
 				public static GROUP_ID: androidx.annotation.RestrictTo.Scope;
 				public static TESTS: androidx.annotation.RestrictTo.Scope;
 				public static SUBCLASSES: androidx.annotation.RestrictTo.Scope;
-				public static values(): native.Array<androidx.annotation.RestrictTo.Scope>;
+				public static values(): androidNative.Array<androidx.annotation.RestrictTo.Scope>;
 				public static valueOf(param0: string): androidx.annotation.RestrictTo.Scope;
 			}
 		}
@@ -3616,10 +3616,10 @@ declare module androidx {
 			 * Constructs a new instance of the androidx.annotation.StringDef interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 			 */
 			public constructor(implementation: {
-				value(): native.Array<string>;
+				value(): androidNative.Array<string>;
 			});
 			public constructor();
-			public value(): native.Array<string>;
+			public value(): androidNative.Array<string>;
 		}
 	}
 }
@@ -4087,7 +4087,7 @@ declare module androidx {
 					public mOnCancelListener: globalAndroid.content.DialogInterface.OnCancelListener;
 					public mOnDismissListener: globalAndroid.content.DialogInterface.OnDismissListener;
 					public mOnKeyListener: globalAndroid.content.DialogInterface.OnKeyListener;
-					public mItems: native.Array<string>;
+					public mItems: androidNative.Array<string>;
 					public mAdapter: globalAndroid.widget.ListAdapter;
 					public mOnClickListener: globalAndroid.content.DialogInterface.OnClickListener;
 					public mViewLayoutResId: number;
@@ -4097,7 +4097,7 @@ declare module androidx {
 					public mViewSpacingRight: number;
 					public mViewSpacingBottom: number;
 					public mViewSpacingSpecified: boolean;
-					public mCheckedItems: native.Array<boolean>;
+					public mCheckedItems: androidNative.Array<boolean>;
 					public mIsMultiChoice: boolean;
 					public mIsSingleChoice: boolean;
 					public mCheckedItem: number;
@@ -4133,7 +4133,7 @@ declare module androidx {
 				export class CheckedItemAdapter extends globalAndroid.widget.ArrayAdapter<string> {
 					public static class: java.lang.Class<androidx.appcompat.app.AlertController.CheckedItemAdapter>;
 					public hasStableIds(): boolean;
-					public constructor(param0: globalAndroid.content.Context, param1: number, param2: number, param3: native.Array<string>);
+					public constructor(param0: globalAndroid.content.Context, param1: number, param2: number, param3: androidNative.Array<string>);
 					public getItemId(param0: number): number;
 				}
 				export class RecycleListView {
@@ -4179,13 +4179,13 @@ declare module androidx {
 			export module AlertDialog {
 				export class Builder {
 					public static class: java.lang.Class<androidx.appcompat.app.AlertDialog.Builder>;
-					public setMultiChoiceItems(param0: number, param1: native.Array<boolean>, param2: globalAndroid.content.DialogInterface.OnMultiChoiceClickListener): androidx.appcompat.app.AlertDialog.Builder;
+					public setMultiChoiceItems(param0: number, param1: androidNative.Array<boolean>, param2: globalAndroid.content.DialogInterface.OnMultiChoiceClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setSingleChoiceItems(param0: number, param1: number, param2: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public constructor(param0: globalAndroid.content.Context, param1: number);
 					public setNegativeButtonIcon(param0: globalAndroid.graphics.drawable.Drawable): androidx.appcompat.app.AlertDialog.Builder;
 					public setItems(param0: number, param1: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setCursor(param0: globalAndroid.database.Cursor, param1: globalAndroid.content.DialogInterface.OnClickListener, param2: string): androidx.appcompat.app.AlertDialog.Builder;
-					public setItems(param0: native.Array<string>, param1: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
+					public setItems(param0: androidNative.Array<string>, param1: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setPositiveButton(param0: number, param1: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setOnCancelListener(param0: globalAndroid.content.DialogInterface.OnCancelListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setMultiChoiceItems(param0: globalAndroid.database.Cursor, param1: string, param2: string, param3: globalAndroid.content.DialogInterface.OnMultiChoiceClickListener): androidx.appcompat.app.AlertDialog.Builder;
@@ -4203,7 +4203,7 @@ declare module androidx {
 					public setIconAttribute(param0: number): androidx.appcompat.app.AlertDialog.Builder;
 					public setAdapter(param0: globalAndroid.widget.ListAdapter, param1: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public getContext(): globalAndroid.content.Context;
-					public setSingleChoiceItems(param0: native.Array<string>, param1: number, param2: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
+					public setSingleChoiceItems(param0: androidNative.Array<string>, param1: number, param2: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setNegativeButton(param0: string, param1: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setNeutralButton(param0: number, param1: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setOnItemSelectedListener(param0: globalAndroid.widget.AdapterView.OnItemSelectedListener): androidx.appcompat.app.AlertDialog.Builder;
@@ -4211,7 +4211,7 @@ declare module androidx {
 					public setView(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): androidx.appcompat.app.AlertDialog.Builder;
 					public setNeutralButton(param0: string, param1: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setSingleChoiceItems(param0: globalAndroid.database.Cursor, param1: number, param2: string, param3: globalAndroid.content.DialogInterface.OnClickListener): androidx.appcompat.app.AlertDialog.Builder;
-					public setMultiChoiceItems(param0: native.Array<string>, param1: native.Array<boolean>, param2: globalAndroid.content.DialogInterface.OnMultiChoiceClickListener): androidx.appcompat.app.AlertDialog.Builder;
+					public setMultiChoiceItems(param0: androidNative.Array<string>, param1: androidNative.Array<boolean>, param2: globalAndroid.content.DialogInterface.OnMultiChoiceClickListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setOnDismissListener(param0: globalAndroid.content.DialogInterface.OnDismissListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setOnKeyListener(param0: globalAndroid.content.DialogInterface.OnKeyListener): androidx.appcompat.app.AlertDialog.Builder;
 					public setNeutralButtonIcon(param0: globalAndroid.graphics.drawable.Drawable): androidx.appcompat.app.AlertDialog.Builder;
@@ -4274,7 +4274,7 @@ declare module androidx {
 				public closeOptionsMenu(): void;
 				public onCreateSupportNavigateUpTaskStack(param0: androidx.core.app.TaskStackBuilder): void;
 				public getDelegate(): androidx.appcompat.app.AppCompatDelegate;
-				public onRequestPermissionsResult(param0: number, param1: native.Array<string>, param2: native.Array<number>): void;
+				public onRequestPermissionsResult(param0: number, param1: androidNative.Array<string>, param2: androidNative.Array<number>): void;
 				public onMenuOpened(param0: number, param1: globalAndroid.view.Menu): boolean;
 				public addContentView(param0: globalAndroid.view.View, param1: globalAndroid.view.ViewGroup.LayoutParams): void;
 				public onStop(): void;
@@ -4976,17 +4976,17 @@ declare module androidx {
 					public static createFromXmlInner(param0: globalAndroid.content.Context, param1: globalAndroid.content.res.Resources, param2: org.xmlpull.v1.XmlPullParser, param3: globalAndroid.util.AttributeSet, param4: globalAndroid.content.res.Resources.Theme): androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat;
 					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
 					public jumpToCurrentState(): void;
-					public onStateChange(param0: native.Array<number>): boolean;
+					public onStateChange(param0: androidNative.Array<number>): boolean;
 					public isStateful(): boolean;
 					public mutate(): globalAndroid.graphics.drawable.Drawable;
-					public addState(param0: native.Array<number>, param1: globalAndroid.graphics.drawable.Drawable, param2: number): void;
+					public addState(param0: androidNative.Array<number>, param1: globalAndroid.graphics.drawable.Drawable, param2: number): void;
 					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 					public inflate(param0: globalAndroid.content.Context, param1: globalAndroid.content.res.Resources, param2: org.xmlpull.v1.XmlPullParser, param3: globalAndroid.util.AttributeSet, param4: globalAndroid.content.res.Resources.Theme): void;
 					public constructor();
 					public setVisible(param0: boolean, param1: boolean): boolean;
 					public setTint(param0: number): void;
 					public static create(param0: globalAndroid.content.Context, param1: number, param2: globalAndroid.content.res.Resources.Theme): androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat;
-					public addState(param0: native.Array<number>, param1: globalAndroid.graphics.drawable.Drawable): void;
+					public addState(param0: androidNative.Array<number>, param1: globalAndroid.graphics.drawable.Drawable): void;
 				}
 				export module AnimatedStateListDrawableCompat {
 					export class AnimatableTransition extends androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat.Transition {
@@ -5037,7 +5037,7 @@ declare module androidx {
 					public getMinimumWidth(): number;
 					public setDither(param0: boolean): void;
 					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-					public onStateChange(param0: native.Array<number>): boolean;
+					public onStateChange(param0: androidNative.Array<number>): boolean;
 					public setColorFilter(param0: globalAndroid.graphics.ColorFilter): void;
 					public isStateful(): boolean;
 					public onLevelChange(param0: number): boolean;
@@ -5132,7 +5132,7 @@ declare module androidx {
 					public getChangingConfigurations(): number;
 					public setFilterBitmap(param0: boolean): void;
 					public getPadding(param0: globalAndroid.graphics.Rect): boolean;
-					public getState(): native.Array<number>;
+					public getState(): androidNative.Array<number>;
 					public getMinimumHeight(): number;
 					public getWrappedDrawable(): globalAndroid.graphics.drawable.Drawable;
 					public setAutoMirrored(param0: boolean): void;
@@ -5147,7 +5147,7 @@ declare module androidx {
 					public constructor(param0: globalAndroid.graphics.drawable.Drawable);
 					public unscheduleDrawable(param0: globalAndroid.graphics.drawable.Drawable, param1: java.lang.Runnable): void;
 					public onBoundsChange(param0: globalAndroid.graphics.Rect): void;
-					public setState(param0: native.Array<number>): boolean;
+					public setState(param0: androidNative.Array<number>): boolean;
 					public setVisible(param0: boolean, param1: boolean): boolean;
 					public isAutoMirrored(): boolean;
 					public draw(param0: globalAndroid.graphics.Canvas): void;
@@ -5220,11 +5220,11 @@ declare module androidx {
 				export class StateListDrawable extends androidx.appcompat.graphics.drawable.DrawableContainer {
 					public static class: java.lang.Class<androidx.appcompat.graphics.drawable.StateListDrawable>;
 					public inflate(param0: globalAndroid.content.Context, param1: globalAndroid.content.res.Resources, param2: org.xmlpull.v1.XmlPullParser, param3: globalAndroid.util.AttributeSet, param4: globalAndroid.content.res.Resources.Theme): void;
-					public onStateChange(param0: native.Array<number>): boolean;
+					public onStateChange(param0: androidNative.Array<number>): boolean;
 					public applyTheme(param0: globalAndroid.content.res.Resources.Theme): void;
 					public isStateful(): boolean;
 					public mutate(): globalAndroid.graphics.drawable.Drawable;
-					public addState(param0: native.Array<number>, param1: globalAndroid.graphics.drawable.Drawable): void;
+					public addState(param0: androidNative.Array<number>, param1: globalAndroid.graphics.drawable.Drawable): void;
 				}
 				export module StateListDrawable {
 					export class StateListState extends androidx.appcompat.graphics.drawable.DrawableContainer.DrawableContainerState {
@@ -5597,11 +5597,11 @@ declare module androidx {
 				export class ActionMenuItemView extends androidx.appcompat.widget.AppCompatTextView implements androidx.appcompat.view.menu.MenuView.ItemView, androidx.appcompat.widget.ActionMenuView.ActionMenuChildView {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.ActionMenuItemView>;
 					public getItemData(): androidx.appcompat.view.menu.MenuItemImpl;
-					public getAutoSizeTextAvailableSizes(): native.Array<number>;
+					public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 					public setTitle(param0: string): void;
 					public getAutoSizeStepGranularity(): number;
 					public showsIcon(): boolean;
-					public setAutoSizeTextTypeUniformWithPresetSizes(param0: native.Array<number>, param1: number): void;
+					public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 					public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
 					public initialize(param0: androidx.appcompat.view.menu.MenuItemImpl, param1: number): void;
 					public prefersCondensedTitle(): boolean;
@@ -5928,7 +5928,7 @@ declare module androidx {
 					public performItemAction(param0: globalAndroid.view.MenuItem, param1: number): boolean;
 					public getActionItems(): java.util.ArrayList<androidx.appcompat.view.menu.MenuItemImpl>;
 					public getExpandedItem(): androidx.appcompat.view.menu.MenuItemImpl;
-					public addIntentOptions(param0: number, param1: number, param2: number, param3: globalAndroid.content.ComponentName, param4: native.Array<globalAndroid.content.Intent>, param5: globalAndroid.content.Intent, param6: number, param7: native.Array<globalAndroid.view.MenuItem>): number;
+					public addIntentOptions(param0: number, param1: number, param2: number, param3: globalAndroid.content.ComponentName, param4: androidNative.Array<globalAndroid.content.Intent>, param5: globalAndroid.content.Intent, param6: number, param7: androidNative.Array<globalAndroid.view.MenuItem>): number;
 					public isGroupDividerEnabled(): boolean;
 					public onItemsChanged(param0: boolean): void;
 					public getRootMenu(): androidx.appcompat.view.menu.MenuBuilder;
@@ -6419,7 +6419,7 @@ declare module androidx {
 					public size(): number;
 					public addSubMenu(param0: number): globalAndroid.view.SubMenu;
 					public add(param0: number, param1: number, param2: number, param3: number): globalAndroid.view.MenuItem;
-					public addIntentOptions(param0: number, param1: number, param2: number, param3: globalAndroid.content.ComponentName, param4: native.Array<globalAndroid.content.Intent>, param5: globalAndroid.content.Intent, param6: number, param7: native.Array<globalAndroid.view.MenuItem>): number;
+					public addIntentOptions(param0: number, param1: number, param2: number, param3: globalAndroid.content.ComponentName, param4: androidNative.Array<globalAndroid.content.Intent>, param5: globalAndroid.content.Intent, param6: number, param7: androidNative.Array<globalAndroid.view.MenuItem>): number;
 					public clear(): void;
 					public close(): void;
 					public getItem(param0: number): globalAndroid.view.MenuItem;
@@ -6715,9 +6715,9 @@ declare module androidx {
 				public onDetachedFromWindow(): void;
 				public setLogo(param0: number): void;
 				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public setMenuPrepared(): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: native.Array<number>): void;
+				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: androidNative.Array<number>): void;
 				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
 				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
 				public initFeature(param0: number): void;
@@ -6728,7 +6728,7 @@ declare module androidx {
 				public setOverlayMode(param0: boolean): void;
 				public constructor(param0: globalAndroid.content.Context);
 				public fitSystemWindows(param0: globalAndroid.graphics.Rect): boolean;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: number): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
 				public onConfigurationChanged(param0: globalAndroid.content.res.Configuration): void;
 				public onLayout(param0: boolean, param1: number, param2: number, param3: number, param4: number): void;
 				public setShowingForActionMode(param0: boolean): void;
@@ -7076,7 +7076,7 @@ declare module androidx {
 				}
 				export class PersistHistoryAsyncTask extends globalAndroid.os.AsyncTask<any,java.lang.Void,java.lang.Void> {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserModel.PersistHistoryAsyncTask>;
-					public doInBackground(param0: native.Array<any>): java.lang.Void;
+					public doInBackground(param0: androidNative.Array<any>): java.lang.Void;
 				}
 			}
 		}
@@ -7203,7 +7203,7 @@ declare module androidx {
 				public setAutoSizeTextTypeWithDefaults(param0: number): void;
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
 				public setTextSize(param0: number, param1: number): void;
-				public setAutoSizeTextTypeUniformWithPresetSizes(param0: native.Array<number>, param1: number): void;
+				public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList): void;
 				public getAutoSizeStepGranularity(): number;
 				public onTextChanged(param0: string, param1: number, param2: number, param3: number): void;
@@ -7211,7 +7211,7 @@ declare module androidx {
 				public setAutoSizeTextTypeUniformWithConfiguration(param0: number, param1: number, param2: number, param3: number): void;
 				public setSupportAllCaps(param0: boolean): void;
 				public constructor(param0: globalAndroid.content.Context);
-				public getAutoSizeTextAvailableSizes(): native.Array<number>;
+				public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 				public setCustomSelectionActionModeCallback(param0: globalAndroid.view.ActionMode.Callback): void;
 				public setBackgroundDrawable(param0: globalAndroid.graphics.drawable.Drawable): void;
 				public setTextAppearance(param0: globalAndroid.content.Context, param1: number): void;
@@ -7656,7 +7656,7 @@ declare module androidx {
 				public getTextMetricsParamsCompat(): androidx.core.text.PrecomputedTextCompat.Params;
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
 				public setTextSize(param0: number, param1: number): void;
-				public setAutoSizeTextTypeUniformWithPresetSizes(param0: native.Array<number>, param1: number): void;
+				public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList): void;
 				public getAutoSizeStepGranularity(): number;
 				public onTextChanged(param0: string, param1: number, param2: number, param3: number): void;
@@ -7668,7 +7668,7 @@ declare module androidx {
 				public setTextMetricsParamsCompat(param0: androidx.core.text.PrecomputedTextCompat.Params): void;
 				public constructor(param0: globalAndroid.content.Context);
 				public setCompoundDrawablesWithIntrinsicBounds(param0: number, param1: number, param2: number, param3: number): void;
-				public getAutoSizeTextAvailableSizes(): native.Array<number>;
+				public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 				public setCustomSelectionActionModeCallback(param0: globalAndroid.view.ActionMode.Callback): void;
 				public setBackgroundDrawable(param0: globalAndroid.graphics.drawable.Drawable): void;
 				public setTextAppearance(param0: globalAndroid.content.Context, param1: number): void;
@@ -7966,7 +7966,7 @@ declare module androidx {
 				public setAutoSizeTextTypeWithDefaults(param0: number): void;
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
-				public setAutoSizeTextTypeUniformWithPresetSizes(param0: native.Array<number>, param1: number): void;
+				public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList): void;
 				public getAutoSizeStepGranularity(): number;
 				public getAutoSizeTextType(): number;
@@ -7976,7 +7976,7 @@ declare module androidx {
 				public constructor(param0: globalAndroid.content.Context);
 				public onMeasure(param0: number, param1: number): void;
 				public getAutoSizeMaxTextSize(): number;
-				public getAutoSizeTextAvailableSizes(): native.Array<number>;
+				public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 				public getSupportBackgroundTintMode(): globalAndroid.graphics.PorterDuff.Mode;
 				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 			}
@@ -8023,7 +8023,7 @@ declare module androidx {
 				export class GateKeeperDrawable extends androidx.appcompat.graphics.drawable.DrawableWrapper {
 					public static class: java.lang.Class<androidx.appcompat.widget.DropDownListView.GateKeeperDrawable>;
 					public setHotspot(param0: number, param1: number): void;
-					public setState(param0: native.Array<number>): boolean;
+					public setState(param0: androidNative.Array<number>): boolean;
 					public setVisible(param0: boolean, param1: boolean): boolean;
 					public draw(param0: globalAndroid.graphics.Canvas): void;
 					public setHotspotBounds(param0: number, param1: number, param2: number, param3: number): void;
@@ -8425,11 +8425,11 @@ declare module androidx {
 				public getResourceEntryName(param0: number): string;
 				public parseBundleExtra(param0: string, param1: globalAndroid.util.AttributeSet, param2: globalAndroid.os.Bundle): void;
 				public getDrawable(param0: number, param1: globalAndroid.content.res.Resources.Theme): globalAndroid.graphics.drawable.Drawable;
-				public getString(param0: number, param1: native.Array<any>): string;
+				public getString(param0: number, param1: androidNative.Array<any>): string;
 				public parseBundleExtras(param0: globalAndroid.content.res.XmlResourceParser, param1: globalAndroid.os.Bundle): void;
 				public updateConfiguration(param0: globalAndroid.content.res.Configuration, param1: globalAndroid.util.DisplayMetrics): void;
 				public openRawResource(param0: number, param1: globalAndroid.util.TypedValue): java.io.InputStream;
-				public getTextArray(param0: number): native.Array<string>;
+				public getTextArray(param0: number): androidNative.Array<string>;
 				public obtainTypedArray(param0: number): globalAndroid.content.res.TypedArray;
 				public getDimension(param0: number): number;
 				public getResourceTypeName(param0: number): string;
@@ -8438,14 +8438,14 @@ declare module androidx {
 				public openRawResource(param0: number): java.io.InputStream;
 				public getValueForDensity(param0: number, param1: number, param2: globalAndroid.util.TypedValue, param3: boolean): void;
 				public getText(param0: number): string;
-				public getIntArray(param0: number): native.Array<number>;
+				public getIntArray(param0: number): androidNative.Array<number>;
 				public getValue(param0: number, param1: globalAndroid.util.TypedValue, param2: boolean): void;
-				public obtainAttributes(param0: globalAndroid.util.AttributeSet, param1: native.Array<number>): globalAndroid.content.res.TypedArray;
+				public obtainAttributes(param0: globalAndroid.util.AttributeSet, param1: androidNative.Array<number>): globalAndroid.content.res.TypedArray;
 				public getColor(param0: number): number;
 				public constructor(param0: globalAndroid.content.res.Resources);
-				public getStringArray(param0: number): native.Array<string>;
+				public getStringArray(param0: number): androidNative.Array<string>;
 				public getFraction(param0: number, param1: number, param2: number): number;
-				public getQuantityString(param0: number, param1: number, param2: native.Array<any>): string;
+				public getQuantityString(param0: number, param1: number, param2: androidNative.Array<any>): string;
 				public getDrawable(param0: number): globalAndroid.graphics.drawable.Drawable;
 				public getText(param0: number, param1: string): string;
 				public getDimensionPixelOffset(param0: number): number;
@@ -8767,7 +8767,7 @@ declare module androidx {
 				public setThumbTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 				public setTextOn(param0: string): void;
 				public getTrackTintList(): globalAndroid.content.res.ColorStateList;
-				public onCreateDrawableState(param0: number): native.Array<number>;
+				public onCreateDrawableState(param0: number): androidNative.Array<number>;
 				public setSwitchTypeface(param0: globalAndroid.graphics.Typeface, param1: number): void;
 				public setThumbTintList(param0: globalAndroid.content.res.ColorStateList): void;
 				public setThumbResource(param0: number): void;
@@ -8907,24 +8907,24 @@ declare module androidx {
 		export module widget {
 			export class TintTypedArray {
 				public static class: java.lang.Class<androidx.appcompat.widget.TintTypedArray>;
-				public static obtainStyledAttributes(param0: globalAndroid.content.Context, param1: number, param2: native.Array<number>): androidx.appcompat.widget.TintTypedArray;
+				public static obtainStyledAttributes(param0: globalAndroid.content.Context, param1: number, param2: androidNative.Array<number>): androidx.appcompat.widget.TintTypedArray;
 				public recycle(): void;
 				public getString(param0: number): string;
 				public peekValue(param0: number): globalAndroid.util.TypedValue;
 				public getFraction(param0: number, param1: number, param2: number, param3: number): number;
 				public getFloat(param0: number, param1: number): number;
-				public static obtainStyledAttributes(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: native.Array<number>): androidx.appcompat.widget.TintTypedArray;
+				public static obtainStyledAttributes(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: androidNative.Array<number>): androidx.appcompat.widget.TintTypedArray;
 				public getPositionDescription(): string;
 				public hasValue(param0: number): boolean;
 				public getNonResourceString(param0: number): string;
 				public getInt(param0: number, param1: number): number;
-				public getTextArray(param0: number): native.Array<string>;
+				public getTextArray(param0: number): androidNative.Array<string>;
 				public getIndex(param0: number): number;
 				public getInteger(param0: number, param1: number): number;
 				public getText(param0: number): string;
 				public getIndexCount(): number;
 				public getDimensionPixelSize(param0: number, param1: number): number;
-				public static obtainStyledAttributes(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: native.Array<number>, param3: number, param4: number): androidx.appcompat.widget.TintTypedArray;
+				public static obtainStyledAttributes(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: androidNative.Array<number>, param3: number, param4: number): androidx.appcompat.widget.TintTypedArray;
 				public getFont(param0: number, param1: number, param2: androidx.core.content.res.ResourcesCompat.FontCallback): globalAndroid.graphics.Typeface;
 				public getLayoutDimension(param0: number, param1: number): number;
 				public getResources(): globalAndroid.content.res.Resources;
@@ -9680,7 +9680,7 @@ declare module androidx {
 				public getOutline(param0: any): void;
 				public onBoundsChange(param0: globalAndroid.graphics.Rect): void;
 				public getRadius(): number;
-				public onStateChange(param0: native.Array<number>): boolean;
+				public onStateChange(param0: androidNative.Array<number>): boolean;
 				public getOpacity(): number;
 				public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 				public isStateful(): boolean;
@@ -9695,7 +9695,7 @@ declare module androidx {
 			export class RoundRectDrawableWithShadow {
 				public static class: java.lang.Class<androidx.cardview.widget.RoundRectDrawableWithShadow>;
 				public setColorFilter(param0: globalAndroid.graphics.ColorFilter): void;
-				public onStateChange(param0: native.Array<number>): boolean;
+				public onStateChange(param0: androidNative.Array<number>): boolean;
 				public setAlpha(param0: number): void;
 				public draw(param0: globalAndroid.graphics.Canvas): void;
 				public getPadding(param0: globalAndroid.graphics.Rect): boolean;
@@ -9746,7 +9746,7 @@ declare module androidx {
 			public static class: java.lang.Class<androidx.collection.ArraySet<any>>;
 			public removeAll(param0: androidx.collection.ArraySet<any>): boolean;
 			public equals(param0: any): boolean;
-			public toArray(): native.Array<any>;
+			public toArray(): androidNative.Array<any>;
 			public iterator(): java.util.Iterator<E>;
 			public removeAt(param0: number): E;
 			public ensureCapacity(param0: number): void;
@@ -9757,7 +9757,7 @@ declare module androidx {
 			public size(): number;
 			public constructor(param0: number);
 			public add(param0: E): boolean;
-			public toArray(param0: native.Array<any>): native.Array<any>;
+			public toArray(param0: androidNative.Array<any>): androidNative.Array<any>;
 			public constructor();
 			public addAll(param0: java.util.Collection<any>): boolean;
 			public retainAll(param0: java.util.Collection<any>): boolean;
@@ -9903,14 +9903,14 @@ declare module androidx {
 			public colClear(): void;
 			public static removeAllHelper(param0: java.util.Map, param1: java.util.Collection): boolean;
 			public getValues(): java.util.Collection<V>;
-			public toArrayHelper(param0: native.Array<any>, param1: number): native.Array<any>;
+			public toArrayHelper(param0: androidNative.Array<any>, param1: number): androidNative.Array<any>;
 			public colGetMap(): java.util.Map<K,V>;
 			public colPut(param0: K, param1: V): void;
 			public static equalsSetHelper(param0: java.util.Set, param1: any): boolean;
 			public colRemoveAt(param0: number): void;
 			public static containsAllHelper(param0: java.util.Map, param1: java.util.Collection): boolean;
 			public colSetValue(param0: number, param1: V): V;
-			public toArrayHelper(param0: number): native.Array<any>;
+			public toArrayHelper(param0: number): androidNative.Array<any>;
 			public colGetSize(): number;
 			public static retainAllHelper(param0: java.util.Map, param1: java.util.Collection): boolean;
 			public colIndexOfKey(param0: any): number;
@@ -9928,10 +9928,10 @@ declare module androidx {
 				public addAll(param0: java.util.Collection<any>): boolean;
 				public contains(param0: any): boolean;
 				public iterator(): java.util.Iterator<java.util.Map.Entry<any,any>>;
-				public toArray(param0: native.Array<any>): native.Array<any>;
+				public toArray(param0: androidNative.Array<any>): androidNative.Array<any>;
 				public retainAll(param0: java.util.Collection<any>): boolean;
 				public size(): number;
-				public toArray(): native.Array<any>;
+				public toArray(): androidNative.Array<any>;
 				public containsAll(param0: java.util.Collection<any>): boolean;
 				public hashCode(): number;
 				public removeAll(param0: java.util.Collection<any>): boolean;
@@ -9944,11 +9944,11 @@ declare module androidx {
 				public static class: java.lang.Class<androidx.collection.MapCollections.KeySet>;
 				public addAll(param0: java.util.Collection<any>): boolean;
 				public contains(param0: any): boolean;
-				public toArray(param0: native.Array<any>): native.Array<any>;
+				public toArray(param0: androidNative.Array<any>): androidNative.Array<any>;
 				public iterator(): java.util.Iterator<any>;
 				public retainAll(param0: java.util.Collection<any>): boolean;
 				public size(): number;
-				public toArray(): native.Array<any>;
+				public toArray(): androidNative.Array<any>;
 				public containsAll(param0: java.util.Collection<any>): boolean;
 				public add(param0: any): boolean;
 				public hashCode(): number;
@@ -9974,11 +9974,11 @@ declare module androidx {
 				public static class: java.lang.Class<androidx.collection.MapCollections.ValuesCollection>;
 				public addAll(param0: java.util.Collection<any>): boolean;
 				public contains(param0: any): boolean;
-				public toArray(param0: native.Array<any>): native.Array<any>;
+				public toArray(param0: androidNative.Array<any>): androidNative.Array<any>;
 				public iterator(): java.util.Iterator<any>;
 				public retainAll(param0: java.util.Collection<any>): boolean;
 				public size(): number;
-				public toArray(): native.Array<any>;
+				public toArray(): androidNative.Array<any>;
 				public containsAll(param0: java.util.Collection<any>): boolean;
 				public add(param0: any): boolean;
 				public removeAll(param0: java.util.Collection<any>): boolean;
@@ -10085,7 +10085,7 @@ declare module androidx {
 				public requestChildRectangleOnScreen(param0: globalAndroid.view.View, param1: globalAndroid.graphics.Rect, param2: boolean): boolean;
 				public onDetachedFromWindow(): void;
 				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public getLastWindowInsets(): androidx.core.view.WindowInsetsCompat;
 				public drawableStateChanged(): void;
 				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
@@ -10100,7 +10100,7 @@ declare module androidx {
 				public constructor(param0: globalAndroid.content.Context);
 				public onLayoutChild(param0: globalAndroid.view.View, param1: number): void;
 				public setFitsSystemWindows(param0: boolean): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: number): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
 				public onLayout(param0: boolean, param1: number, param2: number, param3: number, param4: number): void;
 				public setOnHierarchyChangeListener(param0: globalAndroid.view.ViewGroup.OnHierarchyChangeListener): void;
 				public dispatchDependentViewsChanged(param0: globalAndroid.view.View): void;
@@ -10146,7 +10146,7 @@ declare module androidx {
 					public onRequestChildRectangleOnScreen(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.graphics.Rect, param3: boolean): boolean;
 					public onStartNestedScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View, param3: globalAndroid.view.View, param4: number, param5: number): boolean;
 					/** @deprecated */
-					public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View, param3: number, param4: number, param5: native.Array<number>): void;
+					public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View, param3: number, param4: number, param5: androidNative.Array<number>): void;
 					public onDependentViewRemoved(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View): void;
 					/** @deprecated */
 					public onStartNestedScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View, param3: globalAndroid.view.View, param4: number): boolean;
@@ -10155,7 +10155,7 @@ declare module androidx {
 					public onLayoutChild(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: number): boolean;
 					public static getTag(param0: globalAndroid.view.View): any;
 					public onInterceptTouchEvent(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.MotionEvent): boolean;
-					public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View, param3: number, param4: number, param5: native.Array<number>, param6: number): void;
+					public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View, param3: number, param4: number, param5: androidNative.Array<number>, param6: number): void;
 					public onDetachedFromLayoutParams(): void;
 					public onNestedFling(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View, param3: number, param4: number, param5: boolean): boolean;
 					public layoutDependsOn(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: V, param2: globalAndroid.view.View): boolean;
@@ -10304,7 +10304,7 @@ declare module androidx {
 				public static startPostponedEnterTransition(param0: globalAndroid.app.Activity): void;
 				public static finishAffinity(param0: globalAndroid.app.Activity): void;
 				public static startActivityForResult(param0: globalAndroid.app.Activity, param1: globalAndroid.content.Intent, param2: number, param3: globalAndroid.os.Bundle): void;
-				public static requestPermissions(param0: globalAndroid.app.Activity, param1: native.Array<string>, param2: number): void;
+				public static requestPermissions(param0: globalAndroid.app.Activity, param1: androidNative.Array<string>, param2: number): void;
 				public static shouldShowRequestPermissionRationale(param0: globalAndroid.app.Activity, param1: string): boolean;
 				public static startIntentSenderForResult(param0: globalAndroid.app.Activity, param1: globalAndroid.content.IntentSender, param2: number, param3: globalAndroid.content.Intent, param4: number, param5: number, param6: number, param7: globalAndroid.os.Bundle): void;
 				public static setPermissionCompatDelegate(param0: androidx.core.app.ActivityCompat.PermissionCompatDelegate): void;
@@ -10318,10 +10318,10 @@ declare module androidx {
 					 * Constructs a new instance of the androidx.core.app.ActivityCompat$OnRequestPermissionsResultCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 					 */
 					public constructor(implementation: {
-						onRequestPermissionsResult(param0: number, param1: native.Array<string>, param2: native.Array<number>): void;
+						onRequestPermissionsResult(param0: number, param1: androidNative.Array<string>, param2: androidNative.Array<number>): void;
 					});
 					public constructor();
-					public onRequestPermissionsResult(param0: number, param1: native.Array<string>, param2: native.Array<number>): void;
+					public onRequestPermissionsResult(param0: number, param1: androidNative.Array<string>, param2: androidNative.Array<number>): void;
 				}
 				export class PermissionCompatDelegate {
 					public static class: java.lang.Class<androidx.core.app.ActivityCompat.PermissionCompatDelegate>;
@@ -10329,11 +10329,11 @@ declare module androidx {
 					 * Constructs a new instance of the androidx.core.app.ActivityCompat$PermissionCompatDelegate interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 					 */
 					public constructor(implementation: {
-						requestPermissions(param0: globalAndroid.app.Activity, param1: native.Array<string>, param2: number): boolean;
+						requestPermissions(param0: globalAndroid.app.Activity, param1: androidNative.Array<string>, param2: number): boolean;
 						onActivityResult(param0: globalAndroid.app.Activity, param1: number, param2: number, param3: globalAndroid.content.Intent): boolean;
 					});
 					public constructor();
-					public requestPermissions(param0: globalAndroid.app.Activity, param1: native.Array<string>, param2: number): boolean;
+					public requestPermissions(param0: globalAndroid.app.Activity, param1: androidNative.Array<string>, param2: number): boolean;
 					public onActivityResult(param0: globalAndroid.app.Activity, param1: number, param2: number, param3: globalAndroid.content.Intent): boolean;
 				}
 				export class RequestPermissionsRequestCodeValidator {
@@ -10392,7 +10392,7 @@ declare module androidx {
 				public static makeCustomAnimation(param0: globalAndroid.content.Context, param1: number, param2: number): androidx.core.app.ActivityOptionsCompat;
 				public requestUsageTimeReport(param0: globalAndroid.app.PendingIntent): void;
 				public static makeTaskLaunchBehind(): androidx.core.app.ActivityOptionsCompat;
-				public static makeSceneTransitionAnimation(param0: globalAndroid.app.Activity, param1: native.Array<androidx.core.util.Pair<globalAndroid.view.View,string>>): androidx.core.app.ActivityOptionsCompat;
+				public static makeSceneTransitionAnimation(param0: globalAndroid.app.Activity, param1: androidNative.Array<androidx.core.util.Pair<globalAndroid.view.View,string>>): androidx.core.app.ActivityOptionsCompat;
 				public static makeScaleUpAnimation(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): androidx.core.app.ActivityOptionsCompat;
 			}
 			export module ActivityOptionsCompat {
@@ -10582,30 +10582,30 @@ declare module androidx {
 				public static DELAY_DURATION: number;
 				public static ANIMATION_DURATION: number;
 				public static EVERY_DURATION: number;
-				public stop(): native.Array<globalAndroid.util.SparseIntArray>;
-				public getMetrics(): native.Array<globalAndroid.util.SparseIntArray>;
-				public remove(param0: globalAndroid.app.Activity): native.Array<globalAndroid.util.SparseIntArray>;
+				public stop(): androidNative.Array<globalAndroid.util.SparseIntArray>;
+				public getMetrics(): androidNative.Array<globalAndroid.util.SparseIntArray>;
+				public remove(param0: globalAndroid.app.Activity): androidNative.Array<globalAndroid.util.SparseIntArray>;
 				public constructor(param0: number);
 				public add(param0: globalAndroid.app.Activity): void;
-				public reset(): native.Array<globalAndroid.util.SparseIntArray>;
+				public reset(): androidNative.Array<globalAndroid.util.SparseIntArray>;
 				public constructor();
 			}
 			export module FrameMetricsAggregator {
 				export class FrameMetricsApi24Impl extends androidx.core.app.FrameMetricsAggregator.FrameMetricsBaseImpl {
 					public static class: java.lang.Class<androidx.core.app.FrameMetricsAggregator.FrameMetricsApi24Impl>;
 					public add(param0: globalAndroid.app.Activity): void;
-					public getMetrics(): native.Array<globalAndroid.util.SparseIntArray>;
-					public reset(): native.Array<globalAndroid.util.SparseIntArray>;
-					public remove(param0: globalAndroid.app.Activity): native.Array<globalAndroid.util.SparseIntArray>;
-					public stop(): native.Array<globalAndroid.util.SparseIntArray>;
+					public getMetrics(): androidNative.Array<globalAndroid.util.SparseIntArray>;
+					public reset(): androidNative.Array<globalAndroid.util.SparseIntArray>;
+					public remove(param0: globalAndroid.app.Activity): androidNative.Array<globalAndroid.util.SparseIntArray>;
+					public stop(): androidNative.Array<globalAndroid.util.SparseIntArray>;
 				}
 				export class FrameMetricsBaseImpl {
 					public static class: java.lang.Class<androidx.core.app.FrameMetricsAggregator.FrameMetricsBaseImpl>;
 					public add(param0: globalAndroid.app.Activity): void;
-					public getMetrics(): native.Array<globalAndroid.util.SparseIntArray>;
-					public reset(): native.Array<globalAndroid.util.SparseIntArray>;
-					public remove(param0: globalAndroid.app.Activity): native.Array<globalAndroid.util.SparseIntArray>;
-					public stop(): native.Array<globalAndroid.util.SparseIntArray>;
+					public getMetrics(): androidNative.Array<globalAndroid.util.SparseIntArray>;
+					public reset(): androidNative.Array<globalAndroid.util.SparseIntArray>;
+					public remove(param0: globalAndroid.app.Activity): androidNative.Array<globalAndroid.util.SparseIntArray>;
+					public stop(): androidNative.Array<globalAndroid.util.SparseIntArray>;
 				}
 				export class MetricType {
 					public static class: java.lang.Class<androidx.core.app.FrameMetricsAggregator.MetricType>;
@@ -10641,7 +10641,7 @@ declare module androidx {
 			export module JobIntentService {
 				export class CommandProcessor extends globalAndroid.os.AsyncTask<java.lang.Void,java.lang.Void,java.lang.Void> {
 					public static class: java.lang.Class<androidx.core.app.JobIntentService.CommandProcessor>;
-					public doInBackground(param0: native.Array<java.lang.Void>): java.lang.Void;
+					public doInBackground(param0: androidNative.Array<java.lang.Void>): java.lang.Void;
 					public onCancelled(param0: java.lang.Void): void;
 					public onPostExecute(param0: java.lang.Void): void;
 				}
@@ -10863,13 +10863,13 @@ declare module androidx {
 					public title: string;
 					public actionIntent: globalAndroid.app.PendingIntent;
 					public getTitle(): string;
-					public getRemoteInputs(): native.Array<androidx.core.app.RemoteInput>;
+					public getRemoteInputs(): androidNative.Array<androidx.core.app.RemoteInput>;
 					public getIcon(): number;
 					public getExtras(): globalAndroid.os.Bundle;
 					public getShowsUserInterface(): boolean;
 					public constructor(param0: number, param1: string, param2: globalAndroid.app.PendingIntent);
 					public getAllowGeneratedReplies(): boolean;
-					public getDataOnlyRemoteInputs(): native.Array<androidx.core.app.RemoteInput>;
+					public getDataOnlyRemoteInputs(): androidNative.Array<androidx.core.app.RemoteInput>;
 					public getSemanticAction(): number;
 					public getActionIntent(): globalAndroid.app.PendingIntent;
 				}
@@ -11009,7 +11009,7 @@ declare module androidx {
 					public addAction(param0: number, param1: string, param2: globalAndroid.app.PendingIntent): androidx.core.app.NotificationCompat.Builder;
 					public static limitCharSequenceLength(param0: string): string;
 					public addInvisibleAction(param0: androidx.core.app.NotificationCompat.Action): androidx.core.app.NotificationCompat.Builder;
-					public setRemoteInputHistory(param0: native.Array<string>): androidx.core.app.NotificationCompat.Builder;
+					public setRemoteInputHistory(param0: androidNative.Array<string>): androidx.core.app.NotificationCompat.Builder;
 					public setPublicVersion(param0: globalAndroid.app.Notification): androidx.core.app.NotificationCompat.Builder;
 					public setCategory(param0: string): androidx.core.app.NotificationCompat.Builder;
 					public setLargeIcon(param0: globalAndroid.graphics.Bitmap): androidx.core.app.NotificationCompat.Builder;
@@ -11020,7 +11020,7 @@ declare module androidx {
 					public setContentTitle(param0: string): androidx.core.app.NotificationCompat.Builder;
 					public setContentInfo(param0: string): androidx.core.app.NotificationCompat.Builder;
 					public setStyle(param0: androidx.core.app.NotificationCompat.Style): androidx.core.app.NotificationCompat.Builder;
-					public setVibrate(param0: native.Array<number>): androidx.core.app.NotificationCompat.Builder;
+					public setVibrate(param0: androidNative.Array<number>): androidx.core.app.NotificationCompat.Builder;
 					public setColor(param0: number): androidx.core.app.NotificationCompat.Builder;
 					public getBigContentView(): globalAndroid.widget.RemoteViews;
 					public setContentIntent(param0: globalAndroid.app.PendingIntent): androidx.core.app.NotificationCompat.Builder;
@@ -11053,8 +11053,8 @@ declare module androidx {
 						public getParticipant(): string;
 						public getRemoteInput(): androidx.core.app.RemoteInput;
 						public getReplyPendingIntent(): globalAndroid.app.PendingIntent;
-						public getParticipants(): native.Array<string>;
-						public getMessages(): native.Array<string>;
+						public getParticipants(): androidNative.Array<string>;
+						public getMessages(): androidNative.Array<string>;
 						public getReadPendingIntent(): globalAndroid.app.PendingIntent;
 						public getLatestTimestamp(): number;
 					}
@@ -11479,7 +11479,7 @@ declare module androidx {
 				public static EXTRA_RESULTS_DATA: string;
 				public static SOURCE_FREE_FORM_INPUT: number;
 				public static SOURCE_CHOICE: number;
-				public getChoices(): native.Array<string>;
+				public getChoices(): androidNative.Array<string>;
 				public getAllowFreeFormInput(): boolean;
 				public getExtras(): globalAndroid.os.Bundle;
 				public getLabel(): string;
@@ -11489,7 +11489,7 @@ declare module androidx {
 				public static addDataResultToIntent(param0: androidx.core.app.RemoteInput, param1: globalAndroid.content.Intent, param2: java.util.Map<string,globalAndroid.net.Uri>): void;
 				public static setResultsSource(param0: globalAndroid.content.Intent, param1: number): void;
 				public getResultKey(): string;
-				public static addResultsToIntent(param0: native.Array<androidx.core.app.RemoteInput>, param1: globalAndroid.content.Intent, param2: globalAndroid.os.Bundle): void;
+				public static addResultsToIntent(param0: androidNative.Array<androidx.core.app.RemoteInput>, param1: globalAndroid.content.Intent, param2: globalAndroid.os.Bundle): void;
 				public static getResultsFromIntent(param0: globalAndroid.content.Intent): globalAndroid.os.Bundle;
 				public getAllowedDataTypes(): java.util.Set<string>;
 			}
@@ -11500,7 +11500,7 @@ declare module androidx {
 					public getExtras(): globalAndroid.os.Bundle;
 					public constructor(param0: string);
 					public setLabel(param0: string): androidx.core.app.RemoteInput.Builder;
-					public setChoices(param0: native.Array<string>): androidx.core.app.RemoteInput.Builder;
+					public setChoices(param0: androidNative.Array<string>): androidx.core.app.RemoteInput.Builder;
 					public addExtras(param0: globalAndroid.os.Bundle): androidx.core.app.RemoteInput.Builder;
 					public build(): androidx.core.app.RemoteInput;
 					public setAllowFreeFormInput(param0: boolean): androidx.core.app.RemoteInput.Builder;
@@ -11559,11 +11559,11 @@ declare module androidx {
 			export module ShareCompat {
 				export class IntentBuilder {
 					public static class: java.lang.Class<androidx.core.app.ShareCompat.IntentBuilder>;
-					public addEmailBcc(param0: native.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
+					public addEmailBcc(param0: androidNative.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
 					public setType(param0: string): androidx.core.app.ShareCompat.IntentBuilder;
 					public addEmailCc(param0: string): androidx.core.app.ShareCompat.IntentBuilder;
-					public setEmailTo(param0: native.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
-					public addEmailCc(param0: native.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
+					public setEmailTo(param0: androidNative.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
+					public addEmailCc(param0: androidNative.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
 					public startChooser(): void;
 					public setStream(param0: globalAndroid.net.Uri): androidx.core.app.ShareCompat.IntentBuilder;
 					public getIntent(): globalAndroid.content.Intent;
@@ -11572,13 +11572,13 @@ declare module androidx {
 					public setChooserTitle(param0: number): androidx.core.app.ShareCompat.IntentBuilder;
 					public setSubject(param0: string): androidx.core.app.ShareCompat.IntentBuilder;
 					public setChooserTitle(param0: string): androidx.core.app.ShareCompat.IntentBuilder;
-					public setEmailBcc(param0: native.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
+					public setEmailBcc(param0: androidNative.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
 					public static from(param0: globalAndroid.app.Activity): androidx.core.app.ShareCompat.IntentBuilder;
 					public addEmailTo(param0: string): androidx.core.app.ShareCompat.IntentBuilder;
 					public createChooserIntent(): globalAndroid.content.Intent;
-					public setEmailCc(param0: native.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
+					public setEmailCc(param0: androidNative.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
 					public setText(param0: string): androidx.core.app.ShareCompat.IntentBuilder;
-					public addEmailTo(param0: native.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
+					public addEmailTo(param0: androidNative.Array<string>): androidx.core.app.ShareCompat.IntentBuilder;
 					public setHtmlText(param0: string): androidx.core.app.ShareCompat.IntentBuilder;
 				}
 				export class IntentReader {
@@ -11595,12 +11595,12 @@ declare module androidx {
 					public getCallingActivityIcon(): globalAndroid.graphics.drawable.Drawable;
 					public isSingleShare(): boolean;
 					public getCallingApplicationIcon(): globalAndroid.graphics.drawable.Drawable;
-					public getEmailTo(): native.Array<string>;
+					public getEmailTo(): androidNative.Array<string>;
 					public getCallingActivity(): globalAndroid.content.ComponentName;
 					public getType(): string;
 					public getStream(): globalAndroid.net.Uri;
-					public getEmailBcc(): native.Array<string>;
-					public getEmailCc(): native.Array<string>;
+					public getEmailBcc(): androidNative.Array<string>;
+					public getEmailCc(): androidNative.Array<string>;
 					public getHtmlText(): string;
 				}
 			}
@@ -11648,7 +11648,7 @@ declare module androidx {
 				public getIntent(param0: number): globalAndroid.content.Intent;
 				public addParentStack(param0: globalAndroid.content.ComponentName): androidx.core.app.TaskStackBuilder;
 				public startActivities(): void;
-				public getIntents(): native.Array<globalAndroid.content.Intent>;
+				public getIntents(): androidNative.Array<globalAndroid.content.Intent>;
 				public editIntentAt(param0: number): globalAndroid.content.Intent;
 				public getIntentCount(): number;
 				public addNextIntent(param0: globalAndroid.content.Intent): androidx.core.app.TaskStackBuilder;
@@ -11686,7 +11686,7 @@ declare module androidx {
 		export module content {
 			export class ContentResolverCompat {
 				public static class: java.lang.Class<androidx.core.content.ContentResolverCompat>;
-				public static query(param0: globalAndroid.content.ContentResolver, param1: globalAndroid.net.Uri, param2: native.Array<string>, param3: string, param4: native.Array<string>, param5: string, param6: androidx.core.os.CancellationSignal): globalAndroid.database.Cursor;
+				public static query(param0: globalAndroid.content.ContentResolver, param1: globalAndroid.net.Uri, param2: androidNative.Array<string>, param3: string, param4: androidNative.Array<string>, param5: string, param6: androidx.core.os.CancellationSignal): globalAndroid.database.Cursor;
 			}
 		}
 	}
@@ -11698,7 +11698,7 @@ declare module androidx {
 			export class ContextCompat {
 				public static class: java.lang.Class<androidx.core.content.ContextCompat>;
 				public static getSystemService(param0: globalAndroid.content.Context, param1: java.lang.Class): any;
-				public static getExternalFilesDirs(param0: globalAndroid.content.Context, param1: string): native.Array<java.io.File>;
+				public static getExternalFilesDirs(param0: globalAndroid.content.Context, param1: string): androidNative.Array<java.io.File>;
 				public static startForegroundService(param0: globalAndroid.content.Context, param1: globalAndroid.content.Intent): void;
 				public static getDrawable(param0: globalAndroid.content.Context, param1: number): globalAndroid.graphics.drawable.Drawable;
 				public static checkSelfPermission(param0: globalAndroid.content.Context, param1: string): number;
@@ -11708,14 +11708,14 @@ declare module androidx {
 				public constructor();
 				public static getMainExecutor(param0: globalAndroid.content.Context): java.util.concurrent.Executor;
 				public static startActivity(param0: globalAndroid.content.Context, param1: globalAndroid.content.Intent, param2: globalAndroid.os.Bundle): void;
-				public static startActivities(param0: globalAndroid.content.Context, param1: native.Array<globalAndroid.content.Intent>, param2: globalAndroid.os.Bundle): boolean;
+				public static startActivities(param0: globalAndroid.content.Context, param1: androidNative.Array<globalAndroid.content.Intent>, param2: globalAndroid.os.Bundle): boolean;
 				public static getDataDir(param0: globalAndroid.content.Context): java.io.File;
-				public static getObbDirs(param0: globalAndroid.content.Context): native.Array<java.io.File>;
-				public static getExternalCacheDirs(param0: globalAndroid.content.Context): native.Array<java.io.File>;
+				public static getObbDirs(param0: globalAndroid.content.Context): androidNative.Array<java.io.File>;
+				public static getExternalCacheDirs(param0: globalAndroid.content.Context): androidNative.Array<java.io.File>;
 				public static getColorStateList(param0: globalAndroid.content.Context, param1: number): globalAndroid.content.res.ColorStateList;
 				public static getSystemServiceName(param0: globalAndroid.content.Context, param1: java.lang.Class<any>): string;
 				public static isDeviceProtectedStorage(param0: globalAndroid.content.Context): boolean;
-				public static startActivities(param0: globalAndroid.content.Context, param1: native.Array<globalAndroid.content.Intent>): boolean;
+				public static startActivities(param0: globalAndroid.content.Context, param1: androidNative.Array<globalAndroid.content.Intent>): boolean;
 				public static getNoBackupFilesDir(param0: globalAndroid.content.Context): java.io.File;
 			}
 			export module ContextCompat {
@@ -11740,10 +11740,10 @@ declare module androidx {
 				public getType(param0: globalAndroid.net.Uri): string;
 				public openFile(param0: globalAndroid.net.Uri, param1: string): globalAndroid.os.ParcelFileDescriptor;
 				public insert(param0: globalAndroid.net.Uri, param1: globalAndroid.content.ContentValues): globalAndroid.net.Uri;
-				public update(param0: globalAndroid.net.Uri, param1: globalAndroid.content.ContentValues, param2: string, param3: native.Array<string>): number;
-				public delete(param0: globalAndroid.net.Uri, param1: string, param2: native.Array<string>): number;
+				public update(param0: globalAndroid.net.Uri, param1: globalAndroid.content.ContentValues, param2: string, param3: androidNative.Array<string>): number;
+				public delete(param0: globalAndroid.net.Uri, param1: string, param2: androidNative.Array<string>): number;
 				public attachInfo(param0: globalAndroid.content.Context, param1: globalAndroid.content.pm.ProviderInfo): void;
-				public query(param0: globalAndroid.net.Uri, param1: native.Array<string>, param2: string, param3: native.Array<string>, param4: string): globalAndroid.database.Cursor;
+				public query(param0: globalAndroid.net.Uri, param1: androidNative.Array<string>, param2: string, param3: androidNative.Array<string>, param4: string): globalAndroid.database.Cursor;
 				public onCreate(): boolean;
 				public constructor();
 			}
@@ -11790,10 +11790,10 @@ declare module androidx {
 		export module content {
 			export class MimeTypeFilter {
 				public static class: java.lang.Class<androidx.core.content.MimeTypeFilter>;
-				public static matchesMany(param0: native.Array<string>, param1: string): native.Array<string>;
+				public static matchesMany(param0: androidNative.Array<string>, param1: string): androidNative.Array<string>;
 				public static matches(param0: string, param1: string): boolean;
-				public static matches(param0: string, param1: native.Array<string>): string;
-				public static matches(param0: native.Array<string>, param1: string): string;
+				public static matches(param0: string, param1: androidNative.Array<string>): string;
+				public static matches(param0: androidNative.Array<string>, param1: string): string;
 			}
 		}
 	}
@@ -11924,7 +11924,7 @@ declare module androidx {
 					public getId(): string;
 					public getIntent(): globalAndroid.content.Intent;
 					public toShortcutInfo(): any;
-					public getIntents(): native.Array<globalAndroid.content.Intent>;
+					public getIntents(): androidNative.Array<globalAndroid.content.Intent>;
 					public getActivity(): globalAndroid.content.ComponentName;
 					public getLongLabel(): string;
 				}
@@ -11934,7 +11934,7 @@ declare module androidx {
 						public setAlwaysBadged(): androidx.core.content.pm.ShortcutInfoCompat.Builder;
 						public setLongLived(): androidx.core.content.pm.ShortcutInfoCompat.Builder;
 						public setActivity(param0: globalAndroid.content.ComponentName): androidx.core.content.pm.ShortcutInfoCompat.Builder;
-						public setIntents(param0: native.Array<globalAndroid.content.Intent>): androidx.core.content.pm.ShortcutInfoCompat.Builder;
+						public setIntents(param0: androidNative.Array<globalAndroid.content.Intent>): androidx.core.content.pm.ShortcutInfoCompat.Builder;
 						public constructor(param0: globalAndroid.content.Context, param1: string);
 						public setPerson(param0: androidx.core.app.Person): androidx.core.content.pm.ShortcutInfoCompat.Builder;
 						public setDisabledMessage(param0: string): androidx.core.content.pm.ShortcutInfoCompat.Builder;
@@ -11943,7 +11943,7 @@ declare module androidx {
 						public build(): androidx.core.content.pm.ShortcutInfoCompat;
 						public setLongLabel(param0: string): androidx.core.content.pm.ShortcutInfoCompat.Builder;
 						public setIntent(param0: globalAndroid.content.Intent): androidx.core.content.pm.ShortcutInfoCompat.Builder;
-						public setPersons(param0: native.Array<androidx.core.app.Person>): androidx.core.content.pm.ShortcutInfoCompat.Builder;
+						public setPersons(param0: androidNative.Array<androidx.core.app.Person>): androidx.core.content.pm.ShortcutInfoCompat.Builder;
 						public setCategories(param0: java.util.Set<string>): androidx.core.content.pm.ShortcutInfoCompat.Builder;
 					}
 				}
@@ -11994,7 +11994,7 @@ declare module androidx {
 					public getShader(): globalAndroid.graphics.Shader;
 					public isStateful(): boolean;
 					public willDraw(): boolean;
-					public onStateChanged(param0: native.Array<number>): boolean;
+					public onStateChanged(param0: androidNative.Array<number>): boolean;
 					public static inflate(param0: globalAndroid.content.res.Resources, param1: number, param2: globalAndroid.content.res.Resources.Theme): androidx.core.content.res.ComplexColorCompat;
 				}
 			}
@@ -12025,7 +12025,7 @@ declare module androidx {
 					public static FETCH_STRATEGY_ASYNC: number;
 					public static INFINITE_TIMEOUT_VALUE: number;
 					public static parse(param0: org.xmlpull.v1.XmlPullParser, param1: globalAndroid.content.res.Resources): androidx.core.content.res.FontResourcesParserCompat.FamilyResourceEntry;
-					public static readCerts(param0: globalAndroid.content.res.Resources, param1: number): java.util.List<java.util.List<native.Array<number>>>;
+					public static readCerts(param0: globalAndroid.content.res.Resources, param1: number): java.util.List<java.util.List<androidNative.Array<number>>>;
 				}
 				export module FontResourcesParserCompat {
 					export class FamilyResourceEntry {
@@ -12048,8 +12048,8 @@ declare module androidx {
 					}
 					export class FontFamilyFilesResourceEntry extends androidx.core.content.res.FontResourcesParserCompat.FamilyResourceEntry {
 						public static class: java.lang.Class<androidx.core.content.res.FontResourcesParserCompat.FontFamilyFilesResourceEntry>;
-						public constructor(param0: native.Array<androidx.core.content.res.FontResourcesParserCompat.FontFileResourceEntry>);
-						public getEntries(): native.Array<androidx.core.content.res.FontResourcesParserCompat.FontFileResourceEntry>;
+						public constructor(param0: androidNative.Array<androidx.core.content.res.FontResourcesParserCompat.FontFileResourceEntry>);
+						public getEntries(): androidNative.Array<androidx.core.content.res.FontResourcesParserCompat.FontFileResourceEntry>;
 					}
 					export class FontFileResourceEntry {
 						public static class: java.lang.Class<androidx.core.content.res.FontResourcesParserCompat.FontFileResourceEntry>;
@@ -12097,13 +12097,13 @@ declare module androidx {
 			export module res {
 				export class GrowingArrayUtils {
 					public static class: java.lang.Class<androidx.core.content.res.GrowingArrayUtils>;
-					public static append(param0: native.Array<any>, param1: number, param2: any): native.Array<any>;
-					public static append(param0: native.Array<number>, param1: number, param2: number): native.Array<number>;
-					public static append(param0: native.Array<boolean>, param1: number, param2: boolean): native.Array<boolean>;
+					public static append(param0: androidNative.Array<any>, param1: number, param2: any): androidNative.Array<any>;
+					public static append(param0: androidNative.Array<number>, param1: number, param2: number): androidNative.Array<number>;
+					public static append(param0: androidNative.Array<boolean>, param1: number, param2: boolean): androidNative.Array<boolean>;
 					public static growSize(param0: number): number;
-					public static insert(param0: native.Array<boolean>, param1: number, param2: number, param3: boolean): native.Array<boolean>;
-					public static insert(param0: native.Array<number>, param1: number, param2: number, param3: number): native.Array<number>;
-					public static insert(param0: native.Array<any>, param1: number, param2: number, param3: any): native.Array<any>;
+					public static insert(param0: androidNative.Array<boolean>, param1: number, param2: number, param3: boolean): androidNative.Array<boolean>;
+					public static insert(param0: androidNative.Array<number>, param1: number, param2: number, param3: number): androidNative.Array<number>;
+					public static insert(param0: androidNative.Array<any>, param1: number, param2: number, param3: any): androidNative.Array<any>;
 				}
 			}
 		}
@@ -12152,14 +12152,14 @@ declare module androidx {
 					public static getString(param0: globalAndroid.content.res.TypedArray, param1: number, param2: number): string;
 					public static peekNamedValue(param0: globalAndroid.content.res.TypedArray, param1: org.xmlpull.v1.XmlPullParser, param2: string, param3: number): globalAndroid.util.TypedValue;
 					public static getNamedString(param0: globalAndroid.content.res.TypedArray, param1: org.xmlpull.v1.XmlPullParser, param2: string, param3: number): string;
-					public static obtainAttributes(param0: globalAndroid.content.res.Resources, param1: globalAndroid.content.res.Resources.Theme, param2: globalAndroid.util.AttributeSet, param3: native.Array<number>): globalAndroid.content.res.TypedArray;
+					public static obtainAttributes(param0: globalAndroid.content.res.Resources, param1: globalAndroid.content.res.Resources.Theme, param2: globalAndroid.util.AttributeSet, param3: androidNative.Array<number>): globalAndroid.content.res.TypedArray;
 					public static getText(param0: globalAndroid.content.res.TypedArray, param1: number, param2: number): string;
 					public static hasAttribute(param0: org.xmlpull.v1.XmlPullParser, param1: string): boolean;
 					public static getNamedComplexColor(param0: globalAndroid.content.res.TypedArray, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.content.res.Resources.Theme, param3: string, param4: number, param5: number): androidx.core.content.res.ComplexColorCompat;
 					public static getNamedColorStateList(param0: globalAndroid.content.res.TypedArray, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.content.res.Resources.Theme, param3: string, param4: number): globalAndroid.content.res.ColorStateList;
 					public static getInt(param0: globalAndroid.content.res.TypedArray, param1: number, param2: number, param3: number): number;
 					public static getBoolean(param0: globalAndroid.content.res.TypedArray, param1: number, param2: number, param3: boolean): boolean;
-					public static getTextArray(param0: globalAndroid.content.res.TypedArray, param1: number, param2: number): native.Array<string>;
+					public static getTextArray(param0: globalAndroid.content.res.TypedArray, param1: number, param2: number): androidNative.Array<string>;
 					public static getNamedColor(param0: globalAndroid.content.res.TypedArray, param1: org.xmlpull.v1.XmlPullParser, param2: string, param3: number, param4: number): number;
 					public static getNamedFloat(param0: globalAndroid.content.res.TypedArray, param1: org.xmlpull.v1.XmlPullParser, param2: string, param3: number, param4: number): number;
 					public static getResourceId(param0: globalAndroid.content.res.TypedArray, param1: number, param2: number, param3: number): number;
@@ -12190,7 +12190,7 @@ declare module androidx {
 				/** @deprecated */
 				public static concatenateWhere(param0: string, param1: string): string;
 				/** @deprecated */
-				public static appendSelectionArgs(param0: native.Array<string>, param1: native.Array<string>): native.Array<string>;
+				public static appendSelectionArgs(param0: androidNative.Array<string>, param1: androidNative.Array<string>): androidNative.Array<string>;
 			}
 		}
 	}
@@ -12229,25 +12229,25 @@ declare module androidx {
 				public static class: java.lang.Class<androidx.core.graphics.ColorUtils>;
 				public static LABToColor(param0: number, param1: number, param2: number): number;
 				public static calculateContrast(param0: number, param1: number): number;
-				public static RGBToHSL(param0: number, param1: number, param2: number, param3: native.Array<number>): void;
-				public static colorToLAB(param0: number, param1: native.Array<number>): void;
+				public static RGBToHSL(param0: number, param1: number, param2: number, param3: androidNative.Array<number>): void;
+				public static colorToLAB(param0: number, param1: androidNative.Array<number>): void;
 				public static blendARGB(param0: number, param1: number, param2: number): number;
-				public static colorToHSL(param0: number, param1: native.Array<number>): void;
-				public static RGBToXYZ(param0: number, param1: number, param2: number, param3: native.Array<number>): void;
-				public static XYZToLAB(param0: number, param1: number, param2: number, param3: native.Array<number>): void;
+				public static colorToHSL(param0: number, param1: androidNative.Array<number>): void;
+				public static RGBToXYZ(param0: number, param1: number, param2: number, param3: androidNative.Array<number>): void;
+				public static XYZToLAB(param0: number, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public static calculateLuminance(param0: number): number;
 				public static setAlphaComponent(param0: number, param1: number): number;
 				public static compositeColors(param0: number, param1: number): number;
 				public static calculateMinimumAlpha(param0: number, param1: number, param2: number): number;
-				public static HSLToColor(param0: native.Array<number>): number;
-				public static blendHSL(param0: native.Array<number>, param1: native.Array<number>, param2: number, param3: native.Array<number>): void;
+				public static HSLToColor(param0: androidNative.Array<number>): number;
+				public static blendHSL(param0: androidNative.Array<number>, param1: androidNative.Array<number>, param2: number, param3: androidNative.Array<number>): void;
 				public static XYZToColor(param0: number, param1: number, param2: number): number;
-				public static RGBToLAB(param0: number, param1: number, param2: number, param3: native.Array<number>): void;
+				public static RGBToLAB(param0: number, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public static compositeColors(param0: globalAndroid.graphics.Color, param1: globalAndroid.graphics.Color): globalAndroid.graphics.Color;
-				public static distanceEuclidean(param0: native.Array<number>, param1: native.Array<number>): number;
-				public static blendLAB(param0: native.Array<number>, param1: native.Array<number>, param2: number, param3: native.Array<number>): void;
-				public static LABToXYZ(param0: number, param1: number, param2: number, param3: native.Array<number>): void;
-				public static colorToXYZ(param0: number, param1: native.Array<number>): void;
+				public static distanceEuclidean(param0: androidNative.Array<number>, param1: androidNative.Array<number>): number;
+				public static blendLAB(param0: androidNative.Array<number>, param1: androidNative.Array<number>, param2: number, param3: androidNative.Array<number>): void;
+				public static LABToXYZ(param0: number, param1: number, param2: number, param3: androidNative.Array<number>): void;
+				public static colorToXYZ(param0: number, param1: androidNative.Array<number>): void;
 			}
 		}
 	}
@@ -12269,12 +12269,12 @@ declare module androidx {
 		export module graphics {
 			export class PathParser {
 				public static class: java.lang.Class<androidx.core.graphics.PathParser>;
-				public static interpolatePathDataNodes(param0: native.Array<androidx.core.graphics.PathParser.PathDataNode>, param1: native.Array<androidx.core.graphics.PathParser.PathDataNode>, param2: native.Array<androidx.core.graphics.PathParser.PathDataNode>, param3: number): boolean;
-				public static deepCopyNodes(param0: native.Array<androidx.core.graphics.PathParser.PathDataNode>): native.Array<androidx.core.graphics.PathParser.PathDataNode>;
-				public static canMorph(param0: native.Array<androidx.core.graphics.PathParser.PathDataNode>, param1: native.Array<androidx.core.graphics.PathParser.PathDataNode>): boolean;
+				public static interpolatePathDataNodes(param0: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, param1: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, param2: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, param3: number): boolean;
+				public static deepCopyNodes(param0: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>): androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>;
+				public static canMorph(param0: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, param1: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>): boolean;
 				public static createPathFromPathData(param0: string): globalAndroid.graphics.Path;
-				public static createNodesFromPathData(param0: string): native.Array<androidx.core.graphics.PathParser.PathDataNode>;
-				public static updateNodes(param0: native.Array<androidx.core.graphics.PathParser.PathDataNode>, param1: native.Array<androidx.core.graphics.PathParser.PathDataNode>): void;
+				public static createNodesFromPathData(param0: string): androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>;
+				public static updateNodes(param0: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, param1: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>): void;
 			}
 			export module PathParser {
 				export class ExtractFloatResult {
@@ -12283,8 +12283,8 @@ declare module androidx {
 				export class PathDataNode {
 					public static class: java.lang.Class<androidx.core.graphics.PathParser.PathDataNode>;
 					public mType: string;
-					public mParams: native.Array<number>;
-					public static nodesToPath(param0: native.Array<androidx.core.graphics.PathParser.PathDataNode>, param1: globalAndroid.graphics.Path): void;
+					public mParams: androidNative.Array<number>;
+					public static nodesToPath(param0: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, param1: globalAndroid.graphics.Path): void;
 					public interpolatePathDataNode(param0: androidx.core.graphics.PathParser.PathDataNode, param1: androidx.core.graphics.PathParser.PathDataNode, param2: number): void;
 				}
 			}
@@ -12327,7 +12327,7 @@ declare module androidx {
 		export module graphics {
 			export class TypefaceCompat {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompat>;
-				public static createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
+				public static createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
 				public static createFromResourcesFamilyXml(param0: globalAndroid.content.Context, param1: androidx.core.content.res.FontResourcesParserCompat.FamilyResourceEntry, param2: globalAndroid.content.res.Resources, param3: number, param4: number, param5: androidx.core.content.res.ResourcesCompat.FontCallback, param6: globalAndroid.os.Handler, param7: boolean): globalAndroid.graphics.Typeface;
 				public static findFromCache(param0: globalAndroid.content.res.Resources, param1: number, param2: number): globalAndroid.graphics.Typeface;
 				public static createFromResourcesFontFile(param0: globalAndroid.content.Context, param1: globalAndroid.content.res.Resources, param2: number, param3: string, param4: number): globalAndroid.graphics.Typeface;
@@ -12341,7 +12341,7 @@ declare module androidx {
 		export module graphics {
 			export class TypefaceCompatApi21Impl extends androidx.core.graphics.TypefaceCompatBaseImpl {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatApi21Impl>;
-				public createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
+				public createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
 			}
 		}
 	}
@@ -12354,7 +12354,7 @@ declare module androidx {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatApi24Impl>;
 				public static isUsable(): boolean;
 				public createFromFontFamilyFilesResourceEntry(param0: globalAndroid.content.Context, param1: androidx.core.content.res.FontResourcesParserCompat.FontFamilyFilesResourceEntry, param2: globalAndroid.content.res.Resources, param3: number): globalAndroid.graphics.Typeface;
-				public createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
+				public createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
 			}
 		}
 	}
@@ -12380,7 +12380,7 @@ declare module androidx {
 				public obtainAbortCreationMethod(param0: java.lang.Class): java.lang.reflect.Method;
 				public createFromFamiliesWithDefault(param0: any): globalAndroid.graphics.Typeface;
 				public obtainFontFamily(): java.lang.Class;
-				public createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
+				public createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
 				public obtainAddFontFromBufferMethod(param0: java.lang.Class): java.lang.reflect.Method;
 				public obtainCreateFromFamiliesWithDefaultMethod(param0: java.lang.Class): java.lang.reflect.Method;
 				public constructor();
@@ -12408,10 +12408,10 @@ declare module androidx {
 			export class TypefaceCompatBaseImpl {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatBaseImpl>;
 				public createFromResourcesFontFile(param0: globalAndroid.content.Context, param1: globalAndroid.content.res.Resources, param2: number, param3: string, param4: number): globalAndroid.graphics.Typeface;
-				public findBestInfo(param0: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param1: number): androidx.core.provider.FontsContractCompat.FontInfo;
+				public findBestInfo(param0: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param1: number): androidx.core.provider.FontsContractCompat.FontInfo;
 				public createFromFontFamilyFilesResourceEntry(param0: globalAndroid.content.Context, param1: androidx.core.content.res.FontResourcesParserCompat.FontFamilyFilesResourceEntry, param2: globalAndroid.content.res.Resources, param3: number): globalAndroid.graphics.Typeface;
 				public createFromInputStream(param0: globalAndroid.content.Context, param1: java.io.InputStream): globalAndroid.graphics.Typeface;
-				public createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
+				public createFromFontInfo(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param3: number): globalAndroid.graphics.Typeface;
 			}
 			export module TypefaceCompatBaseImpl {
 				export class StyleExtractor<T>  extends java.lang.Object {
@@ -12487,7 +12487,7 @@ declare module androidx {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.IconCompat>;
 					public static TYPE_UNKNOWN: number;
 					public mType: number;
-					public mData: native.Array<number>;
+					public mData: androidNative.Array<number>;
 					public mParcelable: globalAndroid.os.Parcelable;
 					public mInt1: number;
 					public mInt2: number;
@@ -12507,7 +12507,7 @@ declare module androidx {
 					public addToShortcutIntent(param0: globalAndroid.content.Intent, param1: globalAndroid.graphics.drawable.Drawable, param2: globalAndroid.content.Context): void;
 					public constructor();
 					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): androidx.core.graphics.drawable.IconCompat;
-					public static createWithData(param0: native.Array<number>, param1: number, param2: number): androidx.core.graphics.drawable.IconCompat;
+					public static createWithData(param0: androidNative.Array<number>, param1: number, param2: number): androidx.core.graphics.drawable.IconCompat;
 					public onPreParceling(param0: boolean): void;
 					public getResPackage(): string;
 					public static createWithContentUri(param0: string): androidx.core.graphics.drawable.IconCompat;
@@ -12693,7 +12693,7 @@ declare module androidx {
 					public getChangingConfigurations(): number;
 					public setFilterBitmap(param0: boolean): void;
 					public getPadding(param0: globalAndroid.graphics.Rect): boolean;
-					public getState(): native.Array<number>;
+					public getState(): androidNative.Array<number>;
 					public getMinimumHeight(): number;
 					public getWrappedDrawable(): globalAndroid.graphics.drawable.Drawable;
 					public setAutoMirrored(param0: boolean): void;
@@ -12709,7 +12709,7 @@ declare module androidx {
 					public mutate(): globalAndroid.graphics.drawable.Drawable;
 					public unscheduleDrawable(param0: globalAndroid.graphics.drawable.Drawable, param1: java.lang.Runnable): void;
 					public onBoundsChange(param0: globalAndroid.graphics.Rect): void;
-					public setState(param0: native.Array<number>): boolean;
+					public setState(param0: androidNative.Array<number>): boolean;
 					public setVisible(param0: boolean, param1: boolean): boolean;
 					public isAutoMirrored(): boolean;
 					public draw(param0: globalAndroid.graphics.Canvas): void;
@@ -12731,7 +12731,7 @@ declare module androidx {
 					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 					public getDirtyBounds(): globalAndroid.graphics.Rect;
 					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-					public setState(param0: native.Array<number>): boolean;
+					public setState(param0: androidNative.Array<number>): boolean;
 					public isProjected(): boolean;
 					public isCompatTintEnabled(): boolean;
 					public getOutline(param0: any): void;
@@ -12769,8 +12769,8 @@ declare module androidx {
 					public static DISPLAY_CATEGORY_PRESENTATION: string;
 					public static getInstance(param0: globalAndroid.content.Context): androidx.core.hardware.display.DisplayManagerCompat;
 					public getDisplay(param0: number): globalAndroid.view.Display;
-					public getDisplays(): native.Array<globalAndroid.view.Display>;
-					public getDisplays(param0: string): native.Array<globalAndroid.view.Display>;
+					public getDisplays(): androidNative.Array<globalAndroid.view.Display>;
+					public getDisplays(param0: string): androidNative.Array<globalAndroid.view.Display>;
 				}
 			}
 		}
@@ -13129,14 +13129,14 @@ declare module androidx {
 				public static class: java.lang.Class<androidx.core.os.LocaleListCompat>;
 				public static wrap(param0: any): androidx.core.os.LocaleListCompat;
 				public indexOf(param0: java.util.Locale): number;
-				public getFirstMatch(param0: native.Array<string>): java.util.Locale;
+				public getFirstMatch(param0: androidNative.Array<string>): java.util.Locale;
 				public toString(): string;
 				/** @deprecated */
 				public static wrap(param0: any): androidx.core.os.LocaleListCompat;
 				public size(): number;
 				public static getDefault(): androidx.core.os.LocaleListCompat;
 				public get(param0: number): java.util.Locale;
-				public static create(param0: native.Array<java.util.Locale>): androidx.core.os.LocaleListCompat;
+				public static create(param0: androidNative.Array<java.util.Locale>): androidx.core.os.LocaleListCompat;
 				public static forLanguageTags(param0: string): androidx.core.os.LocaleListCompat;
 				public hashCode(): number;
 				public toLanguageTags(): string;
@@ -13159,7 +13159,7 @@ declare module androidx {
 				public getLocaleList(): any;
 				public indexOf(param0: java.util.Locale): number;
 				public hashCode(): number;
-				public getFirstMatch(param0: native.Array<string>): java.util.Locale;
+				public getFirstMatch(param0: androidNative.Array<string>): java.util.Locale;
 				public equals(param0: any): boolean;
 				public toLanguageTags(): string;
 				public isEmpty(): boolean;
@@ -13185,13 +13185,13 @@ declare module androidx {
 					size(): number;
 					indexOf(param0: java.util.Locale): number;
 					toLanguageTags(): string;
-					getFirstMatch(param0: native.Array<string>): java.util.Locale;
+					getFirstMatch(param0: androidNative.Array<string>): java.util.Locale;
 				});
 				public constructor();
 				public get(param0: number): java.util.Locale;
 				public getLocaleList(): any;
 				public indexOf(param0: java.util.Locale): number;
-				public getFirstMatch(param0: native.Array<string>): java.util.Locale;
+				public getFirstMatch(param0: androidNative.Array<string>): java.util.Locale;
 				public toLanguageTags(): string;
 				public isEmpty(): boolean;
 				public size(): number;
@@ -13209,7 +13209,7 @@ declare module androidx {
 				public getLocaleList(): any;
 				public indexOf(param0: java.util.Locale): number;
 				public hashCode(): number;
-				public getFirstMatch(param0: native.Array<string>): java.util.Locale;
+				public getFirstMatch(param0: androidNative.Array<string>): java.util.Locale;
 				public equals(param0: any): boolean;
 				public toLanguageTags(): string;
 				public isEmpty(): boolean;
@@ -13269,7 +13269,7 @@ declare module androidx {
 					public static class: java.lang.Class<androidx.core.os.ParcelableCompat.ParcelableCompatCreatorHoneycombMR2<any>>;
 					public createFromParcel(param0: globalAndroid.os.Parcel): any;
 					public createFromParcel(param0: globalAndroid.os.Parcel, param1: java.lang.ClassLoader): any;
-					public newArray(param0: number): native.Array<any>;
+					public newArray(param0: number): androidNative.Array<any>;
 				}
 			}
 		}
@@ -13286,11 +13286,11 @@ declare module androidx {
 				 */
 				public constructor(implementation: {
 					createFromParcel(param0: globalAndroid.os.Parcel, param1: java.lang.ClassLoader): T;
-					newArray(param0: number): native.Array<T>;
+					newArray(param0: number): androidNative.Array<T>;
 				});
 				public constructor();
 				public createFromParcel(param0: globalAndroid.os.Parcel, param1: java.lang.ClassLoader): T;
-				public newArray(param0: number): native.Array<T>;
+				public newArray(param0: number): androidNative.Array<T>;
 			}
 		}
 	}
@@ -13331,8 +13331,8 @@ declare module androidx {
 				public getIdentifier(): string;
 				public getProviderAuthority(): string;
 				public toString(): string;
-				public constructor(param0: string, param1: string, param2: string, param3: java.util.List<java.util.List<native.Array<number>>>);
-				public getCertificates(): java.util.List<java.util.List<native.Array<number>>>;
+				public constructor(param0: string, param1: string, param2: string, param3: java.util.List<java.util.List<androidNative.Array<number>>>);
+				public getCertificates(): java.util.List<java.util.List<androidNative.Array<number>>>;
 			}
 		}
 	}
@@ -13344,10 +13344,10 @@ declare module androidx {
 			export class FontsContractCompat {
 				public static class: java.lang.Class<androidx.core.provider.FontsContractCompat>;
 				public static PARCEL_FONT_RESULTS: string;
-				public static prepareFontData(param0: globalAndroid.content.Context, param1: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param2: globalAndroid.os.CancellationSignal): java.util.Map<globalAndroid.net.Uri,java.nio.ByteBuffer>;
+				public static prepareFontData(param0: globalAndroid.content.Context, param1: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, param2: globalAndroid.os.CancellationSignal): java.util.Map<globalAndroid.net.Uri,java.nio.ByteBuffer>;
 				public static getProvider(param0: globalAndroid.content.pm.PackageManager, param1: androidx.core.provider.FontRequest, param2: globalAndroid.content.res.Resources): globalAndroid.content.pm.ProviderInfo;
 				public static resetCache(): void;
-				public static buildTypeface(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>): globalAndroid.graphics.Typeface;
+				public static buildTypeface(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>): globalAndroid.graphics.Typeface;
 				public static getFontSync(param0: globalAndroid.content.Context, param1: androidx.core.provider.FontRequest, param2: androidx.core.content.res.ResourcesCompat.FontCallback, param3: globalAndroid.os.Handler, param4: boolean, param5: number, param6: number): globalAndroid.graphics.Typeface;
 				public static requestFont(param0: globalAndroid.content.Context, param1: androidx.core.provider.FontRequest, param2: androidx.core.provider.FontsContractCompat.FontRequestCallback, param3: globalAndroid.os.Handler): void;
 				public static fetchFonts(param0: globalAndroid.content.Context, param1: globalAndroid.os.CancellationSignal, param2: androidx.core.provider.FontRequest): androidx.core.provider.FontsContractCompat.FontFamilyResult;
@@ -13372,8 +13372,8 @@ declare module androidx {
 					public static STATUS_OK: number;
 					public static STATUS_WRONG_CERTIFICATES: number;
 					public static STATUS_UNEXPECTED_DATA_PROVIDED: number;
-					public getFonts(): native.Array<androidx.core.provider.FontsContractCompat.FontInfo>;
-					public constructor(param0: number, param1: native.Array<androidx.core.provider.FontsContractCompat.FontInfo>);
+					public getFonts(): androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>;
+					public constructor(param0: number, param1: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>);
 					public getStatusCode(): number;
 				}
 				export class FontInfo {
@@ -13537,7 +13537,7 @@ declare module androidx {
 				public getParagraphStart(param0: number): number;
 				public static getTextFuture(param0: string, param1: androidx.core.text.PrecomputedTextCompat.Params, param2: java.util.concurrent.Executor): java.util.concurrent.Future<androidx.core.text.PrecomputedTextCompat>;
 				public getSpanFlags(param0: any): number;
-				public getSpans(param0: number, param1: number, param2: java.lang.Class): native.Array<any>;
+				public getSpans(param0: number, param1: number, param2: java.lang.Class): androidNative.Array<any>;
 				public length(): number;
 				public getPrecomputedText(): any;
 				public setSpan(param0: any, param1: number, param2: number, param3: number): void;
@@ -13597,11 +13597,11 @@ declare module androidx {
 				 * Constructs a new instance of the androidx.core.text.TextDirectionHeuristicCompat interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 				 */
 				public constructor(implementation: {
-					isRtl(param0: native.Array<string>, param1: number, param2: number): boolean;
+					isRtl(param0: androidNative.Array<string>, param1: number, param2: number): boolean;
 					isRtl(param0: string, param1: number, param2: number): boolean;
 				});
 				public constructor();
-				public isRtl(param0: native.Array<string>, param1: number, param2: number): boolean;
+				public isRtl(param0: androidNative.Array<string>, param1: number, param2: number): boolean;
 				public isRtl(param0: string, param1: number, param2: number): boolean;
 			}
 		}
@@ -13643,19 +13643,19 @@ declare module androidx {
 				export abstract class TextDirectionHeuristicImpl extends androidx.core.text.TextDirectionHeuristicCompat {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicImpl>;
 					public defaultIsRtl(): boolean;
-					public isRtl(param0: native.Array<string>, param1: number, param2: number): boolean;
+					public isRtl(param0: androidNative.Array<string>, param1: number, param2: number): boolean;
 					public isRtl(param0: string, param1: number, param2: number): boolean;
 				}
 				export class TextDirectionHeuristicInternal extends androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicImpl {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicInternal>;
 					public defaultIsRtl(): boolean;
-					public isRtl(param0: native.Array<string>, param1: number, param2: number): boolean;
+					public isRtl(param0: androidNative.Array<string>, param1: number, param2: number): boolean;
 					public isRtl(param0: string, param1: number, param2: number): boolean;
 				}
 				export class TextDirectionHeuristicLocale extends androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicImpl {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicLocale>;
 					public defaultIsRtl(): boolean;
-					public isRtl(param0: native.Array<string>, param1: number, param2: number): boolean;
+					public isRtl(param0: androidNative.Array<string>, param1: number, param2: number): boolean;
 					public isRtl(param0: string, param1: number, param2: number): boolean;
 				}
 			}
@@ -13705,10 +13705,10 @@ declare module androidx {
 					public static class: java.lang.Class<androidx.core.text.util.LinkifyCompat>;
 					public static addLinks(param0: globalAndroid.widget.TextView, param1: java.util.regex.Pattern, param2: string): void;
 					public static addLinks(param0: globalAndroid.text.Spannable, param1: java.util.regex.Pattern, param2: string): boolean;
-					public static addLinks(param0: globalAndroid.text.Spannable, param1: java.util.regex.Pattern, param2: string, param3: native.Array<string>, param4: globalAndroid.text.util.Linkify.MatchFilter, param5: globalAndroid.text.util.Linkify.TransformFilter): boolean;
+					public static addLinks(param0: globalAndroid.text.Spannable, param1: java.util.regex.Pattern, param2: string, param3: androidNative.Array<string>, param4: globalAndroid.text.util.Linkify.MatchFilter, param5: globalAndroid.text.util.Linkify.TransformFilter): boolean;
 					public static addLinks(param0: globalAndroid.widget.TextView, param1: number): boolean;
 					public static addLinks(param0: globalAndroid.text.Spannable, param1: java.util.regex.Pattern, param2: string, param3: globalAndroid.text.util.Linkify.MatchFilter, param4: globalAndroid.text.util.Linkify.TransformFilter): boolean;
-					public static addLinks(param0: globalAndroid.widget.TextView, param1: java.util.regex.Pattern, param2: string, param3: native.Array<string>, param4: globalAndroid.text.util.Linkify.MatchFilter, param5: globalAndroid.text.util.Linkify.TransformFilter): void;
+					public static addLinks(param0: globalAndroid.widget.TextView, param1: java.util.regex.Pattern, param2: string, param3: androidNative.Array<string>, param4: globalAndroid.text.util.Linkify.MatchFilter, param5: globalAndroid.text.util.Linkify.TransformFilter): void;
 					public static addLinks(param0: globalAndroid.widget.TextView, param1: java.util.regex.Pattern, param2: string, param3: globalAndroid.text.util.Linkify.MatchFilter, param4: globalAndroid.text.util.Linkify.TransformFilter): void;
 					public static addLinks(param0: globalAndroid.text.Spannable, param1: number): boolean;
 				}
@@ -13743,7 +13743,7 @@ declare module androidx {
 				public getBaseFile(): java.io.File;
 				public startWrite(): java.io.FileOutputStream;
 				public failWrite(param0: java.io.FileOutputStream): void;
-				public readFully(): native.Array<number>;
+				public readFully(): androidNative.Array<number>;
 			}
 		}
 	}
@@ -13783,7 +13783,7 @@ declare module androidx {
 		export module util {
 			export class LogWriter {
 				public static class: java.lang.Class<androidx.core.util.LogWriter>;
-				public write(param0: native.Array<string>, param1: number, param2: number): void;
+				public write(param0: androidNative.Array<string>, param1: number, param2: number): void;
 				public close(): void;
 				public constructor(param0: string);
 				public flush(): void;
@@ -13797,7 +13797,7 @@ declare module androidx {
 		export module util {
 			export class ObjectsCompat {
 				public static class: java.lang.Class<androidx.core.util.ObjectsCompat>;
-				public static hash(param0: native.Array<any>): number;
+				public static hash(param0: androidNative.Array<any>): number;
 				public static hashCode(param0: any): number;
 				public static equals(param0: any, param1: any): boolean;
 			}
@@ -14434,20 +14434,20 @@ declare module androidx {
 					startNestedScroll(param0: number): boolean;
 					stopNestedScroll(): void;
 					hasNestedScrollingParent(): boolean;
-					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
-					dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
+					dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 					dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 					dispatchNestedPreFling(param0: number, param1: number): boolean;
 				});
 				public constructor();
 				public stopNestedScroll(): void;
 				public setNestedScrollingEnabled(param0: boolean): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
 				public startNestedScroll(param0: number): boolean;
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 				public hasNestedScrollingParent(): boolean;
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 				public isNestedScrollingEnabled(): boolean;
 			}
 		}
@@ -14466,32 +14466,32 @@ declare module androidx {
 					startNestedScroll(param0: number, param1: number): boolean;
 					stopNestedScroll(param0: number): void;
 					hasNestedScrollingParent(param0: number): boolean;
-					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number): boolean;
-					dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>, param4: number): boolean;
+					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): boolean;
+					dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>, param4: number): boolean;
 					setNestedScrollingEnabled(param0: boolean): void;
 					isNestedScrollingEnabled(): boolean;
 					startNestedScroll(param0: number): boolean;
 					stopNestedScroll(): void;
 					hasNestedScrollingParent(): boolean;
-					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
-					dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
+					dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 					dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 					dispatchNestedPreFling(param0: number, param1: number): boolean;
 				});
 				public constructor();
 				public stopNestedScroll(param0: number): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>, param4: number): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>, param4: number): boolean;
 				public startNestedScroll(param0: number, param1: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): boolean;
 				public stopNestedScroll(): void;
 				public setNestedScrollingEnabled(param0: boolean): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
 				public startNestedScroll(param0: number): boolean;
 				public hasNestedScrollingParent(param0: number): boolean;
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 				public hasNestedScrollingParent(): boolean;
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 				public isNestedScrollingEnabled(): boolean;
 			}
 		}
@@ -14507,37 +14507,37 @@ declare module androidx {
 				 * Constructs a new instance of the androidx.core.view.NestedScrollingChild3 interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 				 */
 				public constructor(implementation: {
-					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number, param6: native.Array<number>): void;
+					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number, param6: androidNative.Array<number>): void;
 					startNestedScroll(param0: number, param1: number): boolean;
 					stopNestedScroll(param0: number): void;
 					hasNestedScrollingParent(param0: number): boolean;
-					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number): boolean;
-					dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>, param4: number): boolean;
+					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): boolean;
+					dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>, param4: number): boolean;
 					setNestedScrollingEnabled(param0: boolean): void;
 					isNestedScrollingEnabled(): boolean;
 					startNestedScroll(param0: number): boolean;
 					stopNestedScroll(): void;
 					hasNestedScrollingParent(): boolean;
-					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
-					dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+					dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
+					dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 					dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 					dispatchNestedPreFling(param0: number, param1: number): boolean;
 				});
 				public constructor();
 				public stopNestedScroll(param0: number): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>, param4: number): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>, param4: number): boolean;
 				public startNestedScroll(param0: number, param1: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): boolean;
 				public stopNestedScroll(): void;
 				public setNestedScrollingEnabled(param0: boolean): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
 				public startNestedScroll(param0: number): boolean;
 				public hasNestedScrollingParent(param0: number): boolean;
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 				public hasNestedScrollingParent(): boolean;
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number, param6: native.Array<number>): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number, param6: androidNative.Array<number>): void;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 				public isNestedScrollingEnabled(): boolean;
 			}
 		}
@@ -14550,12 +14550,12 @@ declare module androidx {
 			export class NestedScrollingChildHelper {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingChildHelper>;
 				public stopNestedScroll(param0: number): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>, param4: number): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>, param4: number): boolean;
 				public startNestedScroll(param0: number, param1: number): boolean;
 				public stopNestedScroll(): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): boolean;
 				public setNestedScrollingEnabled(param0: boolean): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
 				public startNestedScroll(param0: number): boolean;
 				public hasNestedScrollingParent(param0: number): boolean;
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
@@ -14563,8 +14563,8 @@ declare module androidx {
 				public onDetachedFromWindow(): void;
 				public onStopNestedScroll(param0: globalAndroid.view.View): void;
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number, param6: native.Array<number>): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number, param6: androidNative.Array<number>): void;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 				public constructor(param0: globalAndroid.view.View);
 				public isNestedScrollingEnabled(): boolean;
 			}
@@ -14585,7 +14585,7 @@ declare module androidx {
 					onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
 					onStopNestedScroll(param0: globalAndroid.view.View): void;
 					onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
-					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 					onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
 					onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
 					getNestedScrollAxes(): number;
@@ -14596,7 +14596,7 @@ declare module androidx {
 				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): boolean;
 				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
 				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public onStopNestedScroll(param0: globalAndroid.view.View): void;
 				public getNestedScrollAxes(): number;
 			}
@@ -14617,12 +14617,12 @@ declare module androidx {
 					onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
 					onStopNestedScroll(param0: globalAndroid.view.View, param1: number): void;
 					onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number): void;
-					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: number): void;
+					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
 					onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): boolean;
 					onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
 					onStopNestedScroll(param0: globalAndroid.view.View): void;
 					onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
-					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 					onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
 					onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
 					getNestedScrollAxes(): number;
@@ -14637,9 +14637,9 @@ declare module androidx {
 				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): boolean;
 				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
 				public onStopNestedScroll(param0: globalAndroid.view.View, param1: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public onStopNestedScroll(param0: globalAndroid.view.View): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: number): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
 				public getNestedScrollAxes(): number;
 			}
 		}
@@ -14655,17 +14655,17 @@ declare module androidx {
 				 * Constructs a new instance of the androidx.core.view.NestedScrollingParent3 interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 				 */
 				public constructor(implementation: {
-					onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: native.Array<number>): void;
+					onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: androidNative.Array<number>): void;
 					onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): boolean;
 					onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
 					onStopNestedScroll(param0: globalAndroid.view.View, param1: number): void;
 					onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number): void;
-					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: number): void;
+					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
 					onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): boolean;
 					onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
 					onStopNestedScroll(param0: globalAndroid.view.View): void;
 					onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
-					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+					onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 					onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
 					onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
 					getNestedScrollAxes(): number;
@@ -14680,11 +14680,11 @@ declare module androidx {
 				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): boolean;
 				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
 				public onStopNestedScroll(param0: globalAndroid.view.View, param1: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public onStopNestedScroll(param0: globalAndroid.view.View): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: number): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
 				public getNestedScrollAxes(): number;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: native.Array<number>): void;
+				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: androidNative.Array<number>): void;
 			}
 		}
 	}
@@ -14924,7 +14924,7 @@ declare module androidx {
 				public static getScaleX(param0: globalAndroid.view.View): number;
 				public static getImportantForAutofill(param0: globalAndroid.view.View): number;
 				public static setTransitionName(param0: globalAndroid.view.View, param1: string): void;
-				public static dispatchNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: native.Array<number>, param5: number): boolean;
+				public static dispatchNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: androidNative.Array<number>, param5: number): boolean;
 				public static dispatchApplyWindowInsets(param0: globalAndroid.view.View, param1: androidx.core.view.WindowInsetsCompat): androidx.core.view.WindowInsetsCompat;
 				/** @deprecated */
 				public static jumpDrawablesToCurrentState(param0: globalAndroid.view.View): void;
@@ -14978,7 +14978,7 @@ declare module androidx {
 				public static getX(param0: globalAndroid.view.View): number;
 				public static dispatchNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
 				public static hasExplicitFocusable(param0: globalAndroid.view.View): boolean;
-				public static dispatchNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: native.Array<number>): boolean;
+				public static dispatchNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: androidNative.Array<number>): boolean;
 				public static offsetTopAndBottom(param0: globalAndroid.view.View, param1: number): void;
 				public static getTransitionName(param0: globalAndroid.view.View): string;
 				/** @deprecated */
@@ -15036,11 +15036,11 @@ declare module androidx {
 				public static setAccessibilityPaneTitle(param0: globalAndroid.view.View, param1: string): void;
 				/** @deprecated */
 				public static canScrollHorizontally(param0: globalAndroid.view.View, param1: number): boolean;
-				public static dispatchNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: native.Array<number>): boolean;
+				public static dispatchNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: androidNative.Array<number>): boolean;
 				public static isAttachedToWindow(param0: globalAndroid.view.View): boolean;
-				public static dispatchNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: native.Array<number>, param6: number, param7: native.Array<number>): void;
+				public static dispatchNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: androidNative.Array<number>, param6: number, param7: androidNative.Array<number>): void;
 				public static setAccessibilityLiveRegion(param0: globalAndroid.view.View, param1: number): void;
-				public static dispatchNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: native.Array<number>, param6: number): boolean;
+				public static dispatchNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: androidNative.Array<number>, param6: number): boolean;
 				/** @deprecated */
 				public static setX(param0: globalAndroid.view.View, param1: number): void;
 				public static setAccessibilityDelegate(param0: globalAndroid.view.View, param1: androidx.core.view.AccessibilityDelegateCompat): void;
@@ -15090,7 +15090,7 @@ declare module androidx {
 				/** @deprecated */
 				public static setRotation(param0: globalAndroid.view.View, param1: number): void;
 				public static setLayoutDirection(param0: globalAndroid.view.View, param1: number): void;
-				public static setAutofillHints(param0: globalAndroid.view.View, param1: native.Array<string>): void;
+				public static setAutofillHints(param0: globalAndroid.view.View, param1: androidNative.Array<string>): void;
 				public static isScreenReaderFocusable(param0: globalAndroid.view.View): boolean;
 				/** @deprecated */
 				public static setFitsSystemWindows(param0: globalAndroid.view.View, param1: boolean): void;
@@ -15228,11 +15228,11 @@ declare module androidx {
 				public static class: java.lang.Class<androidx.core.view.ViewParentCompat>;
 				public static onStopNestedScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number): void;
 				public static onStopNestedScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View): void;
-				public static onNestedScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number, param4: number, param5: number, param6: number, param7: native.Array<number>): void;
-				public static onNestedPreScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number, param4: native.Array<number>, param5: number): void;
+				public static onNestedScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number, param4: number, param5: number, param6: number, param7: androidNative.Array<number>): void;
+				public static onNestedPreScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): void;
 				public static onNestedPreFling(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number): boolean;
 				public static onNestedScrollAccepted(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: globalAndroid.view.View, param3: number): void;
-				public static onNestedPreScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number, param4: native.Array<number>): void;
+				public static onNestedPreScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number, param4: androidNative.Array<number>): void;
 				public static onNestedScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number, param4: number, param5: number, param6: number): void;
 				public static onStartNestedScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: globalAndroid.view.View, param3: number): boolean;
 				public static onNestedScroll(param0: globalAndroid.view.ViewParent, param1: globalAndroid.view.View, param2: number, param3: number, param4: number, param5: number): void;
@@ -15628,7 +15628,7 @@ declare module androidx {
 					public getDrawingOrder(): number;
 					public getWindow(): androidx.core.view.accessibility.AccessibilityWindowInfoCompat;
 					public setLabelFor(param0: globalAndroid.view.View, param1: number): void;
-					public static getClickableSpans(param0: string): native.Array<globalAndroid.text.style.ClickableSpan>;
+					public static getClickableSpans(param0: string): androidNative.Array<globalAndroid.text.style.ClickableSpan>;
 					public addAction(param0: number): void;
 					public isCheckable(): boolean;
 					public removeChild(param0: globalAndroid.view.View, param1: number): boolean;
@@ -16032,10 +16032,10 @@ declare module androidx {
 					public static class: java.lang.Class<androidx.core.view.inputmethod.EditorInfoCompat>;
 					public static IME_FLAG_NO_PERSONALIZED_LEARNING: number;
 					public static IME_FLAG_FORCE_ASCII: number;
-					public static setContentMimeTypes(param0: globalAndroid.view.inputmethod.EditorInfo, param1: native.Array<string>): void;
+					public static setContentMimeTypes(param0: globalAndroid.view.inputmethod.EditorInfo, param1: androidNative.Array<string>): void;
 					/** @deprecated */
 					public constructor();
-					public static getContentMimeTypes(param0: globalAndroid.view.inputmethod.EditorInfo): native.Array<string>;
+					public static getContentMimeTypes(param0: globalAndroid.view.inputmethod.EditorInfo): androidNative.Array<string>;
 				}
 			}
 		}
@@ -16198,21 +16198,21 @@ declare module androidx {
 				public constructor(implementation: {
 					setAutoSizeTextTypeWithDefaults(param0: number): void;
 					setAutoSizeTextTypeUniformWithConfiguration(param0: number, param1: number, param2: number, param3: number): void;
-					setAutoSizeTextTypeUniformWithPresetSizes(param0: native.Array<number>, param1: number): void;
+					setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 					getAutoSizeTextType(): number;
 					getAutoSizeStepGranularity(): number;
 					getAutoSizeMinTextSize(): number;
 					getAutoSizeMaxTextSize(): number;
-					getAutoSizeTextAvailableSizes(): native.Array<number>;
+					getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 					<clinit>(): void;
 				});
 				public constructor();
 				public static PLATFORM_SUPPORTS_AUTOSIZE: boolean;
 				public setAutoSizeTextTypeWithDefaults(param0: number): void;
 				public setAutoSizeTextTypeUniformWithConfiguration(param0: number, param1: number, param2: number, param3: number): void;
-				public setAutoSizeTextTypeUniformWithPresetSizes(param0: native.Array<number>, param1: number): void;
+				public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 				public getAutoSizeMaxTextSize(): number;
-				public getAutoSizeTextAvailableSizes(): native.Array<number>;
+				public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 				public getAutoSizeStepGranularity(): number;
 				public getAutoSizeTextType(): number;
 				public getAutoSizeMinTextSize(): number;
@@ -16370,19 +16370,19 @@ declare module androidx {
 				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number): void;
 				public requestChildRectangleOnScreen(param0: globalAndroid.view.View, param1: globalAndroid.graphics.Rect, param2: boolean): boolean;
 				public computeHorizontalScrollExtent(): number;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
 				public startNestedScroll(param0: number): boolean;
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 				public executeKeyEvent(param0: globalAndroid.view.KeyEvent): boolean;
 				public computeVerticalScrollExtent(): number;
 				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
 				public computeVerticalScrollRange(): number;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public fling(param0: number): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 				public getMaxScrollAmount(): number;
 				public arrowScroll(param0: number): boolean;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: native.Array<number>): void;
+				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: androidNative.Array<number>): void;
 				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
 				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
 				public setFillViewport(param0: boolean): void;
@@ -16396,17 +16396,17 @@ declare module androidx {
 				public constructor(param0: globalAndroid.content.Context);
 				public isSmoothScrollingEnabled(): boolean;
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: number): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number, param6: native.Array<number>): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number, param6: androidNative.Array<number>): void;
 				public onLayout(param0: boolean, param1: number, param2: number, param3: number, param4: number): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>, param4: number): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>, param4: number): boolean;
 				public onSaveInstanceState(): globalAndroid.os.Parcelable;
 				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
 				public computeScroll(): void;
 				public addView(param0: globalAndroid.view.View): void;
 				public isFillViewport(): boolean;
 				public scrollTo(param0: number, param1: number): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): boolean;
 				public stopNestedScroll(): void;
 				public hasNestedScrollingParent(param0: number): boolean;
 				public setSmoothScrollingEnabled(param0: boolean): void;
@@ -16544,15 +16544,15 @@ declare module androidx {
 				public static setLastBaselineToBottomHeight(param0: globalAndroid.widget.TextView, param1: number): void;
 				public static setCompoundDrawablesRelativeWithIntrinsicBounds(param0: globalAndroid.widget.TextView, param1: globalAndroid.graphics.drawable.Drawable, param2: globalAndroid.graphics.drawable.Drawable, param3: globalAndroid.graphics.drawable.Drawable, param4: globalAndroid.graphics.drawable.Drawable): void;
 				public static getAutoSizeStepGranularity(param0: globalAndroid.widget.TextView): number;
-				public static getAutoSizeTextAvailableSizes(param0: globalAndroid.widget.TextView): native.Array<number>;
+				public static getAutoSizeTextAvailableSizes(param0: globalAndroid.widget.TextView): androidNative.Array<number>;
 				public static setTextAppearance(param0: globalAndroid.widget.TextView, param1: number): void;
 				public static setLineHeight(param0: globalAndroid.widget.TextView, param1: number): void;
 				public static setCompoundDrawablesRelativeWithIntrinsicBounds(param0: globalAndroid.widget.TextView, param1: number, param2: number, param3: number, param4: number): void;
-				public static getCompoundDrawablesRelative(param0: globalAndroid.widget.TextView): native.Array<globalAndroid.graphics.drawable.Drawable>;
+				public static getCompoundDrawablesRelative(param0: globalAndroid.widget.TextView): androidNative.Array<globalAndroid.graphics.drawable.Drawable>;
 				public static getFirstBaselineToTopHeight(param0: globalAndroid.widget.TextView): number;
 				public static wrapCustomSelectionActionModeCallback(param0: globalAndroid.widget.TextView, param1: globalAndroid.view.ActionMode.Callback): globalAndroid.view.ActionMode.Callback;
 				public static getAutoSizeMaxTextSize(param0: globalAndroid.widget.TextView): number;
-				public static setAutoSizeTextTypeUniformWithPresetSizes(param0: globalAndroid.widget.TextView, param1: native.Array<number>, param2: number): void;
+				public static setAutoSizeTextTypeUniformWithPresetSizes(param0: globalAndroid.widget.TextView, param1: androidNative.Array<number>, param2: number): void;
 				public static getMinLines(param0: globalAndroid.widget.TextView): number;
 				public static setCustomSelectionActionModeCallback(param0: globalAndroid.widget.TextView, param1: globalAndroid.view.ActionMode.Callback): void;
 				public static getTextMetricsParams(param0: globalAndroid.widget.TextView): androidx.core.text.PrecomputedTextCompat.Params;
@@ -16749,8 +16749,8 @@ declare module androidx {
 		export module widget {
 			export class SimpleCursorAdapter extends androidx.cursoradapter.widget.ResourceCursorAdapter {
 				public static class: java.lang.Class<androidx.cursoradapter.widget.SimpleCursorAdapter>;
-				public mFrom: native.Array<number>;
-				public mTo: native.Array<number>;
+				public mFrom: androidNative.Array<number>;
+				public mTo: androidNative.Array<number>;
 				public setStringConversionColumn(param0: number): void;
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.database.Cursor, param2: boolean);
 				public getCursorToStringConverter(): androidx.cursoradapter.widget.SimpleCursorAdapter.CursorToStringConverter;
@@ -16760,14 +16760,14 @@ declare module androidx {
 				public changeCursor(param0: globalAndroid.database.Cursor): void;
 				public constructor(param0: globalAndroid.content.Context, param1: number, param2: globalAndroid.database.Cursor, param3: number);
 				public convertToString(param0: globalAndroid.database.Cursor): string;
-				public constructor(param0: globalAndroid.content.Context, param1: number, param2: globalAndroid.database.Cursor, param3: native.Array<string>, param4: native.Array<number>, param5: number);
+				public constructor(param0: globalAndroid.content.Context, param1: number, param2: globalAndroid.database.Cursor, param3: androidNative.Array<string>, param4: androidNative.Array<number>, param5: number);
 				public getViewBinder(): androidx.cursoradapter.widget.SimpleCursorAdapter.ViewBinder;
 				public setViewImage(param0: globalAndroid.widget.ImageView, param1: string): void;
 				/** @deprecated */
 				public constructor(param0: globalAndroid.content.Context, param1: number, param2: globalAndroid.database.Cursor);
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.database.Cursor, param2: number);
 				/** @deprecated */
-				public constructor(param0: globalAndroid.content.Context, param1: number, param2: globalAndroid.database.Cursor, param3: native.Array<string>, param4: native.Array<number>);
+				public constructor(param0: globalAndroid.content.Context, param1: number, param2: globalAndroid.database.Cursor, param3: androidNative.Array<string>, param4: androidNative.Array<number>);
 				public bindView(param0: globalAndroid.view.View, param1: globalAndroid.content.Context, param2: globalAndroid.database.Cursor): void;
 				public swapCursor(param0: globalAndroid.database.Cursor): globalAndroid.database.Cursor;
 				/** @deprecated */
@@ -16777,7 +16777,7 @@ declare module androidx {
 				public constructor(param0: globalAndroid.content.Context, param1: number, param2: globalAndroid.database.Cursor, param3: boolean);
 				public setViewBinder(param0: androidx.cursoradapter.widget.SimpleCursorAdapter.ViewBinder): void;
 				public runQueryOnBackgroundThread(param0: string): globalAndroid.database.Cursor;
-				public changeCursorAndColumns(param0: globalAndroid.database.Cursor, param1: native.Array<string>, param2: native.Array<number>): void;
+				public changeCursorAndColumns(param0: globalAndroid.database.Cursor, param1: androidNative.Array<string>, param2: androidNative.Array<number>): void;
 			}
 			export module SimpleCursorAdapter {
 				export class CursorToStringConverter {
@@ -16998,7 +16998,7 @@ declare module androidx {
 				public createDirectory(param0: string): androidx.documentfile.provider.DocumentFile;
 				public getName(): string;
 				public delete(): boolean;
-				public listFiles(): native.Array<androidx.documentfile.provider.DocumentFile>;
+				public listFiles(): androidNative.Array<androidx.documentfile.provider.DocumentFile>;
 				public findFile(param0: string): androidx.documentfile.provider.DocumentFile;
 				public static fromSingleUri(param0: globalAndroid.content.Context, param1: globalAndroid.net.Uri): androidx.documentfile.provider.DocumentFile;
 				public createFile(param0: string, param1: string): androidx.documentfile.provider.DocumentFile;
@@ -17050,7 +17050,7 @@ declare module androidx {
 				public createDirectory(param0: string): androidx.documentfile.provider.DocumentFile;
 				public getName(): string;
 				public delete(): boolean;
-				public listFiles(): native.Array<androidx.documentfile.provider.DocumentFile>;
+				public listFiles(): androidNative.Array<androidx.documentfile.provider.DocumentFile>;
 				public createFile(param0: string, param1: string): androidx.documentfile.provider.DocumentFile;
 				public getUri(): globalAndroid.net.Uri;
 				public renameTo(param0: string): boolean;
@@ -17076,7 +17076,7 @@ declare module androidx {
 				public createDirectory(param0: string): androidx.documentfile.provider.DocumentFile;
 				public getName(): string;
 				public delete(): boolean;
-				public listFiles(): native.Array<androidx.documentfile.provider.DocumentFile>;
+				public listFiles(): androidNative.Array<androidx.documentfile.provider.DocumentFile>;
 				public createFile(param0: string, param1: string): androidx.documentfile.provider.DocumentFile;
 				public getUri(): globalAndroid.net.Uri;
 				public renameTo(param0: string): boolean;
@@ -17102,7 +17102,7 @@ declare module androidx {
 				public createDirectory(param0: string): androidx.documentfile.provider.DocumentFile;
 				public getName(): string;
 				public delete(): boolean;
-				public listFiles(): native.Array<androidx.documentfile.provider.DocumentFile>;
+				public listFiles(): androidNative.Array<androidx.documentfile.provider.DocumentFile>;
 				public createFile(param0: string, param1: string): androidx.documentfile.provider.DocumentFile;
 				public getUri(): globalAndroid.net.Uri;
 				public renameTo(param0: string): boolean;
@@ -17419,17 +17419,17 @@ declare module androidx {
 				/** @deprecated */
 				public getLoaderManager(): androidx.loader.app.LoaderManager;
 				public getString(param0: number): string;
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public startActivityForResult(param0: globalAndroid.content.Intent, param1: number, param2: globalAndroid.os.Bundle): void;
 				public isHidden(): boolean;
 				public setArguments(param0: globalAndroid.os.Bundle): void;
 				public onViewStateRestored(param0: globalAndroid.os.Bundle): void;
 				public onOptionsItemSelected(param0: globalAndroid.view.MenuItem): boolean;
-				public onRequestPermissionsResult(param0: number, param1: native.Array<string>, param2: native.Array<number>): void;
+				public onRequestPermissionsResult(param0: number, param1: androidNative.Array<string>, param2: androidNative.Array<number>): void;
 				public getActivity(): androidx.fragment.app.FragmentActivity;
 				public setRetainInstance(param0: boolean): void;
 				public onPictureInPictureModeChanged(param0: boolean): void;
-				public requestPermissions(param0: native.Array<string>, param1: number): void;
+				public requestPermissions(param0: androidNative.Array<string>, param1: number): void;
 				public getText(param0: number): string;
 				public registerForContextMenu(param0: globalAndroid.view.View): void;
 				public getResources(): globalAndroid.content.res.Resources;
@@ -17485,7 +17485,7 @@ declare module androidx {
 				public onActivityCreated(param0: globalAndroid.os.Bundle): void;
 				public setAllowEnterTransitionOverlap(param0: boolean): void;
 				public onPause(): void;
-				public getString(param0: number, param1: native.Array<any>): string;
+				public getString(param0: number, param1: androidNative.Array<any>): string;
 				public onCreateAnimator(param0: number, param1: boolean, param2: number): globalAndroid.animation.Animator;
 				public isMenuVisible(): boolean;
 				public onStop(): void;
@@ -17557,7 +17557,7 @@ declare module androidx {
 				public onMenuItemSelected(param0: number, param1: globalAndroid.view.MenuItem): boolean;
 				public onCreatePanelMenu(param0: number, param1: globalAndroid.view.Menu): boolean;
 				public onPause(): void;
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public onResumeFragments(): void;
 				/** @deprecated */
 				public supportInvalidateOptionsMenu(): void;
@@ -17568,7 +17568,7 @@ declare module androidx {
 				public getLifecycle(): androidx.lifecycle.Lifecycle;
 				public constructor();
 				public onCreateView(param0: string, param1: globalAndroid.content.Context, param2: globalAndroid.util.AttributeSet): globalAndroid.view.View;
-				public onRequestPermissionsResult(param0: number, param1: native.Array<string>, param2: native.Array<number>): void;
+				public onRequestPermissionsResult(param0: number, param1: androidNative.Array<string>, param2: androidNative.Array<number>): void;
 				public onPictureInPictureModeChanged(param0: boolean): void;
 				public onStop(): void;
 				public onAttachFragment(param0: androidx.fragment.app.Fragment): void;
@@ -17613,7 +17613,7 @@ declare module androidx {
 					public onGetWindowAnimations(): number;
 					public constructor(param0: androidx.fragment.app.FragmentActivity);
 					public onShouldSaveFragmentState(param0: androidx.fragment.app.Fragment): boolean;
-					public onRequestPermissionsFromFragment(param0: androidx.fragment.app.Fragment, param1: native.Array<string>, param2: number): void;
+					public onRequestPermissionsFromFragment(param0: androidx.fragment.app.Fragment, param1: androidNative.Array<string>, param2: number): void;
 					public onHasWindowAnimations(): boolean;
 					public onGetHost(): androidx.fragment.app.FragmentActivity;
 					public onHasView(): boolean;
@@ -17625,7 +17625,7 @@ declare module androidx {
 					public onSupportInvalidateOptionsMenu(): void;
 					public onStartIntentSenderFromFragment(param0: androidx.fragment.app.Fragment, param1: globalAndroid.content.IntentSender, param2: number, param3: globalAndroid.content.Intent, param4: number, param5: number, param6: number, param7: globalAndroid.os.Bundle): void;
 					public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.os.Handler, param2: number);
-					public onDump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+					public onDump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				}
 			}
 		}
@@ -17667,7 +17667,7 @@ declare module androidx {
 				/** @deprecated */
 				public restoreLoaderNonConfig(param0: androidx.collection.SimpleArrayMap<string,androidx.loader.app.LoaderManager>): void;
 				/** @deprecated */
-				public dumpLoaders(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dumpLoaders(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public getSupportFragmentManager(): androidx.fragment.app.FragmentManager;
 				public dispatchStop(): void;
 				/** @deprecated */
@@ -17737,11 +17737,11 @@ declare module androidx {
 				public onStartActivityFromFragment(param0: androidx.fragment.app.Fragment, param1: globalAndroid.content.Intent, param2: number, param3: globalAndroid.os.Bundle): void;
 				public onHasView(): boolean;
 				public onHasWindowAnimations(): boolean;
-				public onDump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public onDump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public constructor();
 				public onFindViewById(param0: number): globalAndroid.view.View;
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.os.Handler, param2: number);
-				public onRequestPermissionsFromFragment(param0: androidx.fragment.app.Fragment, param1: native.Array<string>, param2: number): void;
+				public onRequestPermissionsFromFragment(param0: androidx.fragment.app.Fragment, param1: androidNative.Array<string>, param2: number): void;
 				public onGetWindowAnimations(): number;
 				public onGetHost(): any;
 				public onStartActivityFromFragment(param0: androidx.fragment.app.Fragment, param1: globalAndroid.content.Intent, param2: number): void;
@@ -17761,7 +17761,7 @@ declare module androidx {
 				/** @deprecated */
 				public openTransaction(): androidx.fragment.app.FragmentTransaction;
 				public isDestroyed(): boolean;
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public getFragmentFactory(): androidx.fragment.app.FragmentFactory;
 				public executePendingTransactions(): boolean;
 				public removeOnBackStackChangedListener(param0: androidx.fragment.app.FragmentManager.OnBackStackChangedListener): void;
@@ -17890,7 +17890,7 @@ declare module androidx {
 				public hideFragment(param0: androidx.fragment.app.Fragment): void;
 				public isDestroyed(): boolean;
 				public dispatchMultiWindowModeChanged(param0: boolean): void;
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public onCreateView(param0: globalAndroid.view.View, param1: string, param2: globalAndroid.content.Context, param3: globalAndroid.util.AttributeSet): globalAndroid.view.View;
 				public addFragment(param0: androidx.fragment.app.Fragment, param1: boolean): void;
 				public setBackStackIndex(param0: number, param1: androidx.fragment.app.BackStackRecord): void;
@@ -17954,7 +17954,7 @@ declare module androidx {
 				}
 				export class FragmentTag {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentManagerImpl.FragmentTag>;
-					public static Fragment: native.Array<number>;
+					public static Fragment: androidNative.Array<number>;
 					public static Fragment_id: number;
 					public static Fragment_name: number;
 					public static Fragment_tag: number;
@@ -18315,7 +18315,7 @@ declare module androidx {
 			export module animation {
 				export class FastOutLinearInInterpolator extends androidx.interpolator.view.animation.LookupTableInterpolator {
 					public static class: java.lang.Class<androidx.interpolator.view.animation.FastOutLinearInInterpolator>;
-					public constructor(param0: native.Array<number>);
+					public constructor(param0: androidNative.Array<number>);
 					public constructor();
 				}
 			}
@@ -18329,7 +18329,7 @@ declare module androidx {
 			export module animation {
 				export class FastOutSlowInInterpolator extends androidx.interpolator.view.animation.LookupTableInterpolator {
 					public static class: java.lang.Class<androidx.interpolator.view.animation.FastOutSlowInInterpolator>;
-					public constructor(param0: native.Array<number>);
+					public constructor(param0: androidNative.Array<number>);
 					public constructor();
 				}
 			}
@@ -18343,7 +18343,7 @@ declare module androidx {
 			export module animation {
 				export class LinearOutSlowInInterpolator extends androidx.interpolator.view.animation.LookupTableInterpolator {
 					public static class: java.lang.Class<androidx.interpolator.view.animation.LinearOutSlowInInterpolator>;
-					public constructor(param0: native.Array<number>);
+					public constructor(param0: androidNative.Array<number>);
 					public constructor();
 				}
 			}
@@ -18357,7 +18357,7 @@ declare module androidx {
 			export module animation {
 				export abstract class LookupTableInterpolator {
 					public static class: java.lang.Class<androidx.interpolator.view.animation.LookupTableInterpolator>;
-					public constructor(param0: native.Array<number>);
+					public constructor(param0: androidNative.Array<number>);
 					public getInterpolation(param0: number): number;
 				}
 			}
@@ -18596,7 +18596,7 @@ declare module androidx {
 				public static ON_STOP: androidx.lifecycle.Lifecycle.Event;
 				public static ON_DESTROY: androidx.lifecycle.Lifecycle.Event;
 				public static ON_ANY: androidx.lifecycle.Lifecycle.Event;
-				public static values(): native.Array<androidx.lifecycle.Lifecycle.Event>;
+				public static values(): androidNative.Array<androidx.lifecycle.Lifecycle.Event>;
 				public static valueOf(param0: string): androidx.lifecycle.Lifecycle.Event;
 			}
 			export class State {
@@ -18607,7 +18607,7 @@ declare module androidx {
 				public static STARTED: androidx.lifecycle.Lifecycle.State;
 				public static RESUMED: androidx.lifecycle.Lifecycle.State;
 				public isAtLeast(param0: androidx.lifecycle.Lifecycle.State): boolean;
-				public static values(): native.Array<androidx.lifecycle.Lifecycle.State>;
+				public static values(): androidNative.Array<androidx.lifecycle.Lifecycle.State>;
 				public static valueOf(param0: string): androidx.lifecycle.Lifecycle.State;
 			}
 		}
@@ -18943,7 +18943,7 @@ declare module androidx {
 				public static enableDebugLogging(param0: boolean): void;
 				public destroyLoader(param0: number): void;
 				/** @deprecated */
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public hasRunningLoaders(): boolean;
 				public constructor();
 			}
@@ -18980,7 +18980,7 @@ declare module androidx {
 				public destroyLoader(param0: number): void;
 				public toString(): string;
 				/** @deprecated */
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public hasRunningLoaders(): boolean;
 			}
 			export module LoaderManagerImpl {
@@ -18992,7 +18992,7 @@ declare module androidx {
 					public setValue(param0: any): void;
 					public onActive(): void;
 					public onLoadComplete(param0: androidx.loader.content.Loader<any>, param1: any): void;
-					public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+					public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				}
 				export class LoaderObserver<D>  extends androidx.lifecycle.Observer<any> {
 					public static class: java.lang.Class<androidx.loader.app.LoaderManagerImpl.LoaderObserver<any>>;
@@ -19003,7 +19003,7 @@ declare module androidx {
 				export class LoaderViewModel extends androidx.lifecycle.ViewModel {
 					public static class: java.lang.Class<androidx.loader.app.LoaderManagerImpl.LoaderViewModel>;
 					public onCleared(): void;
-					public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+					public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				}
 			}
 		}
@@ -19026,16 +19026,16 @@ declare module androidx {
 				public isLoadInBackgroundCanceled(): boolean;
 				public waitForLoader(): void;
 				/** @deprecated */
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 			}
 			export module AsyncTaskLoader {
 				export class LoadTask extends androidx.loader.content.ModernAsyncTask<java.lang.Void,java.lang.Void,any> implements java.lang.Runnable  {
 					public static class: java.lang.Class<androidx.loader.content.AsyncTaskLoader.LoadTask>;
 					public onCancelled(param0: any): void;
 					public run(): void;
-					public doInBackground(param0: native.Array<java.lang.Void>): any;
+					public doInBackground(param0: androidNative.Array<java.lang.Void>): any;
 					public onCancelled(): void;
-					public doInBackground(param0: native.Array<any>): any;
+					public doInBackground(param0: androidNative.Array<any>): any;
 					public onPostExecute(param0: any): void;
 					public waitForLoader(): void;
 				}
@@ -19052,24 +19052,24 @@ declare module androidx {
 				public onStartLoading(): void;
 				public deliverResult(param0: any): void;
 				public onStopLoading(): void;
-				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.net.Uri, param2: native.Array<string>, param3: string, param4: native.Array<string>, param5: string);
-				public setSelectionArgs(param0: native.Array<string>): void;
+				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.net.Uri, param2: androidNative.Array<string>, param3: string, param4: androidNative.Array<string>, param5: string);
+				public setSelectionArgs(param0: androidNative.Array<string>): void;
 				public getSortOrder(): string;
 				public getSelection(): string;
 				public cancelLoadInBackground(): void;
-				public getProjection(): native.Array<string>;
+				public getProjection(): androidNative.Array<string>;
 				public onCanceled(param0: any): void;
 				public loadInBackground(): any;
 				public setUri(param0: globalAndroid.net.Uri): void;
 				public loadInBackground(): globalAndroid.database.Cursor;
 				/** @deprecated */
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
-				public setProjection(param0: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
+				public setProjection(param0: androidNative.Array<string>): void;
 				public onReset(): void;
 				public getUri(): globalAndroid.net.Uri;
 				public onCanceled(param0: globalAndroid.database.Cursor): void;
 				public deliverResult(param0: globalAndroid.database.Cursor): void;
-				public getSelectionArgs(): native.Array<string>;
+				public getSelectionArgs(): androidNative.Array<string>;
 				public constructor(param0: globalAndroid.content.Context);
 				public setSortOrder(param0: string): void;
 				public setSelection(param0: string): void;
@@ -19104,7 +19104,7 @@ declare module androidx {
 				public cancelLoad(): boolean;
 				public toString(): string;
 				/** @deprecated */
-				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: native.Array<string>): void;
+				public dump(param0: string, param1: java.io.FileDescriptor, param2: java.io.PrintWriter, param3: androidNative.Array<string>): void;
 				public onReset(): void;
 				public onContentChanged(): void;
 				public registerOnLoadCanceledListener(param0: androidx.loader.content.Loader.OnLoadCanceledListener<D>): void;
@@ -19158,13 +19158,13 @@ declare module androidx {
 				public static THREAD_POOL_EXECUTOR: java.util.concurrent.Executor;
 				public onPostExecute(param0: Result): void;
 				public getStatus(): androidx.loader.content.ModernAsyncTask.Status;
-				public onProgressUpdate(param0: native.Array<Progress>): void;
+				public onProgressUpdate(param0: androidNative.Array<Progress>): void;
 				public get(): Result;
-				public execute(param0: native.Array<Params>): androidx.loader.content.ModernAsyncTask<Params,Progress,Result>;
+				public execute(param0: androidNative.Array<Params>): androidx.loader.content.ModernAsyncTask<Params,Progress,Result>;
 				public static setDefaultExecutor(param0: java.util.concurrent.Executor): void;
-				public doInBackground(param0: native.Array<Params>): Result;
-				public executeOnExecutor(param0: java.util.concurrent.Executor, param1: native.Array<Params>): androidx.loader.content.ModernAsyncTask<Params,Progress,Result>;
-				public publishProgress(param0: native.Array<Progress>): void;
+				public doInBackground(param0: androidNative.Array<Params>): Result;
+				public executeOnExecutor(param0: java.util.concurrent.Executor, param1: androidNative.Array<Params>): androidx.loader.content.ModernAsyncTask<Params,Progress,Result>;
+				public publishProgress(param0: androidNative.Array<Progress>): void;
 				public onPreExecute(): void;
 				public static execute(param0: java.lang.Runnable): void;
 				public onCancelled(param0: Result): void;
@@ -19186,7 +19186,7 @@ declare module androidx {
 					public static PENDING: androidx.loader.content.ModernAsyncTask.Status;
 					public static RUNNING: androidx.loader.content.ModernAsyncTask.Status;
 					public static FINISHED: androidx.loader.content.ModernAsyncTask.Status;
-					public static values(): native.Array<androidx.loader.content.ModernAsyncTask.Status>;
+					public static values(): androidNative.Array<androidx.loader.content.ModernAsyncTask.Status>;
 					public static valueOf(param0: string): androidx.loader.content.ModernAsyncTask.Status;
 				}
 				export abstract class WorkerRunnable<Params, Result>  extends java.util.concurrent.Callable<any> {
@@ -19478,7 +19478,7 @@ declare module androidx {
 			public onLoadChildren(param0: string, param1: androidx.media.MediaBrowserServiceCompat.Result<java.util.List<globalAndroid.support.v4.media.MediaBrowserCompat.MediaItem>>, param2: globalAndroid.os.Bundle): void;
 			public notifyChildrenChanged(param0: string): void;
 			public onCreate(): void;
-			public dump(param0: java.io.FileDescriptor, param1: java.io.PrintWriter, param2: native.Array<string>): void;
+			public dump(param0: java.io.FileDescriptor, param1: java.io.PrintWriter, param2: androidNative.Array<string>): void;
 			public constructor();
 			public notifyChildrenChanged(param0: string, param1: globalAndroid.os.Bundle): void;
 			public onUnsubscribe(param0: string): void;
@@ -19945,7 +19945,7 @@ declare module androidx {
 					public static class: java.lang.Class<androidx.media.app.NotificationCompat.MediaStyle>;
 					public setShowCancelButton(param0: boolean): androidx.media.app.NotificationCompat.MediaStyle;
 					public makeContentView(param0: androidx.core.app.NotificationBuilderWithBuilderAccessor): globalAndroid.widget.RemoteViews;
-					public setShowActionsInCompactView(param0: native.Array<number>): androidx.media.app.NotificationCompat.MediaStyle;
+					public setShowActionsInCompactView(param0: androidNative.Array<number>): androidx.media.app.NotificationCompat.MediaStyle;
 					public constructor();
 					public setCancelButtonIntent(param0: globalAndroid.app.PendingIntent): androidx.media.app.NotificationCompat.MediaStyle;
 					public makeBigContentView(param0: androidx.core.app.NotificationBuilderWithBuilderAccessor): globalAndroid.widget.RemoteViews;
@@ -20021,13 +20021,13 @@ declare module androidx {
 			export class PrintBitmapAdapter {
 				public static class: java.lang.Class<androidx.print.PrintHelper.PrintBitmapAdapter>;
 				public onLayout(param0: any, param1: any, param2: globalAndroid.os.CancellationSignal, param3: any, param4: globalAndroid.os.Bundle): void;
-				public onWrite(param0: native.Array<any>, param1: globalAndroid.os.ParcelFileDescriptor, param2: globalAndroid.os.CancellationSignal, param3: any): void;
+				public onWrite(param0: androidNative.Array<any>, param1: globalAndroid.os.ParcelFileDescriptor, param2: globalAndroid.os.CancellationSignal, param3: any): void;
 				public onFinish(): void;
 			}
 			export class PrintUriAdapter {
 				public static class: java.lang.Class<androidx.print.PrintHelper.PrintUriAdapter>;
 				public onLayout(param0: any, param1: any, param2: globalAndroid.os.CancellationSignal, param3: any, param4: globalAndroid.os.Bundle): void;
-				public onWrite(param0: native.Array<any>, param1: globalAndroid.os.ParcelFileDescriptor, param2: globalAndroid.os.CancellationSignal, param3: any): void;
+				public onWrite(param0: androidNative.Array<any>, param1: globalAndroid.os.ParcelFileDescriptor, param2: globalAndroid.os.CancellationSignal, param3: any): void;
 				public onFinish(): void;
 			}
 		}
@@ -20154,8 +20154,8 @@ declare module androidx {
 					public refreshData(): number;
 					public getMaxCachedTiles(): number;
 					public constructor();
-					public recycleData(param0: native.Array<T>, param1: number): void;
-					public fillData(param0: native.Array<T>, param1: number, param2: number): void;
+					public recycleData(param0: androidNative.Array<T>, param1: number): void;
+					public fillData(param0: androidNative.Array<T>, param1: number, param2: number): void;
 				}
 				export abstract class ViewCallback {
 					public static class: java.lang.Class<androidx.recyclerview.widget.AsyncListUtil.ViewCallback>;
@@ -20163,9 +20163,9 @@ declare module androidx {
 					public static HINT_SCROLL_DESC: number;
 					public static HINT_SCROLL_ASC: number;
 					public constructor();
-					public getItemRangeInto(param0: native.Array<number>): void;
+					public getItemRangeInto(param0: androidNative.Array<number>): void;
 					public onItemLoaded(param0: number): void;
-					public extendRangeInto(param0: native.Array<number>, param1: native.Array<number>, param2: number): void;
+					public extendRangeInto(param0: androidNative.Array<number>, param1: androidNative.Array<number>, param2: number): void;
 					public onDataRefresh(): void;
 				}
 			}
@@ -20778,7 +20778,7 @@ declare module androidx {
 			export class LinearSnapHelper extends androidx.recyclerview.widget.SnapHelper {
 				public static class: java.lang.Class<androidx.recyclerview.widget.LinearSnapHelper>;
 				public findSnapView(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager): globalAndroid.view.View;
-				public calculateDistanceToFinalSnap(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: globalAndroid.view.View): native.Array<number>;
+				public calculateDistanceToFinalSnap(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: globalAndroid.view.View): androidNative.Array<number>;
 				public findTargetSnapPosition(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: number, param2: number): number;
 				public constructor();
 			}
@@ -20919,7 +20919,7 @@ declare module androidx {
 				public static class: java.lang.Class<androidx.recyclerview.widget.PagerSnapHelper>;
 				public findSnapView(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager): globalAndroid.view.View;
 				public createSnapScroller(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager): androidx.recyclerview.widget.LinearSmoothScroller;
-				public calculateDistanceToFinalSnap(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: globalAndroid.view.View): native.Array<number>;
+				public calculateDistanceToFinalSnap(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: globalAndroid.view.View): androidNative.Array<number>;
 				/** @deprecated */
 				public createSnapScroller(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager): androidx.recyclerview.widget.LinearSmoothScroller;
 				public findTargetSnapPosition(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: number, param2: number): number;
@@ -20970,11 +20970,11 @@ declare module androidx {
 				public setHasFixedSize(param0: boolean): void;
 				public requestChildRectangleOnScreen(param0: globalAndroid.view.View, param1: globalAndroid.graphics.Rect, param2: boolean): boolean;
 				public computeHorizontalScrollExtent(): number;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
 				public addFocusables(param0: java.util.ArrayList<globalAndroid.view.View>, param1: number, param2: number): void;
 				public removeItemDecorationAt(param0: number): void;
 				public computeVerticalScrollRange(): number;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 				public addOnChildAttachStateChangeListener(param0: androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener): void;
 				public setItemViewCacheSize(param0: number): void;
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
@@ -20988,7 +20988,7 @@ declare module androidx {
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
 				public setLayoutFrozen(param0: boolean): void;
 				public removeDetachedView(param0: globalAndroid.view.View, param1: boolean): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>, param4: number): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>, param4: number): boolean;
 				public scrollBy(param0: number, param1: number): void;
 				public generateLayoutParams(param0: globalAndroid.view.ViewGroup.LayoutParams): globalAndroid.view.ViewGroup.LayoutParams;
 				public removeOnScrollListener(param0: androidx.recyclerview.widget.RecyclerView.OnScrollListener): void;
@@ -21065,7 +21065,7 @@ declare module androidx {
 				public invalidateItemDecorations(): void;
 				public setItemAnimator(param0: androidx.recyclerview.widget.RecyclerView.ItemAnimator): void;
 				public scrollTo(param0: number, param1: number): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): boolean;
 				public isComputingLayout(): boolean;
 				public onDraw(param0: globalAndroid.graphics.Canvas): void;
 				public sendAccessibilityEventUnchecked(param0: globalAndroid.view.accessibility.AccessibilityEvent): void;
@@ -21739,12 +21739,12 @@ declare module androidx {
 		export module widget {
 			export abstract class SnapHelper extends androidx.recyclerview.widget.RecyclerView.OnFlingListener {
 				public static class: java.lang.Class<androidx.recyclerview.widget.SnapHelper>;
-				public calculateScrollDistance(param0: number, param1: number): native.Array<number>;
+				public calculateScrollDistance(param0: number, param1: number): androidNative.Array<number>;
 				public attachToRecyclerView(param0: androidx.recyclerview.widget.RecyclerView): void;
 				public findSnapView(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager): globalAndroid.view.View;
 				/** @deprecated */
 				public createSnapScroller(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager): androidx.recyclerview.widget.LinearSmoothScroller;
-				public calculateDistanceToFinalSnap(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: globalAndroid.view.View): native.Array<number>;
+				public calculateDistanceToFinalSnap(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: globalAndroid.view.View): androidNative.Array<number>;
 				public onFling(param0: number, param1: number): boolean;
 				public findTargetSnapPosition(param0: androidx.recyclerview.widget.RecyclerView.LayoutManager, param1: number, param2: number): number;
 				public constructor();
@@ -21763,16 +21763,16 @@ declare module androidx {
 				public constructor(param0: java.lang.Class<T>, param1: androidx.recyclerview.widget.SortedList.Callback<T>);
 				public remove(param0: T): boolean;
 				public indexOf(param0: T): number;
-				public replaceAll(param0: native.Array<T>): void;
+				public replaceAll(param0: androidNative.Array<T>): void;
 				public updateItemAt(param0: number, param1: T): void;
 				public get(param0: number): T;
 				public size(): number;
-				public addAll(param0: native.Array<T>): void;
+				public addAll(param0: androidNative.Array<T>): void;
 				public addAll(param0: java.util.Collection<T>): void;
 				public recalculatePositionOfItemAt(param0: number): void;
-				public replaceAll(param0: native.Array<T>, param1: boolean): void;
+				public replaceAll(param0: androidNative.Array<T>, param1: boolean): void;
 				public endBatchedUpdates(): void;
-				public addAll(param0: native.Array<T>, param1: boolean): void;
+				public addAll(param0: androidNative.Array<T>, param1: boolean): void;
 				public removeItemAt(param0: number): T;
 				public add(param0: T): number;
 				public clear(): void;
@@ -21850,7 +21850,7 @@ declare module androidx {
 				public smoothScrollToPosition(param0: androidx.recyclerview.widget.RecyclerView, param1: androidx.recyclerview.widget.RecyclerView.State, param2: number): void;
 				public constructor();
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number, param3: number);
-				public findLastVisibleItemPositions(param0: native.Array<number>): native.Array<number>;
+				public findLastVisibleItemPositions(param0: androidNative.Array<number>): androidNative.Array<number>;
 				public computeHorizontalScrollExtent(param0: androidx.recyclerview.widget.RecyclerView.State): number;
 				public getColumnCountForAccessibility(param0: androidx.recyclerview.widget.RecyclerView.Recycler, param1: androidx.recyclerview.widget.RecyclerView.State): number;
 				public onItemsUpdated(param0: androidx.recyclerview.widget.RecyclerView, param1: number, param2: number, param3: any): void;
@@ -21862,14 +21862,14 @@ declare module androidx {
 				public computeVerticalScrollExtent(param0: androidx.recyclerview.widget.RecyclerView.State): number;
 				public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				public generateDefaultLayoutParams(): androidx.recyclerview.widget.RecyclerView.LayoutParams;
-				public findFirstVisibleItemPositions(param0: native.Array<number>): native.Array<number>;
+				public findFirstVisibleItemPositions(param0: androidNative.Array<number>): androidNative.Array<number>;
 				public onItemsRemoved(param0: androidx.recyclerview.widget.RecyclerView, param1: number, param2: number): void;
 				public canScrollVertically(): boolean;
 				public invalidateSpanAssignments(): void;
 				public checkLayoutParams(param0: androidx.recyclerview.widget.RecyclerView.LayoutParams): boolean;
 				public setMeasuredDimension(param0: globalAndroid.graphics.Rect, param1: number, param2: number): void;
 				public onItemsUpdated(param0: androidx.recyclerview.widget.RecyclerView, param1: number, param2: number): void;
-				public findLastCompletelyVisibleItemPositions(param0: native.Array<number>): native.Array<number>;
+				public findLastCompletelyVisibleItemPositions(param0: androidNative.Array<number>): androidNative.Array<number>;
 				public scrollToPositionWithOffset(param0: number, param1: number): void;
 				public computeScrollVectorForPosition(param0: number): globalAndroid.graphics.PointF;
 				public generateLayoutParams(param0: globalAndroid.view.ViewGroup.LayoutParams): androidx.recyclerview.widget.RecyclerView.LayoutParams;
@@ -21883,7 +21883,7 @@ declare module androidx {
 				public offsetChildrenHorizontal(param0: number): void;
 				public scrollVerticallyBy(param0: number, param1: androidx.recyclerview.widget.RecyclerView.Recycler, param2: androidx.recyclerview.widget.RecyclerView.State): number;
 				public getOrientation(): number;
-				public findFirstCompletelyVisibleItemPositions(param0: native.Array<number>): native.Array<number>;
+				public findFirstCompletelyVisibleItemPositions(param0: androidNative.Array<number>): androidNative.Array<number>;
 				public setReverseLayout(param0: boolean): void;
 				public onSaveInstanceState(): globalAndroid.os.Parcelable;
 				public onItemsAdded(param0: androidx.recyclerview.widget.RecyclerView, param1: number, param2: number): void;
@@ -22029,7 +22029,7 @@ declare module androidx {
 			export module TileList {
 				export class Tile<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.recyclerview.widget.TileList.Tile<any>>;
-					public mItems: native.Array<T>;
+					public mItems: androidNative.Array<T>;
 					public mStartPosition: number;
 					public mItemCount: number;
 					public constructor(param0: java.lang.Class<T>, param1: number);
@@ -22270,7 +22270,7 @@ declare module androidx {
 				public static DEFAULT: number;
 				public getArrowWidth(): number;
 				public setArrowDimensions(param0: number, param1: number): void;
-				public setColorSchemeColors(param0: native.Array<number>): void;
+				public setColorSchemeColors(param0: androidNative.Array<number>): void;
 				public getEndTrim(): number;
 				public getArrowEnabled(): boolean;
 				public setColorFilter(param0: globalAndroid.graphics.ColorFilter): void;
@@ -22280,7 +22280,7 @@ declare module androidx {
 				public getAlpha(): number;
 				public setStartEndTrim(param0: number, param1: number): void;
 				public setProgressRotation(param0: number): void;
-				public getColorSchemeColors(): native.Array<number>;
+				public getColorSchemeColors(): androidNative.Array<number>;
 				public constructor(param0: globalAndroid.content.Context);
 				public start(): void;
 				public getArrowScale(): number;
@@ -22329,7 +22329,7 @@ declare module androidx {
 				public static DEFAULT_SLINGSHOT_DISTANCE: number;
 				public mFrom: number;
 				public mOriginalOffsetTop: number;
-				public setColorSchemeColors(param0: native.Array<number>): void;
+				public setColorSchemeColors(param0: androidNative.Array<number>): void;
 				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
 				public setSlingshotDistance(param0: number): void;
 				public requestDisallowInterceptTouchEvent(param0: boolean): void;
@@ -22354,7 +22354,7 @@ declare module androidx {
 				public onLayout(param0: boolean, param1: number, param2: number, param3: number, param4: number): void;
 				public getProgressViewStartOffset(): number;
 				public onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
-				public setColorSchemeResources(param0: native.Array<number>): void;
+				public setColorSchemeResources(param0: androidNative.Array<number>): void;
 				public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
 				public setProgressBackgroundColorSchemeColor(param0: number): void;
 				public setProgressViewOffset(param0: boolean, param1: number, param2: number): void;
@@ -22363,19 +22363,19 @@ declare module androidx {
 				public getProgressViewEndOffset(): number;
 				public getChildDrawingOrder(param0: number, param1: number): number;
 				public stopNestedScroll(): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
+				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
 				public startNestedScroll(param0: number): boolean;
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 				public hasNestedScrollingParent(): boolean;
 				public onMeasure(param0: number, param1: number): void;
 				/** @deprecated */
-				public setColorScheme(param0: native.Array<number>): void;
+				public setColorScheme(param0: androidNative.Array<number>): void;
 				public onDetachedFromWindow(): void;
 				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 				public setProgressBackgroundColorSchemeResource(param0: number): void;
 				public onStopNestedScroll(param0: globalAndroid.view.View): void;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 				public isNestedScrollingEnabled(): boolean;
 			}
 			export module SwipeRefreshLayout {
@@ -22463,7 +22463,7 @@ declare module androidx {
 			public setResizeClip(param0: boolean): void;
 			public getResizeClip(): boolean;
 			public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
-			public getTransitionProperties(): native.Array<string>;
+			public getTransitionProperties(): androidNative.Array<string>;
 			public captureEndValues(param0: androidx.transition.TransitionValues): void;
 			public createAnimator(param0: globalAndroid.view.ViewGroup, param1: androidx.transition.TransitionValues, param2: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 			public captureStartValues(param0: androidx.transition.TransitionValues): void;
@@ -22481,7 +22481,7 @@ declare module androidx {
 	export module transition {
 		export class ChangeClipBounds extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.ChangeClipBounds>;
-			public getTransitionProperties(): native.Array<string>;
+			public getTransitionProperties(): androidNative.Array<string>;
 			public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
 			public captureEndValues(param0: androidx.transition.TransitionValues): void;
 			public createAnimator(param0: globalAndroid.view.ViewGroup, param1: androidx.transition.TransitionValues, param2: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
@@ -22496,7 +22496,7 @@ declare module androidx {
 		export class ChangeImageTransform extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.ChangeImageTransform>;
 			public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
-			public getTransitionProperties(): native.Array<string>;
+			public getTransitionProperties(): androidNative.Array<string>;
 			public captureEndValues(param0: androidx.transition.TransitionValues): void;
 			public createAnimator(param0: globalAndroid.view.ViewGroup, param1: androidx.transition.TransitionValues, param2: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 			public captureStartValues(param0: androidx.transition.TransitionValues): void;
@@ -22510,7 +22510,7 @@ declare module androidx {
 		export class ChangeScroll extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.ChangeScroll>;
 			public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
-			public getTransitionProperties(): native.Array<string>;
+			public getTransitionProperties(): androidNative.Array<string>;
 			public captureEndValues(param0: androidx.transition.TransitionValues): void;
 			public createAnimator(param0: globalAndroid.view.ViewGroup, param1: androidx.transition.TransitionValues, param2: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 			public captureStartValues(param0: androidx.transition.TransitionValues): void;
@@ -22526,7 +22526,7 @@ declare module androidx {
 			public getReparent(): boolean;
 			public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
 			public getReparentWithOverlay(): boolean;
-			public getTransitionProperties(): native.Array<string>;
+			public getTransitionProperties(): androidNative.Array<string>;
 			public captureEndValues(param0: androidx.transition.TransitionValues): void;
 			public createAnimator(param0: globalAndroid.view.ViewGroup, param1: androidx.transition.TransitionValues, param2: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 			public setReparent(param0: boolean): void;
@@ -22610,9 +22610,9 @@ declare module androidx {
 
 declare module androidx {
 	export module transition {
-		export class FloatArrayEvaluator extends globalAndroid.animation.TypeEvaluator<native.Array<number>> {
+		export class FloatArrayEvaluator extends globalAndroid.animation.TypeEvaluator<androidNative.Array<number>> {
 			public static class: java.lang.Class<androidx.transition.FloatArrayEvaluator>;
-			public evaluate(param0: number, param1: native.Array<number>, param2: native.Array<number>): native.Array<number>;
+			public evaluate(param0: number, param1: androidNative.Array<number>, param2: androidNative.Array<number>): androidNative.Array<number>;
 		}
 	}
 }
@@ -23027,7 +23027,7 @@ declare module androidx {
 			public setStartDelay(param0: number): androidx.transition.Transition;
 			public removeListener(param0: androidx.transition.Transition.TransitionListener): androidx.transition.Transition;
 			public getStartDelay(): number;
-			public setMatchOrder(param0: native.Array<number>): void;
+			public setMatchOrder(param0: androidNative.Array<number>): void;
 			public pause(param0: globalAndroid.view.View): void;
 			public setDuration(param0: number): androidx.transition.Transition;
 			public captureStartValues(param0: androidx.transition.TransitionValues): void;
@@ -23037,7 +23037,7 @@ declare module androidx {
 			public toString(): string;
 			public getName(): string;
 			public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
-			public getTransitionProperties(): native.Array<string>;
+			public getTransitionProperties(): androidNative.Array<string>;
 			public addTarget(param0: java.lang.Class): androidx.transition.Transition;
 			public setEpicenterCallback(param0: androidx.transition.Transition.EpicenterCallback): void;
 			public resume(param0: globalAndroid.view.View): void;
@@ -23145,7 +23145,7 @@ declare module androidx {
 			public getStartDelay(param0: globalAndroid.view.ViewGroup, param1: androidx.transition.Transition, param2: androidx.transition.TransitionValues, param3: androidx.transition.TransitionValues): number;
 			public captureValues(param0: androidx.transition.TransitionValues): void;
 			public constructor();
-			public getPropagationProperties(): native.Array<string>;
+			public getPropagationProperties(): androidNative.Array<string>;
 		}
 	}
 }
@@ -23363,7 +23363,7 @@ declare module androidx {
 				public dispatchDraw(param0: globalAndroid.graphics.Canvas): void;
 				public remove(param0: globalAndroid.graphics.drawable.Drawable): void;
 				public dispatchTouchEvent(param0: globalAndroid.view.MotionEvent): boolean;
-				public invalidateChildInParent(param0: native.Array<number>, param1: globalAndroid.graphics.Rect): globalAndroid.view.ViewParent;
+				public invalidateChildInParent(param0: androidNative.Array<number>, param1: globalAndroid.graphics.Rect): globalAndroid.view.ViewParent;
 				public invalidateDrawable(param0: globalAndroid.graphics.drawable.Drawable): void;
 				public add(param0: globalAndroid.view.View): void;
 				public invalidateChildInParentFast(param0: number, param1: number, param2: globalAndroid.graphics.Rect): globalAndroid.view.ViewParent;
@@ -23484,7 +23484,7 @@ declare module androidx {
 			public onDisappear(param0: globalAndroid.view.ViewGroup, param1: globalAndroid.view.View, param2: androidx.transition.TransitionValues, param3: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 			public onAppear(param0: globalAndroid.view.ViewGroup, param1: androidx.transition.TransitionValues, param2: number, param3: androidx.transition.TransitionValues, param4: number): globalAndroid.animation.Animator;
 			public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
-			public getTransitionProperties(): native.Array<string>;
+			public getTransitionProperties(): androidNative.Array<string>;
 			public createAnimator(param0: globalAndroid.view.ViewGroup, param1: androidx.transition.TransitionValues, param2: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 			public getMode(): number;
 			public isTransitionRequired(param0: androidx.transition.TransitionValues, param1: androidx.transition.TransitionValues): boolean;
@@ -23529,7 +23529,7 @@ declare module androidx {
 			public captureValues(param0: androidx.transition.TransitionValues): void;
 			public getViewX(param0: androidx.transition.TransitionValues): number;
 			public constructor();
-			public getPropagationProperties(): native.Array<string>;
+			public getPropagationProperties(): androidNative.Array<string>;
 		}
 	}
 }
@@ -23574,7 +23574,7 @@ declare module androidx {
 			export module drawable {
 				export class AndroidResources {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AndroidResources>;
-					public static STYLEABLE_ANIMATOR: native.Array<number>;
+					public static STYLEABLE_ANIMATOR: androidNative.Array<number>;
 					public static STYLEABLE_ANIMATOR_INTERPOLATOR: number;
 					public static STYLEABLE_ANIMATOR_DURATION: number;
 					public static STYLEABLE_ANIMATOR_START_OFFSET: number;
@@ -23583,24 +23583,24 @@ declare module androidx {
 					public static STYLEABLE_ANIMATOR_VALUE_FROM: number;
 					public static STYLEABLE_ANIMATOR_VALUE_TO: number;
 					public static STYLEABLE_ANIMATOR_VALUE_TYPE: number;
-					public static STYLEABLE_ANIMATOR_SET: native.Array<number>;
+					public static STYLEABLE_ANIMATOR_SET: androidNative.Array<number>;
 					public static STYLEABLE_ANIMATOR_SET_ORDERING: number;
-					public static STYLEABLE_PROPERTY_VALUES_HOLDER: native.Array<number>;
+					public static STYLEABLE_PROPERTY_VALUES_HOLDER: androidNative.Array<number>;
 					public static STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_FROM: number;
 					public static STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_TO: number;
 					public static STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_TYPE: number;
 					public static STYLEABLE_PROPERTY_VALUES_HOLDER_PROPERTY_NAME: number;
-					public static STYLEABLE_KEYFRAME: native.Array<number>;
+					public static STYLEABLE_KEYFRAME: androidNative.Array<number>;
 					public static STYLEABLE_KEYFRAME_VALUE: number;
 					public static STYLEABLE_KEYFRAME_INTERPOLATOR: number;
 					public static STYLEABLE_KEYFRAME_VALUE_TYPE: number;
 					public static STYLEABLE_KEYFRAME_FRACTION: number;
-					public static STYLEABLE_PROPERTY_ANIMATOR: native.Array<number>;
+					public static STYLEABLE_PROPERTY_ANIMATOR: androidNative.Array<number>;
 					public static STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_NAME: number;
 					public static STYLEABLE_PROPERTY_ANIMATOR_PATH_DATA: number;
 					public static STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_X_NAME: number;
 					public static STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_Y_NAME: number;
-					public static STYLEABLE_PATH_INTERPOLATOR: native.Array<number>;
+					public static STYLEABLE_PATH_INTERPOLATOR: androidNative.Array<number>;
 					public static STYLEABLE_PATH_INTERPOLATOR_CONTROL_X_1: number;
 					public static STYLEABLE_PATH_INTERPOLATOR_CONTROL_Y_1: number;
 					public static STYLEABLE_PATH_INTERPOLATOR_CONTROL_X_2: number;
@@ -23657,7 +23657,7 @@ declare module androidx {
 					public inflate(param0: globalAndroid.content.res.Resources, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.util.AttributeSet): void;
 					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
 					public inflate(param0: globalAndroid.content.res.Resources, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.util.AttributeSet, param3: globalAndroid.content.res.Resources.Theme): void;
-					public onStateChange(param0: native.Array<number>): boolean;
+					public onStateChange(param0: androidNative.Array<number>): boolean;
 					public setColorFilter(param0: globalAndroid.graphics.ColorFilter): void;
 					public isStateful(): boolean;
 					public static create(param0: globalAndroid.content.Context, param1: number): androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
@@ -23738,9 +23738,9 @@ declare module androidx {
 					public static loadAnimator(param0: globalAndroid.content.Context, param1: number): globalAndroid.animation.Animator;
 				}
 				export module AnimatorInflaterCompat {
-					export class PathDataEvaluator extends globalAndroid.animation.TypeEvaluator<native.Array<androidx.core.graphics.PathParser.PathDataNode>> {
+					export class PathDataEvaluator extends globalAndroid.animation.TypeEvaluator<androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>> {
 						public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AnimatorInflaterCompat.PathDataEvaluator>;
-						public evaluate(param0: number, param1: native.Array<androidx.core.graphics.PathParser.PathDataNode>, param2: native.Array<androidx.core.graphics.PathParser.PathDataNode>): native.Array<androidx.core.graphics.PathParser.PathDataNode>;
+						public evaluate(param0: number, param1: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, param2: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>): androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>;
 					}
 				}
 			}
@@ -23799,11 +23799,11 @@ declare module androidx {
 					public setFilterBitmap(param0: boolean): void;
 					public onBoundsChange(param0: globalAndroid.graphics.Rect): void;
 					public getPadding(param0: globalAndroid.graphics.Rect): boolean;
-					public setState(param0: native.Array<number>): boolean;
+					public setState(param0: androidNative.Array<number>): boolean;
 					public getColorFilter(): globalAndroid.graphics.ColorFilter;
 					public setColorFilter(param0: number, param1: globalAndroid.graphics.PorterDuff.Mode): void;
 					public applyTheme(param0: globalAndroid.content.res.Resources.Theme): void;
-					public getState(): native.Array<number>;
+					public getState(): androidNative.Array<number>;
 					public getMinimumHeight(): number;
 					public setTint(param0: number): void;
 					public setChangingConfigurations(param0: number): void;
@@ -23823,7 +23823,7 @@ declare module androidx {
 					public inflate(param0: globalAndroid.content.res.Resources, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.util.AttributeSet): void;
 					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
 					public inflate(param0: globalAndroid.content.res.Resources, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.util.AttributeSet, param3: globalAndroid.content.res.Resources.Theme): void;
-					public onStateChange(param0: native.Array<number>): boolean;
+					public onStateChange(param0: androidNative.Array<number>): boolean;
 					public setColorFilter(param0: globalAndroid.graphics.ColorFilter): void;
 					public isStateful(): boolean;
 					public getIntrinsicWidth(): number;
@@ -23863,7 +23863,7 @@ declare module androidx {
 						public constructor();
 						public isStateful(): boolean;
 						public applyTheme(param0: globalAndroid.content.res.Resources.Theme): void;
-						public onStateChanged(param0: native.Array<number>): boolean;
+						public onStateChanged(param0: androidNative.Array<number>): boolean;
 						public constructor(param0: androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VPath);
 						public inflate(param0: globalAndroid.content.res.Resources, param1: globalAndroid.util.AttributeSet, param2: globalAndroid.content.res.Resources.Theme, param3: org.xmlpull.v1.XmlPullParser): void;
 						public constructor(param0: androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VFullPath);
@@ -23875,7 +23875,7 @@ declare module androidx {
 						public constructor();
 						public getScaleX(): number;
 						public setScaleX(param0: number): void;
-						public onStateChanged(param0: native.Array<number>): boolean;
+						public onStateChanged(param0: androidNative.Array<number>): boolean;
 						public inflate(param0: globalAndroid.content.res.Resources, param1: globalAndroid.util.AttributeSet, param2: globalAndroid.content.res.Resources.Theme, param3: org.xmlpull.v1.XmlPullParser): void;
 						public setScaleY(param0: number): void;
 						public getGroupName(): string;
@@ -23896,28 +23896,28 @@ declare module androidx {
 					export abstract class VObject {
 						public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VObject>;
 						public isStateful(): boolean;
-						public onStateChanged(param0: native.Array<number>): boolean;
+						public onStateChanged(param0: androidNative.Array<number>): boolean;
 					}
 					export abstract class VPath extends androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VObject {
 						public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VPath>;
-						public mNodes: native.Array<androidx.core.graphics.PathParser.PathDataNode>;
-						public nodesToString(param0: native.Array<androidx.core.graphics.PathParser.PathDataNode>): string;
+						public mNodes: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>;
+						public nodesToString(param0: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>): string;
 						public constructor();
 						public isClipPath(): boolean;
-						public setPathData(param0: native.Array<androidx.core.graphics.PathParser.PathDataNode>): void;
+						public setPathData(param0: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>): void;
 						public applyTheme(param0: globalAndroid.content.res.Resources.Theme): void;
 						public constructor(param0: androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VPath);
 						public getPathName(): string;
 						public toPath(param0: globalAndroid.graphics.Path): void;
 						public canApplyTheme(): boolean;
-						public getPathData(): native.Array<androidx.core.graphics.PathParser.PathDataNode>;
+						public getPathData(): androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>;
 						public printVPath(param0: number): void;
 					}
 					export class VPathRenderer {
 						public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VPathRenderer>;
 						public constructor();
 						public isStateful(): boolean;
-						public onStateChanged(param0: native.Array<number>): boolean;
+						public onStateChanged(param0: androidNative.Array<number>): boolean;
 						public constructor(param0: androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VPathRenderer);
 						public getAlpha(): number;
 						public setRootAlpha(param0: number): void;
@@ -23931,7 +23931,7 @@ declare module androidx {
 						public constructor();
 						public getChangingConfigurations(): number;
 						public hasTranslucentRoot(): boolean;
-						public onStateChanged(param0: native.Array<number>): boolean;
+						public onStateChanged(param0: androidNative.Array<number>): boolean;
 						public constructor(param0: androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VectorDrawableCompatState);
 						public updateCacheStates(): void;
 						public drawCachedBitmapWithRootAlpha(param0: globalAndroid.graphics.Canvas, param1: globalAndroid.graphics.ColorFilter, param2: globalAndroid.graphics.Rect): void;
@@ -24040,34 +24040,34 @@ declare module androidx {
 			public writeException(param0: java.lang.Exception, param1: number): void;
 			public readString(): string;
 			public readSizeF(param0: any, param1: number): any;
-			public writeFloatArray(param0: native.Array<number>, param1: number): void;
+			public writeFloatArray(param0: androidNative.Array<number>, param1: number): void;
 			public readCharSequence(): string;
 			public writeSerializable(param0: java.io.Serializable, param1: number): void;
 			public writeFloat(param0: number): void;
-			public readLongArray(param0: native.Array<number>, param1: number): native.Array<number>;
+			public readLongArray(param0: androidNative.Array<number>, param1: number): androidNative.Array<number>;
 			public isStream(): boolean;
 			public readInt(): number;
 			public readFloat(): number;
 			public readSparseBooleanArray(param0: globalAndroid.util.SparseBooleanArray, param1: number): globalAndroid.util.SparseBooleanArray;
-			public readDoubleArray(): native.Array<number>;
+			public readDoubleArray(): androidNative.Array<number>;
 			public writeLong(param0: number): void;
-			public writeByteArray(param0: native.Array<number>, param1: number, param2: number, param3: number): void;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number, param2: number, param3: number): void;
 			public readParcelable(): globalAndroid.os.Parcelable;
-			public readDoubleArray(param0: native.Array<number>, param1: number): native.Array<number>;
-			public readIntArray(): native.Array<number>;
+			public readDoubleArray(param0: androidNative.Array<number>, param1: number): androidNative.Array<number>;
+			public readIntArray(): androidNative.Array<number>;
 			public readSize(param0: any, param1: number): any;
 			public writeStrongInterface(param0: globalAndroid.os.IInterface): void;
 			public readBoolean(): boolean;
 			public writeToParcel(param0: androidx.versionedparcelable.VersionedParcelable, param1: androidx.versionedparcelable.VersionedParcel): void;
 			public writeMap(param0: java.util.Map, param1: number): void;
-			public writeBooleanArray(param0: native.Array<boolean>): void;
+			public writeBooleanArray(param0: androidNative.Array<boolean>): void;
 			public static getRootCause(param0: java.lang.Throwable): java.lang.Throwable;
 			public setSerializationFlags(param0: boolean, param1: boolean): void;
-			public readFloatArray(): native.Array<number>;
+			public readFloatArray(): androidNative.Array<number>;
 			public readLong(param0: number, param1: number): number;
 			public writeByte(param0: number, param1: number): void;
 			public writeSparseBooleanArray(param0: globalAndroid.util.SparseBooleanArray, param1: number): void;
-			public readArray(param0: native.Array<any>, param1: number): native.Array<any>;
+			public readArray(param0: androidNative.Array<any>, param1: number): androidNative.Array<any>;
 			public readFloat(param0: number, param1: number): number;
 			public readField(param0: number): boolean;
 			public readVersionedParcelable(): androidx.versionedparcelable.VersionedParcelable;
@@ -24077,32 +24077,32 @@ declare module androidx {
 			public readSet(param0: java.util.Set, param1: number): java.util.Set;
 			public readByte(param0: number, param1: number): number;
 			public writeLong(param0: number, param1: number): void;
-			public readByteArray(param0: native.Array<number>, param1: number): native.Array<number>;
+			public readByteArray(param0: androidNative.Array<number>, param1: number): androidNative.Array<number>;
 			public readStrongBinder(param0: globalAndroid.os.IBinder, param1: number): globalAndroid.os.IBinder;
 			public setOutputField(param0: number): void;
 			public readString(param0: string, param1: number): string;
 			public constructor(param0: androidx.collection.ArrayMap<string,java.lang.reflect.Method>, param1: androidx.collection.ArrayMap<string,java.lang.reflect.Method>, param2: androidx.collection.ArrayMap<string,java.lang.Class>);
 			public writeBundle(param0: globalAndroid.os.Bundle): void;
-			public readCharArray(param0: native.Array<string>, param1: number): native.Array<string>;
-			public readIntArray(param0: native.Array<number>, param1: number): native.Array<number>;
-			public readArray(param0: native.Array<any>): native.Array<any>;
+			public readCharArray(param0: androidNative.Array<string>, param1: number): androidNative.Array<string>;
+			public readIntArray(param0: androidNative.Array<number>, param1: number): androidNative.Array<number>;
+			public readArray(param0: androidNative.Array<any>): androidNative.Array<any>;
 			public closeField(): void;
 			public writeBoolean(param0: boolean, param1: number): void;
-			public writeIntArray(param0: native.Array<number>): void;
+			public writeIntArray(param0: androidNative.Array<number>): void;
 			public readDouble(param0: number, param1: number): number;
 			public writeDouble(param0: number, param1: number): void;
 			public readParcelable(param0: globalAndroid.os.Parcelable, param1: number): globalAndroid.os.Parcelable;
 			public readCharSequence(param0: string, param1: number): string;
-			public writeLongArray(param0: native.Array<number>): void;
+			public writeLongArray(param0: androidNative.Array<number>): void;
 			public readVersionedParcelable(param0: androidx.versionedparcelable.VersionedParcelable, param1: number): androidx.versionedparcelable.VersionedParcelable;
 			public writeString(param0: string, param1: number): void;
-			public writeBooleanArray(param0: native.Array<boolean>, param1: number): void;
-			public writeIntArray(param0: native.Array<number>, param1: number): void;
-			public writeFloatArray(param0: native.Array<number>): void;
+			public writeBooleanArray(param0: androidNative.Array<boolean>, param1: number): void;
+			public writeIntArray(param0: androidNative.Array<number>, param1: number): void;
+			public writeFloatArray(param0: androidNative.Array<number>): void;
 			public readInt(param0: number, param1: number): number;
-			public writeLongArray(param0: native.Array<number>, param1: number): void;
+			public writeLongArray(param0: androidNative.Array<number>, param1: number): void;
 			public writeParcelable(param0: globalAndroid.os.Parcelable, param1: number): void;
-			public writeByteArray(param0: native.Array<number>): void;
+			public writeByteArray(param0: androidNative.Array<number>): void;
 			public writeInt(param0: number, param1: number): void;
 			public createSubParcel(): androidx.versionedparcelable.VersionedParcel;
 			public writeSizeF(param0: any, param1: number): void;
@@ -24111,20 +24111,20 @@ declare module androidx {
 			public writeBoolean(param0: boolean): void;
 			public readException(param0: java.lang.Exception, param1: number): java.lang.Exception;
 			public readBundle(): globalAndroid.os.Bundle;
-			public writeByteArray(param0: native.Array<number>, param1: number): void;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number): void;
 			public writeVersionedParcelable(param0: androidx.versionedparcelable.VersionedParcelable, param1: number): void;
 			public writeVersionedParcelable(param0: androidx.versionedparcelable.VersionedParcelable): void;
-			public readBooleanArray(param0: native.Array<boolean>, param1: number): native.Array<boolean>;
-			public writeByteArray(param0: native.Array<number>, param1: number, param2: number): void;
-			public readBooleanArray(): native.Array<boolean>;
+			public readBooleanArray(param0: androidNative.Array<boolean>, param1: number): androidNative.Array<boolean>;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number, param2: number): void;
+			public readBooleanArray(): androidNative.Array<boolean>;
 			public readMap(param0: java.util.Map, param1: number): java.util.Map;
 			public writeCharSequence(param0: string): void;
 			public writeList(param0: java.util.List, param1: number): void;
 			public writeBundle(param0: globalAndroid.os.Bundle, param1: number): void;
 			public writeCharSequence(param0: string, param1: number): void;
 			public writeString(param0: string): void;
-			public writeCharArray(param0: native.Array<string>, param1: number): void;
-			public writeDoubleArray(param0: native.Array<number>, param1: number): void;
+			public writeCharArray(param0: androidNative.Array<string>, param1: number): void;
+			public writeDoubleArray(param0: androidNative.Array<number>, param1: number): void;
 			public readDouble(): number;
 			public writeStrongBinder(param0: globalAndroid.os.IBinder): void;
 			public writeSet(param0: java.util.Set, param1: number): void;
@@ -24133,13 +24133,13 @@ declare module androidx {
 			public writeInt(param0: number): void;
 			public writeStrongInterface(param0: globalAndroid.os.IInterface, param1: number): void;
 			public readLong(): number;
-			public readLongArray(): native.Array<number>;
+			public readLongArray(): androidNative.Array<number>;
 			public writeDouble(param0: number): void;
-			public readByteArray(): native.Array<number>;
-			public writeDoubleArray(param0: native.Array<number>): void;
-			public writeArray(param0: native.Array<any>): void;
-			public writeArray(param0: native.Array<any>, param1: number): void;
-			public readFloatArray(param0: native.Array<number>, param1: number): native.Array<number>;
+			public readByteArray(): androidNative.Array<number>;
+			public writeDoubleArray(param0: androidNative.Array<number>): void;
+			public writeArray(param0: androidNative.Array<any>): void;
+			public writeArray(param0: androidNative.Array<any>, param1: number): void;
+			public readFloatArray(param0: androidNative.Array<number>, param1: number): androidNative.Array<number>;
 			public writeSize(param0: any, param1: number): void;
 			public readBundle(param0: globalAndroid.os.Bundle, param1: number): globalAndroid.os.Bundle;
 			public writeStrongBinder(param0: globalAndroid.os.IBinder, param1: number): void;
@@ -24171,20 +24171,20 @@ declare module androidx {
 			public writeParcelable(param0: globalAndroid.os.Parcelable, param1: number): void;
 			public readInt(): number;
 			public readFloat(): number;
-			public writeByteArray(param0: native.Array<number>): void;
+			public writeByteArray(param0: androidNative.Array<number>): void;
 			public writeInt(param0: number, param1: number): void;
 			public createSubParcel(): androidx.versionedparcelable.VersionedParcel;
 			public writeLong(param0: number): void;
-			public writeByteArray(param0: native.Array<number>, param1: number, param2: number, param3: number): void;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number, param2: number, param3: number): void;
 			public readParcelable(): globalAndroid.os.Parcelable;
 			public writeParcelable(param0: globalAndroid.os.Parcelable): void;
 			public writeBoolean(param0: boolean): void;
 			public writeStrongInterface(param0: globalAndroid.os.IInterface): void;
 			public readBundle(): globalAndroid.os.Bundle;
 			public readBoolean(): boolean;
-			public writeByteArray(param0: native.Array<number>, param1: number): void;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number): void;
 			public readLong(param0: number, param1: number): number;
-			public writeByteArray(param0: native.Array<number>, param1: number, param2: number): void;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number, param2: number): void;
 			public readFloat(param0: number, param1: number): number;
 			public readField(param0: number): boolean;
 			public writeCharSequence(param0: string): void;
@@ -24196,7 +24196,7 @@ declare module androidx {
 			public readDouble(): number;
 			public writeLong(param0: number, param1: number): void;
 			public writeStrongBinder(param0: globalAndroid.os.IBinder): void;
-			public readByteArray(param0: native.Array<number>, param1: number): native.Array<number>;
+			public readByteArray(param0: androidNative.Array<number>, param1: number): androidNative.Array<number>;
 			public writeFloat(param0: number, param1: number): void;
 			public readStrongBinder(param0: globalAndroid.os.IBinder, param1: number): globalAndroid.os.IBinder;
 			public setOutputField(param0: number): void;
@@ -24205,7 +24205,7 @@ declare module androidx {
 			public writeStrongInterface(param0: globalAndroid.os.IInterface, param1: number): void;
 			public readLong(): number;
 			public writeDouble(param0: number): void;
-			public readByteArray(): native.Array<number>;
+			public readByteArray(): androidNative.Array<number>;
 			public writeBundle(param0: globalAndroid.os.Bundle): void;
 			public readBundle(param0: globalAndroid.os.Bundle, param1: number): globalAndroid.os.Bundle;
 			public writeStrongBinder(param0: globalAndroid.os.IBinder, param1: number): void;
@@ -24232,11 +24232,11 @@ declare module androidx {
 			public writeParcelable(param0: globalAndroid.os.Parcelable, param1: number): void;
 			public readInt(): number;
 			public readFloat(): number;
-			public writeByteArray(param0: native.Array<number>): void;
+			public writeByteArray(param0: androidNative.Array<number>): void;
 			public writeInt(param0: number, param1: number): void;
 			public createSubParcel(): androidx.versionedparcelable.VersionedParcel;
 			public writeLong(param0: number): void;
-			public writeByteArray(param0: native.Array<number>, param1: number, param2: number, param3: number): void;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number, param2: number, param3: number): void;
 			public readParcelable(): globalAndroid.os.Parcelable;
 			public writeParcelable(param0: globalAndroid.os.Parcelable): void;
 			public writeBoolean(param0: boolean): void;
@@ -24244,10 +24244,10 @@ declare module androidx {
 			public readBoolean(): boolean;
 			public readBundle(): globalAndroid.os.Bundle;
 			public constructor(param0: java.io.InputStream, param1: java.io.OutputStream);
-			public writeByteArray(param0: native.Array<number>, param1: number): void;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number): void;
 			public setSerializationFlags(param0: boolean, param1: boolean): void;
 			public readLong(param0: number, param1: number): number;
-			public writeByteArray(param0: native.Array<number>, param1: number, param2: number): void;
+			public writeByteArray(param0: androidNative.Array<number>, param1: number, param2: number): void;
 			public readFloat(param0: number, param1: number): number;
 			public readField(param0: number): boolean;
 			public writeCharSequence(param0: string): void;
@@ -24259,7 +24259,7 @@ declare module androidx {
 			public readDouble(): number;
 			public writeLong(param0: number, param1: number): void;
 			public writeStrongBinder(param0: globalAndroid.os.IBinder): void;
-			public readByteArray(param0: native.Array<number>, param1: number): native.Array<number>;
+			public readByteArray(param0: androidNative.Array<number>, param1: number): androidNative.Array<number>;
 			public writeFloat(param0: number, param1: number): void;
 			public readStrongBinder(param0: globalAndroid.os.IBinder, param1: number): globalAndroid.os.IBinder;
 			public setOutputField(param0: number): void;
@@ -24268,7 +24268,7 @@ declare module androidx {
 			public writeStrongInterface(param0: globalAndroid.os.IInterface, param1: number): void;
 			public readLong(): number;
 			public writeDouble(param0: number): void;
-			public readByteArray(): native.Array<number>;
+			public readByteArray(): androidNative.Array<number>;
 			public constructor(param0: androidx.collection.ArrayMap<string,java.lang.reflect.Method>, param1: androidx.collection.ArrayMap<string,java.lang.reflect.Method>, param2: androidx.collection.ArrayMap<string,java.lang.Class>);
 			public writeBundle(param0: globalAndroid.os.Bundle): void;
 			public readBundle(param0: globalAndroid.os.Bundle, param1: number): globalAndroid.os.Bundle;
@@ -24307,7 +24307,7 @@ declare module androidx {
 				allowSerialization(): boolean;
 				ignoreParcelables(): boolean;
 				isCustom(): boolean;
-				deprecatedIds(): native.Array<number>;
+				deprecatedIds(): androidNative.Array<number>;
 				jetifyAs(): string;
 				factory(): java.lang.Class;
 			});
@@ -24317,7 +24317,7 @@ declare module androidx {
 			public isCustom(): boolean;
 			public factory(): java.lang.Class;
 			public allowSerialization(): boolean;
-			public deprecatedIds(): native.Array<number>;
+			public deprecatedIds(): androidNative.Array<number>;
 		}
 	}
 }
@@ -24823,7 +24823,7 @@ declare module com {
 						public generateDefaultLayoutParams(): com.google.android.material.appbar.AppBarLayout.LayoutParams;
 						public generateLayoutParams(param0: globalAndroid.util.AttributeSet): com.google.android.material.appbar.AppBarLayout.LayoutParams;
 						public removeOnOffsetChangedListener(param0: com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener): void;
-						public onCreateDrawableState(param0: number): native.Array<number>;
+						public onCreateDrawableState(param0: number): androidNative.Array<number>;
 						public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
 						public addOnOffsetChangedListener(param0: com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener): void;
 						public setLifted(param0: boolean): boolean;
@@ -24844,14 +24844,14 @@ declare module com {
 							public onRestoreInstanceState(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.os.Parcelable): void;
 							public onStartNestedScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: globalAndroid.view.View, param4: number, param5: number): boolean;
 							public onLayoutChild(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: number): boolean;
-							public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: native.Array<number>, param6: number): void;
+							public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: androidNative.Array<number>, param6: number): void;
 							public onNestedScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: number, param6: number, param7: number): void;
 							public onSaveInstanceState(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any): globalAndroid.os.Parcelable;
 							public onMeasureChild(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: number, param3: number, param4: number, param5: number): boolean;
 							/** @deprecated */
 							public onStartNestedScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: globalAndroid.view.View, param4: number): boolean;
 							/** @deprecated */
-							public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: native.Array<number>): void;
+							public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: androidNative.Array<number>): void;
 						}
 						export module BaseBehavior {
 							export abstract class BaseDragCallback<T>  extends java.lang.Object {
@@ -25372,7 +25372,7 @@ declare module com {
 						public initialize(param0: androidx.appcompat.view.menu.MenuItemImpl, param1: number): void;
 						public setEnabled(param0: boolean): void;
 						public setTitle(param0: string): void;
-						public onCreateDrawableState(param0: number): native.Array<number>;
+						public onCreateDrawableState(param0: number): androidNative.Array<number>;
 						public setShortcut(param0: boolean, param1: string): void;
 						public setShifting(param0: boolean): void;
 						public setItemBackground(param0: number): void;
@@ -25607,7 +25607,7 @@ declare module com {
 						public static STATE_HALF_EXPANDED: number;
 						public static PEEK_HEIGHT_AUTO: number;
 						/** @deprecated */
-						public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: native.Array<number>): void;
+						public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: androidNative.Array<number>): void;
 						/** @deprecated */
 						public onStopNestedScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View): void;
 						public static from(param0: globalAndroid.view.View): com.google.android.material.bottomsheet.BottomSheetBehavior<any>;
@@ -25617,7 +25617,7 @@ declare module com {
 						public setHideable(param0: boolean): void;
 						public setBottomSheetCallback(param0: com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback): void;
 						public setFitToContents(param0: boolean): void;
-						public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: native.Array<number>, param6: number): void;
+						public onNestedPreScroll(param0: androidx.coordinatorlayout.widget.CoordinatorLayout, param1: any, param2: globalAndroid.view.View, param3: number, param4: number, param5: androidNative.Array<number>, param6: number): void;
 						public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
 						public isFitToContents(): boolean;
 						public getSkipCollapsed(): boolean;
@@ -25753,7 +25753,7 @@ declare module com {
 						public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 						public setStrokeColor(param0: globalAndroid.content.res.ColorStateList): void;
 						public getCornerRadius(): number;
-						public getAutoSizeTextAvailableSizes(): native.Array<number>;
+						public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 						public setIconTintResource(param0: number): void;
 						public getStrokeColor(): globalAndroid.content.res.ColorStateList;
 						public setIconTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
@@ -25762,7 +25762,7 @@ declare module com {
 						public getIconTint(): globalAndroid.content.res.ColorStateList;
 						public setIconSize(param0: number): void;
 						public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
-						public setAutoSizeTextTypeUniformWithPresetSizes(param0: native.Array<number>, param1: number): void;
+						public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 						public setIconTint(param0: globalAndroid.content.res.ColorStateList): void;
 						public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
 						public setIconResource(param0: number): void;
@@ -25986,7 +25986,7 @@ declare module com {
 						public setIconStartPaddingResource(param0: number): void;
 						public isCloseIconVisible(): boolean;
 						public setTextEndPaddingResource(param0: number): void;
-						public onCreateDrawableState(param0: number): native.Array<number>;
+						public onCreateDrawableState(param0: number): androidNative.Array<number>;
 						public setChipIconTint(param0: globalAndroid.content.res.ColorStateList): void;
 						public setCompoundDrawables(param0: globalAndroid.graphics.drawable.Drawable, param1: globalAndroid.graphics.drawable.Drawable, param2: globalAndroid.graphics.drawable.Drawable, param3: globalAndroid.graphics.drawable.Drawable): void;
 						public setShowMotionSpecResource(param0: number): void;
@@ -26143,7 +26143,7 @@ declare module com {
 						/** @deprecated */
 						public setChipIconEnabledResource(param0: number): void;
 						public setCloseIconSizeResource(param0: number): void;
-						public onStateChange(param0: native.Array<number>): boolean;
+						public onStateChange(param0: androidNative.Array<number>): boolean;
 						public setCheckedIconVisible(param0: number): void;
 						public setCheckableResource(param0: number): void;
 						public getChipIconSize(): number;
@@ -26156,7 +26156,7 @@ declare module com {
 						public setDelegate(param0: com.google.android.material.chip.ChipDrawable.Delegate): void;
 						public setCloseIconSize(param0: number): void;
 						public getCloseIconEndPadding(): number;
-						public getCloseIconState(): native.Array<number>;
+						public getCloseIconState(): androidNative.Array<number>;
 						public setCloseIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
 						public setIconStartPaddingResource(param0: number): void;
 						public isCloseIconVisible(): boolean;
@@ -26180,7 +26180,7 @@ declare module com {
 						public setChipIconVisible(param0: boolean): void;
 						public getCloseIconTint(): globalAndroid.content.res.ColorStateList;
 						public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-						public setCloseIconState(param0: native.Array<number>): boolean;
+						public setCloseIconState(param0: androidNative.Array<number>): boolean;
 						public getChipIconTint(): globalAndroid.content.res.ColorStateList;
 						public getColorFilter(): globalAndroid.graphics.ColorFilter;
 						public setTextStartPadding(param0: number): void;
@@ -26655,8 +26655,8 @@ declare module com {
 							public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
 							public actualDraw(param0: globalAndroid.graphics.Canvas): void;
 							public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
-							public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>, param4: number): void;
-							public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: native.Array<number>): void;
+							public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
+							public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
 							public setRevealInfo(param0: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo): void;
 							public setCircularRevealScrimColor(param0: number): void;
 							public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet);
@@ -27058,7 +27058,7 @@ declare module com {
 						public setSupportImageTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 						public getSupportImageTintMode(): globalAndroid.graphics.PorterDuff.Mode;
 						public isChecked(): boolean;
-						public onCreateDrawableState(param0: number): native.Array<number>;
+						public onCreateDrawableState(param0: number): androidNative.Array<number>;
 						public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 						public getSupportBackgroundTintMode(): globalAndroid.graphics.PorterDuff.Mode;
 						public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
@@ -27093,7 +27093,7 @@ declare module com {
 						public draw(param0: globalAndroid.graphics.Canvas): void;
 						public setRotation(param0: number): void;
 						public setGradientColors(param0: number, param1: number, param2: number, param3: number): void;
-						public onStateChange(param0: native.Array<number>): boolean;
+						public onStateChange(param0: androidNative.Array<number>): boolean;
 					}
 					export module CircularBorderDrawable {
 						export class CircularBorderState {
@@ -27144,7 +27144,7 @@ declare module com {
 						public setCollapsedBounds(param0: number, param1: number, param2: number, param3: number): void;
 						public setExpandedTextGravity(param0: number): void;
 						public setCollapsedTypeface(param0: globalAndroid.graphics.Typeface): void;
-						public setState(param0: native.Array<number>): boolean;
+						public setState(param0: androidNative.Array<number>): boolean;
 						public setCollapsedTextSize(param0: number): void;
 						public setTypefaces(param0: globalAndroid.graphics.Typeface): void;
 						public getExpansionFraction(): number;
@@ -27341,7 +27341,7 @@ declare module com {
 						public prefersCondensedTitle(): boolean;
 						public setTitle(param0: string): void;
 						public setShortcut(param0: boolean, param1: string): void;
-						public onCreateDrawableState(param0: number): native.Array<number>;
+						public onCreateDrawableState(param0: number): androidNative.Array<number>;
 						public setNeedsEmptyIcon(param0: boolean): void;
 						public getItemData(): androidx.appcompat.view.menu.MenuItemImpl;
 						public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
@@ -27479,18 +27479,18 @@ declare module com {
 					export class NavigationMenuView extends androidx.recyclerview.widget.RecyclerView implements androidx.appcompat.view.menu.MenuView {
 						public static class: java.lang.Class<com.google.android.material.internal.NavigationMenuView>;
 						public initialize(param0: androidx.appcompat.view.menu.MenuBuilder): void;
-						public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>): boolean;
+						public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>): boolean;
 						public stopNestedScroll(): void;
 						public constructor(param0: globalAndroid.content.Context);
 						public stopNestedScroll(param0: number): void;
 						public computeVerticalScrollRange(): number;
-						public dispatchNestedPreScroll(param0: number, param1: number, param2: native.Array<number>, param3: native.Array<number>, param4: number): boolean;
+						public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number>, param3: androidNative.Array<number>, param4: number): boolean;
 						public startNestedScroll(param0: number, param1: number): boolean;
 						public computeHorizontalScrollOffset(): number;
 						public computeHorizontalScrollRange(): number;
 						public startNestedScroll(param0: number): boolean;
 						public getWindowAnimations(): number;
-						public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>): boolean;
+						public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>): boolean;
 						public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number);
 						public computeVerticalScrollExtent(): number;
 						public hasNestedScrollingParent(param0: number): boolean;
@@ -27498,7 +27498,7 @@ declare module com {
 						public computeHorizontalScrollExtent(): number;
 						public computeVerticalScrollOffset(): number;
 						public hasNestedScrollingParent(): boolean;
-						public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: native.Array<number>, param5: number): boolean;
+						public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number>, param5: number): boolean;
 					}
 				}
 			}
@@ -27573,9 +27573,9 @@ declare module com {
 					export class StateListAnimator {
 						public static class: java.lang.Class<com.google.android.material.internal.StateListAnimator>;
 						public constructor();
-						public addState(param0: native.Array<number>, param1: globalAndroid.animation.ValueAnimator): void;
+						public addState(param0: androidNative.Array<number>, param1: globalAndroid.animation.ValueAnimator): void;
 						public jumpToCurrentState(): void;
-						public setState(param0: native.Array<number>): void;
+						public setState(param0: androidNative.Array<number>): void;
 					}
 					export module StateListAnimator {
 						export class Tuple {
@@ -27614,9 +27614,9 @@ declare module com {
 				export module internal {
 					export class ThemeEnforcement {
 						public static class: java.lang.Class<com.google.android.material.internal.ThemeEnforcement>;
-						public static obtainStyledAttributes(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: native.Array<number>, param3: number, param4: number, param5: native.Array<number>): globalAndroid.content.res.TypedArray;
+						public static obtainStyledAttributes(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: androidNative.Array<number>, param3: number, param4: number, param5: androidNative.Array<number>): globalAndroid.content.res.TypedArray;
 						public static checkMaterialTheme(param0: globalAndroid.content.Context): void;
-						public static obtainTintedStyledAttributes(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: native.Array<number>, param3: number, param4: number, param5: native.Array<number>): androidx.appcompat.widget.TintTypedArray;
+						public static obtainTintedStyledAttributes(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: androidNative.Array<number>, param3: number, param4: number, param5: androidNative.Array<number>): androidx.appcompat.widget.TintTypedArray;
 						public static checkAppCompatTheme(param0: globalAndroid.content.Context): void;
 						public static createThemedContext(param0: globalAndroid.content.Context, param1: globalAndroid.util.AttributeSet, param2: number, param3: number): globalAndroid.content.Context;
 						public static isAppCompatTheme(param0: globalAndroid.content.Context): boolean;
@@ -28206,7 +28206,7 @@ declare module com {
 						/** @deprecated */
 						public setShadowRadius(param0: number): void;
 						public drawShape(param0: globalAndroid.graphics.Canvas, param1: globalAndroid.graphics.Paint, param2: globalAndroid.graphics.Path, param3: globalAndroid.graphics.RectF): void;
-						public onStateChange(param0: native.Array<number>): boolean;
+						public onStateChange(param0: androidNative.Array<number>): boolean;
 						/** @deprecated */
 						public setShadowEnabled(param0: boolean): void;
 						public getFillColor(): globalAndroid.content.res.ColorStateList;
