@@ -32,9 +32,33 @@ dependencies {
     // testCompileOnly  "com.android.support:support-v4:27.0.1"
 
     //AndroidX
-    //testCompileOnly  "androidx.legacy:legacy-support-v4:1.0.0"
-    //testCompileOnly  "androidx.appcompat:appcompat:1.0.0"
-    //testCompileOnly   "com.google.android.material:material:1.0.0"
+    // testCompileOnly  "androidx.legacy:legacy-support-v4:1.0.0"
+    // testCompileOnly  "androidx.appcompat:appcompat:1.0.0"
+    // testCompileOnly   "com.google.android.material:material:1.0.0"
+
+    def androidXLegacyVersion = "1.0.0"
+
+    def androidXAppCompatVersion = "1.1.0"
+
+    def androidXMaterialVersion = "1.1.0"
+
+    def androidXExifInterfaceVersion = "1.2.0"
+
+    def androidXViewPagerVersion = "1.0.0"
+
+    def androidXFragmentVersion = "1.2.5"
+
+    def androidXTransitionVersion = "1.3.1"
+
+
+    testCompileOnly "androidx.multidex:multidex:2.0.1"
+    testCompileOnly "androidx.legacy:legacy-support-v4:$androidXLegacyVersion"
+    testCompileOnly "androidx.appcompat:appcompat:$androidXAppCompatVersion"
+    testCompileOnly "com.google.android.material:material:$androidXMaterialVersion"
+    testCompileOnly "androidx.exifinterface:exifinterface:$androidXExifInterfaceVersion"
+    testCompileOnly "androidx.viewpager2:viewpager2:$androidXViewPagerVersion"
+    testCompileOnly "androidx.fragment:fragment:$androidXFragmentVersion"
+    testCompileOnly "androidx.transition:transition:$androidXTransitionVersion"
 }
 
 jar {

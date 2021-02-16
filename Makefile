@@ -50,9 +50,13 @@ android-platform-29:
 	java -jar dts-generator/build/libs/dts-generator.jar -input ${ANDROID_HOME}/platforms/android-29/android.jar
 	mv out/android.d.ts out/android-platform-29.d.ts
 
+android-platform-30:
+	java -jar dts-generator/build/libs/dts-generator.jar -input ${ANDROID_HOME}/platforms/android-30/android.jar
+	mv out/android.d.ts out/android-platform-30.d.ts
+
 android-platform-all: android-platform-17 android-platform-18 android-platform-19 android-platform-20 android-platform-21 \
 	android-platform-22 android-platform-23 android-platform-24 android-platform-25 android-platform-26 android-platform-27 \
-	android-platform-28 android-platform-29
+	android-platform-28 android-platform-29 android-platform-30
 
 androidx-17:
 	java -jar dts-generator/build/libs/dts-generator.jar \
@@ -84,10 +88,16 @@ androidx-29:
 	-super ${ANDROID_HOME}/platforms/android-29/android.jar -skip-declarations
 	mv out/android.d.ts out/androidx-29.d.ts
 
+androidx-30:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-30/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-30.d.ts
+
 test-compare-output:
 	java -jar dts-generator/build/libs/dts-generator.jar \
 	-input libs
 	cmp out/android.d.ts test/expected-output/android.d.ts
 	cmp out/android-declarations.d.ts test/expected-output/android-declarations.d.ts
 
-androidx-all: androidx-17 androidx-23 androidx-26 androidx-28 androidx-29
+androidx-all: androidx-17 androidx-23 androidx-26 androidx-28 androidx-29 androidx-30
