@@ -23,6 +23,7 @@ In order to use this utility, the first thing to do is download it.
 git clone https://github.com/NativeScript/android-dts-generator.git
 cd android-dts-generator
 ```
+
 ## Generate definitons for Android SDK
 ```shell
 cd dts-generator
