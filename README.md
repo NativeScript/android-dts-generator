@@ -17,6 +17,14 @@ A tool that generates TypeScript declaration files (.d.ts) from Jars
 
 
 Generate definitions following any of the approaches described below. Once you have run any of commands, you can find the generated typings in `dts-generator/out` directory.
+
+## How to use?
+In order to use this utility, the first thing to do is download it.
+```shell
+git clone https://github.com/NativeScript/android-dts-generator.git
+cd android-dts-generator
+```
+
 ## Generate definitons for Android SDK
 ```shell
 cd dts-generator
