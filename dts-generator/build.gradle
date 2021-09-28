@@ -9,6 +9,16 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 def version = "3.0.0"
 
+if(!project.hasProperty("loadedProjectDeps")){
+    Properties projectDeps = new Properties()
+    projectDeps.load(new FileInputStream("$project.rootDir/gradle.properties"))
+    projectDeps.each { prop ->
+        project.ext.set(prop.key, prop.value)
+    }
+    project.ext.loadedProjectDeps = true
+}
+
+
 project.ext.extractedDependenciesDir = "jar-files"
 if(project.hasProperty("jarsOutput")) {
     project.ext.extractedDependenciesDir = project.ext.jarsOutput
@@ -76,6 +86,8 @@ jar {
         attributes 'Specification-Version': version
         attributes 'Manifest-Version': version
     }
+
+    duplicatesStrategy = 'include'
 }
 
 task copyJarToBuildTools (type: Copy) {
