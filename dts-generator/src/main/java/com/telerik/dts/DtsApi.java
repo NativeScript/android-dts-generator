@@ -103,7 +103,9 @@ public class DtsApi {
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr1") ||
                         currentFileClassname.startsWith("android.support.v4.media.routing.MediaRouterJellybeanMr2") ||
                         currentFileClassname.contains(".debugger.") ||
-                        currentFileClassname.endsWith("package-info")) {
+                        currentFileClassname.endsWith("package-info") ||
+                        currentFileClassname.endsWith("module-info") ||
+                        currentFileClassname.endsWith("Kt")) {
                     continue;
                 }
 
@@ -112,6 +114,7 @@ public class DtsApi {
 
                 this.namespaceParts = currentFileClassname.split("\\.");
                 if(isIgnoredNamespace()) {
+                    System.out.println(String.format("Found ignored namespace. %s", String.join(".", this.namespaceParts)));
                     continue;
                 }
 
@@ -1235,6 +1238,10 @@ public class DtsApi {
     private List<String> getIgnoredNamespaces(){
         // for some reason these namespaces are references but not existing, so we are replacing all types from these namespaces with "any"
         List<String> result = new ArrayList<>();
+
+        result.add("kotlin");
+        result.add("org.jetbrains");
+        result.add("org.intellij");
 
         result.add("android.app.job");
         result.add("android.app.SharedElementCallback");
