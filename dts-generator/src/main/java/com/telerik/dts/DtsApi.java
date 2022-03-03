@@ -13,7 +13,11 @@ import org.apache.bcel.generic.ReferenceType;
 import org.apache.bcel.generic.Type;
 import org.apache.bcel.util.BCELComparator;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,7 +81,7 @@ public class DtsApi {
         this.aliasedTypes = new HashMap<>();
     }
 
-    public String generateDtsContent(List<JavaClass> javaClasses){
+    public String generateDtsContent(List<JavaClass> javaClasses) {
         this.prevClass = null;
 
         if ((javaClasses != null) && (javaClasses.size() > 0)) {
@@ -95,7 +99,7 @@ public class DtsApi {
 
                 Signature signature = this.getSignature(currClass);
                 TypeDefinition typeDefinition = null;
-                if(signature != null) {
+                if (signature != null) {
                     typeDefinition = new TypeDefinition(signature.getSignature(), currentFileClassname);
                 }
 
@@ -111,7 +115,7 @@ public class DtsApi {
                 // TODO: optimize
 
                 this.namespaceParts = currentFileClassname.split("\\.");
-                if(isIgnoredNamespace()) {
+                if (isIgnoredNamespace()) {
                     continue;
                 }
 
@@ -207,7 +211,7 @@ public class DtsApi {
     private String replaceIgnoredNamespaces(String content) {
         String regexFormat = "(?<Replace>%s(?:(?:\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>]*>)*)(?<Suffix>[^a-zA-Z\\d]+)";
         // these namespaces are not known in some android api levels, so we cannot use them in android-support for instance, so we are replacing them with any
-        for (String ignoredNamespace: this.getIgnoredNamespaces()) {
+        for (String ignoredNamespace : this.getIgnoredNamespaces()) {
             String regexString = String.format(regexFormat, ignoredNamespace.replace(".", "\\."));
             content = content.replaceAll(regexString, "any$2");
             regexString = String.format(regexFormat, getGlobalAliasedClassName(ignoredNamespace).replace(".", "\\."));
@@ -223,14 +227,19 @@ public class DtsApi {
     public static String serializeGenerics() {
         StringBuilder sb = new StringBuilder();
         sb.append("//Generics information:\n");
-        for(Tuple<String, Integer> generic: generics) {
+        for (Tuple<String, Integer> generic : generics) {
             sb.append(String.format("//%s:%s\n", generic.x, generic.y));
         }
         return sb.toString();
     }
 
-    public static void loadGenerics(File inputFile) throws Exception {
-        List<String> lines = Files.readAllLines(inputFile.toPath());
+    public static void loadGenericsFromStream(InputStream stream) throws Exception {
+        List<String> doc =
+            new BufferedReader(new InputStreamReader(stream,
+                    StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
+        loadGenericsLines(doc);
+    }
+    public static void loadGenericsLines(List<String> lines) throws Exception {
         for(String line: lines) {
             if(!line.equals("")) {
                 while(line.startsWith("/")){
@@ -238,10 +247,19 @@ public class DtsApi {
                 }
                 String[] parts = line.split(":");
                 if (parts.length != 2) {
-                    throw new Exception(String.format("Invalid generic info(%s) in file %s", line, inputFile));
+                    throw new Exception(String.format("Invalid generic info(%s)", line));
                 }
                 externalGenerics.add(new Tuple<>(parts[0], Integer.parseInt(parts[1])));
             }
+        }
+    }
+    public static void loadGenerics(File inputFile) throws Exception {
+        System.out.println("loadGenerics from file: " + inputFile.getAbsolutePath());
+        try {
+            List<String> lines = Files.readAllLines(inputFile.toPath());
+            loadGenericsLines(lines);
+        } catch (Exception e) {
+            throw new Exception(String.format("%s in file %s", e.getMessage(), inputFile));
         }
     }
 
