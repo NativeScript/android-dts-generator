@@ -23,6 +23,10 @@ public class Main {
 	// whether to skip the declarations file generation
 	private static final String SKIP_DECLARATIONS = "-skip-declarations";
 
+	// whether to ignore obfuscated classes/namespaces/methods
+	// the parameter defines the length of obfuscated names to detect
+	private static final String IGNORE_OBFUSCATED = "-ignore-obfuscated";
+
 	private static final String HELP = "-help";
 
 	public static void main(String[] args) {
@@ -68,6 +72,13 @@ public class Main {
 
 				if (commandArg.equals(CLASS_MODE)) {
 					inputParameters.setClassMode(true);
+				}
+
+				if (commandArg.equals(IGNORE_OBFUSCATED)) {
+					if (i != (args.length - 1)) {
+						String nextParam = args[i + 1];
+						inputParameters.setIgnoreObfuscatedNameLength(Integer.valueOf(nextParam));
+					}
 				}
 
 				if (commandArg.equals(OUT_DIR)) {
