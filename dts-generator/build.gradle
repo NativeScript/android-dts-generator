@@ -1,9 +1,33 @@
+import java.nio.file.Paths
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+
 apply plugin: 'java-library'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-def version = "2.0.0"
+def version = "3.0.0"
+
+if(!project.hasProperty("loadedProjectDeps")){
+    Properties projectDeps = new Properties()
+    projectDeps.load(new FileInputStream("$project.rootDir/gradle.properties"))
+    projectDeps.each { prop ->
+        project.ext.set(prop.key, prop.value)
+    }
+    project.ext.loadedProjectDeps = true
+}
+
+
+// todo: check if still needed
+// if(!project.hasProperty("loadedProjectDeps")){
+//     Properties projectDeps = new Properties()
+//     projectDeps.load(new FileInputStream("$project.rootDir/gradle.properties"))
+//     projectDeps.each { prop ->
+//         project.ext.set(prop.key, prop.value)
+//     }
+//     project.ext.loadedProjectDeps = true
+// }
 
 project.ext.extractedDependenciesDir = "jar-files"
 if(project.hasProperty("jarsOutput")) {
@@ -12,7 +36,7 @@ if(project.hasProperty("jarsOutput")) {
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 
 allprojects {
@@ -24,9 +48,11 @@ allprojects {
 }
 
 dependencies {
-    implementation 'org.apache.bcel:bcel:6.5.0'
-    implementation 'commons-io:commons-io:2.8.0'
-    implementation 'com.github.spotbugs:spotbugs:3.1.12'
+    // println "\t ~ [DEBUG][dts-generator] build.gradle - bcel_version = ${bcel_version}..."
+
+    implementation "org.apache.bcel:bcel:${bcel_version}"
+    implementation "commons-io:commons-io:${commons_io_version}"
+    implementation "com.github.spotbugs:spotbugs:${spotbugs_version}"
 
     // add your dependency here as the example bellow, make sure you are using testCompileOnly
     // testCompileOnly  "com.android.support:support-v4:27.0.1"
@@ -65,13 +91,17 @@ jar {
     //pack jar dependencies into the final jar
     configurations.implementation.setCanBeResolved(true)
     from configurations.implementation.collect { it.isDirectory() ? it : zipTree(it) }
-
+    from('src/main/resources') {
+      include 'generics.txt'
+   }
     //set main class for the jar
     manifest {
         attributes 'Main-Class': 'com.telerik.Main'
         attributes 'Specification-Version': version
         attributes 'Manifest-Version': version
     }
+
+    duplicatesStrategy = 'include'
 }
 
 task copyJarToBuildTools (type: Copy) {
@@ -90,9 +120,9 @@ task extractAllJars {
         def dependencyCounter = 0
         while (iter.hasNext()) {
             //declaring variable as specific class for getting code completion in Android Studio
-            org.gradle.api.internal.artifacts.DefaultResolvedArtifact nextDependency = iter.next()
+            ResolvedDependency nextDependency = iter.next()
 
-            def outputDir = java.nio.file.Paths.get(extractedDependenciesDir, nextDependency.toString()).normalize().toString().replace(':', '_')
+            def outputDir = Paths.get(extractedDependenciesDir, nextDependency.toString()).normalize().toString().replace(':', '_')
             explodeAar(nextDependency.file, outputDir)
             dependencyCounter++
         }
@@ -101,10 +131,10 @@ task extractAllJars {
 
 def explodeAar(File compileDependency, String outputDir) {
     if (compileDependency.name.endsWith(".aar")) {
-        java.util.jar.JarFile jar = new java.util.jar.JarFile(compileDependency)
+        JarFile jar = new JarFile(compileDependency)
         Enumeration enumEntries = jar.entries()
         while (enumEntries.hasMoreElements()) {
-            java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement()
+            JarEntry file = (JarEntry) enumEntries.nextElement()
             if (file.name.endsWith(".jar")) {
                 def f = new File(outputDir, file.name)
                 new File(f.parent).mkdirs()

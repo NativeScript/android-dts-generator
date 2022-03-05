@@ -1,15 +1,24 @@
 package com.telerik.dts;
 
 import com.telerik.InputParameters;
+import com.telerik.Main;
 
 import org.apache.bcel.classfile.JavaClass;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 /**
  * Created by plamen5kov on 6/17/16.
@@ -43,7 +52,10 @@ public class Generator {
     }
 
     private void generateDts() throws Exception {
-
+        if(inputGenericsFile == null) {
+            InputStream stream = Main.class.getClassLoader().getResourceAsStream("generics.txt");
+            DtsApi.loadGenericsFromStream(stream);
+        }
         if(inputGenericsFile != null){
             DtsApi.loadGenerics(inputGenericsFile);
         }
@@ -95,6 +107,23 @@ public class Generator {
     private void loadJavaClasses(List<File> jars) throws IOException {
         for (File file : jars) {
             if (file.exists()) {
+                if (file.isFile() && file.getName().endsWith(".aar")) {
+                    try {
+                        ZipFile zipFile = new ZipFile(file);
+
+                        Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                        while(entries.hasMoreElements()){
+                            ZipEntry entry = entries.nextElement();
+                            if (entry.getName().equals("classes.jar")) {
+                                JarFile jar = JarFile.readJarInputStream(file.getAbsolutePath(), zipFile.getInputStream(entry));
+                                ClassRepo.cacheJarFile(jar);
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 if (file.isFile() && file.getName().endsWith(".jar")) {
                     JarFile jar = JarFile.readJar(file.getAbsolutePath());
                     ClassRepo.cacheJarFile(jar);

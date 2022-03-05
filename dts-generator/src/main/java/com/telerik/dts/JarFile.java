@@ -2,6 +2,7 @@ package com.telerik.dts;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarInputStream;
@@ -29,11 +30,11 @@ public class JarFile implements ClassMapProvider {
 		return classMap;
 	}
 
-	public static JarFile readJar(String path) throws ClassFormatException,IOException {
+	public static JarFile readJarInputStream(String path, InputStream stream) throws ClassFormatException,IOException {
 		JarFile jar;
 		JarInputStream jis = null;
 		try {
-			jis = new JarInputStream(new FileInputStream(path));
+			jis = new JarInputStream(stream);
 
 			jar = new JarFile(path);
 
@@ -52,5 +53,8 @@ public class JarFile implements ClassMapProvider {
 			}
 		}
 		return jar;
+	}
+	public static JarFile readJar(String path) throws ClassFormatException,IOException {
+		return readJarInputStream(path, new FileInputStream(path));
 	}
 }
