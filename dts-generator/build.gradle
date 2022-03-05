@@ -48,11 +48,11 @@ allprojects {
 }
 
 dependencies {
-    // println "\t ~ [DEBUG][dts-generator] build.gradle - bcel_version = ${bcel_version}..."
+    // println "\t ~ [DEBUG][dts-generator] build.gradle - ns_default_bcel_version = ${ns_default_bcel_version}..."
 
-    implementation "org.apache.bcel:bcel:${bcel_version}"
-    implementation "commons-io:commons-io:${commons_io_version}"
-    implementation "com.github.spotbugs:spotbugs:${spotbugs_version}"
+    implementation "org.apache.bcel:bcel:${ns_default_bcel_version}"
+    implementation "commons-io:commons-io:${ns_default_commons_io_version}"
+    implementation "com.github.spotbugs:spotbugs:${ns_default_spotbugs_version}"
 
     // add your dependency here as the example bellow, make sure you are using testCompileOnly
     // testCompileOnly  "com.android.support:support-v4:27.0.1"
@@ -63,20 +63,12 @@ dependencies {
     // testCompileOnly   "com.google.android.material:material:1.0.0"
 
     def androidXLegacyVersion = "1.0.0"
-
     def androidXAppCompatVersion = "1.4.1"
-
     def androidXMaterialVersion = "1.5.0"
-
     def androidXExifInterfaceVersion = "1.3.3"
-
     def androidXViewPagerVersion = "1.0.0"
-
     def androidXFragmentVersion = "1.4.1"
-
     def androidXTransitionVersion = "1.4.1"
-
-
 
     testCompileOnly "androidx.multidex:multidex:2.0.1"
     testCompileOnly "androidx.legacy:legacy-support-v4:$androidXLegacyVersion"
