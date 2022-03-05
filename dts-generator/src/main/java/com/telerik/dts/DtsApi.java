@@ -1,5 +1,7 @@
 package com.telerik.dts;
 
+import com.telerik.InputParameters;
+
 import org.apache.bcel.classfile.Attribute;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.FieldOrMethod;
@@ -68,10 +70,12 @@ public class DtsApi {
     private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
     private Pattern isWordPattern = Pattern.compile("^[\\w\\d]+$");
     private Pattern isVoid = Pattern.compile("V(\\^.*\\;)?");
+    private int ignoreObfuscatedNameLength;
     private HashSet<String> warnedMissing = new HashSet<>();
 
-    public DtsApi(boolean allGenericImplements) {
+    public DtsApi(boolean allGenericImplements, InputParameters inputParameters) {
         this.allGenericImplements = allGenericImplements;
+        this.ignoreObfuscatedNameLength = inputParameters.getIgnoreObfuscatedNameLength();
         this.indent = 0;
 
         overrideFieldComparator();
@@ -96,8 +100,11 @@ public class DtsApi {
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
 
-                String simpleClassName = getSimpleClassname(currClass);
 
+                String simpleClassName = getSimpleClassname(currClass);
+                if (isObfuscated(simpleClassName)) {
+                    continue;
+                }
                 Signature signature = this.getSignature(currClass);
                 TypeDefinition typeDefinition = null;
                 if (signature != null) {
@@ -204,9 +211,9 @@ public class DtsApi {
             Arrays.sort(refs);
         }
 
-        String conent = replaceIgnoredNamespaces(sbContent.toString());
+        String content = replaceIgnoredNamespaces(sbContent.toString());
 
-        return conent;
+        return content;
     }
 
     private String replaceIgnoredNamespaces(String content) {
@@ -659,7 +666,7 @@ public class DtsApi {
     private void processMethod(Method method, JavaClass clazz, TypeDefinition typeDefinition, Set<String> methodsSet) {
         String name = method.getName();
 
-        if (isPrivateGoogleApiMember(name)) return;
+        if (shouldIgnoreMember(name)) return;
 
         if (method.isSynthetic() || (!method.isPublic() && !method.isProtected())) {
             return;
@@ -940,7 +947,7 @@ public class DtsApi {
     private void processField(Field f, JavaClass clazz, TypeDefinition typeDefinition) {
         String fieldName = f.getName();
 
-        if (isPrivateGoogleApiMember(fieldName)) return;
+        if (shouldIgnoreMember(fieldName)) return;
 
         String tabs = getTabs(this.indent + 1);
         sbContent.append(tabs + "public ");
@@ -1182,6 +1189,18 @@ public class DtsApi {
 
     private boolean isPrivateGoogleApiMember(String memberName) {
         return memberName.startsWith("zz");
+    }
+    private boolean isObfuscated(String memberName) {
+        if (this.ignoreObfuscatedNameLength > 0) {
+
+            // basic test to remove obfuscated classes
+            return memberName.length() <= this.ignoreObfuscatedNameLength && !memberName.equals("R");
+        }
+        return false;
+    }
+
+    private boolean shouldIgnoreMember(String memberName) {
+        return isPrivateGoogleApiMember(memberName) || isObfuscated(memberName);
     }
 
     private boolean isPrivateGoogleApiClass(String name) {
