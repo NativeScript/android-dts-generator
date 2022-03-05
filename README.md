@@ -1,5 +1,5 @@
 # Android d.ts Generator
-A tool that generates TypeScript declaration files (.d.ts) from Jars
+A tool that generates TypeScript declaration files (.d.ts) from Jars/Aars
 
 > Because there are certain incompatibilities between Java and TypeScript, definitions MAY NOT always be completely accurate. They will however compile and provide auto complete feature inside a modern text editor supporting typings.
 
@@ -24,14 +24,14 @@ cd dts-generator
 java -jar build/libs/dts-generator.jar -input %ANDROID_HOME%/platforms/android-<Platform Level (21/22/23/24)>/android.jar
 ```
 
-## Generate definitions for any Jar
+## Generate definitions for any Jar/Aar
 ```shell
 cd dts-generator
 ./gradlew jar
-java -jar build/libs/dts-generator.jar -input <Path to your Jar>
+java -jar build/libs/dts-generator.jar -input <Path to your Jar/Aar>
 ```
 
-## Pass multiple jars to generator
+## Pass multiple jars/aars to generator
 ```shell
 cd dts-generator
 ./gradlew jar
@@ -60,14 +60,7 @@ Then check whether the make command will return an error comparing the files.
 > Note: If the libs folder content is changed, the expected output should also be changed
 
 ## Generate definitions for .aar
-```
-Open the .aar archive
-Extract the classes.jar and any dependencies it may have inside libs/
-Rename classes.jar if necessary
-```
-```shell
-java -jar build/libs/dts-generator.jar -input classes.jar dependency-of-classes-jar.jar
-```
+Pass the aar as input as you would normally do
 
 ## Complex typings generation
 Generating the typings corresponding to the android and android-support jar files is a bit tricky operation, so here's a detailed explanation how to do it.
