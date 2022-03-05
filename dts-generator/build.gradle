@@ -19,6 +19,16 @@ if(!project.hasProperty("loadedProjectDeps")){
 }
 
 
+// todo: check if still needed
+// if(!project.hasProperty("loadedProjectDeps")){
+//     Properties projectDeps = new Properties()
+//     projectDeps.load(new FileInputStream("$project.rootDir/gradle.properties"))
+//     projectDeps.each { prop ->
+//         project.ext.set(prop.key, prop.value)
+//     }
+//     project.ext.loadedProjectDeps = true
+// }
+
 project.ext.extractedDependenciesDir = "jar-files"
 if(project.hasProperty("jarsOutput")) {
     project.ext.extractedDependenciesDir = project.ext.jarsOutput
@@ -38,6 +48,8 @@ allprojects {
 }
 
 dependencies {
+    // println "\t ~ [DEBUG][dts-generator] build.gradle - bcel_version = ${bcel_version}..."
+
     implementation "org.apache.bcel:bcel:${bcel_version}"
     implementation "commons-io:commons-io:${commons_io_version}"
     implementation "com.github.spotbugs:spotbugs:${spotbugs_version}"
