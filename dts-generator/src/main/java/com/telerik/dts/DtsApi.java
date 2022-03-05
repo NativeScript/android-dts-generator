@@ -68,6 +68,7 @@ public class DtsApi {
     private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
     private Pattern isWordPattern = Pattern.compile("^[\\w\\d]+$");
     private Pattern isVoid = Pattern.compile("V(\\^.*\\;)?");
+    private HashSet<String> warnedMissing = new HashSet<>();
 
     public DtsApi(boolean allGenericImplements) {
         this.allGenericImplements = allGenericImplements;
@@ -610,7 +611,10 @@ public class DtsApi {
 
             // Added guard to prevent NullPointerExceptions in case libs are not provided - the dev can choose to include it and rerun the generator
             if (clazz1 == null) {
-                System.out.println("ignoring definitions in missing dependency: " + intface);
+                if (!warnedMissing.contains(intface)) {
+                    warnedMissing.add(intface);
+                    System.out.println("ignoring definitions in missing dependency: " + intface);
+                }
                 continue;
             }
 
