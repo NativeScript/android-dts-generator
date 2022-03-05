@@ -16,6 +16,7 @@ public class InputParameters {
     private boolean allGenericImplements;
     private boolean skipDeclarations;
     private boolean classMode;
+    private int ignoreObfuscatedNameLength;
 
     public InputParameters() {
         this.outputDir = new File("out");
@@ -24,6 +25,7 @@ public class InputParameters {
         this.allGenericImplements = false;
         this.skipDeclarations = false;
         this.classMode = false;
+        this.ignoreObfuscatedNameLength = 0;
     }
 
     public File getOutputDir() {
@@ -63,4 +65,9 @@ public class InputParameters {
     public boolean getClassMode() { return this.classMode; }
 
     public void setClassMode(boolean classMode) { this.classMode = classMode; }
+
+    public int getIgnoreObfuscatedNameLength() { return this.ignoreObfuscatedNameLength; }
+
+    public void setIgnoreObfuscatedNameLength(int nameLength) { this.ignoreObfuscatedNameLength = nameLength; }
+
 }
