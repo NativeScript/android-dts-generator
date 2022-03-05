@@ -952,12 +952,38 @@ public class DtsApi {
 
         if (shouldIgnoreMember(fieldName)) return;
 
+        //
+        // handle member names that conflict with an inner class. For example:
+        // 
+        // class OuterClass {
+        //   public static InnerClass: OuterClass.InnerClass;
+        // 
+        //   class InnerClass {}   
+        // }
+        //
+        // the static field on the OuterClass will have a field type of OuterClass$InnerClass
+        // which we can check for and skip writing the static field to the definitions
+        // since typescript cannot handle this scenario well.
+        //
+
+        // the name of the field eg. InnerClass
+        String name = f.getName();
+
+        // the type of the field eg. OuterClass$InnerClass
+        String fieldTypeString = this.getFieldType(f).toString();
+
+        // we check if the name matches OuterClass (which we are currently in) + "$" + InnerClass
+        if(fieldTypeString.equals(clazz.getClassName() + "$" + name)) {
+            return;
+        }
+
         String tabs = getTabs(this.indent + 1);
         sbContent.append(tabs + "public ");
         if (f.isStatic()) {
             sbContent.append("static ");
         }
-        sbContent.appendln(f.getName() + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition) + ";");
+
+        sbContent.appendln(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition) + ";");
     }
 
     private void addClassField(JavaClass clazz) {
