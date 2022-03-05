@@ -1,6 +1,7 @@
 package com.telerik.dts;
 
 import com.telerik.InputParameters;
+import com.telerik.Main;
 
 import org.apache.bcel.classfile.JavaClass;
 
@@ -8,7 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -49,7 +52,10 @@ public class Generator {
     }
 
     private void generateDts() throws Exception {
-
+        if(inputGenericsFile == null) {
+            InputStream stream = Main.class.getClassLoader().getResourceAsStream("generics.txt");
+            DtsApi.loadGenericsFromStream(stream);
+        }
         if(inputGenericsFile != null){
             DtsApi.loadGenerics(inputGenericsFile);
         }
