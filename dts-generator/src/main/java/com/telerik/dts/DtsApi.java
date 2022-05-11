@@ -72,6 +72,7 @@ public class DtsApi {
     private Pattern isVoid = Pattern.compile("V(\\^.*\\;)?");
     private int ignoreObfuscatedNameLength;
     private HashSet<String> warnedMissing = new HashSet<>();
+    private Pattern jsFieldPattern = Pattern.compile("^[a-zA-Z$_][a-zA-Z0-9$_]*$");
 
     public DtsApi(boolean allGenericImplements, InputParameters inputParameters) {
         this.allGenericImplements = allGenericImplements;
@@ -916,6 +917,10 @@ public class DtsApi {
             name = "constructor";
         }
 
+        if (!jsFieldPattern.matcher(name).matches()) {
+            name = "\"" + name +"\"";
+        }
+
         return name;
     }
 
@@ -983,6 +988,10 @@ public class DtsApi {
             sbContent.append("static ");
         }
 
+        if (!jsFieldPattern.matcher(name).matches()) {
+            name = "\"" + name + "\"";
+        }
+        
         sbContent.appendln(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition) + ";");
     }
 
