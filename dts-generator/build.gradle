@@ -9,13 +9,21 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 def version = "3.0.0"
 
-if(!project.hasProperty("loadedProjectDeps")){
+def hasProject = file("$project.rootDir/gradle.properties").exists();
+
+if(!project.hasProperty("loadedProjectDeps") && hasProject){
     Properties projectDeps = new Properties()
     projectDeps.load(new FileInputStream("$project.rootDir/gradle.properties"))
     projectDeps.each { prop ->
         project.ext.set(prop.key, prop.value)
     }
     project.ext.loadedProjectDeps = true
+}
+
+if(!hasProject){
+    project.ext.set("ns_default_bcel_version", "6.5.0");
+    project.ext.set("ns_default_commons_io_version", "2.6");
+    project.ext.set("ns_default_spotbugs_version", "3.1.12");
 }
 
 
