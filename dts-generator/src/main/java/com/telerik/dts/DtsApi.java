@@ -958,7 +958,9 @@ public class DtsApi {
             }
 
             int localVarIndex = m.isStatic() ? idx : idx + 1; // skip "this" variable name
-            LocalVariable localVariable = variables != null && variables.length > localVarIndex ? variables[localVarIndex] : null;
+            LocalVariable localVariable = variables != null && variables.length > localVarIndex
+                ? variables[localVarIndex]
+                : null;
 
             if (localVariable != null) {
                 String name = localVariable.getName();
@@ -969,6 +971,7 @@ public class DtsApi {
                     sb.append(name);
                 }
             } else {
+                // interface declarations will fallback to paramN since they don't have names in the bytecode
                 sb.append("param");
                 sb.append(idx);
             }
