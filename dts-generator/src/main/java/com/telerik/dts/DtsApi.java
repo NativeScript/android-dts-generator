@@ -943,7 +943,7 @@ public class DtsApi {
         }
 
         return name;
-    }   
+    }
 
    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
         LocalVariableTable table = m.getLocalVariableTable();
