@@ -171,6 +171,8 @@ public class DtsApi {
 
                 mapNameMethod = new HashMap<>();
 
+                loadBaseMethods(currClass); //loaded in "baseMethodNames" and "baseMethods"
+
                 addClassField(currClass);
 
                 // process constructors for interfaces
@@ -704,8 +706,6 @@ public class DtsApi {
             return;
         }
 
-        loadBaseMethods(clazz); //loaded in "baseMethodNames" and "baseMethods"
-
         String tabs = getTabs(this.indent + 1);
 
         cacheMethodBySignature(method); //cached in "mapNameMethod"
@@ -856,7 +856,7 @@ public class DtsApi {
     }
 
     private void cacheMethodBySignature(Method m) {
-        String methodName = m.getName();
+        String methodName = getMethodFullSignature(m);
         if (!mapNameMethod.containsKey(methodName)) {
             mapNameMethod.put(methodName, m);
         }
@@ -874,28 +874,20 @@ public class DtsApi {
             while (true && currClass != null) {
                 boolean isJavaLangObject = currClass.getClassName().equals(DtsApi.JavaLangObject);
 
-                // two similar code blocks, split up so that checks if method is constructor isnt done on objects that are not java.lang.Object
-                if (isJavaLangObject) {
-                    for (Method m : currClass.getMethods()) {
-                        if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
-                            // don't write empty constructor typings for java objects
-                            if(isConstructor(m)) {
-                                continue;
-                            }
-
-                            baseMethods.add(m);
-                            baseMethodNames.add(m.getName());
+                for (Method m : currClass.getMethods()) {
+                    if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
+                        // don't write empty constructor typings for java objects
+                        if (isJavaLangObject && isConstructor(m)) {
+                            continue;
                         }
-                    }
 
+                        baseMethods.add(m);
+                        baseMethodNames.add(m.getName());
+                    }
+                }
+                
+                if(isJavaLangObject){
                     break;
-                } else {
-                    for (Method m : currClass.getMethods()) {
-                        if (!m.isSynthetic() && (m.isPublic() || m.isProtected())) {
-                            baseMethods.add(m);
-                            baseMethodNames.add(m.getName());
-                        }
-                    }
                 }
 
                 String scn = currClass.getSuperclassName();
