@@ -316,20 +316,22 @@ public class DtsApi {
 
     private static String replaceNonGenericUsage(String content, String className, Integer occurencies, String javalangObject) {
         String result = content;
-        Pattern usedAsNonGenericPattern = Pattern.compile("(?<Prefix>[^a-zA-Z\\d\\s:]*)" + className.replace(".", "\\.") + "(?<Suffix>[^a-zA-Z\\d^\\.^\\$^\\<])");
+        Pattern usedAsNonGenericPattern = Pattern.compile(className.replace(".", "\\.") + "(?<Suffix>[^a-zA-Z\\d^\\.^\\$^\\<])");
         Matcher matcher = usedAsNonGenericPattern.matcher(result);
-        if(matcher.find()) {
-            List<String> arguments = new ArrayList<>();
-            for (int i = 0; i < occurencies; i++) {
-                arguments.add(javalangObject);
-            }
-            String classSuffix = "<" + String.join(",", arguments) + ">";
+        
+        if (!matcher.find())
+            return content;
 
-            System.out.println(String.format("Appending %s to occurrences of class %s without passed generic types", classSuffix, className));
-
-            String replaceString = String.format("$1%s%s$2", className, classSuffix);
-            result = matcher.replaceAll(replaceString);
+        List<String> arguments = new ArrayList<>();
+        for (int i = 0; i < occurencies; i++) {
+            arguments.add(javalangObject);
         }
+        String classSuffix = "<" + String.join(",", arguments) + ">";
+        
+        System.out.println(String.format("Appending %s to occurrences of class %s without passed generic types", classSuffix, className));
+
+        String replaceString = String.format("%s%s$1", className, classSuffix);
+        result = matcher.replaceAll(replaceString);
         return result;
     }
 
