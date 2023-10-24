@@ -6,6 +6,8 @@ import org.apache.bcel.classfile.Attribute;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.FieldOrMethod;
 import org.apache.bcel.classfile.JavaClass;
+import org.apache.bcel.classfile.LocalVariable;
+import org.apache.bcel.classfile.LocalVariableTable;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.classfile.Signature;
 import org.apache.bcel.generic.ArrayType;
@@ -73,6 +75,25 @@ public class DtsApi {
     private int ignoreObfuscatedNameLength;
     private HashSet<String> warnedMissing = new HashSet<>();
     private Pattern jsFieldPattern = Pattern.compile("^[a-zA-Z$_][a-zA-Z0-9$_]*$");
+
+    private Set<String> reservedJsKeywords = Set.of(
+        "abstract", "arguments", "await", "boolean",
+        "break", "byte", "case", "catch",
+        "char", "class", "const", "continue",
+        "debugger", "default", "delete", "do",
+        "double", "else", "enum", "eval",
+        "export", "extends", "false", "final",
+        "finally", "float", "for", "function",
+        "goto", "if", "implements", "import",
+        "in", "instanceof", "int", "interface",
+        "let", "long", "native", "new",
+        "null", "package", "private", "protected",
+        "public", "return", "short", "static",
+        "super", "switch", "synchronized", "this",
+        "throw", "throws", "transient", "true",
+        "try", "typeof", "var", "void",
+        "volatile", "while", "with", "yield"
+    );
 
     public DtsApi(boolean allGenericImplements, InputParameters inputParameters) {
         this.allGenericImplements = allGenericImplements;
@@ -924,7 +945,10 @@ public class DtsApi {
         return name;
     }
 
-    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
+   private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
+        LocalVariableTable table = m.getLocalVariableTable();
+        LocalVariable[] variables = table != null ? table.getLocalVariableTable() : null;
+
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         int idx = 0;
@@ -932,8 +956,26 @@ public class DtsApi {
             if (idx > 0) {
                 sb.append(", ");
             }
-            sb.append("param");
-            sb.append(idx++);
+
+            int localVarIndex = m.isStatic() ? idx : idx + 1; // skip "this" variable name
+            LocalVariable localVariable = variables != null && variables.length > localVarIndex
+                ? variables[localVarIndex]
+                : null;
+
+            if (localVariable != null) {
+                String name = localVariable.getName();
+                if(reservedJsKeywords.contains(name)){
+                    System.out.println(String.format("Appending _ to reserved JS keyword %s", name));
+                    sb.append(name + "_");
+                } else {
+                    sb.append(name);
+                }
+            } else {
+                // interface declarations will fallback to paramN since they don't have names in the bytecode
+                sb.append("param");
+                sb.append(idx);
+            }
+            idx++;
             sb.append(": ");
 
             String paramTypeName = getTypeScriptTypeFromJavaType(type, typeDefinition);
