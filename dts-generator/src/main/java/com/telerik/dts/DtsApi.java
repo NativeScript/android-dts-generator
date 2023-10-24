@@ -1028,7 +1028,13 @@ public class DtsApi {
             name = "\"" + name + "\"";
         }
         
-        sbContent.appendln(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition) + ";");
+        sbContent.append(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition));
+        if (f.getConstantValue() != null) {
+            sbContent.appendln( " = " + f.getConstantValue() + ";");
+        } else {
+            sbContent.appendln(";");
+
+        }
     }
 
     private void addClassField(JavaClass clazz) {
