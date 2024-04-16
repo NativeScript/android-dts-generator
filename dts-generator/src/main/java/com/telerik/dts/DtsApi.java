@@ -1289,16 +1289,16 @@ public class DtsApi {
     }
 
     private void overrideFieldComparator() {
-        BCELComparator cmp = Field.getComparator();
+        BCELComparator<Field> cmp = Field.getComparator();
 
-        Field.setComparator(new BCELComparator() {
+        Field.setComparator(new BCELComparator<>() {
             @Override
-            public boolean equals(Object o, Object o1) {
-                return ((Field) o).getName().equals(((Field) o1).getName());
+            public boolean equals(Field o, Field o1) {
+                return o.getName().equals(o1.getName());
             }
 
             @Override
-            public int hashCode(Object o) {
+            public int hashCode(Field o) {
                 return cmp.hashCode(o);
             }
         });
