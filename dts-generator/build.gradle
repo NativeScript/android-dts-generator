@@ -175,9 +175,9 @@ def explodeAar(File compileDependency, String outputDir) {
     }
 }
 
-def buildMetadata = tasks.findByPath(":app:buildMetadata")
+// def buildMetadata = tasks.findByPath(":app:buildMetadata")
 
-if (buildMetadata != null) {
-    processResources.dependsOn(buildMetadata)
-    compileJava.dependsOn(buildMetadata)
-}
+// if (buildMetadata != null) {
+//     processResources.dependsOn(buildMetadata)
+//     compileJava.dependsOn(buildMetadata)
+// }
