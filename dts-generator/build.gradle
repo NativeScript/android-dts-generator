@@ -34,7 +34,7 @@ if (!project.hasProperty("loadedProjectDeps")  && hasProject) {
 }
 
 if(!hasProject){
-    project.ext.set("ns_default_bcel_version", " 6.8.2");
+    project.ext.set("ns_default_bcel_version", "6.8.2");
     project.ext.set("ns_default_commons_io_version", "2.6");
     project.ext.set("ns_default_spotbugs_version", "3.1.12");
 }
