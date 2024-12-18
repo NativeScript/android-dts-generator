@@ -5,8 +5,8 @@ import java.util.jar.JarFile
 apply plugin: 'java-library'
 
 java {
-    sourceCompatibility = '17'
-    targetCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 def version = "4.0.0"
@@ -34,7 +34,7 @@ if (!project.hasProperty("loadedProjectDeps")  && hasProject) {
 }
 
 if(!hasProject){
-    project.ext.set("ns_default_bcel_version", " 6.8.2");
+    project.ext.set("ns_default_bcel_version", "6.10.0");
     project.ext.set("ns_default_commons_io_version", "2.6");
     project.ext.set("ns_default_spotbugs_version", "3.1.12");
 }
