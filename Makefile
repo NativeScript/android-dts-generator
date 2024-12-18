@@ -114,10 +114,28 @@ androidx-32:
 	-super ${ANDROID_HOME}/platforms/android-32/android.jar -skip-declarations
 	mv out/android.d.ts out/androidx-32.d.ts
 
+androidx-33:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-33/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-33.d.ts
+
+androidx-34:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-34/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-34.d.ts
+
+androidx-35:
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	-input dts-generator/jar-files/ -input-generics libs/generics.txt \
+	-super ${ANDROID_HOME}/platforms/android-35/android.jar -skip-declarations
+	mv out/android.d.ts out/androidx-35.d.ts
+
 test-compare-output:
 	java -jar dts-generator/build/libs/dts-generator.jar \
 	-input libs
 	cmp out/android.d.ts test/expected-output/android.d.ts
 	cmp out/android-declarations.d.ts test/expected-output/android-declarations.d.ts
 
-androidx-all: androidx-17 androidx-23 androidx-26 androidx-28 androidx-29 androidx-30 androidx-31 androidx-32
+androidx-all: androidx-17 androidx-23 androidx-26 androidx-28 androidx-29 androidx-30 androidx-31 androidx-32 androidx-33 androidx-34 androidx-35
