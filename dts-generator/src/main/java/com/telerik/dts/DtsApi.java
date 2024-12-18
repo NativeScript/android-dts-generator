@@ -77,22 +77,22 @@ public class DtsApi {
     private Pattern jsFieldPattern = Pattern.compile("^[a-zA-Z$_][a-zA-Z0-9$_]*$");
 
     private Set<String> reservedJsKeywords = Set.of(
-        "abstract", "arguments", "await", "boolean",
-        "break", "byte", "case", "catch",
-        "char", "class", "const", "continue",
-        "debugger", "default", "delete", "do",
-        "double", "else", "enum", "eval",
-        "export", "extends", "false", "final",
-        "finally", "float", "for", "function",
-        "goto", "if", "implements", "import",
-        "in", "instanceof", "int", "interface",
-        "let", "long", "native", "new",
-        "null", "package", "private", "protected",
-        "public", "return", "short", "static",
-        "super", "switch", "synchronized", "this",
-        "throw", "throws", "transient", "true",
-        "try", "typeof", "var", "void",
-        "volatile", "while", "with", "yield"
+            "abstract", "arguments", "await", "boolean",
+            "break", "byte", "case", "catch",
+            "char", "class", "const", "continue",
+            "debugger", "default", "delete", "do",
+            "double", "else", "enum", "eval",
+            "export", "extends", "false", "final",
+            "finally", "float", "for", "function",
+            "goto", "if", "implements", "import",
+            "in", "instanceof", "int", "interface",
+            "let", "long", "native", "new",
+            "null", "package", "private", "protected",
+            "public", "return", "short", "static",
+            "super", "switch", "synchronized", "this",
+            "throw", "throws", "transient", "true",
+            "try", "typeof", "var", "void",
+            "volatile", "while", "with", "yield"
     );
 
     public DtsApi(boolean allGenericImplements, InputParameters inputParameters) {
@@ -147,7 +147,7 @@ public class DtsApi {
                 // TODO: optimize
 
                 this.namespaceParts = currentFileClassname.split("\\.");
-                if(isIgnoredNamespace()) {
+                if (isIgnoredNamespace()) {
                     System.out.println(String.format("Found ignored namespace. %s", String.join(".", this.namespaceParts)));
                     continue;
                 }
@@ -270,14 +270,15 @@ public class DtsApi {
 
     public static void loadGenericsFromStream(InputStream stream) throws Exception {
         List<String> doc =
-            new BufferedReader(new InputStreamReader(stream,
-                    StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
+                new BufferedReader(new InputStreamReader(stream,
+                        StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
         loadGenericsLines(doc);
     }
+
     public static void loadGenericsLines(List<String> lines) throws Exception {
-        for(String line: lines) {
-            if(!line.equals("")) {
-                while(line.startsWith("/")){
+        for (String line : lines) {
+            if (!line.equals("")) {
+                while (line.startsWith("/")) {
                     line = line.substring(1, line.length());
                 }
                 String[] parts = line.split(":");
@@ -288,6 +289,7 @@ public class DtsApi {
             }
         }
     }
+
     public static void loadGenerics(File inputFile) throws Exception {
         System.out.println("loadGenerics from file: " + inputFile.getAbsolutePath());
         try {
@@ -305,10 +307,10 @@ public class DtsApi {
 
         List<Tuple<String, Integer>> allGenerics = Stream.concat(generics.stream(), externalGenerics.stream()).collect(Collectors.toList());
 
-        for(Tuple<String, Integer> generic: allGenerics) {
+        for (Tuple<String, Integer> generic : allGenerics) {
             result = replaceNonGenericUsage(result, generic.x, generic.y, any);
             String globalAliasedClassName = getGlobalAliasedClassName(generic.x);
-            if(!generic.x.equals(globalAliasedClassName)) {
+            if (!generic.x.equals(globalAliasedClassName)) {
                 result = replaceNonGenericUsage(result, globalAliasedClassName, generic.y, any);
             }
         }
@@ -320,7 +322,7 @@ public class DtsApi {
         String result = content;
         Pattern usedAsNonGenericPattern = Pattern.compile(className.replace(".", "\\.") + "(?<Suffix>[^a-zA-Z\\d^\\.^\\$^\\<])");
         Matcher matcher = usedAsNonGenericPattern.matcher(result);
-        
+
         if (!matcher.find())
             return content;
 
@@ -329,7 +331,7 @@ public class DtsApi {
             arguments.add(javalangObject);
         }
         String classSuffix = "<" + String.join(",", arguments) + ">";
-        
+
         System.out.println(String.format("Appending %s to occurrences of class %s without passed generic types", classSuffix, className));
 
         String replaceString = String.format("%s%s$1", className, classSuffix);
@@ -339,7 +341,7 @@ public class DtsApi {
 
     private String getExtendsLine(JavaClass currClass, TypeDefinition typeDefinition) {
         String override = this.extendsOverrides.get(currClass.getClassName());
-        if(override != null) {
+        if (override != null) {
             System.out.println(String.format("Found extends override for class %s - %s", currClass.getClassName(), override));
             return " extends " + override;
         }
@@ -348,16 +350,16 @@ public class DtsApi {
             ReferenceType parent = typeDefinition.getParent();
 
             List<ReferenceType> interfaces = typeDefinition.getInterfaces();
-            if(parent != null) {
+            if (parent != null) {
                 result.append(" extends ");
                 result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
             }
-            if(interfaces.size() == 1 || (this.allGenericImplements && interfaces.size() > 0)) {
+            if (interfaces.size() == 1 || (this.allGenericImplements && interfaces.size() > 0)) {
                 result.append(" implements ");
 
                 for (ReferenceType referenceType : interfaces) {
                     String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
-                    if(!this.isPrimitiveTSType(tsType)) {
+                    if (!this.isPrimitiveTSType(tsType)) {
                         result.append(tsType + ", ");
                     }
                 }
@@ -367,7 +369,7 @@ public class DtsApi {
         } else {
             JavaClass superClass = getSuperClass(currClass);
             List<JavaClass> interfaces = getInterfaces(currClass);
-            if(interfaces.size() == 1 && superClass == null && currClass.getSuperclassName().equals(DtsApi.JavaLangObject)) {
+            if (interfaces.size() == 1 && superClass == null && currClass.getSuperclassName().equals(DtsApi.JavaLangObject)) {
                 superClass = interfaces.get(0);
                 interfaces.clear();
             }
@@ -394,13 +396,13 @@ public class DtsApi {
 
         }
 
-        if(superClass != null) {
+        if (superClass != null) {
             String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
 
-            if(!extendedClass.equals(DtsApi.JavaLangObject)) {
+            if (!extendedClass.equals(DtsApi.JavaLangObject)) {
                 // check for type override
                 String override = this.typeOverrides.get(extendedClass);
-                if(override != null) {
+                if (override != null) {
                     System.out.println(String.format("Found type override for class %s - %s", extendedClass, override));
                     extendedClass = override;
                 }
@@ -427,11 +429,11 @@ public class DtsApi {
     private static String getGlobalAliasedClassName(String className) {
         String[] parts = className.split("\\.");
         String rootNamespace = parts[0];
-        if(globalAliases.containsKey(parts[0])) {
+        if (globalAliases.containsKey(parts[0])) {
             String aliasedNamespace = globalAliases.get(rootNamespace);
             parts = Arrays.copyOfRange(parts, 1, parts.length);
             String result = aliasedNamespace;
-            if(parts.length > 0) {
+            if (parts.length > 0) {
                 result += "." + String.join(".", parts);
             }
             return result;
@@ -441,7 +443,7 @@ public class DtsApi {
     }
 
     private static void addImport(String importToAdd) {
-        if(!imports.stream().anyMatch(x -> x.equals(importToAdd))){
+        if (!imports.stream().anyMatch(x -> x.equals(importToAdd))) {
             imports.add(importToAdd);
         }
     }
@@ -449,17 +451,17 @@ public class DtsApi {
     private String mangleRootClassname(String className) {
         String[] parts = className.split("\\.");
         String rootNamespace = parts[0];
-        if(globalAliases.containsKey(parts[0])) {
+        if (globalAliases.containsKey(parts[0])) {
             String aliasedNamespace = DtsApi.globalAliases.get(rootNamespace);
             String aliasedType = aliasedTypes.get(rootNamespace);
-            if(aliasedType == null) {
+            if (aliasedType == null) {
                 aliasedTypes.put(rootNamespace, aliasedNamespace);
                 addImport(String.format("import %s = %s;\n", aliasedNamespace, rootNamespace));
             }
 
             parts = Arrays.copyOfRange(parts, 1, parts.length);
             String result = aliasedNamespace;
-            if(parts.length > 0) {
+            if (parts.length > 0) {
                 result += "." + String.join(".", parts);
             }
             return result;
@@ -729,15 +731,15 @@ public class DtsApi {
     private boolean methodIsDeprecated(Method method) {
         return Arrays.stream(
                         method
-                        .getAttributes())
-                        .anyMatch(x ->
-                            x.getClass()
-                            .isAssignableFrom(org.apache.bcel.classfile.Deprecated.class));
+                                .getAttributes())
+                .anyMatch(x ->
+                        x.getClass()
+                                .isAssignableFrom(org.apache.bcel.classfile.Deprecated.class));
     }
 
     private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
         StringBuilder2 sbTemp = new StringBuilder2();
-        if(methodIsDeprecated(method)) {
+        if (methodIsDeprecated(method)) {
             sbTemp.appendln(tabs + "/** @deprecated */");
         }
 
@@ -778,11 +780,11 @@ public class DtsApi {
 
     private Type[] getArgumentTypes(Method m) {
         Signature signature = this.getSignature(m);
-        if(signature != null) {
+        if (signature != null) {
             Matcher matcher = methodSignature.matcher(signature.getSignature());
-            if(matcher.matches()) {
+            if (matcher.matches()) {
                 String argumentsSignature = matcher.group(1);
-                if(argumentsSignature.equals("")){
+                if (argumentsSignature.equals("")) {
                     return m.getArgumentTypes();
                 }
                 try {
@@ -803,7 +805,7 @@ public class DtsApi {
         List<Type> types = new ArrayList<>();
         Iterator<String> iter = parser.parameterSignatureIterator();
 
-        while(iter.hasNext()) {
+        while (iter.hasNext()) {
             String parameterString = iter.next();
             Type t = GenericUtilities.getType(parameterString);
             if (t == null) {
@@ -819,9 +821,9 @@ public class DtsApi {
     // gets the full field type including generic types
     private Type getFieldType(Field f) {
         Signature signature = this.getSignature(f);
-        if(signature != null) {
+        if (signature != null) {
             String typeSignature = signature.getSignature();
-            if(typeSignature.equals("")){
+            if (typeSignature.equals("")) {
                 return f.getType();
             }
             try {
@@ -836,11 +838,11 @@ public class DtsApi {
     // gets the full method return type including generic types
     private Type getReturnType(Method m) {
         Signature signature = this.getSignature(m);
-        if(signature != null) {
+        if (signature != null) {
             Matcher matcher = methodSignature.matcher(signature.getSignature());
-            if(matcher.matches()) {
+            if (matcher.matches()) {
                 String returnSignature = matcher.group(2);
-                if(isVoid.matcher(returnSignature).matches()){
+                if (isVoid.matcher(returnSignature).matches()) {
                     return m.getReturnType(); // returning void
                 }
                 return GenericUtilities.getType(returnSignature);
@@ -885,8 +887,8 @@ public class DtsApi {
                         baseMethodNames.add(m.getName());
                     }
                 }
-                
-                if(isJavaLangObject){
+
+                if (isJavaLangObject) {
                     break;
                 }
 
@@ -905,11 +907,11 @@ public class DtsApi {
 
         String scn = clazz.getSuperclassName();
         String override = this.superOverrides.get(clazz.getClassName());
-        if(override != null) {
+        if (override != null) {
             scn = override;
         }
 
-        if(scn.equals("") || scn == null) {
+        if (scn.equals("") || scn == null) {
             return null;
         }
         JavaClass currClass = ClassRepo.findClass(scn);
@@ -933,13 +935,13 @@ public class DtsApi {
         }
 
         if (!jsFieldPattern.matcher(name).matches()) {
-            name = "\"" + name +"\"";
+            name = "\"" + name + "\"";
         }
 
         return name;
     }
 
-   private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
+    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
         LocalVariableTable table = m.getLocalVariableTable();
         LocalVariable[] variables = table != null ? table.getLocalVariableTable() : null;
 
@@ -953,12 +955,12 @@ public class DtsApi {
 
             int localVarIndex = m.isStatic() ? idx : idx + 1; // skip "this" variable name
             LocalVariable localVariable = variables != null && variables.length > localVarIndex
-                ? variables[localVarIndex]
-                : null;
+                    ? variables[localVarIndex]
+                    : null;
 
             if (localVariable != null) {
                 String name = localVariable.getName();
-                if(reservedJsKeywords.contains(name)){
+                if (reservedJsKeywords.contains(name)) {
                     System.out.println(String.format("Appending _ to reserved JS keyword %s", name));
                     sb.append(name + "_");
                 } else {
@@ -1014,7 +1016,7 @@ public class DtsApi {
         String fieldTypeString = this.getFieldType(f).toString();
 
         // we check if the name matches OuterClass (which we are currently in) + "$" + InnerClass
-        if(fieldTypeString.equals(clazz.getClassName() + "$" + name)) {
+        if (fieldTypeString.equals(clazz.getClassName() + "$" + name)) {
             return;
         }
 
@@ -1027,10 +1029,10 @@ public class DtsApi {
         if (!jsFieldPattern.matcher(name).matches()) {
             name = "\"" + name + "\"";
         }
-        
+
         sbContent.append(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition));
         if (f.getConstantValue() != null) {
-            sbContent.appendln( " = " + f.getConstantValue() + ";");
+            sbContent.appendln(" = " + f.getConstantValue() + ";");
         } else {
             sbContent.appendln(";");
 
@@ -1119,14 +1121,14 @@ public class DtsApi {
         } else if (type.equals(Type.STRING)) {
             tsType.append("string");
         } else if (isObjectType) {
-            if(isGenericObjectType) {
-                GenericObjectType genericObjectType = (GenericObjectType)type;
+            if (isGenericObjectType) {
+                GenericObjectType genericObjectType = (GenericObjectType) type;
                 String genericVariable = genericObjectType.getVariable();
-                if(genericVariable != null && isWordPattern.matcher(genericVariable).matches()) {
-                    if(typeDefinition != null && typeDefinition.getGenericDefinitions() != null
+                if (genericVariable != null && isWordPattern.matcher(genericVariable).matches()) {
+                    if (typeDefinition != null && typeDefinition.getGenericDefinitions() != null
                             && typeDefinition.getGenericDefinitions().stream()
-                                .filter(definition -> definition.getLabel().equals(genericVariable)).count() > 0
-                            && ((ObjectType) typeDefinition.getParent()).getClassName().equals(DtsApi.JavaLangObject)){
+                            .filter(definition -> definition.getLabel().equals(genericVariable)).count() > 0
+                            && ((ObjectType) typeDefinition.getParent()).getClassName().equals(DtsApi.JavaLangObject)) {
                         tsType.append(genericObjectType.getVariable());
                         addReference(type);
                         return;
@@ -1139,7 +1141,7 @@ public class DtsApi {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
 
-            if(this.typeOverrides.containsKey(typeName)){
+            if (this.typeOverrides.containsKey(typeName)) {
                 typeName = this.typeOverrides.get(typeName);
             }
 
@@ -1149,11 +1151,11 @@ public class DtsApi {
                 tsType.append(typeName);
             }
 
-            if(type instanceof GenericObjectType) {
+            if (type instanceof GenericObjectType) {
                 GenericObjectType genericType = (GenericObjectType) type;
                 if (genericType.getNumParameters() > 0) {
                     tsType.append("<");
-                    for (ReferenceType refType: genericType.getParameters()){
+                    for (ReferenceType refType : genericType.getParameters()) {
                         useAnyInsteadOfJavaLangObject(refType, typeDefinition, tsType);
                         tsType.append(',');
                     }
@@ -1236,11 +1238,11 @@ public class DtsApi {
 
     // gets the suffix like <T extends javalangComparable<T>>
     private String getTypeSuffix(String fullClassName, TypeDefinition typeDefinition, String extendsLine) {
-        if(typeDefinition == null) {
+        if (typeDefinition == null) {
             return "";
         }
         List<TypeDefinition.GenericDefinition> genericDefinitions = typeDefinition.getGenericDefinitions();
-        if(genericDefinitions != null) {
+        if (genericDefinitions != null) {
             List<String> parts = new ArrayList<>();
             String genericClassName = fullClassName.replace("$", ".");
 
@@ -1248,8 +1250,8 @@ public class DtsApi {
             generics = generics.stream().filter(generic -> generic.x != genericClassName).collect(Collectors.toList());
 
             generics.add(new Tuple<>(fullClassName.replace("$", "."), genericDefinitions.size()));
-            for (TypeDefinition.GenericDefinition definition: genericDefinitions) {
-                ObjectType genericObjectType = (ObjectType)definition.getType();
+            for (TypeDefinition.GenericDefinition definition : genericDefinitions) {
+                ObjectType genericObjectType = (ObjectType) definition.getType();
                 String baseClassName = getAliasedClassName(genericObjectType.getClassName());
                 String resultType = definition.getType().toString();
                 String typeToExtend = resultType.replace(genericObjectType.getClassName(), baseClassName);
@@ -1270,6 +1272,7 @@ public class DtsApi {
     private boolean isPrivateGoogleApiMember(String memberName) {
         return memberName.startsWith("zz");
     }
+
     private boolean isObfuscated(String memberName) {
         if (this.ignoreObfuscatedNameLength > 0) {
 
@@ -1353,7 +1356,7 @@ public class DtsApi {
         globalAliases.put("android", "globalAndroid");
     }
 
-    private List<String> getIgnoredNamespaces(){
+    private List<String> getIgnoredNamespaces() {
         // for some reason these namespaces are references but not existing, so we are replacing all types from these namespaces with "any"
         List<String> result = new ArrayList<>();
 
@@ -1388,10 +1391,10 @@ public class DtsApi {
     }
 
     private boolean isIgnoredNamespace() {
-        String[] namespaceOnlyParts = Arrays.copyOf(namespaceParts, namespaceParts.length-1);
+        String[] namespaceOnlyParts = Arrays.copyOf(namespaceParts, namespaceParts.length - 1);
         String namespace = String.join(".", namespaceOnlyParts);
         for (String ignoredNamespace : getIgnoredNamespaces()) {
-            if(ignoredNamespace.equals(namespace) || namespace.startsWith(ignoredNamespace + ".")) {
+            if (ignoredNamespace.equals(namespace) || namespace.startsWith(ignoredNamespace + ".")) {
                 return true;
             }
         }
