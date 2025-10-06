@@ -16,6 +16,7 @@ import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.ReferenceType;
 import org.apache.bcel.generic.Type;
 import org.apache.bcel.util.BCELComparator;
+import org.apache.bcel.Const;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -75,6 +76,8 @@ public class DtsApi {
     private int ignoreObfuscatedNameLength;
     private HashSet<String> warnedMissing = new HashSet<>();
     private Pattern jsFieldPattern = Pattern.compile("^[a-zA-Z$_][a-zA-Z0-9$_]*$");
+    // Stores raw JVM signature strings for the current method's parameters while generating its signature
+    private List<String> lastArgumentSignatureStrings;
 
     private Set<String> reservedJsKeywords = Set.of(
             "abstract", "arguments", "await", "boolean",
@@ -173,7 +176,7 @@ public class DtsApi {
 
                 loadBaseMethods(currClass); //loaded in "baseMethodNames" and "baseMethods"
 
-                addClassField(currClass);
+                addClassField(currClass, typeDefinition);
 
                 // process constructors for interfaces
                 if (isInterface) {
@@ -320,7 +323,10 @@ public class DtsApi {
 
     private static String replaceNonGenericUsage(String content, String className, Integer occurencies, String javalangObject) {
         String result = content;
-        Pattern usedAsNonGenericPattern = Pattern.compile(className.replace(".", "\\.") + "(?<Suffix>[^a-zA-Z\\d^\\.^\\$^\\<])");
+        // Only match when className appears as a standalone type token (not embedded in identifiers like checkResult)
+        // Capture an optional safe prefix char to re-insert, and require a non-type-character suffix.
+        String tokenPattern = "(?<Prefix>^|[^A-Za-z0-9_.$])" + Pattern.quote(className) + "(?<Suffix>[^A-Za-z0-9_.$<])";
+        Pattern usedAsNonGenericPattern = Pattern.compile(tokenPattern);
         Matcher matcher = usedAsNonGenericPattern.matcher(result);
 
         if (!matcher.find())
@@ -334,7 +340,8 @@ public class DtsApi {
 
         System.out.println(String.format("Appending %s to occurrences of class %s without passed generic types", classSuffix, className));
 
-        String replaceString = String.format("%s%s$1", className, classSuffix);
+        // Reinsert the captured prefix and suffix around the replacement
+        String replaceString = String.format("$1%s%s$2", className, classSuffix);
         result = matcher.replaceAll(replaceString);
         return result;
     }
@@ -387,6 +394,8 @@ public class DtsApi {
                 String implementedInterface = clazz.getClassName().replaceAll("\\$", "\\.");
                 if (!typeBelongsInCurrentTopLevelNamespace(implementedInterface)) {
                     implementedInterface = getAliasedClassName(implementedInterface);
+                } else {
+                    implementedInterface = toLocalNamespaceReference(implementedInterface);
                 }
 
                 implementsSegmentSb.append(implementedInterface + ", ");
@@ -410,6 +419,8 @@ public class DtsApi {
 
             if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
                 extendedClass = getAliasedClassName(extendedClass);
+            } else {
+                extendedClass = toLocalNamespaceReference(extendedClass);
             }
 
             return " extends " + extendedClass + implementsSegment;
@@ -420,6 +431,17 @@ public class DtsApi {
 
     private String getAliasedClassName(String className) {
         return mangleRootClassname(className);
+    }
+
+    // Prefer local reference when the type belongs to the current top-level namespace.
+    private String toLocalNamespaceReference(String className) {
+        if (className == null) return null;
+        if (this.namespaceParts == null || this.namespaceParts.length == 0) return className;
+        String prefix = this.namespaceParts[0] + ".";
+        if (className.startsWith(prefix)) {
+            return className.substring(prefix.length());
+        }
+        return className;
     }
 
     private boolean typeBelongsInCurrentTopLevelNamespace(String className) {
@@ -469,6 +491,18 @@ public class DtsApi {
         return className;
     }
 
+    private static String[] splitClassNameParts(String className) {
+        String replaced = className.replace('$', '.');
+        String[] raw = replaced.split("\\.");
+        List<String> parts = new ArrayList<>();
+        for (String p : raw) {
+            if (p != null && !p.isEmpty()) {
+                parts.add(p);
+            }
+        }
+        return parts.toArray(new String[0]);
+    }
+
     private int closePackage(JavaClass prevClass, JavaClass currClass) {
         int indent = 0;
 
@@ -476,7 +510,7 @@ public class DtsApi {
             return indent;
         }
 
-        String prevClassName = prevClass.getClassName();
+    String prevClassName = prevClass.getClassName();
         int prevDotCount = prevClassName.length() - prevClassName.replace(".", "").length();
         int prevDollarCount = prevClassName.length() - prevClassName.replace("$", "").length();
         int prevCount = prevDotCount + prevDollarCount;
@@ -490,7 +524,7 @@ public class DtsApi {
             return indent;
         }
 
-        String currClassName = currClass.getClassName();
+    String currClassName = currClass.getClassName();
         int currDotCount = currClassName.length() - currClassName.replace(".", "").length();
         int currDollarCount = currClassName.length() - currClassName.replace("$", "").length();
         int currCount = currDotCount + currDollarCount;
@@ -500,7 +534,7 @@ public class DtsApi {
             sbContent.appendln(tabs + "}");
         }
 
-        boolean isNested = isNested(currClass);
+    boolean isNested = isNested(currClass);
 
         if (!isNested) {
             throw new UnsupportedOperationException("TODO: implement");
@@ -537,8 +571,8 @@ public class DtsApi {
         int indent = 0;
 
         String prevClassName = (prevClass != null) ? prevClass.getClassName() : "";
-        String[] prevParts = prevClassName.replace('$', '.').split("\\.");
-        String[] currParts = currClass.getClassName().replace('$', '.').split("\\.");
+        String[] prevParts = splitClassNameParts(prevClassName);
+        String[] currParts = splitClassNameParts(currClass.getClassName());
 
         int diffIdx = 0;
         while ((diffIdx < prevParts.length) && (diffIdx < currParts.length)
@@ -555,12 +589,14 @@ public class DtsApi {
             } else {
                 sbContent.append(tabs + "export ");
             }
-            sbContent.appendln("module " + currParts[idx] + " {");
+            sbContent.appendln("namespace " + currParts[idx] + " {");
         }
 
         if (isNested(currClass) && (prevParts.length < currParts.length)) {
-            String tabs = getTabs(prevParts.length - 1);
-            sbContent.appendln(tabs + "export module " + prevParts[prevParts.length - 1] + " {");
+            if (prevParts.length > 0) {
+                String tabs = getTabs(prevParts.length - 1);
+                sbContent.appendln(tabs + "export namespace " + prevParts[prevParts.length - 1] + " {");
+            }
         }
 
         return indent;
@@ -699,7 +735,7 @@ public class DtsApi {
 
         if (shouldIgnoreMember(name)) return;
 
-        if (method.isSynthetic() || (!method.isPublic() && !method.isProtected())) {
+        if (method.isSynthetic() || isBridge(method) || (!method.isPublic() && !method.isProtected())) {
             return;
         }
 
@@ -785,18 +821,23 @@ public class DtsApi {
             if (matcher.matches()) {
                 String argumentsSignature = matcher.group(1);
                 if (argumentsSignature.equals("")) {
+                    this.lastArgumentSignatureStrings = null;
                     return m.getArgumentTypes();
                 }
                 try {
+                    // Capture raw parameter signature strings alongside parsed Types
+                    this.lastArgumentSignatureStrings = DtsApi.getTypeParameterStrings(argumentsSignature);
                     List<Type> referenceTypes = DtsApi.getTypeParameters(argumentsSignature);
                     Type[] types = new Type[referenceTypes.size()];
                     types = referenceTypes.toArray(types);
                     return types;
                 } catch (ClassCastException classCast) {
+                    this.lastArgumentSignatureStrings = null;
                     return m.getArgumentTypes();
                 }
             }
         }
+        this.lastArgumentSignatureStrings = null;
         return m.getArgumentTypes();
     }
 
@@ -816,6 +857,17 @@ public class DtsApi {
         }
 
         return types;
+    }
+
+    // Returns raw JVM parameter signature substrings for the given method parameter list signature
+    private static List<String> getTypeParameterStrings(String signature) {
+        GenericSignatureParser parser = new GenericSignatureParser("(" + signature + ")V");
+        List<String> params = new ArrayList<>();
+        Iterator<String> iter = parser.parameterSignatureIterator();
+        while (iter.hasNext()) {
+            params.add(iter.next());
+        }
+        return params;
     }
 
     // gets the full field type including generic types
@@ -948,33 +1000,66 @@ public class DtsApi {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         int idx = 0;
+        // JVM local variable table uses slots; long/double take 2 slots. Start after implicit "this" for instance methods.
+        int slotIndex = m.isStatic() ? 0 : 1;
         for (Type type : this.getArgumentTypes(m)) {
             if (idx > 0) {
                 sb.append(", ");
             }
 
-            int localVarIndex = m.isStatic() ? idx : idx + 1; // skip "this" variable name
-            LocalVariable localVariable = variables != null && variables.length > localVarIndex
-                    ? variables[localVarIndex]
-                    : null;
+            int currentIndex = idx; // capture current parameter index for name/typing before we increment
+            LocalVariable localVariable = null;
+            if (variables != null) {
+                // Find the LocalVariable entry matching the current JVM slot index
+                for (LocalVariable lv : variables) {
+                    if (lv != null && lv.getIndex() == slotIndex) {
+                        localVariable = lv;
+                        break;
+                    }
+                }
+            }
 
             if (localVariable != null) {
                 String name = localVariable.getName();
-                if (reservedJsKeywords.contains(name)) {
+                // Fallback to paramN if the name is obviously synthetic/invalid like "<set-?>"
+                // or not a valid JS identifier. This restores previous behavior using param0/1/2...
+                boolean isAngleBracketed = name != null && name.startsWith("<") && name.endsWith(">");
+                boolean isValidJsIdentifier = name != null && jsFieldPattern.matcher(name).matches();
+
+                if (name != null && reservedJsKeywords.contains(name)) {
                     System.out.println(String.format("Appending _ to reserved JS keyword %s", name));
                     sb.append(name + "_");
-                } else {
+                } else if (!isAngleBracketed && isValidJsIdentifier) {
                     sb.append(name);
+                } else {
+                    // Unknown/invalid param name -> fallback to paramN
+                    sb.append("param");
+                    sb.append(currentIndex);
                 }
             } else {
                 // interface declarations will fallback to paramN since they don't have names in the bytecode
                 sb.append("param");
-                sb.append(idx);
+                sb.append(currentIndex);
             }
-            idx++;
+            // Advance slotIndex by the size of the current argument (1 for most, 2 for long/double)
+            slotIndex += type.getSize();
             sb.append(": ");
 
             String paramTypeName = getTypeScriptTypeFromJavaType(type, typeDefinition);
+
+            // If this parameter is a Kotlin function type, prefer reconstructing it from the raw JVM signature
+            // to preserve wildcard bounds like "? super android.content.res.Resources" which may otherwise parse as Object
+            if (type instanceof ObjectType) {
+                ObjectType ot = (ObjectType) type;
+                String cls = ot.getClassName();
+                if (cls != null && cls.startsWith("kotlin.jvm.functions.Function") && this.lastArgumentSignatureStrings != null && currentIndex < this.lastArgumentSignatureStrings.size()) {
+                    String rawSig = this.lastArgumentSignatureStrings.get(currentIndex);
+                    String rebuilt = buildKotlinFunctionFromRawSignature(rawSig);
+                    if (rebuilt != null && !rebuilt.isEmpty()) {
+                        paramTypeName = rebuilt;
+                    }
+                }
+            }
 
             // TODO: Pete:
             if (paramTypeName.startsWith("java.util.function")) {
@@ -983,10 +1068,197 @@ public class DtsApi {
                 addReference(type);
                 sb.append(paramTypeName);
             }
+            // increment param index after we've used it everywhere for this parameter
+            idx++;
         }
         sb.append(")");
         String sig = sb.toString();
         return sig;
+    }
+
+    // Builds a Kotlin FunctionN type string from a raw JVM parameter signature, preserving generic arguments accurately.
+    // Example input: Lkotlin/jvm/functions/Function1<-Landroid/content/res/Resources;Ljava/lang/Boolean;>; ->
+    // kotlin.jvm.functions.Function1<globalAndroid.content.res.Resources,java.lang.Boolean>
+    private String buildKotlinFunctionFromRawSignature(String rawSig) {
+        if (rawSig == null || rawSig.length() == 0) return null;
+        // Expecting a field type signature starting with L...
+        if (rawSig.charAt(0) != 'L') return null;
+
+        int genericStart = rawSig.indexOf('<');
+        int semiIdx = rawSig.lastIndexOf(';');
+        if (semiIdx < 0) return null;
+        String baseDesc = (genericStart > 0 ? rawSig.substring(1, genericStart) : rawSig.substring(1, semiIdx));
+        String base = baseDesc.replace('/', '.');
+        if (!base.startsWith("kotlin.jvm.functions.Function")) {
+            return null;
+        }
+
+        // Parse top-level generic arguments inside <...>
+        List<SigNode> topArgs = new ArrayList<>();
+        if (genericStart > 0) {
+            int genericEnd = findMatching(rawSig, genericStart, '<', '>');
+            if (genericEnd > genericStart) {
+                String generics = rawSig.substring(genericStart + 1, genericEnd);
+                int i = 0;
+                while (i < generics.length()) {
+                    char ch = generics.charAt(i);
+                    // Skip variance and wildcards
+                    if (ch == '+' || ch == '-' ) { i++; continue; }
+                    if (ch == '*') { topArgs.add(new ClassNode("any", List.of())); i++; continue; }
+                    ParseResult pr = parseSigType(generics, i);
+                    if (pr == null) break;
+                    topArgs.add(pr.node);
+                    i = pr.next;
+                }
+            }
+        }
+
+        if (topArgs.isEmpty()) return null;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(base);
+        sb.append('<');
+        for (int i = 0; i < topArgs.size(); i++) {
+            sb.append(topArgs.get(i).toTs(this));
+            if (i < topArgs.size() - 1) sb.append(',');
+        }
+        sb.append('>');
+        return sb.toString();
+    }
+
+    // Find matching closing for brackets in signature (handles nesting)
+    private static int findMatching(String s, int openPos, char open, char close) {
+        int depth = 0;
+        for (int i = openPos; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == open) depth++;
+            else if (c == close) {
+                depth--;
+                if (depth == 0) return i;
+            }
+        }
+        return -1;
+    }
+
+    // Parsed signature node model
+    private static abstract class SigNode {
+        abstract String toTs(DtsApi ctx);
+    }
+
+    private static class ClassNode extends SigNode {
+        final String name; // dotted name, or 'any'
+        final List<SigNode> args;
+        ClassNode(String name, List<SigNode> args) { this.name = name; this.args = args; }
+        @Override String toTs(DtsApi ctx) {
+            if ("any".equals(name)) return "any";
+            String n = name.replace('/', '.');
+            // Apply overrides and aliasing
+            String out = n;
+            if (ctx.typeOverrides.containsKey(out)) {
+                out = ctx.typeOverrides.get(out);
+            }
+            if (!ctx.typeBelongsInCurrentTopLevelNamespace(out) && !out.startsWith("java.util.function") && !ctx.isPrivateGoogleApiClass(out) && !"any".equals(out)) {
+                out = ctx.getAliasedClassName(out);
+            } else {
+                out = ctx.toLocalNamespaceReference(out);
+            }
+            if (args != null && !args.isEmpty() && !"any".equals(out)) {
+                StringBuilder b = new StringBuilder();
+                b.append(out).append('<');
+                for (int i = 0; i < args.size(); i++) {
+                    b.append(args.get(i).toTs(ctx));
+                    if (i < args.size() - 1) b.append(',');
+                }
+                b.append('>');
+                return b.toString();
+            }
+            return out;
+        }
+    }
+
+    private static class TypeVarNode extends SigNode {
+        final String name; // e.g., T, R
+        TypeVarNode(String name) { this.name = name; }
+        @Override String toTs(DtsApi ctx) { return name; }
+    }
+
+    private static class ArrayNode extends SigNode {
+        final SigNode elem;
+        ArrayNode(SigNode e) { this.elem = e; }
+        @Override String toTs(DtsApi ctx) {
+            // Represent arrays as androidNative.Array<...>
+            return "androidNative.Array<" + elem.toTs(ctx) + ">";
+        }
+    }
+
+    private static class PrimitiveNode extends SigNode {
+        final char code;
+        PrimitiveNode(char code) { this.code = code; }
+        @Override String toTs(DtsApi ctx) {
+            switch (code) {
+                case 'Z': return "boolean";
+                case 'B': case 'S': case 'I': case 'J': case 'F': case 'D': return "number";
+                case 'C': return "string";
+                case 'V': return "void";
+                default: return "any";
+            }
+        }
+    }
+
+    private static class ParseResult { final SigNode node; final int next; ParseResult(SigNode n, int nx){ this.node = n; this.next = nx; }}
+
+    // Parse a single field type (class, type variable, array, or primitive) from a JVM generic signature fragment
+    private static ParseResult parseSigType(String s, int i) {
+        if (i >= s.length()) return null;
+        char ch = s.charAt(i);
+        switch (ch) {
+            case 'L': { // Class type
+                int nameStart = i + 1;
+                int p = nameStart;
+                // Read until ';' or '<'
+                while (p < s.length() && s.charAt(p) != ';' && s.charAt(p) != '<') p++;
+                if (p >= s.length()) return null;
+                String rawName = s.substring(nameStart, p).replace('/', '.');
+                List<SigNode> args = new ArrayList<>();
+                if (p < s.length() && s.charAt(p) == '<') {
+                    int end = findMatching(s, p, '<', '>');
+                    if (end < 0) return null;
+                    int q = p + 1;
+                    while (q < end) {
+                        char c2 = s.charAt(q);
+                        if (c2 == '+' || c2 == '-') { q++; continue; }
+                        if (c2 == '*') { args.add(new ClassNode("any", List.of())); q++; continue; }
+                        ParseResult child = parseSigType(s, q);
+                        if (child == null) break;
+                        args.add(child.node);
+                        q = child.next;
+                    }
+                    p = end + 1;
+                }
+                // Expect ';'
+                if (p < s.length() && s.charAt(p) == ';') {
+                    return new ParseResult(new ClassNode(rawName, args), p + 1);
+                }
+                // If somehow already at ';' consumed, still return
+                return new ParseResult(new ClassNode(rawName, args), p);
+            }
+            case 'T': { // Type variable
+                int nameStart = i + 1;
+                int semi = s.indexOf(';', nameStart);
+                if (semi < 0) return null;
+                String id = s.substring(nameStart, semi);
+                return new ParseResult(new TypeVarNode(id), semi + 1);
+            }
+            case '[': { // Array
+                ParseResult el = parseSigType(s, i + 1);
+                if (el == null) return null;
+                return new ParseResult(new ArrayNode(el.node), el.next);
+            }
+            default: { // Primitive or unknown
+                // Primitives are single letters like I, Z, etc.
+                return new ParseResult(new PrimitiveNode(ch), i + 1);
+            }
+        }
     }
 
     //field related
@@ -1039,9 +1311,25 @@ public class DtsApi {
         }
     }
 
-    private void addClassField(JavaClass clazz) {
+    private void addClassField(JavaClass clazz, TypeDefinition typeDefinition) {
         String tabs = getTabs(this.indent + 1);
-        sbContent.append(String.format("%spublic static class: java.lang.Class<%s>;\n", tabs, clazz.getClassName().replace("$", ".")));
+        // Use the visible TS type name at this location (simple name), not fully-qualified,
+        // to avoid doubling the namespace prefix (e.g., kotlin.kotlin.*). If the class is generic,
+        // emit matching `<any,...>` arity so TypeScript doesn't error on missing type arguments in a static context.
+        String visibleTypeName = getSimpleClassname(clazz);
+        String genericArity = "";
+        if (typeDefinition != null && typeDefinition.getGenericDefinitions() != null && !typeDefinition.getGenericDefinitions().isEmpty()) {
+            int n = typeDefinition.getGenericDefinitions().size();
+            StringBuilder args = new StringBuilder();
+            args.append('<');
+            for (int i = 0; i < n; i++) {
+                args.append("unknown");
+                if (i < n - 1) args.append(',');
+            }
+            args.append('>');
+            genericArity = args.toString();
+        }
+        sbContent.append(String.format("%spublic static class: java.lang.Class<%s%s>;\n", tabs, visibleTypeName, genericArity));
     }
 
     private boolean isPrimitiveTSType(String tsType) {
@@ -1101,7 +1389,7 @@ public class DtsApi {
         boolean isObjectType = type instanceof ObjectType;
         boolean isGenericObjectType = type instanceof GenericObjectType;
 
-        if (isPrimitive) {
+    if (isPrimitive) {
             if (type.equals(Type.BOOLEAN)) {
                 tsType.append("boolean");
             } else if (type.equals(Type.BYTE) || type.equals(Type.SHORT)
@@ -1127,8 +1415,7 @@ public class DtsApi {
                 if (genericVariable != null && isWordPattern.matcher(genericVariable).matches()) {
                     if (typeDefinition != null && typeDefinition.getGenericDefinitions() != null
                             && typeDefinition.getGenericDefinitions().stream()
-                            .filter(definition -> definition.getLabel().equals(genericVariable)).count() > 0
-                            && ((ObjectType) typeDefinition.getParent()).getClassName().equals(DtsApi.JavaLangObject)) {
+                            .anyMatch(definition -> definition.getLabel().equals(genericVariable))) {
                         tsType.append(genericObjectType.getVariable());
                         addReference(type);
                         return;
@@ -1141,26 +1428,46 @@ public class DtsApi {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
 
+            // Preserve Kotlin function interfaces as their declared types
+            // e.g., kotlin.jvm.functions.Function1<android.content.res.Resources, java.lang.Boolean>
+            // (no arrow conversion here by design)
+
             if (this.typeOverrides.containsKey(typeName)) {
                 typeName = this.typeOverrides.get(typeName);
             }
 
+            String baseTsTypeName;
             if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.") && !isPrivateGoogleApiClass(typeName)) {
-                tsType.append(getAliasedClassName(typeName));
+                baseTsTypeName = getAliasedClassName(typeName);
             } else {
-                tsType.append(typeName);
+                baseTsTypeName = toLocalNamespaceReference(typeName);
             }
+            tsType.append(baseTsTypeName);
 
-            if (type instanceof GenericObjectType) {
+            if (type instanceof GenericObjectType && !"any".equals(baseTsTypeName)) {
                 GenericObjectType genericType = (GenericObjectType) type;
                 if (genericType.getNumParameters() > 0) {
                     tsType.append("<");
-                    for (ReferenceType refType : genericType.getParameters()) {
+                    java.util.List<? extends ReferenceType> gParams = genericType.getParameters();
+                    for (int i = 0; i < gParams.size(); i++) {
+                        ReferenceType refType = gParams.get(i);
                         useAnyInsteadOfJavaLangObject(refType, typeDefinition, tsType);
-                        tsType.append(',');
+                        if (i < gParams.size() - 1) {
+                            tsType.append(',');
+                        }
                     }
-                    tsType.deleteCharAt(tsType.lastIndexOf(","));
                     tsType.append(">");
+                }
+            } else if (!"any".equals(baseTsTypeName)) {
+                // If this is a raw reference to a known generic class, append <any,...> with the correct arity
+                int arity = findGenericArity(typeName);
+                if (arity > 0) {
+                    tsType.append('<');
+                    for (int i = 0; i < arity; i++) {
+                        tsType.append("any");
+                        if (i < arity - 1) tsType.append(',');
+                    }
+                    tsType.append('>');
                 }
             }
 
@@ -1168,6 +1475,29 @@ public class DtsApi {
         } else {
             throw new RuntimeException("Unhandled type=" + type.getSignature());
         }
+    }
+
+    // Returns the number of generic parameters for a fully-qualified class name recorded during generation.
+    private static int findGenericArity(String fqcn) {
+        if (fqcn == null) return 0;
+        String normalized = fqcn.replace('$', '.');
+        for (Tuple<String, Integer> t : generics) {
+            if (normalized.equals(t.x)) return t.y;
+        }
+        for (Tuple<String, Integer> t : externalGenerics) {
+            if (normalized.equals(t.x)) return t.y;
+        }
+        // Also check globally aliased name in case roots were remapped
+        String aliased = getGlobalAliasedClassName(normalized);
+        if (!aliased.equals(normalized)) {
+            for (Tuple<String, Integer> t : generics) {
+                if (aliased.equals(t.x)) return t.y;
+            }
+            for (Tuple<String, Integer> t : externalGenerics) {
+                if (aliased.equals(t.x)) return t.y;
+            }
+        }
+        return 0;
     }
 
     private void useAnyInsteadOfJavaLangObject(Type refType, TypeDefinition typeDefinition, StringBuilder tsType) {
@@ -1205,7 +1535,7 @@ public class DtsApi {
         methods.addAll(allInterfacesMethods);
 
         for (Method m : methods) {
-            if ((m.isPublic() || m.isProtected()) && !m.isSynthetic()) {
+            if ((m.isPublic() || m.isProtected()) && !m.isSynthetic() && !isBridge(m)) {
                 members.add(m);
                 methodNames.add(m.getName());
             }
@@ -1265,6 +1595,9 @@ public class DtsApi {
     }
 
     private String getTabs(int count) {
+        if (count <= 0) {
+            return "";
+        }
         String tabs = new String(new char[count]).replace("\0", "\t");
         return tabs;
     }
@@ -1282,13 +1615,39 @@ public class DtsApi {
         return false;
     }
 
+    private boolean isKotlinInternal(String memberName) {
+        if (memberName == null) return false;
+        // Only filter known Kotlin/compiler synthetic/internal naming patterns.
+        // Keep methods/fields that legitimately use '$' in their names otherwise.
+        // Patterns filtered:
+        // - default parameter helpers: foo$default
+        // - annotations holders: <name>$annotations
+        // - synthetic accessors: access$123, access$getFoo$p
+        // - module release suffixes: *$something_release (e.g., $pdf_release, $activity_release)
+        // - inlined/lambda artifacts: *$inlined$*, *$lambda-\d+
+        if (memberName.endsWith("$default")) return true;
+        if (memberName.endsWith("$annotations")) return true;
+        if (memberName.matches("access\\$\\d+.*")) return true;
+        if (memberName.contains("$inlined$")) return true;
+        if (memberName.matches(".*\\$lambda-\\d+")) return true;
+        if (memberName.matches(".*\\$[A-Za-z0-9_]+_release$")) return true;
+        if (memberName.contains("$kotlin_stdlib")) return true;
+        return false;
+    }
+
     private boolean shouldIgnoreMember(String memberName) {
-        return isPrivateGoogleApiMember(memberName) || isObfuscated(memberName);
+        return isPrivateGoogleApiMember(memberName) || isObfuscated(memberName) || isKotlinInternal(memberName);
     }
 
     private boolean isPrivateGoogleApiClass(String name) {
         String[] classNameParts = name.replace('$', '.').split("\\.");
         return classNameParts.length > 0 && classNameParts[classNameParts.length - 1].startsWith("zz");
+    }
+
+    // BCEL's Method in this version doesn't expose isBridge(); test the ACC_BRIDGE flag directly.
+    private static boolean isBridge(Method m) {
+        // ACC_BRIDGE = 0x0040 according to JVMS; available as Const.ACC_BRIDGE in BCEL
+        return (m.getAccessFlags() & Const.ACC_BRIDGE) != 0;
     }
 
     private void overrideFieldComparator() {
@@ -1360,7 +1719,7 @@ public class DtsApi {
         // for some reason these namespaces are references but not existing, so we are replacing all types from these namespaces with "any"
         List<String> result = new ArrayList<>();
 
-        result.add("kotlin");
+        // Keep Kotlin types visible, especially kotlin.jvm.functions.* used in public APIs
         result.add("org.jetbrains");
         result.add("org.intellij");
 

@@ -92,7 +92,7 @@ public class Generator {
 
     private void writeDeclarations() {
         List<String> imports = DtsApi.imports;
-        imports.add(0, "declare module androidNative {\texport class Array<T> {\tconstructor(); length: number; [index: number]: T; } }\n");
+    imports.add(0, "declare namespace androidNative {\texport class Array<T> {\tconstructor(); length: number; [index: number]: T; } }\n");
 
         String existingContent = this.fileHelper.readFileContent(this.declarationsFileName);
         existingContent = existingContent != null ? existingContent : "";

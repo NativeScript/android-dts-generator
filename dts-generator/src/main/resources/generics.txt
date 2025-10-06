@@ -192,3 +192,4 @@
 //com.telerik.android.common.ObservableCollection:1
 //com.telerik.android.common.Procedure:1
 //com.telerik.android.common.Procedure2:2
+//kotlin.Pair:2
