@@ -139,7 +139,8 @@ public class DtsApi {
                         currentFileClassname.contains(".debugger.") ||
                         currentFileClassname.endsWith("package-info") ||
                         currentFileClassname.endsWith("module-info") ||
-                        currentFileClassname.endsWith("Kt")) {
+                        currentFileClassname.endsWith("Kt") ||
+                        currentFileClassname.contains("$$serializer")) {
                     continue;
                 }
 
@@ -244,7 +245,9 @@ public class DtsApi {
     }
 
     private String replaceIgnoredNamespaces(String content) {
-        String regexFormat = "(?<Replace>%s(?:(?:\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>]*>)*)(?<Suffix>[^a-zA-Z\\d]+)";
+        // Updated regex to properly capture generics with commas, spaces, and nested angle brackets
+        // Also matches end of string or line as valid suffix
+        String regexFormat = "(?<Replace>%s(?:(?:\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>, ]*>)*)(?<Suffix>[^a-zA-Z\\d]+|$)";
         // these namespaces are not known in some android api levels, so we cannot use them in android-support for instance, so we are replacing them with any
         for (String ignoredNamespace : this.getIgnoredNamespaces()) {
             String regexString = String.format(regexFormat, ignoredNamespace.replace(".", "\\."));
@@ -960,6 +963,20 @@ public class DtsApi {
 
             if (localVariable != null) {
                 String name = localVariable.getName();
+
+                // Sanitize Kotlin synthetic parameter names like <set-?>
+                if (name.startsWith("<") && name.endsWith(">")) {
+                    // For setter methods, derive parameter name from method name
+                    String methodName = m.getName();
+                    if (methodName.startsWith("set") && methodName.length() > 3) {
+                        // setInitialDelay -> initialDelay
+                        name = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);
+                    } else {
+                        // Fallback to "value" for other synthetic names
+                        name = "value";
+                    }
+                }
+
                 if (reservedJsKeywords.contains(name)) {
                     System.out.println(String.format("Appending _ to reserved JS keyword %s", name));
                     sb.append(name + "_");
