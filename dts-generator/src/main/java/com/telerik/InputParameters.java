@@ -16,6 +16,7 @@ public class InputParameters {
     private boolean allGenericImplements;
     private boolean skipDeclarations;
     private boolean classMode;
+    private boolean perLibrary;
     private int ignoreObfuscatedNameLength;
 
     public InputParameters() {
@@ -25,6 +26,7 @@ public class InputParameters {
         this.allGenericImplements = false;
         this.skipDeclarations = false;
         this.classMode = false;
+        this.perLibrary = false;
         this.ignoreObfuscatedNameLength = 0;
     }
 
@@ -70,4 +72,11 @@ public class InputParameters {
 
     public void setIgnoreObfuscatedNameLength(int nameLength) { this.ignoreObfuscatedNameLength = nameLength; }
 
+    public boolean getPerLibrary() { 
+        return perLibrary; 
+    }
+
+    public void setPerLibrary(boolean perLibrary) { 
+        this.perLibrary = perLibrary; 
+    }
 }

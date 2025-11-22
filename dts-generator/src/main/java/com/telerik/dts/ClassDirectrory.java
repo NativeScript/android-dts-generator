@@ -11,46 +11,48 @@ import java.util.List;
 import java.util.Map;
 
 public class ClassDirectrory implements ClassMapProvider {
-	private final String path;
-	private final Map<String, JavaClass> classMap;
-	private static final String CLASS_EXT = ".class";
+    private Map<String, JavaClass> classes;
+    private String libraryName;
+    private static final String CLASS_EXT = ".class";
 
-	private ClassDirectrory(String path) {
-		this.path = path;
-		this.classMap = new HashMap<String, JavaClass>();
-	}
+    private ClassDirectrory() {
+        this.classes = new HashMap<String, JavaClass>();
+    }
 
-	public Map<String, JavaClass> getClassMap() {
-		return classMap;
-	}
+    public static ClassDirectrory readDirectory(String directoryPath) throws IOException {
+        ClassDirectrory dir = new ClassDirectrory();
+        readDirectory(dir, directoryPath);
+        return dir;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public static void readDirectory(ClassDirectrory dir, String path) throws IOException {
+        List<File> subDirs = new ArrayList<File>();
+        File currentDir = new File(path);
+        for (File file : currentDir.listFiles()) {
+            if (file.isFile()) {
+                String name = file.getName();
+                if (name.endsWith(CLASS_EXT)) {
+                    ClassParser cp = new ClassParser(file.getAbsolutePath());
+                    JavaClass clazz = cp.parse();
+                    dir.classes.put(clazz.getClassName(), clazz);
+                }
+            } else if (file.isDirectory()) {
+                subDirs.add(file);
+            }
+        }
+        for (File sd: subDirs) {
+            readDirectory(dir, sd.getAbsolutePath());
+        }
+        dir.libraryName = new File(path).getName();
+    }
 
-	public static ClassDirectrory readDirectory(String path) throws IOException {
-		ClassDirectrory dir = new ClassDirectrory(path);
-		readDirectory(dir, path);
-		return dir;
-	}
+    @Override
+    public Map<String, JavaClass> getClassMap() {
+        return classes;
+    }
 
-	public static void readDirectory(ClassDirectrory dir, String path) throws IOException {
-		List<File> subDirs = new ArrayList<File>();
-		File currentDir = new File(path);
-		for (File file : currentDir.listFiles()) {
-			if (file.isFile()) {
-				String name = file.getName();
-				if (name.endsWith(CLASS_EXT)) {
-					ClassParser cp = new ClassParser(file.getAbsolutePath());
-					JavaClass clazz = cp.parse();
-					dir.classMap.put(clazz.getClassName(), clazz);
-				}
-			} else if (file.isDirectory()) {
-				subDirs.add(file);
-			}
-		}
-		for (File sd: subDirs) {
-			readDirectory(dir, sd.getAbsolutePath());
-		}
-	}
+    @Override
+    public String getLibraryName() {
+        return libraryName;
+    }
 }
