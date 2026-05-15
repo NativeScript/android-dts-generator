@@ -27,6 +27,9 @@ public class Main {
 	// the parameter defines the length of obfuscated names to detect
 	private static final String IGNORE_OBFUSCATED = "-ignore-obfuscated";
 
+	private static final String PER_LIBRARY = "-per-library";
+
+
 	private static final String HELP = "-help";
 
 	public static void main(String[] args) {
@@ -117,6 +120,10 @@ public class Main {
 						inputParameters.getSuperJars().add(new File(currentArgument));
 					}
 				}
+
+				if (commandArg.equals(PER_LIBRARY)) {
+					inputParameters.setPerLibrary(true);
+				}
 			}
 
 			inputParameters.getOutputDir().mkdir();
@@ -138,6 +145,7 @@ public class Main {
 		helpMessage.appendln("\t\t[-all-generic-implements]:\t\tAdd this flag to generate implements for all interfaces implemented by the generic types." +
 			" It is not enabled by default as when there are more than one implementation most probably one of them needs to be changed to extends, but this have to be made manually");
 		helpMessage.appendln("\t\t[-skip-declarations]:\t\tProvide this flag if you don't want android-declarations.d.ts file to be generated and referenced.");
+		helpMessage.appendln("\t\t[-per-library]:\t\tGenerate separate .android.d.ts file per input jar/aar library.");
 		helpMessage.appendln("\t\t[--class-mode]:\t\tPass this argument if you want folders to be processed as class folders.");
 		helpMessage.appendln("\t\t[-help]:\t\tPrints this help message.");
 

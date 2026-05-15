@@ -1,5 +1,6 @@
 package com.telerik.dts;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,48 +14,73 @@ import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
 
 public class JarFile implements ClassMapProvider {
-	private final String path;
-	private final Map<String, JavaClass> classMap;
-	private static final String CLASS_EXT = ".class";
+    private Map<String, JavaClass> classes;
+    private String libraryName;
+    private static final String CLASS_EXT = ".class";
 
-	private JarFile(String path) {
-		this.path = path;
-		this.classMap = new HashMap<String, JavaClass>();
-	}
+    private JarFile() {
+        this.classes = new HashMap<String, JavaClass>();
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public static JarFile readJar(String jarFilePath) throws IOException {
+        JarFile jarFile = new JarFile();
+        try (JarInputStream jarInputStream = new JarInputStream(new FileInputStream(jarFilePath))) {
+            ZipEntry entry;
+            while ((entry = jarInputStream.getNextEntry()) != null) {
+                String name = entry.getName();
+                if (name.endsWith(CLASS_EXT)) {
+                    name = name.substring(0, name.length() - CLASS_EXT.length()).replace('/', '.');
+                    ClassParser classParser = new ClassParser(jarInputStream, name);
+                    JavaClass javaClass = classParser.parse();
+                    jarFile.classes.put(name, javaClass);
+                }
+            }
+        } catch (ClassFormatException e) {
+            throw new IOException("Invalid class format in JAR file: " + e.getMessage(), e);
+        }
+        // Extract library name from file path
+        jarFile.libraryName = extractLibraryName(jarFilePath);
+        return jarFile;
+    }
 
-	public Map<String, JavaClass> getClassMap() {
-		return classMap;
-	}
+    public static JarFile readJarInputStream(String sourceFileName, InputStream stream) throws IOException {
+        JarFile jarFile = new JarFile();
+        try (JarInputStream jarInputStream = new JarInputStream(stream)) {
+            ZipEntry entry;
+            while ((entry = jarInputStream.getNextEntry()) != null) {
+                String name = entry.getName();
+                if (name.endsWith(CLASS_EXT)) {
+                    name = name.substring(0, name.length() - CLASS_EXT.length()).replace('/', '.');
+                    ClassParser classParser = new ClassParser(jarInputStream, name);
+                    JavaClass javaClass = classParser.parse();
+                    jarFile.classes.put(name, javaClass);
+                }
+            }
+        } catch (ClassFormatException e) {
+            throw new IOException("Invalid class format in JAR file: " + e.getMessage(), e);
+        }
+        jarFile.libraryName = extractLibraryName(sourceFileName);
+        return jarFile;
+    }
 
-	public static JarFile readJarInputStream(String path, InputStream stream) throws ClassFormatException,IOException {
-		JarFile jar;
-		JarInputStream jis = null;
-		try {
-			jis = new JarInputStream(stream);
+    @Override
+    public Map<String, JavaClass> getClassMap() {
+        return classes;
+    }
 
-			jar = new JarFile(path);
+    @Override
+    public String getLibraryName() {
+        return libraryName;
+    }
 
-			for (ZipEntry ze = jis.getNextEntry(); ze != null; ze = jis.getNextEntry()) {
-				String name = ze.getName();
-				if (name.endsWith(CLASS_EXT)) {
-					name = name.substring(0, name.length() - CLASS_EXT.length()).replace('/', '.');
-					ClassParser cp = new ClassParser(jis, name);
-					JavaClass clazz = cp.parse();
-					jar.classMap.put(name, clazz);
-				}
-			}
-		} finally {
-			if (jis != null) {
-				jis.close();
-			}
-		}
-		return jar;
-	}
-	public static JarFile readJar(String path) throws ClassFormatException,IOException {
-		return readJarInputStream(path, new FileInputStream(path));
-	}
+    private static String extractLibraryName(String filePath) {
+        String fileName = new File(filePath).getName();
+        // Remove .jar or .aar extension
+        if (fileName.endsWith(".jar")) {
+            return fileName.substring(0, fileName.length() - 4);
+        } else if (fileName.endsWith(".aar")) {
+            return fileName.substring(0, fileName.length() - 4);
+        }
+        return fileName;
+    }
 }
