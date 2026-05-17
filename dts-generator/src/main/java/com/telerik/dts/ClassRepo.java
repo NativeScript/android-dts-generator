@@ -119,4 +119,17 @@ public class ClassRepo {
 		boolean res = first ? !isNestedClass : isNestedClass;
 		return res;
 	}
+
+	public static List<ClassMapProvider> getCachedProviders() {
+		return new ArrayList<>(cachedProviders);
+	}
+
+	public static String getLibraryNameForClass(String className) {
+		for (ClassMapProvider provider : cachedProviders) {
+			if (provider.getClassMap().containsKey(className)) {
+				return provider.getLibraryName();
+			}
+		}
+		return null;
+	}
 }

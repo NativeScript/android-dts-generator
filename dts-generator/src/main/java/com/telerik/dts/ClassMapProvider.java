@@ -7,5 +7,5 @@ import java.util.Map;
 public interface ClassMapProvider {
 	Map<String, JavaClass> getClassMap();
 	
-	String getPath();
+	String getLibraryName();
 }

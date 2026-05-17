@@ -43,6 +43,9 @@ import edu.umd.cs.findbugs.ba.generic.GenericObjectType;
 import edu.umd.cs.findbugs.ba.generic.GenericSignatureParser;
 import edu.umd.cs.findbugs.ba.generic.GenericUtilities;
 
+import java.util.Deque;
+import java.util.ArrayDeque;
+
 /**
  * Created by plamen5kov on 6/17/16.
  */
@@ -139,13 +142,12 @@ public class DtsApi {
                         currentFileClassname.contains(".debugger.") ||
                         currentFileClassname.endsWith("package-info") ||
                         currentFileClassname.endsWith("module-info") ||
-                        currentFileClassname.endsWith("Kt")) {
+                        currentFileClassname.endsWith("Kt") ||
+                        currentFileClassname.contains("$$serializer")) {
                     continue;
                 }
 
-                // check if processed class hijacks a namespace
-                // TODO: optimize
-
+                // compute namespace parts
                 this.namespaceParts = currentFileClassname.split("\\.");
                 if (isIgnoredNamespace()) {
                     System.out.println(String.format("Found ignored namespace. %s", String.join(".", this.namespaceParts)));
@@ -159,6 +161,100 @@ public class DtsApi {
                 this.indent = openPackage(this.prevClass, currClass);
 
                 String tabs = getTabs(this.indent);
+
+                                // Special-case: Kotlin Companion inner object — emit as namespace merge instead of class
+                if ((simpleClassName.equals("Companion") || currClass.getClassName().endsWith("$Companion")) && currClass.getClassName().contains("$")) {
+                    // compute parent and its simple name
+                    String parentFull = currClass.getClassName().substring(0, currClass.getClassName().lastIndexOf("$"));
+                    String[] parentParts = parentFull.replace('$', '.').split("\\.");
+                    String outerSimple = parentParts[parentParts.length - 1];
+
+                    // Decide whether the outer namespace is already open.
+                    // We use namespaceStack (Deque<String>) that tracks currently opened namespaces.
+                    boolean outerAlreadyOpen = !namespaceStack.isEmpty() && namespaceStack.peekLast().equals(outerSimple);
+
+                    // Track whether we opened the outer namespace here so we close the correct number of braces later.
+                    boolean openedOuterHere = false;
+
+                    if (!outerAlreadyOpen) {
+                        // need to open the outer namespace first, then Companion
+                        sbContent.appendln(tabs + "export namespace " + outerSimple + " {");
+                        sbContent.appendln(tabs + "\texport namespace Companion {");
+                        openedOuterHere = true;
+                    } else {
+                        // outer namespace already exists in the stack; only open Companion inside it
+                        // Do not add an extra tab here because 'tabs' is already indented inside the outer namespace.
+                        sbContent.appendln(tabs + "export namespace Companion {");
+                    }
+
+                    // Deduplicate member emissions (some members may appear duplicated in getMembers)
+                    Set<String> seenMemberSigs = new HashSet<>();
+
+                    List<FieldOrMethod> members = getMembers(currClass, getAllInterfaces(currClass));
+                    for (FieldOrMethod member : members) {
+                        if (member instanceof Method) {
+                            Method m = (Method) member;
+                            if (m.isSynthetic() || (!m.isPublic() && !m.isProtected())) {
+                                continue;
+                            }
+                            if (isConstructor(m)) {
+                                continue;
+                            }
+
+                            String sig = getMethodFullSignature(m);
+                            if (seenMemberSigs.contains(sig)) {
+                                continue;
+                            }
+                            seenMemberSigs.add(sig);
+
+                            String methodNameRaw = m.getName();
+                            String methodNameForDecl = jsFieldPattern.matcher(methodNameRaw).matches() ? methodNameRaw : getMethodName(m);
+
+                            String paramsSig = getMethodParamSignature(currClass, typeDefinition, m);
+                            String returnType = "";
+                            if (!isConstructor(m)) {
+                                returnType = ": " + safeGetTypeScriptType(this.getReturnType(m), typeDefinition);
+                            }
+
+                            // choose member indentation based on whether we opened outer here
+                            String memberIndent = openedOuterHere ? (tabs + "\t\t") : (tabs + "\t");
+                            sbContent.appendln(memberIndent + "function " + methodNameForDecl + paramsSig + returnType + ";");
+                        } else if (member instanceof Field) {
+                            Field f = (Field) member;
+                            if (f.isSynthetic() || (!f.isPublic() && !f.isProtected())) {
+                                continue;
+                            }
+
+                            String fieldSig = f.getName() + ":" + this.getFieldType(f).toString();
+                            if (seenMemberSigs.contains(fieldSig)) {
+                                continue;
+                            }
+                            seenMemberSigs.add(fieldSig);
+
+                            String name = f.getName();
+                            if (!jsFieldPattern.matcher(name).matches()) {
+                                name = "\"" + name + "\"";
+                            }
+                            String fType = safeGetTypeScriptType(this.getFieldType(f), typeDefinition);
+
+                            String memberIndent = openedOuterHere ? (tabs + "\t\t") : (tabs + "\t");
+                            sbContent.appendln(memberIndent + "const " + name + ": " + fType + ";");
+                        }
+                    }
+
+                    // Close Companion namespace (and outer namespace if we opened it here)
+                    // closing indentation must match how we opened
+                    if (openedOuterHere) {
+                        sbContent.appendln(tabs + "\t}");
+                        sbContent.appendln(tabs + "}");
+                    } else {
+                        sbContent.appendln(tabs + "}");
+                    }
+
+                    // Mark prevClass and continue (we don't emit the Companion class itself)
+                    this.prevClass = currClass;
+                    continue;
+                }
 
                 String extendsLine = getExtendsLine(currClass, typeDefinition);
 
@@ -240,23 +336,135 @@ public class DtsApi {
 
         String content = replaceIgnoredNamespaces(sbContent.toString());
 
+        // Ensure braces are balanced (only append missing closing braces)
+        content = balanceUnclosedBraces(content);
+
         return content;
     }
 
+    /**
+     * Replace known ignored namespaces with 'any' — but do it safely on a per-match basis
+     * (no greedy regex that can swallow closing '>' characters). For each occurrence of
+     * the ignored namespace-qualified type we:
+     *  - detect if it's followed by a generic argument list starting with '<'
+     *  - if so, scan forward to find the matching closing '>' (taking nested '<' into account)
+     *  - replace the entire type token (including its generic args) with "any"
+     *
+     * This approach never uses a global regex that can accidentally drop characters
+     * from previously-correct type tokens.
+     */
     private String replaceIgnoredNamespaces(String content) {
-        String regexFormat = "(?<Replace>%s(?:(?:\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>]*>)*)(?<Suffix>[^a-zA-Z\\d]+)";
-        // these namespaces are not known in some android api levels, so we cannot use them in android-support for instance, so we are replacing them with any
+        String result = content;
+
         for (String ignoredNamespace : this.getIgnoredNamespaces()) {
-            String regexString = String.format(regexFormat, ignoredNamespace.replace(".", "\\."));
-            content = content.replaceAll(regexString, "any$2");
-            regexString = String.format(regexFormat, getGlobalAliasedClassName(ignoredNamespace).replace(".", "\\."));
-            content = content.replaceAll(regexString, "any$2");
+            result = replaceIgnoredNamespaceOccurrences(result, ignoredNamespace);
+            String globalAliasedClassName = getGlobalAliasedClassName(ignoredNamespace);
+            if (!globalAliasedClassName.equals(ignoredNamespace)) {
+                result = replaceIgnoredNamespaceOccurrences(result, globalAliasedClassName);
+            }
         }
 
-        // replace "extends any" with "extends java.lang.Object"
-        content = content.replace(" extends any ", String.format(" extends %s ", DtsApi.JavaLangObject));
+        // keep the small extends-any replacement
+        result = result.replace(" extends any ", String.format(" extends %s ", DtsApi.JavaLangObject));
 
-        return content;
+        return result;
+    }
+
+    /**
+     * Replace occurrences of a particular namespace/prefix like "kotlin.foo.Bar" (or its
+     * aliased variant) with "any". This is done by finding occurrences of the qualified
+     * name and — if the next character is '<' — locating the matching '>' and including
+     * it in the replaced span. The replacement preserves all surrounding characters.
+     */
+    private String replaceIgnoredNamespaceOccurrences(String content, String namespacePrefix) {
+        if (content == null || content.isEmpty()) {
+            return content;
+        }
+
+        StringBuilder out = new StringBuilder();
+        int last = 0;
+
+        // pattern matches the namespace prefix followed by one or more ".SimpleName" segments
+        Pattern p = Pattern.compile(Pattern.quote(namespacePrefix) + "(?:\\.[A-Za-z0-9_]+)*");
+        Matcher m = p.matcher(content);
+
+        while (m.find()) {
+            int s = m.start();
+            int e = m.end();
+
+            // append unchanged region before this match
+            out.append(content, last, s);
+
+            // Defensive check: ensure the match isn't part of a longer identifier (e.g. preceded by a letter/digit/_)
+            // if it is, treat it as non-match (copy-through)
+            boolean isPartOfLongerIdentifier = false;
+            if (s > 0) {
+                char before = content.charAt(s - 1);
+                if (Character.isLetterOrDigit(before) || before == '_' || before == '$') {
+                    isPartOfLongerIdentifier = true;
+                }
+            }
+            if (isPartOfLongerIdentifier) {
+                // copy the matched text as-is and continue
+                out.append(content, s, e);
+                last = e;
+                // move the matcher's region forward to avoid re-matching the same span
+                if (e < content.length()) {
+                    m.region(e, content.length());
+                }
+                continue;
+            }
+
+            // Determine whether a generic argument list follows (starts with '<')
+            int newEnd = e;
+            if (e < content.length() && content.charAt(e) == '<') {
+                int match = findMatchingAngle(content, e);
+                if (match != -1) {
+                    newEnd = match + 1; // include the closing '>'
+                } else {
+                    // Unbalanced generics in the source; be conservative and do not consume further chars
+                    newEnd = e;
+                }
+            }
+
+            // Replace the full type token (including generics if found) with "any"
+            out.append("any");
+
+            // advance last to the end of the consumed span
+            last = newEnd;
+
+            // advance matcher search region to the new last position
+            if (last < content.length()) {
+                m.region(last, content.length());
+            } else {
+                break;
+            }
+        }
+
+        // append the rest
+        out.append(content.substring(last));
+        return out.toString();
+    }
+
+    /**
+     * Find matching '>' for a '<' at position 'start' (start points to the '<' char).
+     * Handles nested '<' / '>' pairs and ignores other characters.
+     * Returns index of matching '>' or -1 if not found.
+     */
+    private static int findMatchingAngle(String text, int start) {
+        if (text == null || start < 0 || start >= text.length() || text.charAt(start) != '<') {
+            return -1;
+        }
+        int depth = 0;
+        for (int i = start; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c == '<') depth++;
+            else if (c == '>') {
+                depth--;
+                if (depth == 0) return i;
+            }
+        }
+        return -1; // no match found
     }
 
     public static String serializeGenerics() {
@@ -300,7 +508,10 @@ public class DtsApi {
         }
     }
 
-    // Adds javalangObject types to all generics which are used without types
+    /**
+     * Compatibility API: limited/safe replaceGenericsInText used by other steps/tools.
+     * Only appends "<any,...>" for classes we know are generic (from generics + externalGenerics).
+     */
     public static String replaceGenericsInText(String content) {
         String any = "any";
         String result = content;
@@ -319,9 +530,9 @@ public class DtsApi {
     }
 
     private static String replaceNonGenericUsage(String content, String className, Integer occurencies, String javalangObject) {
-        String result = content;
-        Pattern usedAsNonGenericPattern = Pattern.compile(className.replace(".", "\\.") + "(?<Suffix>[^a-zA-Z\\d^\\.^\\$^\\<])");
-        Matcher matcher = usedAsNonGenericPattern.matcher(result);
+        // AppendReplacement-based approach to avoid regex replacement pitfalls.
+        Pattern usedAsNonGenericPattern = Pattern.compile(className.replace(".", "\\.") + "(?<Suffix>[^a-zA-Z\\d\\.\\$\\<])");
+        Matcher matcher = usedAsNonGenericPattern.matcher(content);
 
         if (!matcher.find())
             return content;
@@ -332,11 +543,16 @@ public class DtsApi {
         }
         String classSuffix = "<" + String.join(",", arguments) + ">";
 
-        System.out.println(String.format("Appending %s to occurrences of class %s without passed generic types", classSuffix, className));
-
-        String replaceString = String.format("%s%s$1", className, classSuffix);
-        result = matcher.replaceAll(replaceString);
-        return result;
+        matcher.reset();
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            String suffix = matcher.group("Suffix");
+            String replacement = className + classSuffix + suffix;
+            replacement = Matcher.quoteReplacement(replacement);
+            matcher.appendReplacement(sb, replacement);
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
     }
 
     private String getExtendsLine(JavaClass currClass, TypeDefinition typeDefinition) {
@@ -469,101 +685,95 @@ public class DtsApi {
         return className;
     }
 
+
+    private Deque<String> namespaceStack = new ArrayDeque<>();
+
+    /**
+     * Close namespaces that are not part of currClass's desired namespace path.
+     * This is stack-based: namespaceStack contains the currently open namespace parts
+     * (in order). We compute the desired namespace path for currClass (all parts except the final
+     * class name) and pop/emit closing braces for any stack entries not in that prefix.
+     *
+     * Returns the current namespace indentation level (namespaceStack.size()).
+     */
     private int closePackage(JavaClass prevClass, JavaClass currClass) {
-        int indent = 0;
-
-        if (prevClass == null) {
-            return indent;
-        }
-
-        String prevClassName = prevClass.getClassName();
-        int prevDotCount = prevClassName.length() - prevClassName.replace(".", "").length();
-        int prevDollarCount = prevClassName.length() - prevClassName.replace("$", "").length();
-        int prevCount = prevDotCount + prevDollarCount;
-
-        if (currClass == null) {
-            indent = prevCount;
-            while (indent > 0) {
-                String tabs = getTabs(--indent);
-                sbContent.appendln(tabs + "}");
+        // desired namespace segments for currClass (all parts except last/class name)
+        String[] desiredParts;
+        if (currClass != null) {
+            String curr = currClass.getClassName().replace('$', '.');
+            String[] parts = curr.split("\\.");
+            if (parts.length <= 1) {
+                desiredParts = new String[0];
+            } else {
+                desiredParts = Arrays.copyOfRange(parts, 0, parts.length - 1);
             }
-            return indent;
+        } else {
+            desiredParts = new String[0];
         }
 
-        String currClassName = currClass.getClassName();
-        int currDotCount = currClassName.length() - currClassName.replace(".", "").length();
-        int currDollarCount = currClassName.length() - currClassName.replace("$", "").length();
-        int currCount = currDotCount + currDollarCount;
+        // compare namespaceStack with desiredParts to find common prefix
+        List<String> stackList = new ArrayList<>(namespaceStack);
+        int common = 0;
+        while (common < stackList.size() && common < desiredParts.length) {
+            if (stackList.get(common).equals(desiredParts[common])) {
+                common++;
+            } else {
+                break;
+            }
+        }
 
-        while (prevCount > currCount) {
-            String tabs = getTabs(--prevCount);
+        // pop & close namespaces that are beyond the common prefix
+        for (int i = stackList.size() - 1; i >= common; i--) {
+            // the tab level for closing should match the index of the namespace being closed
+            String tabs = getTabs(i);
             sbContent.appendln(tabs + "}");
+            namespaceStack.removeLast();
         }
 
-        boolean isNested = isNested(currClass);
-
-        if (!isNested) {
-            throw new UnsupportedOperationException("TODO: implement");
-            // String prevClassName = prevClass.getClassName();
-            // int dotCount = prevClassName.length() -
-            // prevClassName.replace(".", "").length();
-            // int dollarCount = prevClassName.length() -
-            // prevClassName.replace("$", "").length();
-            // indent = dotCount + dollarCount;
-            //
-            // String[] prevParts = prevClassName.replace('$',
-            // '.').split("\\.");
-            // String[] currParts = currClass.getClassName().replace('$',
-            // '.').split("\\.");
-            //
-            // int diffIdx = 0;
-            // while ((diffIdx < prevParts.length) && (diffIdx <
-            // currParts.length) &&
-            // prevParts[diffIdx].equals(currParts[diffIdx])) {
-            // ++diffIdx;
-            // }
-            //
-            // int count = prevParts.length - diffIdx - 1;
-            // while (count-- > 0) {
-            // String tabs = getTabs(--indent);
-            // ps.println(tabs + "}");
-            // }
-        }
-
-        return indent;
+        // indentation is the number of open namespaces remaining
+        return namespaceStack.size();
     }
 
+    /**
+     * Open namespaces needed for currClass. Assumes closePackage(prevClass, currClass) was (or will be)
+     * called to close non-matching namespaces first; nevertheless this method is defensive and computes
+     * the common prefix against the current namespaceStack state to open only the missing segments.
+     *
+     * Returns the current namespace indentation level (namespaceStack.size()) after opening.
+     */
     private int openPackage(JavaClass prevClass, JavaClass currClass) {
-        int indent = 0;
+        // desired namespace segments for currClass (all parts except last/class name)
+        String curr = currClass.getClassName().replace('$', '.');
+        String[] parts = curr.split("\\.");
+        String[] desiredParts = (parts.length <= 1) ? new String[0] : Arrays.copyOfRange(parts, 0, parts.length - 1);
 
-        String prevClassName = (prevClass != null) ? prevClass.getClassName() : "";
-        String[] prevParts = prevClassName.replace('$', '.').split("\\.");
-        String[] currParts = currClass.getClassName().replace('$', '.').split("\\.");
+        // current stack as list for prefix comparison
+        List<String> stackList = new ArrayList<>(namespaceStack);
 
-        int diffIdx = 0;
-        while ((diffIdx < prevParts.length) && (diffIdx < currParts.length)
-                && prevParts[diffIdx].equals(currParts[diffIdx])) {
-            ++diffIdx;
+        int common = 0;
+        while (common < stackList.size() && common < desiredParts.length) {
+            if (stackList.get(common).equals(desiredParts[common])) {
+                common++;
+            } else {
+                break;
+            }
         }
 
-        indent = diffIdx;
-        for (int idx = diffIdx; idx < currParts.length - 1; idx++) {
-            ++indent;
-            String tabs = getTabs(idx);
-            if (idx == 0) {
+        // open the remaining desired namespaces (indices common .. desiredParts.length-1)
+        for (int i = common; i < desiredParts.length; i++) {
+            String part = desiredParts[i];
+            if (part == null || part.isEmpty()) continue;
+            String tabs = getTabs(i);
+            if (i == 0) {
                 sbContent.append(tabs + "declare ");
             } else {
                 sbContent.append(tabs + "export ");
             }
-            sbContent.appendln("module " + currParts[idx] + " {");
+            sbContent.appendln("namespace " + part + " {");
+            namespaceStack.addLast(part);
         }
 
-        if (isNested(currClass) && (prevParts.length < currParts.length)) {
-            String tabs = getTabs(prevParts.length - 1);
-            sbContent.appendln(tabs + "export module " + prevParts[prevParts.length - 1] + " {");
-        }
-
-        return indent;
+        return namespaceStack.size();
     }
 
     private void processInterfaceConstructor(JavaClass classInterface, TypeDefinition typeDefinition, List<Method> allInterfacesMethods) {
@@ -581,7 +791,7 @@ public class DtsApi {
             sbContent.append(getTabs(this.indent + 2) + getMethodName(m) + getMethodParamSignature(classInterface, typeDefinition, m));
             String bmSig = "";
             if (!isConstructor(m)) {
-                bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(m), typeDefinition);
+                bmSig += ": " + safeGetTypeScriptType(this.getReturnType(m), typeDefinition);
             }
             sbContent.appendln(bmSig + ";");
         }
@@ -593,8 +803,8 @@ public class DtsApi {
 
     private void generateInterfaceConstructorCommentBlock(JavaClass classInterface, String tabs) {
         sbContent.appendln(tabs + "/**");
-        sbContent.appendln(tabs + " * Constructs a new instance of the " + classInterface.getClassName() + " interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.");
-        // sbContent.appendln(tabs + " * @param implementation - allows implementor to define their own logic for all public methods."); // <- causes too much noise
+        sbContent.appendln(tabs + " * Constructs a new instance of the " + classInterface.getClassName() + " interface with the provided implementation.");
+        sbContent.appendln(tabs + " * An empty constructor exists calling super().");
         sbContent.appendln(tabs + " */");
     }
 
@@ -752,7 +962,7 @@ public class DtsApi {
         sbTemp.append(getMethodName(method) + getMethodParamSignature(clazz, typeDefinition, method));
         String bmSig = "";
         if (!isConstructor(method)) {
-            bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(method), typeDefinition);
+            bmSig += ": " + safeGetTypeScriptType(this.getReturnType(method), typeDefinition);
         }
 
         sbTemp.append(bmSig + ";");
@@ -948,6 +1158,8 @@ public class DtsApi {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         int idx = 0;
+        // track existing names in this method scope to deduplicate sanitized names
+        Set<String> existingNames = new HashSet<>();
         for (Type type : this.getArgumentTypes(m)) {
             if (idx > 0) {
                 sb.append(", ");
@@ -958,25 +1170,42 @@ public class DtsApi {
                     ? variables[localVarIndex]
                     : null;
 
+            String nameToUse;
             if (localVariable != null) {
                 String name = localVariable.getName();
-                if (reservedJsKeywords.contains(name)) {
-                    System.out.println(String.format("Appending _ to reserved JS keyword %s", name));
-                    sb.append(name + "_");
-                } else {
-                    sb.append(name);
+
+                // Sanitize Kotlin synthetic parameter names like <set-?>
+                if (name.startsWith("<") && name.endsWith(">")) {
+                    // For setter methods, derive parameter name from method name
+                    String methodName = m.getName();
+                    if (methodName.startsWith("set") && methodName.length() > 3) {
+                        // setInitialDelay -> initialDelay
+                        name = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);
+                    } else {
+                        // Fallback to "value" for other synthetic names
+                        name = "value";
+                    }
                 }
+
+                // sanitize and truncate to max length 10, deduplicate in scope
+                nameToUse = sanitizeIdentifier(name, existingNames, 10);
+
+                if (reservedJsKeywords.contains(nameToUse)) {
+                    nameToUse = nameToUse + "_";
+                }
+
+                sb.append(nameToUse);
             } else {
                 // interface declarations will fallback to paramN since they don't have names in the bytecode
-                sb.append("param");
-                sb.append(idx);
+                String fallback = "param" + idx;
+                nameToUse = sanitizeIdentifier(fallback, existingNames, 10);
+                sb.append(nameToUse);
             }
             idx++;
             sb.append(": ");
 
-            String paramTypeName = getTypeScriptTypeFromJavaType(type, typeDefinition);
+            String paramTypeName = safeGetTypeScriptType(type, typeDefinition);
 
-            // TODO: Pete:
             if (paramTypeName.startsWith("java.util.function")) {
                 sb.append("any /* " + paramTypeName + "*/");
             } else {
@@ -997,10 +1226,10 @@ public class DtsApi {
 
         //
         // handle member names that conflict with an inner class. For example:
-        // 
+        //
         // class OuterClass {
         //   public static InnerClass: OuterClass.InnerClass;
-        // 
+        //
         //   class InnerClass {}   
         // }
         //
@@ -1021,22 +1250,22 @@ public class DtsApi {
         }
 
         String tabs = getTabs(this.indent + 1);
+
+        if (f.getConstantValue() != null) {
+            sbContent.appendln( tabs + "/**");
+            sbContent.appendln( tabs + "* "  + f.getConstantValue());
+            sbContent.appendln( tabs + "*/");
+        }
         sbContent.append(tabs + "public ");
         if (f.isStatic()) {
             sbContent.append("static ");
         }
-
+      
         if (!jsFieldPattern.matcher(name).matches()) {
             name = "\"" + name + "\"";
         }
+        sbContent.appendln(name + ": " + safeGetTypeScriptType(this.getFieldType(f), typeDefinition) + ";");
 
-        sbContent.append(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition));
-        if (f.getConstantValue() != null) {
-            sbContent.appendln(" = " + f.getConstantValue() + ";");
-        } else {
-            sbContent.appendln(";");
-
-        }
     }
 
     private void addClassField(JavaClass clazz) {
@@ -1056,7 +1285,27 @@ public class DtsApi {
         }
     }
 
+    /**
+     * The core conversion: produces balanced TypeScript type strings (including nested generics).
+     * Also synthesizes "<any,...>" for raw generic usages if we know class arity.
+     */
     private String getTypeScriptTypeFromJavaType(Type type, TypeDefinition typeDefinition) {
+
+        // early check for object types and ignored namespaces:
+        if (type instanceof ObjectType) {
+            String className = ((ObjectType) type).getClassName().replace('$', '.');
+            // compute namespaceOnly = everything except the simple class name
+            String[] parts = className.split("\\.");
+            if (parts.length > 1) {
+                String namespaceOnly = String.join(".", Arrays.copyOf(parts, parts.length - 1));
+                for (String ignored : getIgnoredNamespaces()) {
+                    if (namespaceOnly.equals(ignored) || namespaceOnly.startsWith(ignored + ".")) {
+                        return "any"; // short-circuit
+                    }
+                }
+            }
+        }
+
         String tsType;
         String typeSig = type.getSignature();
 
@@ -1116,25 +1365,30 @@ public class DtsApi {
         } else if (isArray) {
             tsType.append("androidNative.Array<");
             Type elementType = ((ArrayType) type).getElementType();
-            useAnyInsteadOfJavaLangObject(elementType, typeDefinition, tsType);
+            StringBuilder elemSb = new StringBuilder();
+            convertToTypeScriptType(elementType, typeDefinition, elemSb);
+            tsType.append(elemSb.toString());
             tsType.append(">");
         } else if (type.equals(Type.STRING)) {
             tsType.append("string");
         } else if (isObjectType) {
+            // Generic variable handling (type variables like T)
             if (isGenericObjectType) {
                 GenericObjectType genericObjectType = (GenericObjectType) type;
                 String genericVariable = genericObjectType.getVariable();
-                if (genericVariable != null && isWordPattern.matcher(genericVariable).matches()) {
+                final String genericVarSanitized = (genericVariable == null) ? null : genericVariable.replaceAll("[<>]", "");
+                if (genericVarSanitized != null && isWordPattern.matcher(genericVarSanitized).matches()) {
                     if (typeDefinition != null && typeDefinition.getGenericDefinitions() != null
                             && typeDefinition.getGenericDefinitions().stream()
-                            .filter(definition -> definition.getLabel().equals(genericVariable)).count() > 0
+                            .filter(definition -> definition.getLabel().equals(genericVarSanitized)).count() > 0
                             && ((ObjectType) typeDefinition.getParent()).getClassName().equals(DtsApi.JavaLangObject)) {
-                        tsType.append(genericObjectType.getVariable());
+                        tsType.append(genericObjectType.getVariable().replaceAll("[<>]", ""));
                         addReference(type);
                         return;
                     }
                 }
             }
+
             ObjectType objType = (ObjectType) type;
             String typeName = objType.getClassName();
             if (typeName.contains("$")) {
@@ -1145,22 +1399,51 @@ public class DtsApi {
                 typeName = this.typeOverrides.get(typeName);
             }
 
+            String emittedName;
             if (!typeBelongsInCurrentTopLevelNamespace(typeName) && !typeName.startsWith("java.util.function.") && !isPrivateGoogleApiClass(typeName)) {
-                tsType.append(getAliasedClassName(typeName));
+                emittedName = getAliasedClassName(typeName);
             } else {
-                tsType.append(typeName);
+                emittedName = typeName;
             }
+            tsType.append(emittedName);
 
+            // Render explicit parameters if present. If none but we have arity info -> synthesize any args.
             if (type instanceof GenericObjectType) {
                 GenericObjectType genericType = (GenericObjectType) type;
                 if (genericType.getNumParameters() > 0) {
-                    tsType.append("<");
+                    List<String> paramStrings = new ArrayList<>();
                     for (ReferenceType refType : genericType.getParameters()) {
-                        useAnyInsteadOfJavaLangObject(refType, typeDefinition, tsType);
-                        tsType.append(',');
+                        StringBuilder paramSb = new StringBuilder();
+                        convertToTypeScriptType(refType, typeDefinition, paramSb);
+                        paramStrings.add(paramSb.toString());
                     }
-                    tsType.deleteCharAt(tsType.lastIndexOf(","));
-                    tsType.append(">");
+                    tsType.append(formatGenericArgs(paramStrings));
+                } else {
+                    int arity = getGenericArityForClassName(typeName);
+                    if (arity == 0) {
+                        String globalAliased = getGlobalAliasedClassName(typeName);
+                        if (!globalAliased.equals(typeName)) {
+                            arity = getGenericArityForClassName(globalAliased);
+                        }
+                    }
+                    if (arity > 0) {
+                        List<String> anyArgs = new ArrayList<>();
+                        for (int i = 0; i < arity; i++) anyArgs.add("any");
+                        tsType.append(formatGenericArgs(anyArgs));
+                    }
+                }
+            } else {
+                int arity = getGenericArityForClassName(typeName);
+                if (arity == 0) {
+                    String globalAliased = getGlobalAliasedClassName(typeName);
+                    if (!globalAliased.equals(typeName)) {
+                        arity = getGenericArityForClassName(globalAliased);
+                    }
+                }
+                if (arity > 0) {
+                    List<String> anyArgs = new ArrayList<>();
+                    for (int i = 0; i < arity; i++) anyArgs.add("any");
+                    tsType.append(formatGenericArgs(anyArgs));
                 }
             }
 
@@ -1168,17 +1451,6 @@ public class DtsApi {
         } else {
             throw new RuntimeException("Unhandled type=" + type.getSignature());
         }
-    }
-
-    private void useAnyInsteadOfJavaLangObject(Type refType, TypeDefinition typeDefinition, StringBuilder tsType) {
-//        if (refType instanceof ObjectType) {
-//            ObjectType currentType = (ObjectType)refType;
-//            if (currentType.getClassName().equals(DtsApi.JavaLangObject)) {
-//                tsType.append("any");
-//                return;
-//            }
-//        }
-        this.convertToTypeScriptType(refType, typeDefinition, tsType);
     }
 
     private void addReference(Type type) {
@@ -1251,11 +1523,6 @@ public class DtsApi {
 
             generics.add(new Tuple<>(fullClassName.replace("$", "."), genericDefinitions.size()));
             for (TypeDefinition.GenericDefinition definition : genericDefinitions) {
-                ObjectType genericObjectType = (ObjectType) definition.getType();
-                String baseClassName = getAliasedClassName(genericObjectType.getClassName());
-                String resultType = definition.getType().toString();
-                String typeToExtend = resultType.replace(genericObjectType.getClassName(), baseClassName);
-                //parts.add(String.format("%s extends %s", definition.getLabel(), typeToExtend));
                 parts.add(definition.getLabel());
             }
             return "<" + String.join(", ", parts) + "> ";
@@ -1399,5 +1666,176 @@ public class DtsApi {
             }
         }
         return false;
+    }
+
+    // ---------- Helpers ----------
+    private static String formatGenericArgs(List<String> args) {
+        if (args == null || args.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("<");
+        for (int i = 0; i < args.size(); i++) {
+            if (i > 0) sb.append(",");
+            sb.append(args.get(i));
+        }
+        sb.append(">");
+        return sb.toString();
+    }
+
+    private static String shortHash(String s) {
+        int h = 0x811c9dc5;
+        for (int i = 0; i < s.length(); i++) {
+            h ^= s.charAt(i);
+            h *= 16777619;
+        }
+        String hex = Integer.toHexString(h);
+        if (hex.length() <= 3) return hex;
+        return hex.substring(hex.length() - 3);
+    }
+
+    private static String sanitizeIdentifier(String orig, Set<String> existing, int maxLen) {
+        if (orig == null) orig = "";
+
+        // Detect likely synthetic / Kotlin-generated parameter names:
+        // - Kotlin synthetic names often look like "<set-...>" or contain '-' characters.
+        // - Obfuscated or compiler-generated names may contain '$'.
+        // If the original name is "clean" (only letters/digits/underscore), treat it as a real name
+        // and do NOT aggressively truncate it to maxLen. We will still sanitize invalid chars,
+        // ensure it doesn't start with a digit, and deduplicate in scope.
+        boolean likelySynthetic = orig.startsWith("<") || orig.contains("-") || orig.contains("$") || orig.contains(">") || !orig.matches("^[A-Za-z0-9_]+$");
+
+        // Step 1: remove angle brackets that commonly appear in synthetic names
+        String s = orig.replaceAll("[<>]", "");
+
+        // Step 2: replace invalid chars with underscore (this also converts '-' -> '_')
+        s = s.replaceAll("[^A-Za-z0-9_]", "_");
+
+        // Step 3: collapse consecutive underscores and trim leading/trailing underscores
+        s = s.replaceAll("_+", "_");
+        s = s.replaceAll("^_+|_+$", "");
+        if (s.isEmpty()) {
+            s = "_param";
+        }
+
+        // Step 4: if starts with digit, prefix underscore (valid TS identifier)
+        if (s.matches("^[0-9].*")) {
+            s = "_" + s;
+        }
+
+        // If the name looks synthetic, enforce maxLen (truncate + short hash suffix).
+        // If it looks like a real/meaningful identifier, avoid truncation: allow the original length.
+        if (likelySynthetic) {
+            if (s.length() > maxLen) {
+                String hash = shortHash(orig);
+                int baseLen = Math.max(1, maxLen - 4); // reserve '_' + 3 hex chars
+                String base = s.substring(0, baseLen);
+                s = base + "_" + hash; // final length <= maxLen
+            }
+        } else {
+            // keep full meaningful name (no truncation). However to be defensive, if it's absurdly long
+            // we still cap it to a much larger limit to avoid unlimited growth; but not the tiny maxLen.
+            int generousLimit = Math.max(maxLen, 128);
+            if (s.length() > generousLimit) {
+                String hash = shortHash(orig);
+                int baseLen = Math.max(1, generousLimit - 4);
+                String base = s.substring(0, baseLen);
+                s = base + "_" + hash;
+            }
+        }
+
+        // Step 5: deduplicate within scope; append numeric suffixes as needed.
+        if (existing != null) {
+            String candidate = s;
+            int i = 1;
+            while (existing.contains(candidate)) {
+                String suffix = "_" + i;
+                // If we previously didn't truncate (meaningful name) allow the new candidate to grow,
+                // but for synthetic names keep within maxLen.
+                if (likelySynthetic) {
+                    int allowedBase = Math.max(1, maxLen - suffix.length());
+                    String base = s.length() > allowedBase ? s.substring(0, allowedBase) : s;
+                    candidate = base + suffix;
+                } else {
+                    // for meaningful names allow adding suffix without aggressive truncation (but cap at generousLimit)
+                    int generousLimit = Math.max(maxLen, 128);
+                    int allowedBase = Math.max(1, generousLimit - suffix.length());
+                    String base = s.length() > allowedBase ? s.substring(0, allowedBase) : s;
+                    candidate = base + suffix;
+                }
+                i++;
+            }
+            s = candidate;
+            existing.add(s);
+        }
+
+        return s;
+    }
+
+    private static int getGenericArityForClassName(String className) {
+        for (Tuple<String, Integer> g : generics) {
+            if (g.x.equals(className)) {
+                return g.y;
+            }
+        }
+        for (Tuple<String, Integer> g : externalGenerics) {
+            if (g.x.equals(className)) {
+                return g.y;
+            }
+        }
+        return 0;
+    }
+
+
+    /**
+     * Balance a single type string by appending missing '>' characters.
+     * This operates only on the single type string (parameter or return).
+     */
+    private static String balanceAngleBracketsForType(String typeText) {
+        if (typeText == null || typeText.isEmpty()) return typeText;
+        int opens = 0;
+        for (int i = 0; i < typeText.length(); i++) {
+            char c = typeText.charAt(i);
+            if (c == '<') opens++;
+            else if (c == '>') {
+                opens--;
+            }
+        }
+        if (opens > 0) {
+            System.out.println(String.format("Found unbalanced. %s", typeText));
+            StringBuilder sb = new StringBuilder(typeText);
+            for (int j = 0; j < opens; j++) sb.append('>');
+            return sb.toString();
+        } else if (opens < 0) {
+            StringBuilder sb = new StringBuilder(typeText);
+            for (int j = 0; j < Math.abs(opens); j++) sb.append('<');
+            return sb.toString();
+        }
+        return typeText;
+    }
+
+    /**
+     * Wrapper that produces a TypeScript type string for a Java Type and ensures
+     * the single type token is balanced (each '<' has a matching '>' appended if missing).
+     * Use this whenever emitting a parameter type, return type or field type.
+     */
+    private String safeGetTypeScriptType(Type type, TypeDefinition typeDefinition) {
+        String raw = getTypeScriptTypeFromJavaType(type, typeDefinition);
+        return balanceAngleBracketsForType(raw);
+    }
+
+    private static String balanceUnclosedBraces(String content) {
+        long open = content.chars().filter(ch -> ch == '{').count();
+        long close = content.chars().filter(ch -> ch == '}').count();
+        long diff = open - close;
+        if (diff > 0) {
+            StringBuilder sb = new StringBuilder(content);
+            sb.append("\n");
+            for (long i = 0; i < diff; i++) {
+                sb.append("}\n");
+            }
+            return sb.toString();
+        }
+        return content;
     }
 }

@@ -15,7 +15,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -31,6 +33,7 @@ public class Generator {
     private boolean allGenericImplements;
     private boolean skipDeclarations;
     private boolean classMode;
+    private boolean perLibrary;
     private String outFileName;
     private String declarationsFileName;
 
@@ -39,6 +42,7 @@ public class Generator {
         this.allGenericImplements = inputParameters.isAllGenericImplementsEnabled();
         this.skipDeclarations = inputParameters.getSkipDeclarations();
         this.classMode = inputParameters.getClassMode();
+        this.perLibrary = inputParameters.getPerLibrary();
         this.fileHelper = new FileHelper(inputParameters.getOutputDir());
         this.dtsApi = new DtsApi(allGenericImplements, inputParameters);
         this.outFileName = FileHelper.DEFAULT_DTS_FILE_NAME;
@@ -48,7 +52,73 @@ public class Generator {
         loadSuperClasses(inputParameters.getSuperJars());
         ClassRepo.sortCachedProviders();
 
-        generateDts();
+        if (perLibrary) {
+            generateDtsPerLibrary();
+        } else {
+            generateDts();
+        }
+    }
+
+    private void generateDtsPerLibrary() throws Exception {
+        if(inputGenericsFile == null) {
+            InputStream stream = Main.class.getClassLoader().getResourceAsStream("generics.txt");
+            DtsApi.loadGenericsFromStream(stream);
+        }
+        if(inputGenericsFile != null){
+            DtsApi.loadGenerics(inputGenericsFile);
+        }
+
+        // Group classes by library
+        Map<String, List<JavaClass>> classesByLibrary = new HashMap<>();
+        
+        while (ClassRepo.hasNext()) {
+            List<JavaClass> classFiles = ClassRepo.getNextClassGroup();
+            for (JavaClass javaClass : classFiles) {
+                String libraryName = ClassRepo.getLibraryNameForClass(javaClass.getClassName());
+                if (libraryName != null) {
+                    classesByLibrary.computeIfAbsent(libraryName, k -> new ArrayList<>()).add(javaClass);
+                }
+            }
+        }
+
+        // Generate separate file for each library
+        for (Map.Entry<String, List<JavaClass>> entry : classesByLibrary.entrySet()) {
+            String libraryName = entry.getKey();
+            List<JavaClass> classes = entry.getValue();
+            
+            String outputFileName = libraryName + ".android.d.ts";
+            
+            this.fileHelper.writeToFile("/* eslint-disable @typescript-eslint/unified-signatures */\n" +
+                    "/* eslint-disable @typescript-eslint/adjacent-overload-signatures */\n" +
+                    "/* eslint-disable no-redeclare */\n", outputFileName, false);
+            
+            if(!this.skipDeclarations) {
+                this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), outputFileName, true);
+            }
+
+            String generatedContent = this.dtsApi.generateDtsContent(classes);
+            if (generatedContent.length() > 0) {
+                this.fileHelper.writeToFile(generatedContent, outputFileName, true);
+            }
+
+            String content = this.fileHelper.readFileContent(outputFileName);
+            if(content != null) {
+                String replacedContent = DtsApi.replaceGenericsInText(content);
+                if(!content.equals(replacedContent)) {
+                    this.fileHelper.writeToFile(replacedContent, outputFileName, false);
+                }
+            }
+        }
+
+        // Write generics info once in a separate file
+        String serializedGenerics = DtsApi.serializeGenerics();
+        if(!serializedGenerics.equals("")) {
+            this.fileHelper.writeToFile(serializedGenerics, "generics-info.txt", false);
+        }
+
+        if(!this.skipDeclarations) {
+            this.writeDeclarations();
+        }
     }
 
     private void generateDts() throws Exception {
@@ -59,9 +129,11 @@ public class Generator {
         if(inputGenericsFile != null){
             DtsApi.loadGenerics(inputGenericsFile);
         }
-
+        this.fileHelper.writeToFile("/* eslint-disable @typescript-eslint/unified-signatures */\n" +
+                "/* eslint-disable @typescript-eslint/adjacent-overload-signatures */\n" +
+                "/* eslint-disable no-redeclare */\n", this.outFileName, false);
         if(!this.skipDeclarations) {
-            this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, false);
+            this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, true);
         }
 
         while (ClassRepo.hasNext()) {
