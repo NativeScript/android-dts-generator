@@ -33,6 +33,9 @@ if (!project.hasProperty("loadedProjectDeps")  && hasProject) {
     project.ext.loadedProjectDeps = true
 }
 
+// Used when this project is built on its own. Inside the android runtime these come from its
+// gradle.properties instead, so the two have to name the same versions or the definitions this
+// generator produces depend on which way it was built.
 if(!hasProject){
     project.ext.set("ns_default_bcel_version", "6.10.0");
     project.ext.set("ns_default_commons_io_version", "2.6");
