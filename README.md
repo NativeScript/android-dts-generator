@@ -21,27 +21,27 @@ Generate definitions following any of the approaches described below. Once you h
 ```shell
 cd dts-generator
 ./gradlew jar
-java -jar build/libs/dts-generator.jar -input %ANDROID_HOME%/platforms/android-<Platform Level (21/22/23/24)>/android.jar
+java -jar build/libs/dts-generator.jar --input %ANDROID_HOME%/platforms/android-<Platform Level (21/22/23/24)>/android.jar
 ```
 
 ## Generate definitions for any Jar/Aar
 ```shell
 cd dts-generator
 ./gradlew jar
-java -jar build/libs/dts-generator.jar -input <Path to your Jar/Aar>
+java -jar build/libs/dts-generator.jar --input <Path to your Jar/Aar>
 ```
 
 ## Pass multiple jars/aars to generator
 ```shell
 cd dts-generator
 ./gradlew jar
-java -jar build/libs/dts-generator.jar -input <jar1> <jar2> <jar3>
+java -jar build/libs/dts-generator.jar --input <jar1> <jar2> <jar3>
 ```
 Another option is to pass the folder containing the jars you want to pass
 ```shell
 cd dts-generator
 ./gradlew jar
-java -jar build/libs/dts-generator.jar -input <jarFolder>
+java -jar build/libs/dts-generator.jar --input <jarFolder>
 ```
 
 > Note: Check the [Makefile](Makefile) for sample usage
