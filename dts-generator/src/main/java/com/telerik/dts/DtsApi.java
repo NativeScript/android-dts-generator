@@ -65,6 +65,7 @@ public class DtsApi {
     private Set<String> baseMethodNames;
     private List<Method> baseMethods;
     private Map<String, Method> mapNameMethod;
+    private KotlinVisibility currentClassVisibility = KotlinVisibility.NOT_KOTLIN;
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
     private int indent = 0;
@@ -125,6 +126,11 @@ public class DtsApi {
 
                 String simpleClassName = getSimpleClassname(currClass);
                 if (isObfuscated(simpleClassName)) {
+                    continue;
+                }
+
+                this.currentClassVisibility = KotlinVisibility.of(currClass);
+                if (this.currentClassVisibility.isInternalClass()) {
                     continue;
                 }
                 Signature signature = this.getSignature(currClass);
@@ -700,6 +706,10 @@ public class DtsApi {
         if (shouldIgnoreMember(name)) return;
 
         if (method.isSynthetic() || (!method.isPublic() && !method.isProtected())) {
+            return;
+        }
+
+        if (this.currentClassVisibility.isInternalMember(name, method.getSignature())) {
             return;
         }
 
@@ -1282,8 +1292,16 @@ public class DtsApi {
         return false;
     }
 
+    private boolean isCompilerGeneratedMember(String memberName) {
+        // '$' in a member name marks it as compiler-owned: Kotlin mangles internal members as
+        // name$module, and the module segment differs between build variants, so such a name is
+        // never a stable call target. Java uses the same convention for access$000, foo$default
+        // and $VALUES. Nested class names also contain '$' but are not member names.
+        return memberName.indexOf('$') > -1;
+    }
+
     private boolean shouldIgnoreMember(String memberName) {
-        return isPrivateGoogleApiMember(memberName) || isObfuscated(memberName);
+        return isPrivateGoogleApiMember(memberName) || isObfuscated(memberName) || isCompilerGeneratedMember(memberName);
     }
 
     private boolean isPrivateGoogleApiClass(String name) {

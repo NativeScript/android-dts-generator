@@ -37,6 +37,7 @@ if(!hasProject){
     project.ext.set("ns_default_bcel_version", "6.10.0");
     project.ext.set("ns_default_commons_io_version", "2.6");
     project.ext.set("ns_default_spotbugs_version", "3.1.12");
+    project.ext.set("ns_default_kotlinx_metadata_jvm_version", "2.4.10");
 }
 
 
@@ -73,6 +74,7 @@ dependencies {
     implementation "org.apache.bcel:bcel:${ns_default_bcel_version}"
     implementation "commons-io:commons-io:${ns_default_commons_io_version}"
     implementation "com.github.spotbugs:spotbugs:${ns_default_spotbugs_version}"
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-metadata-jvm', version: "${ns_default_kotlinx_metadata_jvm_version}"
 
     // add your dependency here as the example bellow, make sure you are using testCompileOnly
     // testCompileOnly  "com.android.support:support-v4:27.0.1"
