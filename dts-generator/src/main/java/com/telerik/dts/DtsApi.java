@@ -2,6 +2,7 @@ package com.telerik.dts;
 
 import com.telerik.InputParameters;
 
+import org.apache.bcel.classfile.AnnotationEntry;
 import org.apache.bcel.classfile.Attribute;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.FieldOrMethod;
@@ -65,8 +66,9 @@ public class DtsApi {
     private Set<String> baseMethodNames;
     private List<Method> baseMethods;
     private Map<String, Method> mapNameMethod;
-    private KotlinVisibility currentClassVisibility = KotlinVisibility.NOT_KOTLIN;
+    private KotlinTypeInfo currentClassKotlin = KotlinTypeInfo.NOT_KOTLIN;
     private boolean mergeClassVersions;
+    private boolean nullableUnknownTypes;
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
     private int indent = 0;
@@ -101,6 +103,7 @@ public class DtsApi {
         this.allGenericImplements = allGenericImplements;
         this.ignoreObfuscatedNameLength = inputParameters.getIgnoreObfuscatedNameLength();
         this.mergeClassVersions = inputParameters.getMergeClassVersions();
+        this.nullableUnknownTypes = inputParameters.getNullableUnknownTypes();
         this.indent = 0;
 
         overrideFieldComparator();
@@ -131,8 +134,8 @@ public class DtsApi {
                     continue;
                 }
 
-                this.currentClassVisibility = KotlinVisibility.of(currClass);
-                if (this.currentClassVisibility.isInternalClass()) {
+                this.currentClassKotlin = KotlinTypeInfo.of(currClass);
+                if (this.currentClassKotlin.isInternalClass()) {
                     continue;
                 }
                 Signature signature = this.getSignature(currClass);
@@ -589,7 +592,7 @@ public class DtsApi {
             sbContent.append(getTabs(this.indent + 2) + getMethodName(m) + getMethodParamSignature(classInterface, typeDefinition, m));
             String bmSig = "";
             if (!isConstructor(m)) {
-                bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(m), typeDefinition);
+                bmSig += ": " + returnTypeOf(m, typeDefinition);
             }
             sbContent.appendln(bmSig + ";");
         }
@@ -711,7 +714,7 @@ public class DtsApi {
             return;
         }
 
-        if (this.currentClassVisibility.isInternalMember(name, method.getSignature())) {
+        if (this.currentClassKotlin.isInternalMember(name, method.getSignature())) {
             return;
         }
 
@@ -740,6 +743,40 @@ public class DtsApi {
         methodsSet.add(generateMethodContent(clazz, typeDefinition, tabs, method));
     }
 
+    // Kotlin metadata states nullability outright, so it decides wherever it is available. Java
+    // bytecode carries it only where someone annotated the declaration: @Nullable and @NonNull are
+    // definitive, and the rest is unknown rather than non-null, which -nullable-unknown-types settles.
+    private boolean isNullable(Type type, AnnotationEntry[] annotations, Boolean kotlinNullable) {
+        if (!Nullability.isReferenceType(type)) {
+            return false;
+        }
+
+        if (kotlinNullable != null) {
+            return kotlinNullable;
+        }
+
+        if (Nullability.isNullable(annotations)) {
+            return true;
+        }
+
+        if (Nullability.isNonNull(annotations)) {
+            return false;
+        }
+
+        return this.nullableUnknownTypes;
+    }
+
+    private String withNull(String tsType, boolean nullable) {
+        // `any` already admits null, so a union there would be noise rather than information.
+        return nullable && !"any".equals(tsType) ? tsType + " | null" : tsType;
+    }
+
+    private String returnTypeOf(Method method, TypeDefinition typeDefinition) {
+        String tsType = getTypeScriptTypeFromJavaType(this.getReturnType(method), typeDefinition);
+        Boolean kotlinNullable = this.currentClassKotlin.isReturnNullable(method.getName(), method.getSignature());
+        return withNull(tsType, isNullable(method.getReturnType(), method.getAnnotationEntries(), kotlinNullable));
+    }
+
     private boolean methodIsDeprecated(Method method) {
         return Arrays.stream(
                         method
@@ -764,7 +801,7 @@ public class DtsApi {
         sbTemp.append(getMethodName(method) + getMethodParamSignature(clazz, typeDefinition, method));
         String bmSig = "";
         if (!isConstructor(method)) {
-            bmSig += ": " + getTypeScriptTypeFromJavaType(this.getReturnType(method), typeDefinition);
+            bmSig += ": " + returnTypeOf(method, typeDefinition);
         }
 
         sbTemp.append(bmSig + ";");
@@ -983,6 +1020,7 @@ public class DtsApi {
                 sb.append("param");
                 sb.append(idx);
             }
+            int paramIndex = idx;
             idx++;
             sb.append(": ");
 
@@ -993,7 +1031,8 @@ public class DtsApi {
                 sb.append("any /* " + paramTypeName + "*/");
             } else {
                 addReference(type);
-                sb.append(paramTypeName);
+                Boolean kotlinNullable = this.currentClassKotlin.isParameterNullable(m.getName(), m.getSignature(), paramIndex);
+                sb.append(withNull(paramTypeName, isNullable(type, Nullability.parameterAnnotations(m, paramIndex), kotlinNullable)));
             }
         }
         sb.append(")");

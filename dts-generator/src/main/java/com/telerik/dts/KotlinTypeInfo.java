@@ -3,11 +3,16 @@ package com.telerik.dts;
 import kotlin.Metadata;
 import kotlin.metadata.Attributes;
 import kotlin.metadata.KmClass;
+import kotlin.metadata.KmConstructor;
 import kotlin.metadata.KmDeclarationContainer;
 import kotlin.metadata.KmFunction;
 import kotlin.metadata.KmProperty;
 import kotlin.metadata.KmPropertyAccessorAttributes;
+import kotlin.metadata.KmValueParameter;
 import kotlin.metadata.Visibility;
+
+import java.util.Collections;
+import java.util.List;
 import kotlin.metadata.jvm.JvmExtensionsKt;
 import kotlin.metadata.jvm.JvmMetadataUtil;
 import kotlin.metadata.jvm.JvmMethodSignature;
@@ -21,26 +26,34 @@ import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.SimpleElementValue;
 
 /**
- * Kotlin visibility of a class and its members, read from the @kotlin.Metadata annotation.
+ * What a class's @kotlin.Metadata annotation says about its declarations, for the things the
+ * bytecode alone cannot express.
  *
  * The JVM has no `internal` modifier — Kotlin compiles internal declarations down to public ones —
- * so without consulting this annotation an internal type is indistinguishable from public API.
+ * so without this an internal type is indistinguishable from public API. Nullability is the same
+ * story in reverse: Java carries it only where someone wrote an annotation, while Kotlin records it
+ * on every type, so a Kotlin declaration never has to be guessed at.
  */
-public class KotlinVisibility {
+public class KotlinTypeInfo {
 
     private static final String KOTLIN_METADATA_ANNOTATION = "Lkotlin/Metadata;";
 
-    static final KotlinVisibility NOT_KOTLIN = new KotlinVisibility(null, false);
+    private static final String CONSTRUCTOR_NAME = "<init>";
+
+    static final KotlinTypeInfo NOT_KOTLIN = new KotlinTypeInfo(null, null, false);
 
     private final KmDeclarationContainer container;
+    // Constructors live beside the functions rather than among them, and only a class has any.
+    private final KmClass kmClass;
     private final boolean internalClass;
 
-    private KotlinVisibility(KmDeclarationContainer container, boolean internalClass) {
+    private KotlinTypeInfo(KmDeclarationContainer container, KmClass kmClass, boolean internalClass) {
         this.container = container;
+        this.kmClass = kmClass;
         this.internalClass = internalClass;
     }
 
-    public static KotlinVisibility of(JavaClass clazz) {
+    public static KotlinTypeInfo of(JavaClass clazz) {
         AnnotationEntry annotation = findMetadataAnnotation(clazz);
         if (annotation == null) {
             return NOT_KOTLIN;
@@ -57,13 +70,13 @@ public class KotlinVisibility {
 
         if (metadata instanceof KotlinClassMetadata.Class) {
             KmClass kmClass = ((KotlinClassMetadata.Class) metadata).getKmClass();
-            return new KotlinVisibility(kmClass, Attributes.getVisibility(kmClass) == Visibility.INTERNAL);
+            return new KotlinTypeInfo(kmClass, kmClass, Attributes.getVisibility(kmClass) == Visibility.INTERNAL);
         }
         if (metadata instanceof KotlinClassMetadata.FileFacade) {
-            return new KotlinVisibility(((KotlinClassMetadata.FileFacade) metadata).getKmPackage(), false);
+            return new KotlinTypeInfo(((KotlinClassMetadata.FileFacade) metadata).getKmPackage(), null, false);
         }
         if (metadata instanceof KotlinClassMetadata.MultiFileClassPart) {
-            return new KotlinVisibility(((KotlinClassMetadata.MultiFileClassPart) metadata).getKmPackage(), false);
+            return new KotlinTypeInfo(((KotlinClassMetadata.MultiFileClassPart) metadata).getKmPackage(), null, false);
         }
 
         return NOT_KOTLIN;
@@ -96,6 +109,87 @@ public class KotlinVisibility {
         }
 
         return false;
+    }
+
+    /**
+     * Whether the value a member returns may be null, or null when this is not a Kotlin declaration.
+     * Kotlin records nullability on the type itself, so unlike the Java annotations it is always
+     * present and never has to be guessed at.
+     */
+    public Boolean isReturnNullable(String name, String descriptor) {
+        KmFunction function = findFunction(name, descriptor);
+        if (function != null) {
+            return Attributes.isNullable(function.getReturnType());
+        }
+
+        for (KmProperty property : properties()) {
+            if (matches(JvmExtensionsKt.getGetterSignature(property), name, descriptor)) {
+                return Attributes.isNullable(property.getReturnType());
+            }
+        }
+
+        return null;
+    }
+
+    /** Whether a parameter accepts null, or null when this is not a Kotlin declaration. */
+    public Boolean isParameterNullable(String name, String descriptor, int index) {
+        if (CONSTRUCTOR_NAME.equals(name)) {
+            KmConstructor constructor = findConstructor(name, descriptor);
+            if (constructor == null) {
+                return null;
+            }
+            List<KmValueParameter> parameters = constructor.getValueParameters();
+            return index < parameters.size() ? Attributes.isNullable(parameters.get(index).getType()) : null;
+        }
+
+        KmFunction function = findFunction(name, descriptor);
+        if (function != null) {
+            List<KmValueParameter> parameters = function.getValueParameters();
+            if (index < parameters.size()) {
+                return Attributes.isNullable(parameters.get(index).getType());
+            }
+            return null;
+        }
+
+        for (KmProperty property : properties()) {
+            if (matches(JvmExtensionsKt.getSetterSignature(property), name, descriptor) && index == 0) {
+                return Attributes.isNullable(property.getReturnType());
+            }
+        }
+
+        return null;
+    }
+
+    private KmConstructor findConstructor(String name, String descriptor) {
+        if (kmClass == null) {
+            return null;
+        }
+
+        for (KmConstructor constructor : kmClass.getConstructors()) {
+            if (matches(JvmExtensionsKt.getSignature(constructor), name, descriptor)) {
+                return constructor;
+            }
+        }
+
+        return null;
+    }
+
+    private KmFunction findFunction(String name, String descriptor) {
+        if (container == null) {
+            return null;
+        }
+
+        for (KmFunction function : container.getFunctions()) {
+            if (matches(JvmExtensionsKt.getSignature(function), name, descriptor)) {
+                return function;
+            }
+        }
+
+        return null;
+    }
+
+    private List<KmProperty> properties() {
+        return container == null ? Collections.<KmProperty>emptyList() : container.getProperties();
     }
 
     private static boolean isInternal(KmProperty property, KmPropertyAccessorAttributes accessor) {

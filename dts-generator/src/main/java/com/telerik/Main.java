@@ -34,11 +34,15 @@ public class Main {
 	// rather than from the first one only
 	private static final String MERGE_CLASS_VERSIONS = "-merge-class-versions";
 
+	// whether a reference type carrying neither @Nullable nor @NonNull should be treated as nullable
+	private static final String NULLABLE_UNKNOWN_TYPES = "-nullable-unknown-types";
+
 	private static final String HELP = "-help";
 
 	private static final Set<String> KNOWN_FLAGS = new LinkedHashSet<>(Arrays.asList(
 			OUT_DIR, INPUT_JARS, SUPER_JARS, CLASS_MODE, INPUT_GENERICS,
-			ALL_GENERIC_IMPLEMENTS, SKIP_DECLARATIONS, IGNORE_OBFUSCATED, MERGE_CLASS_VERSIONS, HELP));
+			ALL_GENERIC_IMPLEMENTS, SKIP_DECLARATIONS, IGNORE_OBFUSCATED, MERGE_CLASS_VERSIONS,
+			NULLABLE_UNKNOWN_TYPES, HELP));
 
 	public static void main(String[] args) {
 		if (args == null || args.length == 0 || isHelpRequested(args)) {
@@ -103,6 +107,9 @@ public class Main {
 					break;
 				case MERGE_CLASS_VERSIONS:
 					inputParameters.setMergeClassVersions(booleanValue(flag, inlineValue));
+					break;
+				case NULLABLE_UNKNOWN_TYPES:
+					inputParameters.setNullableUnknownTypes(booleanValue(flag, inlineValue));
 					break;
 				case IGNORE_OBFUSCATED:
 					inputParameters.setIgnoreObfuscatedNameLength(parseLength(flag, valueOf(flag, inlineValue, args, i)));
@@ -259,6 +266,7 @@ public class Main {
 		option(out, SKIP_DECLARATIONS, "Do not generate android-declarations.d.ts, and do not reference it.");
 		option(out, CLASS_MODE, "Treat input directories as class folders.");
 		option(out, MERGE_CLASS_VERSIONS, "Generate a class that appears in several input jars from all of them combined rather than from the first one alone. Intended for definitions spanning multiple Android platform jars, where a member a newer platform dropped still has to be described.");
+		option(out, NULLABLE_UNKNOWN_TYPES, "Treat a reference type that carries neither @Nullable nor @NonNull as nullable. By default only types known to be nullable get a null union, which leaves the rest as they are described today; this widens that to everything not marked @NonNull. Kotlin declarations are unaffected either way, as their metadata always states nullability exactly.");
 		option(out, IGNORE_OBFUSCATED + " <n>", "Skip classes and members whose name is n characters or shorter, treating them as obfuscated.");
 		option(out, HELP, "Print this message.");
 	}

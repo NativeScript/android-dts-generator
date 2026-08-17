@@ -17,6 +17,7 @@ public class InputParameters {
     private boolean skipDeclarations;
     private boolean classMode;
     private boolean mergeClassVersions;
+    private boolean nullableUnknownTypes;
     private int ignoreObfuscatedNameLength;
 
     public InputParameters() {
@@ -66,6 +67,10 @@ public class InputParameters {
     public boolean getClassMode() { return this.classMode; }
 
     public void setClassMode(boolean classMode) { this.classMode = classMode; }
+
+    public boolean getNullableUnknownTypes() { return this.nullableUnknownTypes; }
+
+    public void setNullableUnknownTypes(boolean nullableUnknownTypes) { this.nullableUnknownTypes = nullableUnknownTypes; }
 
     public boolean getMergeClassVersions() { return this.mergeClassVersions; }
 
