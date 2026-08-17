@@ -66,6 +66,7 @@ public class DtsApi {
     private List<Method> baseMethods;
     private Map<String, Method> mapNameMethod;
     private KotlinVisibility currentClassVisibility = KotlinVisibility.NOT_KOTLIN;
+    private boolean mergeClassVersions;
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
     private int indent = 0;
@@ -99,6 +100,7 @@ public class DtsApi {
     public DtsApi(boolean allGenericImplements, InputParameters inputParameters) {
         this.allGenericImplements = allGenericImplements;
         this.ignoreObfuscatedNameLength = inputParameters.getIgnoreObfuscatedNameLength();
+        this.mergeClassVersions = inputParameters.getMergeClassVersions();
         this.indent = 0;
 
         overrideFieldComparator();
@@ -1214,19 +1216,61 @@ public class DtsApi {
         methods.addAll(Arrays.asList(javaClass.getMethods()));
         methods.addAll(allInterfacesMethods);
 
+        List<Field> fields = new ArrayList<>(Arrays.asList(javaClass.getFields()));
+
+        if (this.mergeClassVersions) {
+            addMembersFromOtherVersions(javaClass, methods, fields);
+        }
+
         for (Method m : methods) {
             if ((m.isPublic() || m.isProtected()) && !m.isSynthetic()) {
                 members.add(m);
                 methodNames.add(m.getName());
             }
         }
-        for (Field f : javaClass.getFields()) {
+        for (Field f : fields) {
             if ((f.isPublic() || f.isProtected()) && !f.isSynthetic() && !methodNames.contains(f.getName())) {
                 members.add(f);
             }
         }
 
         return members;
+    }
+
+    // A class is generated from whichever input jar defined it first. When those jars are Android
+    // platform jars, members the newer platforms dropped exist only in the older ones, and are
+    // otherwise absent from the typings even though code guarded on an older SDK still calls them.
+    private void addMembersFromOtherVersions(JavaClass javaClass, List<Method> methods, List<Field> fields) {
+        List<JavaClass> versions = ClassRepo.findAllVersions(javaClass.getClassName());
+        if (versions.size() < 2) {
+            return;
+        }
+
+        Set<String> seenMethods = new HashSet<>();
+        for (Method m : methods) {
+            seenMethods.add(m.getName() + m.getSignature());
+        }
+
+        Set<String> seenFields = new HashSet<>();
+        for (Field f : fields) {
+            seenFields.add(f.getName() + f.getSignature());
+        }
+
+        // No version is skipped: BCEL compares JavaClass by name, so every version of a class
+        // equals every other. The seen sets already drop anything the first definition provided.
+        for (JavaClass version : versions) {
+            for (Method m : version.getMethods()) {
+                if (seenMethods.add(m.getName() + m.getSignature())) {
+                    methods.add(m);
+                }
+            }
+
+            for (Field f : version.getFields()) {
+                if (seenFields.add(f.getName() + f.getSignature())) {
+                    fields.add(f);
+                }
+            }
+        }
     }
 
     // HELPER METHODS

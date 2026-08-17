@@ -16,6 +16,7 @@ public class InputParameters {
     private boolean allGenericImplements;
     private boolean skipDeclarations;
     private boolean classMode;
+    private boolean mergeClassVersions;
     private int ignoreObfuscatedNameLength;
 
     public InputParameters() {
@@ -65,6 +66,10 @@ public class InputParameters {
     public boolean getClassMode() { return this.classMode; }
 
     public void setClassMode(boolean classMode) { this.classMode = classMode; }
+
+    public boolean getMergeClassVersions() { return this.mergeClassVersions; }
+
+    public void setMergeClassVersions(boolean mergeClassVersions) { this.mergeClassVersions = mergeClassVersions; }
 
     public int getIgnoreObfuscatedNameLength() { return this.ignoreObfuscatedNameLength; }
 

@@ -20,22 +20,10 @@ public class ClassRepo {
 	private static int traversedFilesIdx = 0;
 
 	public static void cacheJarFile(ClassMapProvider classMapProvider) {
-		for (String className : classMapProvider.getClassMap().keySet()) {
-			for (ClassMapProvider cachedProvider : cachedProviders) {
-				JavaClass clazz = cachedProvider.getClassMap().get(className);
-			}
-		}
-
 		cachedProviders.add(classMapProvider);
 	}
 
 	public static void cacheSuperJarFile(ClassMapProvider classMapProvider) {
-		for (String className : classMapProvider.getClassMap().keySet()) {
-			for (ClassMapProvider cachedProvider : cachedProviders) {
-				JavaClass clazz = cachedProvider.getClassMap().get(className);
-			}
-		}
-
 		cachedSuperProviders.add(classMapProvider);
 	}
 
@@ -69,6 +57,22 @@ public class ClassRepo {
 			return findSuperClass(className);
 		}
 		return clazz;
+	}
+
+	/**
+	 * Every cached definition of a class, in the order the input jars were given. findClass keeps
+	 * only the first, which is all a set of unrelated jars needs; a set of Android platform jars
+	 * also has to describe members that a later platform dropped, and those survive only here.
+	 */
+	public static List<JavaClass> findAllVersions(String className) {
+		List<JavaClass> versions = new ArrayList<>();
+		for (ClassMapProvider classMapProvider : cachedProviders) {
+			JavaClass clazz = classMapProvider.getClassMap().get(className);
+			if (clazz != null) {
+				versions.add(clazz);
+			}
+		}
+		return versions;
 	}
 
 	public static JavaClass findSuperClass(String className) {
