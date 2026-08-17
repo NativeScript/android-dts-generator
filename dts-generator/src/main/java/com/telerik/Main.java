@@ -11,38 +11,44 @@ import java.util.Set;
 
 public class Main {
 
-	private static final String OUT_DIR = "-output";
-	private static final String INPUT_JARS = "-input";
-	private static final String SUPER_JARS = "-super";
-	private static final String CLASS_MODE = "-class-mode";
+	private static final String OUT_DIR = "--output";
+	private static final String INPUT_JARS = "--input";
+	private static final String SUPER_JARS = "--super";
+	private static final String CLASS_MODE = "--class-mode";
 
 	// provide a file with rows in the following format - com.telerik.android.data.SelectionService:1
 	// to know how many generic types uses a given generic
-	private static final String INPUT_GENERICS = "-input-generics";
+	private static final String INPUT_GENERICS = "--input-generics";
 
 	// whether to generate implements for all interfaces implemented by the generic types
-	private static final String ALL_GENERIC_IMPLEMENTS = "-all-generic-implements";
+	private static final String ALL_GENERIC_IMPLEMENTS = "--all-generic-implements";
 
 	// whether to skip the declarations file generation
-	private static final String SKIP_DECLARATIONS = "-skip-declarations";
+	private static final String SKIP_DECLARATIONS = "--skip-declarations";
 
 	// whether to ignore obfuscated classes/namespaces/methods
 	// the parameter defines the length of obfuscated names to detect
-	private static final String IGNORE_OBFUSCATED = "-ignore-obfuscated";
+	private static final String IGNORE_OBFUSCATED = "--ignore-obfuscated";
 
 	// whether a class found in several input jars should be generated from all of them at once
 	// rather than from the first one only
-	private static final String MERGE_CLASS_VERSIONS = "-merge-class-versions";
+	private static final String MERGE_CLASS_VERSIONS = "--merge-class-versions";
 
 	// whether a reference type carrying neither @Nullable nor @NonNull should be treated as nullable
-	private static final String NULLABLE_UNKNOWN_TYPES = "-nullable-unknown-types";
+	private static final String NULLABLE_UNKNOWN_TYPES = "--nullable-unknown-types";
 
-	private static final String HELP = "-help";
+	private static final String HELP = "--help";
 
 	private static final Set<String> KNOWN_FLAGS = new LinkedHashSet<>(Arrays.asList(
 			OUT_DIR, INPUT_JARS, SUPER_JARS, CLASS_MODE, INPUT_GENERICS,
 			ALL_GENERIC_IMPLEMENTS, SKIP_DECLARATIONS, IGNORE_OBFUSCATED, MERGE_CLASS_VERSIONS,
 			NULLABLE_UNKNOWN_TYPES, HELP));
+
+	// Options that existed before the move to double dash, and so are still answered to with one.
+	// Anything added since is double dash only, which is where the rest of these are headed too.
+	private static final Set<String> ACCEPTS_SINGLE_DASH = new LinkedHashSet<>(Arrays.asList(
+			OUT_DIR, INPUT_JARS, SUPER_JARS, CLASS_MODE, INPUT_GENERICS,
+			ALL_GENERIC_IMPLEMENTS, SKIP_DECLARATIONS, IGNORE_OBFUSCATED, HELP));
 
 	public static void main(String[] args) {
 		if (args == null || args.length == 0 || isHelpRequested(args)) {
@@ -89,8 +95,7 @@ public class Main {
 			String inlineValue = separator > 0 ? token.substring(separator + 1) : null;
 
 			if (!KNOWN_FLAGS.contains(flag)) {
-				throw new IllegalArgumentException("unknown option '"
-						+ (separator > 0 ? token.substring(0, separator) : token) + "'");
+				throw new IllegalArgumentException(unknownOption(separator > 0 ? token.substring(0, separator) : token));
 			}
 
 			switch (flag) {
@@ -153,9 +158,27 @@ public class Main {
 		return inputParameters;
 	}
 
-	/** Both -flag and --flag are accepted; the single dash spelling is the canonical one. */
+	/** Resolves a written option to its canonical double dash spelling, or returns it unchanged. */
 	private static String canonical(String flag) {
-		return flag.startsWith("--") ? flag.substring(1) : flag;
+		if (KNOWN_FLAGS.contains(flag)) {
+			return flag;
+		}
+
+		String promoted = "-" + flag;
+		if (flag.startsWith("-") && !flag.startsWith("--") && ACCEPTS_SINGLE_DASH.contains(promoted)) {
+			return promoted;
+		}
+
+		return flag;
+	}
+
+	private static String unknownOption(String written) {
+		// A single dash on an option that only answers to two is the likely mistake here, so point
+		// at the spelling that works rather than leaving the reader to find it in the usage.
+		if (KNOWN_FLAGS.contains("-" + written)) {
+			return "unknown option '" + written + "'; did you mean '-" + written + "'?";
+		}
+		return "unknown option '" + written + "'";
 	}
 
 	private static boolean isHelpRequested(String[] args) {
@@ -251,9 +274,9 @@ public class Main {
 		out.println("Usage:");
 		out.println("  java -jar dts-generator.jar " + INPUT_JARS + " <path>... [options]");
 		out.println();
-		out.println("Options take their value either as a separate argument or after an '=', and may");
-		out.println("be written with one or two leading dashes, so -output out, -output=out, --output out");
-		out.println("and --output=out are all equivalent.");
+		out.println("Options take their value either as a separate argument or after an '=', so");
+		out.println("--output out and --output=out are equivalent. The options that predate the move to");
+		out.println("double dash still answer to a single one; newer options do not.");
 		out.println();
 		out.println("Required:");
 		option(out, INPUT_JARS + " <path>...", "Jars or class directories to generate definitions from.");
