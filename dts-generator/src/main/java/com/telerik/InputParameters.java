@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class InputParameters {
 
+    /** The lowest level the NativeScript Android runtime supports. */
+    public static final int DEFAULT_MIN_SDK = 21;
+
     private File outputDir;
     private List<File> inputJars;
     private List<File> superJars;
@@ -19,6 +22,8 @@ public class InputParameters {
     private boolean mergeClassVersions;
     private boolean nullableUnknownTypes;
     private int ignoreObfuscatedNameLength;
+    private File apiVersions;
+    private int minSdk;
 
     public InputParameters() {
         this.outputDir = new File("out");
@@ -28,6 +33,7 @@ public class InputParameters {
         this.skipDeclarations = false;
         this.classMode = false;
         this.ignoreObfuscatedNameLength = 0;
+        this.minSdk = DEFAULT_MIN_SDK;
     }
 
     public File getOutputDir() {
@@ -80,4 +86,12 @@ public class InputParameters {
 
     public void setIgnoreObfuscatedNameLength(int nameLength) { this.ignoreObfuscatedNameLength = nameLength; }
 
+
+    public File getApiVersions() { return this.apiVersions; }
+
+    public void setApiVersions(File apiVersions) { this.apiVersions = apiVersions; }
+
+    public int getMinSdk() { return this.minSdk; }
+
+    public void setMinSdk(int minSdk) { this.minSdk = minSdk; }
 }

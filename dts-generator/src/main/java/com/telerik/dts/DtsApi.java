@@ -27,8 +27,10 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -80,6 +82,8 @@ public class DtsApi {
     private HashSet<String> warnedMissing = new HashSet<>();
     private Pattern jsFieldPattern = Pattern.compile("^[a-zA-Z$_][a-zA-Z0-9$_]*$");
 
+    private final ApiLevels apiLevels;
+
     private Set<String> reservedJsKeywords = Set.of(
             "abstract", "arguments", "await", "boolean",
             "break", "byte", "case", "catch",
@@ -99,8 +103,15 @@ public class DtsApi {
             "volatile", "while", "with", "yield"
     );
 
-    public DtsApi(boolean allGenericImplements, InputParameters inputParameters) {
+    public DtsApi(boolean allGenericImplements, InputParameters inputParameters) throws Exception {
         this.allGenericImplements = allGenericImplements;
+        File apiVersions = inputParameters.getApiVersions();
+        this.apiLevels = apiVersions == null ? null : ApiLevels.read(apiVersions, inputParameters.getMinSdk());
+        if (this.apiLevels != null) {
+            // Naming the level makes an api-versions.xml taken from an older platform than the jars
+            // visible, which otherwise just degrades the annotations quietly.
+            System.out.println("Read API levels up to " + this.apiLevels.highestLevel() + " from " + apiVersions);
+        }
         this.ignoreObfuscatedNameLength = inputParameters.getIgnoreObfuscatedNameLength();
         this.mergeClassVersions = inputParameters.getMergeClassVersions();
         this.nullableUnknownTypes = inputParameters.getNullableUnknownTypes();
@@ -123,7 +134,9 @@ public class DtsApi {
 
             // process class scope
             for (int i = 0; i < javaClasses.size(); i++) {
-                Set<String> methodsSet = new HashSet<>();
+                // Keyed on the declaration alone: two members can render the same TypeScript and
+                // only one can be written, so which survives must not depend on the comment.
+                Map<String, ApiLevels.Tags> methods = new LinkedHashMap<>();
 
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
@@ -173,6 +186,15 @@ public class DtsApi {
 
                 String extendsLine = getExtendsLine(currClass, typeDefinition);
 
+                // currentFileClassname here, clazz.getClassName() for members: both give the same
+                // $-separated internal name the levels are keyed by, and both have to keep doing so.
+                if (this.apiLevels != null) {
+                    String classComment = apiLevelComment(tabs, this.apiLevels.tagsForClass(currentFileClassname).render());
+                    if (!classComment.isEmpty()) {
+                        sbContent.appendln(classComment);
+                    }
+                }
+
                 if (simpleClassName.equals("AccessibilityDelegate")) {
                     sbContent.appendln(tabs + "export class " + getFullClassNameConcatenated(currClass) + getTypeSuffix(currentFileClassname, typeDefinition, extendsLine) + extendsLine + " {");
                 } else {
@@ -196,7 +218,7 @@ public class DtsApi {
                     processInterfaceConstructor(currClass, typeDefinition, allInterfacesMethods);
 
                     for (Method method : allInterfacesMethods) {
-                        processMethod(method, currClass, typeDefinition, methodsSet);
+                        processMethod(method, currClass, typeDefinition, methods);
                     }
 
                     for (Field f : allInterfaceFields) {
@@ -208,7 +230,7 @@ public class DtsApi {
                         if (fieldOrMethod instanceof Field) {
                             processField((Field) fieldOrMethod, currClass, typeDefinition);
                         } else if (fieldOrMethod instanceof Method) {
-                            processMethod((Method) fieldOrMethod, currClass, typeDefinition, methodsSet);
+                            processMethod((Method) fieldOrMethod, currClass, typeDefinition, methods);
                         } else {
                             throw new IllegalArgumentException("Argument is not method or field");
                         }
@@ -229,11 +251,11 @@ public class DtsApi {
                     List<Method> allInterfacesMethods = getAllInterfacesMethods(allInterfaces);
 
                     for (Method method : allInterfacesMethods) {
-                        processMethod(method, currClass, typeDefinition, methodsSet);
+                        processMethod(method, currClass, typeDefinition, methods);
                     }
                 }
 
-                writeMethods(methodsSet);
+                writeMethods(methods);
 
                 sbContent.appendln(tabs + "}");
                 if (getSimpleClassname(currClass).equals("AccessibilityDelegate")) {
@@ -705,7 +727,7 @@ public class DtsApi {
     }
 
     //method related
-    private void processMethod(Method method, JavaClass clazz, TypeDefinition typeDefinition, Set<String> methodsSet) {
+    private void processMethod(Method method, JavaClass clazz, TypeDefinition typeDefinition, Map<String, ApiLevels.Tags> methods) {
         String name = method.getName();
 
         if (shouldIgnoreMember(name)) return;
@@ -734,13 +756,18 @@ public class DtsApi {
                     String sig = getMethodFullSignature(baseMethod);
                     if (!mapNameMethod.containsKey(sig)) {
                         mapNameMethod.put(sig, baseMethod);
-                        methodsSet.add(generateMethodContent(clazz, typeDefinition, tabs, baseMethod));
+                        addMethod(methods, clazz, typeDefinition, tabs, baseMethod);
                     }
                 }
             }
         }
 
-        methodsSet.add(generateMethodContent(clazz, typeDefinition, tabs, method));
+        addMethod(methods, clazz, typeDefinition, tabs, method);
+    }
+
+    private void addMethod(Map<String, ApiLevels.Tags> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
+        ApiLevels.Tags tags = memberTags(clazz, method.getName() + method.getSignature(), isDeprecated(method));
+        methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method), tags, ApiLevels.Tags::mergedWith);
     }
 
     // Kotlin metadata states nullability outright, so it decides wherever it is available. Java
@@ -777,20 +804,41 @@ public class DtsApi {
         return withNull(tsType, isNullable(method.getReturnType(), method.getAnnotationEntries(), kotlinNullable));
     }
 
-    private boolean methodIsDeprecated(Method method) {
+    private boolean isDeprecated(FieldOrMethod member) {
         return Arrays.stream(
-                        method
+                        member
                                 .getAttributes())
                 .anyMatch(x ->
                         x.getClass()
                                 .isAssignableFrom(org.apache.bcel.classfile.Deprecated.class));
     }
 
+    private ApiLevels.Tags memberTags(JavaClass clazz, String memberKey, boolean deprecatedInBytecode) {
+        if (this.apiLevels == null) {
+            return deprecatedInBytecode ? ApiLevels.Tags.DEPRECATED_IN_BYTECODE : ApiLevels.Tags.NONE;
+        }
+
+        return this.apiLevels.tagsForMember(clazz.getClassName(), memberKey, deprecatedInBytecode);
+    }
+
+    private String apiLevelComment(String tabs, List<String> tags) {
+        if (tags.isEmpty()) {
+            return "";
+        }
+
+        if (tags.size() == 1) {
+            return tabs + "/** " + tags.get(0) + " */";
+        }
+
+        StringBuilder comment = new StringBuilder(tabs).append("/** ").append(tags.get(0));
+        for (int i = 1; i < tags.size(); i++) {
+            comment.append("\n").append(tabs).append(" *  ").append(tags.get(i));
+        }
+        return comment.append(" */").toString();
+    }
+
     private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
         StringBuilder2 sbTemp = new StringBuilder2();
-        if (methodIsDeprecated(method)) {
-            sbTemp.appendln(tabs + "/** @deprecated */");
-        }
 
         sbTemp.append(tabs + "public ");
 
@@ -900,9 +948,14 @@ public class DtsApi {
         return m.getReturnType();
     }
 
-    private void writeMethods(Set<String> methodsSet) {
-        for (String m : methodsSet) {
-            sbContent.appendln(m);
+    private void writeMethods(Map<String, ApiLevels.Tags> methods) {
+        String tabs = getTabs(this.indent + 1);
+        for (Map.Entry<String, ApiLevels.Tags> method : methods.entrySet()) {
+            String comment = apiLevelComment(tabs, method.getValue().render());
+            if (!comment.isEmpty()) {
+                sbContent.appendln(comment);
+            }
+            sbContent.appendln(method.getKey());
         }
     }
 
@@ -1072,6 +1125,14 @@ public class DtsApi {
         }
 
         String tabs = getTabs(this.indent + 1);
+        // Only annotated with a versions file in hand: a field has never carried a bare
+        // @deprecated, so deriving one from the bytecode alone would rewrite existing definitions.
+        if (this.apiLevels != null) {
+            String fieldComment = apiLevelComment(tabs, memberTags(clazz, f.getName(), isDeprecated(f)).render());
+            if (!fieldComment.isEmpty()) {
+                sbContent.appendln(fieldComment);
+            }
+        }
         sbContent.append(tabs + "public ");
         if (f.isStatic()) {
             sbContent.append("static ");

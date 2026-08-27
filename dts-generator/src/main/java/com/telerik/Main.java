@@ -37,12 +37,19 @@ public class Main {
 	// whether a reference type carrying neither @Nullable nor @NonNull should be treated as nullable
 	private static final String NULLABLE_UNKNOWN_TYPES = "--nullable-unknown-types";
 
+	// the api-versions.xml an Android platform ships, which says what level each class and member
+	// appeared, was deprecated, and was removed in
+	private static final String API_VERSIONS = "--api-versions";
+
+	// the level below which an @since says nothing the reader did not already assume
+	private static final String MIN_SDK = "--min-sdk";
+
 	private static final String HELP = "--help";
 
 	private static final Set<String> KNOWN_FLAGS = new LinkedHashSet<>(Arrays.asList(
 			OUT_DIR, INPUT_JARS, SUPER_JARS, CLASS_MODE, INPUT_GENERICS,
 			ALL_GENERIC_IMPLEMENTS, SKIP_DECLARATIONS, IGNORE_OBFUSCATED, MERGE_CLASS_VERSIONS,
-			NULLABLE_UNKNOWN_TYPES, HELP));
+			NULLABLE_UNKNOWN_TYPES, API_VERSIONS, MIN_SDK, HELP));
 
 	// Options that existed before the move to double dash, and so are still answered to with one.
 	// Anything added since is double dash only, which is where the rest of these are headed too.
@@ -117,7 +124,15 @@ public class Main {
 					inputParameters.setNullableUnknownTypes(booleanValue(flag, inlineValue));
 					break;
 				case IGNORE_OBFUSCATED:
-					inputParameters.setIgnoreObfuscatedNameLength(parseLength(flag, valueOf(flag, inlineValue, args, i)));
+					inputParameters.setIgnoreObfuscatedNameLength(parseNumber(flag, valueOf(flag, inlineValue, args, i)));
+					if (inlineValue == null) i++;
+					break;
+				case API_VERSIONS:
+					inputParameters.setApiVersions(existingFile(flag, valueOf(flag, inlineValue, args, i)));
+					if (inlineValue == null) i++;
+					break;
+				case MIN_SDK:
+					inputParameters.setMinSdk(parseLevel(flag, valueOf(flag, inlineValue, args, i)));
 					if (inlineValue == null) i++;
 					break;
 				case OUT_DIR:
@@ -136,6 +151,17 @@ public class Main {
 					break;
 				default:
 					throw new IllegalArgumentException("unhandled option '" + flag + "'");
+			}
+		}
+
+		if (inputParameters.getApiVersions() == null) {
+			if (inputParameters.getMinSdk() != InputParameters.DEFAULT_MIN_SDK) {
+				System.err.println("dts-generator: " + MIN_SDK + " has no effect without " + API_VERSIONS);
+			}
+
+			if (inputParameters.getMergeClassVersions()) {
+				System.err.println("dts-generator: merging without " + API_VERSIONS + " leaves the members that only"
+						+ " older platforms have indistinguishable from current ones");
 			}
 		}
 
@@ -250,12 +276,20 @@ public class Main {
 		return last;
 	}
 
-	private static int parseLength(String flag, String value) {
+	private static int parseNumber(String flag, String value) {
 		try {
 			return Integer.parseInt(value);
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException(flag + " expects a number, got '" + value + "'");
 		}
+	}
+
+	private static int parseLevel(String flag, String value) {
+		int level = parseNumber(flag, value);
+		if (level < 1) {
+			throw new IllegalArgumentException(flag + " expects an API level of 1 or more, got '" + value + "'");
+		}
+		return level;
 	}
 
 	private static File existingFile(String flag, String value) {
@@ -291,6 +325,8 @@ public class Main {
 		option(out, MERGE_CLASS_VERSIONS, "Generate a class that appears in several input jars from all of them combined rather than from the first one alone. Intended for definitions spanning multiple Android platform jars, where a member a newer platform dropped still has to be described.");
 		option(out, NULLABLE_UNKNOWN_TYPES, "Treat a reference type that carries neither @Nullable nor @NonNull as nullable. By default only types known to be nullable get a null union, which leaves the rest as they are described today; this widens that to everything not marked @NonNull. Kotlin declarations are unaffected either way, as their metadata always states nullability exactly.");
 		option(out, IGNORE_OBFUSCATED + " <n>", "Skip classes and members whose name is n characters or shorter, treating them as obfuscated.");
+		option(out, API_VERSIONS + " <file>", "An Android platform's data/api-versions.xml, from which classes and members are annotated with the API level they appeared in and, where they did not survive, the level that deprecated or removed them. Worth passing whenever definitions are merged from several platforms, since a member no current platform has otherwise reads as though it were still there. An SDK stripped to android.jar alone does not carry this file.");
+		option(out, MIN_SDK + " <n>", "The lowest API level the definitions are meant for, below which an @since is left off as saying nothing. Defaults to " + InputParameters.DEFAULT_MIN_SDK + ". Only read alongside " + API_VERSIONS + ".");
 		option(out, HELP, "Print this message.");
 	}
 
