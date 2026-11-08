@@ -158,6 +158,46 @@ declare namespace fixture {
 }
 
 declare namespace fixture {
+	export class Overrides {
+		public static class: java.lang.Class<fixture.Overrides>;
+		public constructor();
+	}
+	export namespace Overrides {
+		export class BasePanel extends fixture.Overrides.Panel {
+			public static class: java.lang.Class<fixture.Overrides.BasePanel>;
+			public constructor();
+			public title(): string | null;
+		}
+		export class Circle extends fixture.Overrides.Shape {
+			public static class: java.lang.Class<fixture.Overrides.Circle>;
+			public constructor();
+			public label(): string;
+		}
+		export class DerivedPanel extends fixture.Overrides.BasePanel {
+			public static class: java.lang.Class<fixture.Overrides.DerivedPanel>;
+			public constructor();
+			public title(): string | null;
+		}
+		export class Panel {
+			public static class: java.lang.Class<fixture.Overrides.Panel>;
+			/**
+			 * Constructs a new instance of the fixture.Overrides$Panel interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
+			 */
+			public constructor(implementation: {
+				title(): string | null;
+			});
+			public constructor();
+			public title(): string | null;
+		}
+		export class Shape {
+			public static class: java.lang.Class<fixture.Overrides.Shape>;
+			public constructor();
+			public label(): string;
+		}
+	}
+}
+
+declare namespace fixture {
 	export class Settings {
 		public static class: java.lang.Class<fixture.Settings>;
 		public label: string;
