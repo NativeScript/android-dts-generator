@@ -14,8 +14,6 @@ import edu.umd.cs.findbugs.ba.generic.GenericUtilities;
 
 public class TypeDefinition {
     private static Pattern typeSignature = Pattern.compile("^(<(?<TypeGenerics>.*)>)?(?<Interfaces>L.*)$");
-    //private static Pattern extendsGenericType = Pattern.compile("(?<GenericLetter>\\w+)\\:+(?<GenericType>L.*?(?=;\\w+|;$))");
-    private static Pattern extendsGenericType = Pattern.compile("(?<GenericLetter>\\w+)\\:+(?<GenericType>L.*?(?=(?=;\\w+|;$)|(?=<.*>)))");
 
     private String signature;
     private String className;
@@ -93,13 +91,51 @@ public class TypeDefinition {
         }
     }
 
+    // Formal type parameters: Label ':' ClassBound? (':' InterfaceBound)*, repeated. A label can
+    // carry several bounds (`<E extends Throwable & Copyable<E>>`), so they cannot be split on ':'.
     private void setTypeGenerics(String typeGenericsSignature) {
-        Matcher matcher = extendsGenericType.matcher(typeGenericsSignature);
         this.genericDefinitions = new ArrayList<>();
-        while (matcher.find()) {
-            String label = matcher.group(1);
-            Type type = GenericUtilities.getType(matcher.group(2) + ";");
+        int i = 0;
+        while (i < typeGenericsSignature.length()) {
+            int colon = typeGenericsSignature.indexOf(':', i);
+            if (colon < 0) {
+                break;
+            }
+            String label = typeGenericsSignature.substring(i, colon);
+            String firstBound = null;
+            i = colon;
+            while (i < typeGenericsSignature.length() && typeGenericsSignature.charAt(i) == ':') {
+                i++;
+                if (i < typeGenericsSignature.length() && typeGenericsSignature.charAt(i) != ':') {
+                    int end = fieldTypeSignatureEnd(typeGenericsSignature, i);
+                    if (firstBound == null) {
+                        firstBound = typeGenericsSignature.substring(i, end);
+                    }
+                    i = end;
+                }
+            }
+            Type type = GenericUtilities.getType(firstBound != null ? firstBound : "Ljava/lang/Object;");
             this.genericDefinitions.add(new GenericDefinition(label, type));
         }
+    }
+
+    private static int fieldTypeSignatureEnd(String signature, int start) {
+        char first = signature.charAt(start);
+        if (first == '[') {
+            char element = signature.charAt(start + 1);
+            return (element == 'L' || element == 'T' || element == '[') ? fieldTypeSignatureEnd(signature, start + 1) : start + 2;
+        }
+        int depth = 0;
+        for (int i = start; i < signature.length(); i++) {
+            char c = signature.charAt(i);
+            if (c == '<') {
+                depth++;
+            } else if (c == '>') {
+                depth--;
+            } else if (c == ';' && depth == 0) {
+                return i + 1;
+            }
+        }
+        return signature.length();
     }
 }

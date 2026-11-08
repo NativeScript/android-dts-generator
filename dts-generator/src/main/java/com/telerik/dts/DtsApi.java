@@ -1405,11 +1405,6 @@ public class DtsApi {
 
             generics.add(new Tuple<>(fullClassName.replace("$", "."), genericDefinitions.size()));
             for (TypeDefinition.GenericDefinition definition : genericDefinitions) {
-                ObjectType genericObjectType = (ObjectType) definition.getType();
-                String baseClassName = getAliasedClassName(genericObjectType.getClassName());
-                String resultType = definition.getType().toString();
-                String typeToExtend = resultType.replace(genericObjectType.getClassName(), baseClassName);
-                //parts.add(String.format("%s extends %s", definition.getLabel(), typeToExtend));
                 parts.add(definition.getLabel());
             }
             return "<" + String.join(", ", parts) + "> ";
