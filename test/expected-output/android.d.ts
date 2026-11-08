@@ -16712,7 +16712,6 @@ declare namespace androidx {
 					getAutoSizeMinTextSize(): number;
 					getAutoSizeMaxTextSize(): number;
 					getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
-					"<clinit>"(): void;
 				});
 				public constructor();
 				public static PLATFORM_SUPPORTS_AUTOSIZE: boolean;

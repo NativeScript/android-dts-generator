@@ -556,6 +556,11 @@ public class DtsApi {
         sbContent.appendln(tabs + "public constructor(implementation: {");
 
         for (Method m : methods) {
+            // An interface with a companion object or constant fields carries a static initializer,
+            // which is not something an implementation provides.
+            if (m.isSynthetic() || m.getName().equals("<clinit>")) {
+                continue;
+            }
             sbContent.append(getTabs(this.indent + 2) + getMethodName(m) + getMethodParamSignature(classInterface, typeDefinition, m));
             String bmSig = "";
             if (!isConstructor(m)) {
