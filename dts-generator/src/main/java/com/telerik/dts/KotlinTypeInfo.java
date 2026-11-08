@@ -2,6 +2,7 @@ package com.telerik.dts;
 
 import kotlin.Metadata;
 import kotlin.metadata.Attributes;
+import kotlin.metadata.ClassKind;
 import kotlin.metadata.KmClass;
 import kotlin.metadata.KmConstructor;
 import kotlin.metadata.KmDeclarationContainer;
@@ -84,6 +85,10 @@ public class KotlinTypeInfo {
 
     public boolean isInternalClass() {
         return internalClass;
+    }
+
+    public boolean isCompanionObject() {
+        return kmClass != null && Attributes.getKind(kmClass) == ClassKind.COMPANION_OBJECT;
     }
 
     public boolean isInternalMember(String name, String descriptor) {

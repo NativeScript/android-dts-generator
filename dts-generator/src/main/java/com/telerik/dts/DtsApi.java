@@ -712,8 +712,19 @@ public class DtsApi {
 
     private void addMethod(Map<String, ApiLevels.Tags> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
         ApiLevels.Tags tags = memberTags(clazz, method.getName() + method.getSignature(), isDeprecated(method));
-        methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method), tags, ApiLevels.Tags::mergedWith);
+        methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method, method.isStatic()), tags, ApiLevels.Tags::mergedWith);
+
+        // The runtime resolves Outer.Companion to the static field holding the companion instance,
+        // not to the nested class, so its methods are also called on the class value itself.
+        // TypeScript cannot give one name both a class and a field, so they are declared static too.
+        if (this.currentClassKotlin.isCompanionObject() && !method.isStatic() && !isConstructor(method)
+                && !functionOwnStatics.contains(method.getName())) {
+            methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method, true), tags, ApiLevels.Tags::mergedWith);
+        }
     }
+
+    // Static members by these names clash with the built-in properties of a class's constructor (TS2699).
+    private static final Set<String> functionOwnStatics = Set.of("name", "length", "caller", "arguments", "prototype");
 
     // Kotlin metadata states nullability outright, so it decides wherever it is available. Java
     // bytecode carries it only where someone annotated the declaration: @Nullable and @NonNull are
@@ -782,12 +793,12 @@ public class DtsApi {
         return comment.append(" */").toString();
     }
 
-    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
+    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method, boolean asStatic) {
         StringBuilder2 sbTemp = new StringBuilder2();
 
         sbTemp.append(tabs + "public ");
 
-        if (method.isStatic()) {
+        if (asStatic) {
             sbTemp.append("static ");
         }
 
