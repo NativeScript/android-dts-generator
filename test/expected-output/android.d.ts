@@ -1,9 +1,9 @@
 /// <reference path="android-declarations.d.ts"/>
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module app {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace app {
 				export class INotificationSideChannel {
 					public static class: java.lang.Class<android.support.v4.app.INotificationSideChannel>;
 					/**
@@ -19,7 +19,7 @@ declare module android {
 					public cancel(param0: string, param1: number, param2: string): void;
 					public cancelAll(param0: string): void;
 				}
-				export module INotificationSideChannel {
+				export namespace INotificationSideChannel {
 					export abstract class Stub implements android.support.v4.app.INotificationSideChannel {
 						public static class: java.lang.Class<android.support.v4.app.INotificationSideChannel.Stub>;
 						public constructor();
@@ -30,7 +30,7 @@ declare module android {
 						public cancel(param0: string, param1: number, param2: string): void;
 						public cancelAll(param0: string): void;
 					}
-					export module Stub {
+					export namespace Stub {
 						export class Proxy extends android.support.v4.app.INotificationSideChannel {
 							public static class: java.lang.Class<android.support.v4.app.INotificationSideChannel.Stub.Proxy>;
 							public asBinder(): android.os.IBinder;
@@ -49,11 +49,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module graphics {
-				export module drawable {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace graphics {
+				export namespace drawable {
 					export class IconCompatParcelizer extends androidx.core.graphics.drawable.IconCompatParcelizer {
 						public static class: java.lang.Class<android.support.v4.graphics.drawable.IconCompatParcelizer>;
 						public constructor();
@@ -66,10 +66,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaBrowserCompat {
 					public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat>;
 					public static readonly EXTRA_PAGE = "android.media.browse.extra.PAGE";
@@ -95,7 +95,7 @@ declare module android {
 					public sendCustomAction(action: string, extras: android.os.Bundle, callback: android.support.v4.media.MediaBrowserCompat.CustomActionCallback | null): void;
 					public getNotifyChildrenChangedOptions(): android.os.Bundle | null;
 				}
-				export module MediaBrowserCompat {
+				export namespace MediaBrowserCompat {
 					export class CallbackHandler {
 						public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.CallbackHandler>;
 						public handleMessage(msg: android.os.Message): void;
@@ -107,7 +107,7 @@ declare module android {
 						public onConnectionSuspended(): void;
 						public onConnectionFailed(): void;
 					}
-					export module ConnectionCallback {
+					export namespace ConnectionCallback {
 						export class ConnectionCallbackInternal {
 							public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.ConnectionCallback.ConnectionCallbackInternal>;
 							/**
@@ -147,7 +147,7 @@ declare module android {
 						public onItemLoaded(item: android.support.v4.media.MediaBrowserCompat.MediaItem): void;
 						public onError(itemId: string): void;
 					}
-					export module ItemCallback {
+					export namespace ItemCallback {
 						export class StubApi23 extends android.support.v4.media.MediaBrowserCompatApi23.ItemCallback {
 							public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.ItemCallback.StubApi23>;
 							public onItemLoaded(itemParcel: android.os.Parcel): void;
@@ -308,7 +308,7 @@ declare module android {
 						public onConnectionFailed(param0: android.os.Messenger): void;
 						public onLoadChildren(param0: android.os.Messenger, param1: string, param2: java.util.List<any>, param3: android.os.Bundle, param4: android.os.Bundle): void;
 					}
-					export module MediaBrowserImplBase {
+					export namespace MediaBrowserImplBase {
 						export class MediaServiceConnection {
 							public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.MediaBrowserImplBase.MediaServiceConnection>;
 							public onServiceConnected(name: android.content.ComponentName, binder: android.os.IBinder): void;
@@ -347,7 +347,7 @@ declare module android {
 						public getDescription(): android.support.v4.media.MediaDescriptionCompat;
 						public getMediaId(): string | null;
 					}
-					export module MediaItem {
+					export namespace MediaItem {
 						export class Flags {
 							public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.MediaItem.Flags>;
 							/**
@@ -389,7 +389,7 @@ declare module android {
 						public onError(parentId: string): void;
 						public onError(parentId: string, options: android.os.Bundle): void;
 					}
-					export module SubscriptionCallback {
+					export namespace SubscriptionCallback {
 						export class StubApi21 extends android.support.v4.media.MediaBrowserCompatApi21.SubscriptionCallback {
 							public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.SubscriptionCallback.StubApi21>;
 							public onChildrenLoaded(parentId: string, children: java.util.List<any>): void;
@@ -415,10 +415,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaBrowserCompatApi21 {
 					public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompatApi21>;
 					public static createConnectionCallback(callback: android.support.v4.media.MediaBrowserCompatApi21.ConnectionCallback): any;
@@ -434,7 +434,7 @@ declare module android {
 					public static subscribe(browserObj: any, parentId: string, subscriptionCallbackObj: any): void;
 					public static unsubscribe(browserObj: any, parentId: string): void;
 				}
-				export module MediaBrowserCompatApi21 {
+				export namespace MediaBrowserCompatApi21 {
 					export class ConnectionCallback {
 						public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompatApi21.ConnectionCallback>;
 						/**
@@ -489,16 +489,16 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaBrowserCompatApi23 {
 					public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompatApi23>;
 					public static createItemCallback(callback: android.support.v4.media.MediaBrowserCompatApi23.ItemCallback): any;
 					public static getItem(browserObj: any, mediaId: string, itemCallbackObj: any): void;
 				}
-				export module MediaBrowserCompatApi23 {
+				export namespace MediaBrowserCompatApi23 {
 					export class ItemCallback {
 						public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompatApi23.ItemCallback>;
 						/**
@@ -525,16 +525,16 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaBrowserCompatApi26 {
 					public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompatApi26>;
 					public static subscribe(browserObj: any, parentId: string, options: android.os.Bundle, subscriptionCallbackObj: any): void;
 					public static unsubscribe(browserObj: any, parentId: string, subscriptionCallbackObj: any): void;
 				}
-				export module MediaBrowserCompatApi26 {
+				export namespace MediaBrowserCompatApi26 {
 					export class SubscriptionCallback extends android.support.v4.media.MediaBrowserCompatApi21.SubscriptionCallback {
 						public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompatApi26.SubscriptionCallback>;
 						/**
@@ -565,10 +565,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaDescriptionCompat {
 					public static class: java.lang.Class<android.support.v4.media.MediaDescriptionCompat>;
 					public static readonly EXTRA_BT_FOLDER_TYPE = "android.media.extra.BT_FOLDER_TYPE";
@@ -600,7 +600,7 @@ declare module android {
 					public getMediaDescription(): any;
 					public static fromMediaDescription(descriptionObj: any): android.support.v4.media.MediaDescriptionCompat;
 				}
-				export module MediaDescriptionCompat {
+				export namespace MediaDescriptionCompat {
 					export class Builder {
 						public static class: java.lang.Class<android.support.v4.media.MediaDescriptionCompat.Builder>;
 						public constructor();
@@ -620,10 +620,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaDescriptionCompatApi21 {
 					public static class: java.lang.Class<android.support.v4.media.MediaDescriptionCompatApi21>;
 					public static getMediaId(descriptionObj: any): string;
@@ -636,7 +636,7 @@ declare module android {
 					public static writeToParcel(descriptionObj: any, dest: android.os.Parcel, flags: number): void;
 					public static fromParcel(in_: android.os.Parcel): any;
 				}
-				export module MediaDescriptionCompatApi21 {
+				export namespace MediaDescriptionCompatApi21 {
 					export class Builder {
 						public static class: java.lang.Class<android.support.v4.media.MediaDescriptionCompatApi21.Builder>;
 						public static newInstance(): any;
@@ -655,15 +655,15 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaDescriptionCompatApi23 {
 					public static class: java.lang.Class<android.support.v4.media.MediaDescriptionCompatApi23>;
 					public static getMediaUri(descriptionObj: any): android.net.Uri;
 				}
-				export module MediaDescriptionCompatApi23 {
+				export namespace MediaDescriptionCompatApi23 {
 					export class Builder {
 						public static class: java.lang.Class<android.support.v4.media.MediaDescriptionCompatApi23.Builder>;
 						public static setMediaUri(builderObj: any, mediaUri: android.net.Uri): void;
@@ -674,10 +674,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaMetadataCompat {
 					public static class: java.lang.Class<android.support.v4.media.MediaMetadataCompat>;
 					public static readonly METADATA_KEY_TITLE = "android.media.metadata.TITLE";
@@ -727,7 +727,7 @@ declare module android {
 					public static fromMediaMetadata(metadataObj: any): android.support.v4.media.MediaMetadataCompat;
 					public getMediaMetadata(): any;
 				}
-				export module MediaMetadataCompat {
+				export namespace MediaMetadataCompat {
 					export class BitmapKey {
 						public static class: java.lang.Class<android.support.v4.media.MediaMetadataCompat.BitmapKey>;
 						/**
@@ -782,10 +782,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class MediaMetadataCompatApi21 {
 					public static class: java.lang.Class<android.support.v4.media.MediaMetadataCompatApi21>;
 					public static keySet(metadataObj: any): java.util.Set<string>;
@@ -796,7 +796,7 @@ declare module android {
 					public static writeToParcel(metadataObj: any, dest: android.os.Parcel, flags: number): void;
 					public static createFromParcel(in_: android.os.Parcel): any;
 				}
-				export module MediaMetadataCompatApi21 {
+				export namespace MediaMetadataCompatApi21 {
 					export class Builder {
 						public static class: java.lang.Class<android.support.v4.media.MediaMetadataCompatApi21.Builder>;
 						public static newInstance(): any;
@@ -813,10 +813,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class ParceledListSliceAdapterApi21 {
 					public static class: java.lang.Class<android.support.v4.media.ParceledListSliceAdapterApi21>;
 				}
@@ -825,10 +825,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
 				export class RatingCompat {
 					public static class: java.lang.Class<android.support.v4.media.RatingCompat>;
 					public static readonly RATING_NONE = 0;
@@ -856,7 +856,7 @@ declare module android {
 					public static fromRating(ratingObj: any): android.support.v4.media.RatingCompat;
 					public getRating(): any;
 				}
-				export module RatingCompat {
+				export namespace RatingCompat {
 					export class StarStyle {
 						public static class: java.lang.Class<android.support.v4.media.RatingCompat.StarStyle>;
 						/**
@@ -881,11 +881,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class IMediaControllerCallback {
 						public static class: java.lang.Class<android.support.v4.media.session.IMediaControllerCallback>;
 						/**
@@ -921,7 +921,7 @@ declare module android {
 						public onShuffleModeChanged(param0: number): void;
 						public onSessionReady(): void;
 					}
-					export module IMediaControllerCallback {
+					export namespace IMediaControllerCallback {
 						export abstract class Stub implements android.support.v4.media.session.IMediaControllerCallback {
 							public static class: java.lang.Class<android.support.v4.media.session.IMediaControllerCallback.Stub>;
 							public constructor();
@@ -942,7 +942,7 @@ declare module android {
 							public onShuffleModeChanged(param0: number): void;
 							public onSessionReady(): void;
 						}
-						export module Stub {
+						export namespace Stub {
 							export class Proxy extends android.support.v4.media.session.IMediaControllerCallback {
 								public static class: java.lang.Class<android.support.v4.media.session.IMediaControllerCallback.Stub.Proxy>;
 								public asBinder(): android.os.IBinder;
@@ -980,11 +980,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class IMediaSession {
 						public static class: java.lang.Class<android.support.v4.media.session.IMediaSession>;
 						/**
@@ -1092,7 +1092,7 @@ declare module android {
 						public setShuffleMode(param0: number): void;
 						public sendCustomAction(param0: string, param1: android.os.Bundle): void;
 					}
-					export module IMediaSession {
+					export namespace IMediaSession {
 						export abstract class Stub implements android.support.v4.media.session.IMediaSession {
 							public static class: java.lang.Class<android.support.v4.media.session.IMediaSession.Stub>;
 							public constructor();
@@ -1149,7 +1149,7 @@ declare module android {
 							public setShuffleMode(param0: number): void;
 							public sendCustomAction(param0: string, param1: android.os.Bundle): void;
 						}
-						export module Stub {
+						export namespace Stub {
 							export class Proxy extends android.support.v4.media.session.IMediaSession {
 								public static class: java.lang.Class<android.support.v4.media.session.IMediaSession.Stub.Proxy>;
 								public asBinder(): android.os.IBinder;
@@ -1237,11 +1237,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaControllerCompat {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat>;
 						public static readonly COMMAND_GET_EXTRA_BINDER = "android.support.v4.media.session.command.GET_EXTRA_BINDER";
@@ -1286,7 +1286,7 @@ declare module android {
 						public getPackageName(): string;
 						public getMediaController(): any;
 					}
-					export module MediaControllerCompat {
+					export namespace MediaControllerCompat {
 						export abstract class Callback {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.Callback>;
 							public constructor();
@@ -1305,7 +1305,7 @@ declare module android {
 							public getIControllerCallback(): android.support.v4.media.session.IMediaControllerCallback;
 							public binderDied(): void;
 						}
-						export module Callback {
+						export namespace Callback {
 							export class MessageHandler {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.Callback.MessageHandler>;
 								public handleMessage(msg: android.os.Message): void;
@@ -1457,7 +1457,7 @@ declare module android {
 							public adjustVolume(param0: number, param1: number): void;
 							public sendCommand(param0: string, param1: android.os.Bundle, param2: android.os.ResultReceiver): void;
 						}
-						export module MediaControllerImplApi21 {
+						export namespace MediaControllerImplApi21 {
 							export class ExtraBinderRequestResultReceiver {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.MediaControllerImplApi21.ExtraBinderRequestResultReceiver>;
 								public onReceiveResult(resultCode: number, resultData: android.os.Bundle): void;
@@ -1698,11 +1698,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaControllerCompatApi21 {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompatApi21>;
 						public static fromToken(context: android.content.Context, sessionToken: any): any;
@@ -1728,7 +1728,7 @@ declare module android {
 						public static sendCommand(controllerObj: any, command: string, params: android.os.Bundle, cb: android.os.ResultReceiver): void;
 						public static getPackageName(controllerObj: any): string;
 					}
-					export module MediaControllerCompatApi21 {
+					export namespace MediaControllerCompatApi21 {
 						export class Callback {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompatApi21.Callback>;
 							/**
@@ -1799,15 +1799,15 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaControllerCompatApi23 {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompatApi23>;
 					}
-					export module MediaControllerCompatApi23 {
+					export namespace MediaControllerCompatApi23 {
 						export class TransportControls {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompatApi23.TransportControls>;
 							public static playFromUri(controlsObj: any, uri: android.net.Uri, extras: android.os.Bundle): void;
@@ -1819,15 +1819,15 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaControllerCompatApi24 {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompatApi24>;
 					}
-					export module MediaControllerCompatApi24 {
+					export namespace MediaControllerCompatApi24 {
 						export class TransportControls {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompatApi24.TransportControls>;
 							public static prepare(controlsObj: any): void;
@@ -1842,11 +1842,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaSessionCompat {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat>;
 						public static readonly FLAG_HANDLES_MEDIA_BUTTONS = 1;
@@ -1915,7 +1915,7 @@ declare module android {
 						public static fromMediaSession(context: android.content.Context, mediaSession: any): android.support.v4.media.session.MediaSessionCompat;
 						public static ensureClassLoader(bundle: android.os.Bundle | null): void;
 					}
-					export module MediaSessionCompat {
+					export namespace MediaSessionCompat {
 						export abstract class Callback {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.Callback>;
 							public constructor();
@@ -1949,7 +1949,7 @@ declare module android {
 							/** @deprecated */
 							public onRemoveQueueItemAt(index: number): void;
 						}
-						export module Callback {
+						export namespace Callback {
 							export class CallbackHandler {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.Callback.CallbackHandler>;
 								public handleMessage(msg: android.os.Message): void;
@@ -2201,7 +2201,7 @@ declare module android {
 							public setExtras(param0: android.os.Bundle): void;
 							public setCurrentControllerInfo(param0: androidx.media.MediaSessionManager.RemoteUserInfo): void;
 						}
-						export module MediaSessionImplApi21 {
+						export namespace MediaSessionImplApi21 {
 							export class ExtraSession extends android.support.v4.media.session.IMediaSession.Stub {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.MediaSessionImplApi21.ExtraSession>;
 								public sendCommand(command: string, args: android.os.Bundle, cb: android.support.v4.media.session.MediaSessionCompat.ResultReceiverWrapper): void;
@@ -2358,7 +2358,7 @@ declare module android {
 							public setExtras(param0: android.os.Bundle): void;
 							public setCurrentControllerInfo(param0: androidx.media.MediaSessionManager.RemoteUserInfo): void;
 						}
-						export module MediaSessionImplBase {
+						export namespace MediaSessionImplBase {
 							export class Command {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.MediaSessionImplBase.Command>;
 								public command: string;
@@ -2514,11 +2514,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaSessionCompatApi21 {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompatApi21>;
 						public static createSession(context: android.content.Context, tag: string): any;
@@ -2543,7 +2543,7 @@ declare module android {
 						public static setExtras(sessionObj: any, extras: android.os.Bundle): void;
 						public static hasCallback(sessionObj: any): boolean;
 					}
-					export module MediaSessionCompatApi21 {
+					export namespace MediaSessionCompatApi21 {
 						export class Callback {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompatApi21.Callback>;
 							/**
@@ -2618,11 +2618,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaSessionCompatApi22 {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompatApi22>;
 						public static setRatingType(sessionObj: any, type: number): void;
@@ -2633,16 +2633,16 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaSessionCompatApi23 {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompatApi23>;
 						public static createCallback(callback: android.support.v4.media.session.MediaSessionCompatApi23.Callback): any;
 					}
-					export module MediaSessionCompatApi23 {
+					export namespace MediaSessionCompatApi23 {
 						export class Callback extends android.support.v4.media.session.MediaSessionCompatApi21.Callback {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompatApi23.Callback>;
 							/**
@@ -2698,17 +2698,17 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class MediaSessionCompatApi24 {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompatApi24>;
 						public static createCallback(callback: android.support.v4.media.session.MediaSessionCompatApi24.Callback): any;
 						public static getCallingPackage(sessionObj: any): string;
 					}
-					export module MediaSessionCompatApi24 {
+					export namespace MediaSessionCompatApi24 {
 						export class Callback extends android.support.v4.media.session.MediaSessionCompatApi23.Callback {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompatApi24.Callback>;
 							/**
@@ -2775,11 +2775,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class ParcelableVolumeInfo {
 						public static class: java.lang.Class<android.support.v4.media.session.ParcelableVolumeInfo>;
 						public volumeType: number;
@@ -2799,11 +2799,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class PlaybackStateCompat {
 						public static class: java.lang.Class<android.support.v4.media.session.PlaybackStateCompat>;
 						public static readonly ACTION_STOP = 1;
@@ -2882,7 +2882,7 @@ declare module android {
 						public static fromPlaybackState(stateObj: any): android.support.v4.media.session.PlaybackStateCompat;
 						public getPlaybackState(): any;
 					}
-					export module PlaybackStateCompat {
+					export namespace PlaybackStateCompat {
 						export class Actions {
 							public static class: java.lang.Class<android.support.v4.media.session.PlaybackStateCompat.Actions>;
 							/**
@@ -2922,7 +2922,7 @@ declare module android {
 							public getExtras(): android.os.Bundle;
 							public toString(): string;
 						}
-						export module CustomAction {
+						export namespace CustomAction {
 							export class Builder {
 								public static class: java.lang.Class<android.support.v4.media.session.PlaybackStateCompat.CustomAction.Builder>;
 								public constructor(action: string, name: string, icon: number);
@@ -2982,11 +2982,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class PlaybackStateCompatApi21 {
 						public static class: java.lang.Class<android.support.v4.media.session.PlaybackStateCompatApi21>;
 						public static getState(stateObj: any): number;
@@ -3000,7 +3000,7 @@ declare module android {
 						public static getActiveQueueItemId(stateObj: any): number;
 						public static newInstance(state: number, position: number, bufferedPosition: number, speed: number, actions: number, errorMessage: string, updateTime: number, customActions: java.util.List<any>, activeItemId: number): any;
 					}
-					export module PlaybackStateCompatApi21 {
+					export namespace PlaybackStateCompatApi21 {
 						export class CustomAction {
 							public static class: java.lang.Class<android.support.v4.media.session.PlaybackStateCompatApi21.CustomAction>;
 							public static getAction(customActionObj: any): string;
@@ -3016,11 +3016,11 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module media {
-				export module session {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace media {
+				export namespace session {
 					export class PlaybackStateCompatApi22 {
 						public static class: java.lang.Class<android.support.v4.media.session.PlaybackStateCompatApi22>;
 						public static getExtras(stateObj: any): android.os.Bundle;
@@ -3032,10 +3032,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module os {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace os {
 				export class IResultReceiver {
 					public static class: java.lang.Class<android.support.v4.os.IResultReceiver>;
 					/**
@@ -3047,7 +3047,7 @@ declare module android {
 					public constructor();
 					public send(param0: number, param1: android.os.Bundle): void;
 				}
-				export module IResultReceiver {
+				export namespace IResultReceiver {
 					export abstract class Stub implements android.support.v4.os.IResultReceiver {
 						public static class: java.lang.Class<android.support.v4.os.IResultReceiver.Stub>;
 						public constructor();
@@ -3056,7 +3056,7 @@ declare module android {
 						public onTransact(code: number, data: android.os.Parcel, reply: android.os.Parcel, flags: number): boolean;
 						public send(param0: number, param1: android.os.Bundle): void;
 					}
-					export module Stub {
+					export namespace Stub {
 						export class Proxy extends android.support.v4.os.IResultReceiver {
 							public static class: java.lang.Class<android.support.v4.os.IResultReceiver.Stub.Proxy>;
 							public asBinder(): android.os.IBinder;
@@ -3071,10 +3071,10 @@ declare module android {
 	}
 }
 
-declare module android {
-	export module support {
-		export module v4 {
-			export module os {
+declare namespace android {
+	export namespace support {
+		export namespace v4 {
+			export namespace os {
 				export class ResultReceiver {
 					public static class: java.lang.Class<android.support.v4.os.ResultReceiver>;
 					public static CREATOR: android.os.Parcelable.Creator<android.support.v4.os.ResultReceiver>;
@@ -3084,7 +3084,7 @@ declare module android {
 					public describeContents(): number;
 					public writeToParcel(out: android.os.Parcel, flags: number): void;
 				}
-				export module ResultReceiver {
+				export namespace ResultReceiver {
 					export class MyResultReceiver extends android.support.v4.os.IResultReceiver.Stub {
 						public static class: java.lang.Class<android.support.v4.os.ResultReceiver.MyResultReceiver>;
 						public send(resultCode: number, resultData: android.os.Bundle): void;
@@ -3100,8 +3100,8 @@ declare module android {
 	}
 }
 
-declare module androidx {
-	export module activity {
+declare namespace androidx {
+	export namespace activity {
 		export class ComponentActivity extends androidx.core.app.ComponentActivity implements androidx.lifecycle.LifecycleOwner, androidx.lifecycle.ViewModelStoreOwner {
 			public static class: java.lang.Class<androidx.activity.ComponentActivity>;
 			public constructor();
@@ -3120,7 +3120,7 @@ declare module androidx {
 			public removeOnBackPressedCallback(onBackPressedCallback: androidx.activity.OnBackPressedCallback): void;
 			public superDispatchKeyEvent(param0: globalAndroid.view.KeyEvent): boolean;
 		}
-		export module ComponentActivity {
+		export namespace ComponentActivity {
 			export class LifecycleAwareOnBackPressedCallback implements androidx.activity.OnBackPressedCallback, androidx.lifecycle.GenericLifecycleObserver {
 				public static class: java.lang.Class<androidx.activity.ComponentActivity.LifecycleAwareOnBackPressedCallback>;
 				public handleOnBackPressed(): boolean;
@@ -3135,8 +3135,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module activity {
+declare namespace androidx {
+	export namespace activity {
 		export class OnBackPressedCallback {
 			public static class: java.lang.Class<androidx.activity.OnBackPressedCallback>;
 			/**
@@ -3151,8 +3151,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class AnimRes {
 			public static class: java.lang.Class<androidx.annotation.AnimRes>;
 			/**
@@ -3165,8 +3165,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class AnimatorRes {
 			public static class: java.lang.Class<androidx.annotation.AnimatorRes>;
 			/**
@@ -3179,8 +3179,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class AnyRes {
 			public static class: java.lang.Class<androidx.annotation.AnyRes>;
 			/**
@@ -3193,8 +3193,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class AnyThread {
 			public static class: java.lang.Class<androidx.annotation.AnyThread>;
 			/**
@@ -3207,8 +3207,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class ArrayRes {
 			public static class: java.lang.Class<androidx.annotation.ArrayRes>;
 			/**
@@ -3221,8 +3221,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class AttrRes {
 			public static class: java.lang.Class<androidx.annotation.AttrRes>;
 			/**
@@ -3235,8 +3235,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class BinderThread {
 			public static class: java.lang.Class<androidx.annotation.BinderThread>;
 			/**
@@ -3249,8 +3249,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class BoolRes {
 			public static class: java.lang.Class<androidx.annotation.BoolRes>;
 			/**
@@ -3263,8 +3263,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class CallSuper {
 			public static class: java.lang.Class<androidx.annotation.CallSuper>;
 			/**
@@ -3277,8 +3277,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class CheckResult {
 			public static class: java.lang.Class<androidx.annotation.CheckResult>;
 			/**
@@ -3293,8 +3293,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class ColorInt {
 			public static class: java.lang.Class<androidx.annotation.ColorInt>;
 			/**
@@ -3307,8 +3307,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class ColorLong {
 			public static class: java.lang.Class<androidx.annotation.ColorLong>;
 			/**
@@ -3321,8 +3321,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class ColorRes {
 			public static class: java.lang.Class<androidx.annotation.ColorRes>;
 			/**
@@ -3335,8 +3335,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class DimenRes {
 			public static class: java.lang.Class<androidx.annotation.DimenRes>;
 			/**
@@ -3349,8 +3349,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class Dimension {
 			public static class: java.lang.Class<androidx.annotation.Dimension>;
 			/**
@@ -3368,8 +3368,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class DrawableRes {
 			public static class: java.lang.Class<androidx.annotation.DrawableRes>;
 			/**
@@ -3382,8 +3382,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class FloatRange {
 			public static class: java.lang.Class<androidx.annotation.FloatRange>;
 			/**
@@ -3404,8 +3404,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class FontRes {
 			public static class: java.lang.Class<androidx.annotation.FontRes>;
 			/**
@@ -3418,8 +3418,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class FractionRes {
 			public static class: java.lang.Class<androidx.annotation.FractionRes>;
 			/**
@@ -3432,8 +3432,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class GuardedBy {
 			public static class: java.lang.Class<androidx.annotation.GuardedBy>;
 			/**
@@ -3448,8 +3448,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class HalfFloat {
 			public static class: java.lang.Class<androidx.annotation.HalfFloat>;
 			/**
@@ -3462,8 +3462,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class IdRes {
 			public static class: java.lang.Class<androidx.annotation.IdRes>;
 			/**
@@ -3476,8 +3476,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class IntDef {
 			public static class: java.lang.Class<androidx.annotation.IntDef>;
 			/**
@@ -3494,8 +3494,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class IntRange {
 			public static class: java.lang.Class<androidx.annotation.IntRange>;
 			/**
@@ -3512,8 +3512,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class IntegerRes {
 			public static class: java.lang.Class<androidx.annotation.IntegerRes>;
 			/**
@@ -3526,8 +3526,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class InterpolatorRes {
 			public static class: java.lang.Class<androidx.annotation.InterpolatorRes>;
 			/**
@@ -3540,8 +3540,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class Keep {
 			public static class: java.lang.Class<androidx.annotation.Keep>;
 			/**
@@ -3554,8 +3554,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class LayoutRes {
 			public static class: java.lang.Class<androidx.annotation.LayoutRes>;
 			/**
@@ -3568,8 +3568,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class LongDef {
 			public static class: java.lang.Class<androidx.annotation.LongDef>;
 			/**
@@ -3586,8 +3586,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class MainThread {
 			public static class: java.lang.Class<androidx.annotation.MainThread>;
 			/**
@@ -3600,8 +3600,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class MenuRes {
 			public static class: java.lang.Class<androidx.annotation.MenuRes>;
 			/**
@@ -3614,8 +3614,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class NavigationRes {
 			public static class: java.lang.Class<androidx.annotation.NavigationRes>;
 			/**
@@ -3628,8 +3628,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class NonNull {
 			public static class: java.lang.Class<androidx.annotation.NonNull>;
 			/**
@@ -3642,8 +3642,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class Nullable {
 			public static class: java.lang.Class<androidx.annotation.Nullable>;
 			/**
@@ -3656,8 +3656,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class PluralsRes {
 			public static class: java.lang.Class<androidx.annotation.PluralsRes>;
 			/**
@@ -3670,8 +3670,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class Px {
 			public static class: java.lang.Class<androidx.annotation.Px>;
 			/**
@@ -3684,8 +3684,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class RawRes {
 			public static class: java.lang.Class<androidx.annotation.RawRes>;
 			/**
@@ -3698,8 +3698,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class RequiresApi {
 			public static class: java.lang.Class<androidx.annotation.RequiresApi>;
 			/**
@@ -3716,8 +3716,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class RequiresFeature {
 			public static class: java.lang.Class<androidx.annotation.RequiresFeature>;
 			/**
@@ -3734,8 +3734,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class RequiresPermission {
 			public static class: java.lang.Class<androidx.annotation.RequiresPermission>;
 			/**
@@ -3753,7 +3753,7 @@ declare module androidx {
 			public anyOf(): androidNative.Array<string>;
 			public conditional(): boolean;
 		}
-		export module RequiresPermission {
+		export namespace RequiresPermission {
 			export class Read {
 				public static class: java.lang.Class<androidx.annotation.RequiresPermission.Read>;
 				/**
@@ -3780,8 +3780,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class RestrictTo {
 			public static class: java.lang.Class<androidx.annotation.RestrictTo>;
 			/**
@@ -3793,7 +3793,7 @@ declare module androidx {
 			public constructor();
 			public value(): androidNative.Array<androidx.annotation.RestrictTo.Scope>;
 		}
-		export module RestrictTo {
+		export namespace RestrictTo {
 			export class Scope {
 				public static class: java.lang.Class<androidx.annotation.RestrictTo.Scope>;
 				public static LIBRARY: androidx.annotation.RestrictTo.Scope;
@@ -3808,8 +3808,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class Size {
 			public static class: java.lang.Class<androidx.annotation.Size>;
 			/**
@@ -3830,8 +3830,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class StringDef {
 			public static class: java.lang.Class<androidx.annotation.StringDef>;
 			/**
@@ -3846,8 +3846,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class StringRes {
 			public static class: java.lang.Class<androidx.annotation.StringRes>;
 			/**
@@ -3860,8 +3860,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class StyleRes {
 			public static class: java.lang.Class<androidx.annotation.StyleRes>;
 			/**
@@ -3874,8 +3874,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class StyleableRes {
 			public static class: java.lang.Class<androidx.annotation.StyleableRes>;
 			/**
@@ -3888,8 +3888,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class TransitionRes {
 			public static class: java.lang.Class<androidx.annotation.TransitionRes>;
 			/**
@@ -3902,8 +3902,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class UiThread {
 			public static class: java.lang.Class<androidx.annotation.UiThread>;
 			/**
@@ -3916,8 +3916,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class VisibleForTesting {
 			public static class: java.lang.Class<androidx.annotation.VisibleForTesting>;
 			/**
@@ -3936,8 +3936,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class WorkerThread {
 			public static class: java.lang.Class<androidx.annotation.WorkerThread>;
 			/**
@@ -3950,8 +3950,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module annotation {
+declare namespace androidx {
+	export namespace annotation {
 		export class XmlRes {
 			public static class: java.lang.Class<androidx.annotation.XmlRes>;
 			/**
@@ -3964,9 +3964,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export abstract class ActionBar {
 				public static class: java.lang.Class<androidx.appcompat.app.ActionBar>;
 				public static readonly NAVIGATION_MODE_STANDARD = 0;
@@ -4071,7 +4071,7 @@ declare module androidx {
 				public collapseActionView(): boolean;
 				public setWindowTitle(title: string): void;
 			}
-			export module ActionBar {
+			export namespace ActionBar {
 				export class DisplayOptions {
 					public static class: java.lang.Class<androidx.appcompat.app.ActionBar.DisplayOptions>;
 					/**
@@ -4164,9 +4164,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class ActionBarDrawerToggle extends androidx.drawerlayout.widget.DrawerLayout.DrawerListener {
 				public static class: java.lang.Class<androidx.appcompat.app.ActionBarDrawerToggle>;
 				public constructor(activity: globalAndroid.app.Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, openDrawerContentDescRes: number, closeDrawerContentDescRes: number);
@@ -4193,7 +4193,7 @@ declare module androidx {
 				public onDrawerClosed(param0: globalAndroid.view.View): void;
 				public onDrawerStateChanged(param0: number): void;
 			}
-			export module ActionBarDrawerToggle {
+			export namespace ActionBarDrawerToggle {
 				export class Delegate {
 					public static class: java.lang.Class<androidx.appcompat.app.ActionBarDrawerToggle.Delegate>;
 					/**
@@ -4249,16 +4249,16 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class ActionBarDrawerToggleHoneycomb {
 				public static class: java.lang.Class<androidx.appcompat.app.ActionBarDrawerToggleHoneycomb>;
 				public static setActionBarUpIndicator(activity: globalAndroid.app.Activity, drawable: globalAndroid.graphics.drawable.Drawable, contentDescRes: number): androidx.appcompat.app.ActionBarDrawerToggleHoneycomb.SetIndicatorInfo;
 				public static setActionBarDescription(info: androidx.appcompat.app.ActionBarDrawerToggleHoneycomb.SetIndicatorInfo, activity: globalAndroid.app.Activity, contentDescRes: number): androidx.appcompat.app.ActionBarDrawerToggleHoneycomb.SetIndicatorInfo;
 				public static getThemeUpIndicator(activity: globalAndroid.app.Activity): globalAndroid.graphics.drawable.Drawable;
 			}
-			export module ActionBarDrawerToggleHoneycomb {
+			export namespace ActionBarDrawerToggleHoneycomb {
 				export class SetIndicatorInfo {
 					public static class: java.lang.Class<androidx.appcompat.app.ActionBarDrawerToggleHoneycomb.SetIndicatorInfo>;
 					public setHomeAsUpIndicator: java.lang.reflect.Method;
@@ -4270,9 +4270,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class AlertController {
 				public static class: java.lang.Class<androidx.appcompat.app.AlertController>;
 				public constructor(context: globalAndroid.content.Context, di: androidx.appcompat.app.AppCompatDialog, window: globalAndroid.view.Window);
@@ -4293,7 +4293,7 @@ declare module androidx {
 				public onKeyDown(keyCode: number, event: globalAndroid.view.KeyEvent): boolean;
 				public onKeyUp(keyCode: number, event: globalAndroid.view.KeyEvent): boolean;
 			}
-			export module AlertController {
+			export namespace AlertController {
 				export class AlertParams {
 					public static class: java.lang.Class<androidx.appcompat.app.AlertController.AlertParams>;
 					public mContext: globalAndroid.content.Context;
@@ -4342,7 +4342,7 @@ declare module androidx {
 					public constructor(context: globalAndroid.content.Context);
 					public apply(dialog: androidx.appcompat.app.AlertController): void;
 				}
-				export module AlertParams {
+				export namespace AlertParams {
 					export class OnPrepareListViewListener {
 						public static class: java.lang.Class<androidx.appcompat.app.AlertController.AlertParams.OnPrepareListViewListener>;
 						/**
@@ -4377,9 +4377,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class AlertDialog extends androidx.appcompat.app.AppCompatDialog {
 				public static class: java.lang.Class<androidx.appcompat.app.AlertDialog>;
 				public constructor(context: globalAndroid.content.Context, theme: number);
@@ -4408,7 +4408,7 @@ declare module androidx {
 				public onSupportActionModeFinished(param0: androidx.appcompat.view.ActionMode): void;
 				public onWindowStartingSupportActionMode(param0: androidx.appcompat.view.ActionMode.Callback): androidx.appcompat.view.ActionMode | null;
 			}
-			export module AlertDialog {
+			export namespace AlertDialog {
 				export class Builder {
 					public static class: java.lang.Class<androidx.appcompat.app.AlertDialog.Builder>;
 					public constructor(context: globalAndroid.content.Context);
@@ -4462,9 +4462,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class AppCompatActivity extends androidx.fragment.app.FragmentActivity implements androidx.appcompat.app.AppCompatCallback, androidx.core.app.TaskStackBuilder.SupportParentable, androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider {
 				public static class: java.lang.Class<androidx.appcompat.app.AppCompatActivity>;
 				public constructor();
@@ -4533,9 +4533,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class AppCompatCallback {
 				public static class: java.lang.Class<androidx.appcompat.app.AppCompatCallback>;
 				/**
@@ -4555,9 +4555,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export abstract class AppCompatDelegate {
 				public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegate>;
 				public static readonly MODE_NIGHT_NO = 1;
@@ -4603,7 +4603,7 @@ declare module androidx {
 				public static setCompatVectorFromResourcesEnabled(enabled: boolean): void;
 				public static isCompatVectorFromResourcesEnabled(): boolean;
 			}
-			export module AppCompatDelegate {
+			export namespace AppCompatDelegate {
 				export class NightMode {
 					public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegate.NightMode>;
 					/**
@@ -4618,9 +4618,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class AppCompatDelegateImpl extends androidx.appcompat.app.AppCompatDelegate implements androidx.appcompat.view.menu.MenuBuilder.Callback {
 				public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegateImpl>;
 				public onCreate(savedInstanceState: globalAndroid.os.Bundle): void;
@@ -4661,7 +4661,7 @@ declare module androidx {
 				public onMenuItemSelected(param0: androidx.appcompat.view.menu.MenuBuilder, param1: globalAndroid.view.MenuItem): boolean;
 				public onMenuModeChange(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 			}
-			export module AppCompatDelegateImpl {
+			export namespace AppCompatDelegateImpl {
 				export class ActionBarDrawableToggleImpl extends androidx.appcompat.app.ActionBarDrawerToggle.Delegate {
 					public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegateImpl.ActionBarDrawableToggleImpl>;
 					public getThemeUpIndicator(): globalAndroid.graphics.drawable.Drawable;
@@ -4723,7 +4723,7 @@ declare module androidx {
 					public hasPanelItems(): boolean;
 					public clearMenuPresenters(): void;
 				}
-				export module PanelFeatureState {
+				export namespace PanelFeatureState {
 					export class SavedState {
 						public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegateImpl.PanelFeatureState.SavedState>;
 						public static CREATOR: globalAndroid.os.Parcelable.Creator<androidx.appcompat.app.AppCompatDelegateImpl.PanelFeatureState.SavedState>;
@@ -4743,9 +4743,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class AppCompatDialog implements androidx.appcompat.app.AppCompatCallback {
 				public static class: java.lang.Class<androidx.appcompat.app.AppCompatDialog>;
 				public constructor(context: globalAndroid.content.Context);
@@ -4776,9 +4776,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class AppCompatDialogFragment extends androidx.fragment.app.DialogFragment {
 				public static class: java.lang.Class<androidx.appcompat.app.AppCompatDialogFragment>;
 				public constructor();
@@ -4791,9 +4791,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class AppCompatViewInflater {
 				public static class: java.lang.Class<androidx.appcompat.app.AppCompatViewInflater>;
 				public constructor();
@@ -4813,7 +4813,7 @@ declare module androidx {
 				public createToggleButton(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet): androidx.appcompat.widget.AppCompatToggleButton;
 				public createView(context: globalAndroid.content.Context, name: string, attrs: globalAndroid.util.AttributeSet): globalAndroid.view.View | null;
 			}
-			export module AppCompatViewInflater {
+			export namespace AppCompatViewInflater {
 				export class DeclaredOnClickListener {
 					public static class: java.lang.Class<androidx.appcompat.app.AppCompatViewInflater.DeclaredOnClickListener>;
 					public constructor(hostView: globalAndroid.view.View, methodName: string);
@@ -4824,9 +4824,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class NavItemSelectedListener {
 				public static class: java.lang.Class<androidx.appcompat.app.NavItemSelectedListener>;
 				public constructor(listener: androidx.appcompat.app.ActionBar.OnNavigationListener);
@@ -4837,9 +4837,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class ResourcesFlusher {
 				public static class: java.lang.Class<androidx.appcompat.app.ResourcesFlusher>;
 			}
@@ -4847,9 +4847,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class ToolbarActionBar extends androidx.appcompat.app.ActionBar {
 				public static class: java.lang.Class<androidx.appcompat.app.ToolbarActionBar>;
 				public getWrappedWindowCallback(): globalAndroid.view.Window.Callback;
@@ -4937,7 +4937,7 @@ declare module androidx {
 				public removeOnMenuVisibilityListener(listener: androidx.appcompat.app.ActionBar.OnMenuVisibilityListener): void;
 				public dispatchMenuVisibilityChanged(isVisible: boolean): void;
 			}
-			export module ToolbarActionBar {
+			export namespace ToolbarActionBar {
 				export class ActionMenuPresenterCallback extends androidx.appcompat.view.menu.MenuPresenter.Callback {
 					public static class: java.lang.Class<androidx.appcompat.app.ToolbarActionBar.ActionMenuPresenterCallback>;
 					public onOpenSubMenu(subMenu: androidx.appcompat.view.menu.MenuBuilder): boolean;
@@ -4964,9 +4964,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class TwilightCalculator {
 				public static class: java.lang.Class<androidx.appcompat.app.TwilightCalculator>;
 				public static readonly DAY = 0;
@@ -4980,13 +4980,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class TwilightManager {
 				public static class: java.lang.Class<androidx.appcompat.app.TwilightManager>;
 			}
-			export module TwilightManager {
+			export namespace TwilightManager {
 				export class TwilightState {
 					public static class: java.lang.Class<androidx.appcompat.app.TwilightManager.TwilightState>;
 				}
@@ -4995,9 +4995,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module app {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace app {
 			export class WindowDecorActionBar extends androidx.appcompat.app.ActionBar implements androidx.appcompat.widget.ActionBarOverlayLayout.ActionBarVisibilityCallback {
 				public static class: java.lang.Class<androidx.appcompat.app.WindowDecorActionBar>;
 				public constructor();
@@ -5102,7 +5102,7 @@ declare module androidx {
 				public onWindowVisibilityChanged(param0: number): void;
 				public enableContentAnimations(param0: boolean): void;
 			}
-			export module WindowDecorActionBar {
+			export namespace WindowDecorActionBar {
 				export class ActionModeImpl extends androidx.appcompat.view.ActionMode implements androidx.appcompat.view.menu.MenuBuilder.Callback {
 					public static class: java.lang.Class<androidx.appcompat.app.WindowDecorActionBar.ActionModeImpl>;
 					public constructor();
@@ -5165,16 +5165,16 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace content {
+			export namespace res {
 				export class AppCompatResources {
 					public static class: java.lang.Class<androidx.appcompat.content.res.AppCompatResources>;
 					public static getColorStateList(context: globalAndroid.content.Context, resId: number): globalAndroid.content.res.ColorStateList;
 					public static getDrawable(context: globalAndroid.content.Context, resId: number): globalAndroid.graphics.drawable.Drawable | null;
 				}
-				export module AppCompatResources {
+				export namespace AppCompatResources {
 					export class ColorStateListCacheEntry {
 						public static class: java.lang.Class<androidx.appcompat.content.res.AppCompatResources.ColorStateListCacheEntry>;
 					}
@@ -5184,10 +5184,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace graphics {
+			export namespace drawable {
 				export class AnimatedStateListDrawableCompat extends androidx.appcompat.graphics.drawable.StateListDrawable implements androidx.core.graphics.drawable.TintAwareDrawable {
 					public static class: java.lang.Class<androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat>;
 					public constructor();
@@ -5206,7 +5206,7 @@ declare module androidx {
 					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
 					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 				}
-				export module AnimatedStateListDrawableCompat {
+				export namespace AnimatedStateListDrawableCompat {
 					export class AnimatableTransition extends androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat.Transition {
 						public static class: java.lang.Class<androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat.AnimatableTransition>;
 						public start(): void;
@@ -5246,10 +5246,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace graphics {
+			export namespace drawable {
 				export class DrawableContainer {
 					public static class: java.lang.Class<androidx.appcompat.graphics.drawable.DrawableContainer>;
 					public draw(canvas: globalAndroid.graphics.Canvas): void;
@@ -5290,7 +5290,7 @@ declare module androidx {
 					public getConstantState(): globalAndroid.graphics.drawable.Drawable.ConstantState;
 					public mutate(): globalAndroid.graphics.drawable.Drawable;
 				}
-				export module DrawableContainer {
+				export namespace DrawableContainer {
 					export class BlockInvalidateCallback {
 						public static class: java.lang.Class<androidx.appcompat.graphics.drawable.DrawableContainer.BlockInvalidateCallback>;
 						public wrap(callback: globalAndroid.graphics.drawable.Drawable.Callback): androidx.appcompat.graphics.drawable.DrawableContainer.BlockInvalidateCallback;
@@ -5330,10 +5330,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace graphics {
+			export namespace drawable {
 				export class DrawableWrapper {
 					public static class: java.lang.Class<androidx.appcompat.graphics.drawable.DrawableWrapper>;
 					public constructor(drawable: globalAndroid.graphics.drawable.Drawable);
@@ -5377,10 +5377,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace graphics {
+			export namespace drawable {
 				export class DrawerArrowDrawable {
 					public static class: java.lang.Class<androidx.appcompat.graphics.drawable.DrawerArrowDrawable>;
 					public static readonly ARROW_DIRECTION_LEFT = 0;
@@ -5415,7 +5415,7 @@ declare module androidx {
 					public setProgress(progress: number): void;
 					public getPaint(): globalAndroid.graphics.Paint;
 				}
-				export module DrawerArrowDrawable {
+				export namespace DrawerArrowDrawable {
 					export class ArrowDirection {
 						public static class: java.lang.Class<androidx.appcompat.graphics.drawable.DrawerArrowDrawable.ArrowDirection>;
 						/**
@@ -5431,10 +5431,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace graphics {
+			export namespace drawable {
 				export class StateListDrawable extends androidx.appcompat.graphics.drawable.DrawableContainer {
 					public static class: java.lang.Class<androidx.appcompat.graphics.drawable.StateListDrawable>;
 					public addState(stateSet: androidNative.Array<number>, drawable: globalAndroid.graphics.drawable.Drawable): void;
@@ -5444,7 +5444,7 @@ declare module androidx {
 					public mutate(): globalAndroid.graphics.drawable.Drawable;
 					public applyTheme(theme: globalAndroid.content.res.Resources.Theme): void;
 				}
-				export module StateListDrawable {
+				export namespace StateListDrawable {
 					export class StateListState extends androidx.appcompat.graphics.drawable.DrawableContainer.DrawableContainerState {
 						public static class: java.lang.Class<androidx.appcompat.graphics.drawable.StateListDrawable.StateListState>;
 						public newDrawable(): globalAndroid.graphics.drawable.Drawable;
@@ -5457,9 +5457,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module text {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace text {
 			export class AllCapsTransformationMethod {
 				public static class: java.lang.Class<androidx.appcompat.text.AllCapsTransformationMethod>;
 				public constructor(context: globalAndroid.content.Context);
@@ -5470,9 +5470,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export class ActionBarPolicy {
 				public static class: java.lang.Class<androidx.appcompat.view.ActionBarPolicy>;
 				public static get(context: globalAndroid.content.Context): androidx.appcompat.view.ActionBarPolicy;
@@ -5488,9 +5488,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export abstract class ActionMode {
 				public static class: java.lang.Class<androidx.appcompat.view.ActionMode>;
 				public constructor();
@@ -5513,7 +5513,7 @@ declare module androidx {
 				public getMenuInflater(): globalAndroid.view.MenuInflater;
 				public isUiFocusable(): boolean;
 			}
-			export module ActionMode {
+			export namespace ActionMode {
 				export class Callback {
 					public static class: java.lang.Class<androidx.appcompat.view.ActionMode.Callback>;
 					/**
@@ -5536,9 +5536,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export class CollapsibleActionView {
 				public static class: java.lang.Class<androidx.appcompat.view.CollapsibleActionView>;
 				/**
@@ -5556,9 +5556,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export class ContextThemeWrapper {
 				public static class: java.lang.Class<androidx.appcompat.view.ContextThemeWrapper>;
 				public constructor();
@@ -5578,9 +5578,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export class StandaloneActionMode extends androidx.appcompat.view.ActionMode implements androidx.appcompat.view.menu.MenuBuilder.Callback {
 				public static class: java.lang.Class<androidx.appcompat.view.StandaloneActionMode>;
 				public constructor();
@@ -5614,9 +5614,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export class SupportActionModeWrapper {
 				public static class: java.lang.Class<androidx.appcompat.view.SupportActionModeWrapper>;
 				public constructor(context: globalAndroid.content.Context, supportActionMode: androidx.appcompat.view.ActionMode);
@@ -5638,7 +5638,7 @@ declare module androidx {
 				public setTitleOptionalHint(titleOptional: boolean): void;
 				public isTitleOptional(): boolean;
 			}
-			export module SupportActionModeWrapper {
+			export namespace SupportActionModeWrapper {
 				export class CallbackWrapper extends androidx.appcompat.view.ActionMode.Callback {
 					public static class: java.lang.Class<androidx.appcompat.view.SupportActionModeWrapper.CallbackWrapper>;
 					public constructor(context: globalAndroid.content.Context, supportCallback: globalAndroid.view.ActionMode.Callback);
@@ -5657,15 +5657,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export class SupportMenuInflater {
 				public static class: java.lang.Class<androidx.appcompat.view.SupportMenuInflater>;
 				public constructor(context: globalAndroid.content.Context);
 				public inflate(menuRes: number, menu: globalAndroid.view.Menu): void;
 			}
-			export module SupportMenuInflater {
+			export namespace SupportMenuInflater {
 				export class InflatedOnMenuItemClickListener {
 					public static class: java.lang.Class<androidx.appcompat.view.SupportMenuInflater.InflatedOnMenuItemClickListener>;
 					public constructor(realOwner: any, methodName: string);
@@ -5686,9 +5686,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export class ViewPropertyAnimatorCompatSet {
 				public static class: java.lang.Class<androidx.appcompat.view.ViewPropertyAnimatorCompatSet>;
 				public constructor();
@@ -5704,9 +5704,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
 			export class WindowCallbackWrapper {
 				public static class: java.lang.Class<androidx.appcompat.view.WindowCallbackWrapper>;
 				public constructor(wrapped: globalAndroid.view.Window.Callback);
@@ -5740,10 +5740,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class ActionMenuItem extends androidx.core.internal.view.SupportMenuItem {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.ActionMenuItem>;
 					public constructor(context: globalAndroid.content.Context, group: number, id: number, categoryOrder: number, ordering: number, title: string);
@@ -5825,10 +5825,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class ActionMenuItemView extends androidx.appcompat.widget.AppCompatTextView implements androidx.appcompat.view.menu.MenuView.ItemView, androidx.appcompat.widget.ActionMenuView.ActionMenuChildView {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.ActionMenuItemView>;
 					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -5876,7 +5876,7 @@ declare module androidx {
 					public getAutoSizeMaxTextSize(): number;
 					public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 				}
-				export module ActionMenuItemView {
+				export namespace ActionMenuItemView {
 					export class ActionMenuItemForwardingListener extends androidx.appcompat.widget.ForwardingListener {
 						public static class: java.lang.Class<androidx.appcompat.view.menu.ActionMenuItemView.ActionMenuItemForwardingListener>;
 						public constructor(src: globalAndroid.view.View);
@@ -5895,10 +5895,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export abstract class BaseMenuPresenter extends androidx.appcompat.view.menu.MenuPresenter {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.BaseMenuPresenter>;
 					public mSystemContext: globalAndroid.content.Context;
@@ -5942,10 +5942,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export abstract class BaseMenuWrapper {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.BaseMenuWrapper>;
 				}
@@ -5954,10 +5954,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class CascadingMenuPopup extends androidx.appcompat.view.menu.MenuPopup implements androidx.appcompat.view.menu.MenuPresenter {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.CascadingMenuPopup>;
 					public constructor(context: globalAndroid.content.Context, anchor: globalAndroid.view.View, popupStyleAttr: number, popupStyleRes: number, overflowOnly: boolean);
@@ -5994,7 +5994,7 @@ declare module androidx {
 					public getId(): number;
 					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
-				export module CascadingMenuPopup {
+				export namespace CascadingMenuPopup {
 					export class CascadingMenuInfo {
 						public static class: java.lang.Class<androidx.appcompat.view.menu.CascadingMenuPopup.CascadingMenuInfo>;
 						public window: androidx.appcompat.widget.MenuPopupWindow;
@@ -6018,10 +6018,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class ExpandedMenuView implements androidx.appcompat.view.menu.MenuBuilder.ItemInvoker, androidx.appcompat.view.menu.MenuView {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.ExpandedMenuView>;
 					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -6039,10 +6039,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class ListMenuItemView implements androidx.appcompat.view.menu.MenuView.ItemView {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.ListMenuItemView>;
 					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -6074,10 +6074,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class ListMenuPresenter extends androidx.appcompat.view.menu.MenuPresenter {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.ListMenuPresenter>;
 					public static readonly VIEWS_TAG = "android:menu:list";
@@ -6111,7 +6111,7 @@ declare module androidx {
 					public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
-				export module ListMenuPresenter {
+				export namespace ListMenuPresenter {
 					export class MenuAdapter {
 						public static class: java.lang.Class<androidx.appcompat.view.menu.ListMenuPresenter.MenuAdapter>;
 						public constructor(param0: androidx.appcompat.view.menu.ListMenuPresenter);
@@ -6127,10 +6127,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuAdapter {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuAdapter>;
 					public constructor(menu: androidx.appcompat.view.menu.MenuBuilder, inflater: globalAndroid.view.LayoutInflater, overflowOnly: boolean, itemLayoutRes: number);
@@ -6148,10 +6148,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuBuilder extends androidx.core.internal.view.SupportMenu {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuBuilder>;
 					public constructor(context: globalAndroid.content.Context);
@@ -6229,7 +6229,7 @@ declare module androidx {
 					public setOverrideVisibleItems(override: boolean): void;
 					public setGroupDividerEnabled(param0: boolean): void;
 				}
-				export module MenuBuilder {
+				export namespace MenuBuilder {
 					export class Callback {
 						public static class: java.lang.Class<androidx.appcompat.view.menu.MenuBuilder.Callback>;
 						/**
@@ -6260,10 +6260,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuDialogHelper extends androidx.appcompat.view.menu.MenuPresenter.Callback {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuDialogHelper>;
 					public constructor(menu: androidx.appcompat.view.menu.MenuBuilder);
@@ -6283,10 +6283,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuHelper {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuHelper>;
 					/**
@@ -6305,10 +6305,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuItemImpl extends androidx.core.internal.view.SupportMenuItem {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuItemImpl>;
 					public invoke(): boolean;
@@ -6402,10 +6402,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuItemWrapperICS extends androidx.appcompat.view.menu.BaseMenuWrapper {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuItemWrapperICS>;
 					public constructor(context: globalAndroid.content.Context, object: androidx.core.internal.view.SupportMenuItem);
@@ -6465,7 +6465,7 @@ declare module androidx {
 					public getIconTintMode(): globalAndroid.graphics.PorterDuff.Mode;
 					public setExclusiveCheckable(checkable: boolean): void;
 				}
-				export module MenuItemWrapperICS {
+				export namespace MenuItemWrapperICS {
 					export class ActionProviderWrapper extends androidx.core.view.ActionProvider {
 						public static class: java.lang.Class<androidx.appcompat.view.menu.MenuItemWrapperICS.ActionProviderWrapper>;
 						public onCreateActionView(forItem: globalAndroid.view.MenuItem): globalAndroid.view.View;
@@ -6504,10 +6504,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export abstract class MenuPopup implements androidx.appcompat.view.menu.ShowableListMenu, androidx.appcompat.view.menu.MenuPresenter {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuPopup>;
 					public setForceShowIcon(param0: boolean): void;
@@ -6551,10 +6551,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuPopupHelper extends androidx.appcompat.view.menu.MenuHelper {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuPopupHelper>;
 					public constructor(context: globalAndroid.content.Context, menu: androidx.appcompat.view.menu.MenuBuilder);
@@ -6583,10 +6583,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuPresenter {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuPresenter>;
 					/**
@@ -6620,7 +6620,7 @@ declare module androidx {
 					public onSaveInstanceState(): globalAndroid.os.Parcelable;
 					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
-				export module MenuPresenter {
+				export namespace MenuPresenter {
 					export class Callback {
 						public static class: java.lang.Class<androidx.appcompat.view.menu.MenuPresenter.Callback>;
 						/**
@@ -6640,10 +6640,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuView {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuView>;
 					/**
@@ -6657,7 +6657,7 @@ declare module androidx {
 					public initialize(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 					public getWindowAnimations(): number;
 				}
-				export module MenuView {
+				export namespace MenuView {
 					export class ItemView {
 						public static class: java.lang.Class<androidx.appcompat.view.menu.MenuView.ItemView>;
 						/**
@@ -6693,10 +6693,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class MenuWrapperICS extends androidx.appcompat.view.menu.BaseMenuWrapper {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.MenuWrapperICS>;
 					public constructor(context: globalAndroid.content.Context, object: androidx.core.internal.view.SupportMenu);
@@ -6730,10 +6730,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class ShowableListMenu {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.ShowableListMenu>;
 					/**
@@ -6756,10 +6756,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class StandardMenuPopup extends androidx.appcompat.view.menu.MenuPopup implements androidx.appcompat.view.menu.MenuPresenter {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.StandardMenuPopup>;
 					public constructor(context: globalAndroid.content.Context, menu: androidx.appcompat.view.menu.MenuBuilder, anchorView: globalAndroid.view.View, popupStyleAttr: number, popupStyleRes: number, overflowOnly: boolean);
@@ -6800,10 +6800,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class SubMenuBuilder extends androidx.appcompat.view.menu.MenuBuilder {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.SubMenuBuilder>;
 					public constructor(context: globalAndroid.content.Context);
@@ -6836,10 +6836,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module view {
-			export module menu {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace view {
+			export namespace menu {
 				export class SubMenuWrapperICS extends androidx.appcompat.view.menu.MenuWrapperICS {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.SubMenuWrapperICS>;
 					public setHeaderTitle(titleRes: number): globalAndroid.view.SubMenu;
@@ -6858,9 +6858,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export abstract class AbsActionBarView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AbsActionBarView>;
 				public mVisAnimListener: androidx.appcompat.widget.AbsActionBarView.VisibilityAnimListener;
@@ -6890,7 +6890,7 @@ declare module androidx {
 				public static next(x: number, val: number, isRtl: boolean): number;
 				public positionChild(child: globalAndroid.view.View, x: number, y: number, contentHeight: number, reverse: boolean): number;
 			}
-			export module AbsActionBarView {
+			export namespace AbsActionBarView {
 				export class VisibilityAnimListener extends androidx.core.view.ViewPropertyAnimatorListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.AbsActionBarView.VisibilityAnimListener>;
 					public constructor(this$0: androidx.appcompat.widget.AbsActionBarView);
@@ -6907,9 +6907,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ActionBarBackgroundDrawable {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActionBarBackgroundDrawable>;
 				public constructor(container: androidx.appcompat.widget.ActionBarContainer);
@@ -6923,9 +6923,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ActionBarContainer {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActionBarContainer>;
 				public constructor(context: globalAndroid.content.Context);
@@ -6953,9 +6953,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ActionBarContextView extends androidx.appcompat.widget.AbsActionBarView {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActionBarContextView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -6987,9 +6987,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ActionBarOverlayLayout implements androidx.appcompat.widget.DecorContentParent, androidx.core.view.NestedScrollingParent, androidx.core.view.NestedScrollingParent2, androidx.core.view.NestedScrollingParent3 {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActionBarOverlayLayout>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7074,7 +7074,7 @@ declare module androidx {
 				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
 				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: androidNative.Array<number>): void;
 			}
-			export module ActionBarOverlayLayout {
+			export namespace ActionBarOverlayLayout {
 				export class ActionBarVisibilityCallback {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionBarOverlayLayout.ActionBarVisibilityCallback>;
 					/**
@@ -7108,9 +7108,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ActionMenuPresenter extends androidx.appcompat.view.menu.BaseMenuPresenter implements androidx.core.view.ActionProvider.SubUiVisibilityListener {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuPresenter>;
 				public constructor(context: globalAndroid.content.Context, menuLayoutRes: number, itemLayoutRes: number);
@@ -7155,7 +7155,7 @@ declare module androidx {
 				public getId(): number;
 				public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 			}
-			export module ActionMenuPresenter {
+			export namespace ActionMenuPresenter {
 				export class ActionButtonSubmenu extends androidx.appcompat.view.menu.MenuPopupHelper {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuPresenter.ActionButtonSubmenu>;
 					public constructor(context: globalAndroid.content.Context, menu: androidx.appcompat.view.menu.MenuBuilder);
@@ -7225,9 +7225,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ActionMenuView extends androidx.appcompat.widget.LinearLayoutCompat implements androidx.appcompat.view.menu.MenuBuilder.ItemInvoker, androidx.appcompat.view.menu.MenuView {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuView>;
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -7270,7 +7270,7 @@ declare module androidx {
 				public invokeItem(param0: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 				public initialize(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 			}
-			export module ActionMenuView {
+			export namespace ActionMenuView {
 				export class ActionMenuChildView {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuView.ActionMenuChildView>;
 					/**
@@ -7330,9 +7330,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ActivityChooserModel {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserModel>;
 				public static readonly DEFAULT_HISTORY_FILE_NAME = "activity_choser_model_history.xml";
@@ -7352,7 +7352,7 @@ declare module androidx {
 				public getHistoryMaxSize(): number;
 				public getHistorySize(): number;
 			}
-			export module ActivityChooserModel {
+			export namespace ActivityChooserModel {
 				export class ActivityChooserModelClient {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserModel.ActivityChooserModelClient>;
 					/**
@@ -7421,9 +7421,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ActivityChooserView implements androidx.appcompat.widget.ActivityChooserModel.ActivityChooserModelClient {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7446,7 +7446,7 @@ declare module androidx {
 				public setDefaultActionButtonContentDescription(resourceId: number): void;
 				public setActivityChooserModel(param0: androidx.appcompat.widget.ActivityChooserModel): void;
 			}
-			export module ActivityChooserView {
+			export namespace ActivityChooserView {
 				export class ActivityChooserViewAdapter {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserView.ActivityChooserViewAdapter>;
 					public static readonly MAX_ACTIVITY_COUNT_UNLIMITED = 2147483647;
@@ -7484,9 +7484,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AlertDialogLayout extends androidx.appcompat.widget.LinearLayoutCompat {
 				public static class: java.lang.Class<androidx.appcompat.widget.AlertDialogLayout>;
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -7500,9 +7500,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatAutoCompleteTextView implements androidx.core.view.TintableBackgroundView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatAutoCompleteTextView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7526,9 +7526,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatBackgroundHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatBackgroundHelper>;
 			}
@@ -7536,9 +7536,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatButton implements androidx.core.view.TintableBackgroundView, androidx.core.widget.AutoSizeableTextView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatButton>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7577,9 +7577,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatCheckBox implements androidx.core.widget.TintableCompoundButton {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatCheckBox>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7599,9 +7599,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatCheckedTextView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatCheckedTextView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7617,13 +7617,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatCompoundButtonHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatCompoundButtonHelper>;
 			}
-			export module AppCompatCompoundButtonHelper {
+			export namespace AppCompatCompoundButtonHelper {
 				export class DirectSetButtonDrawableInterface {
 					public static class: java.lang.Class<androidx.appcompat.widget.AppCompatCompoundButtonHelper.DirectSetButtonDrawableInterface>;
 					/**
@@ -7640,9 +7640,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatDrawableManager {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatDrawableManager>;
 				public constructor();
@@ -7651,7 +7651,7 @@ declare module androidx {
 				public onConfigurationChanged(context: globalAndroid.content.Context): void;
 				public static getPorterDuffColorFilter(color: number, mode: globalAndroid.graphics.PorterDuff.Mode): globalAndroid.graphics.PorterDuffColorFilter;
 			}
-			export module AppCompatDrawableManager {
+			export namespace AppCompatDrawableManager {
 				export class AsldcInflateDelegate extends androidx.appcompat.widget.AppCompatDrawableManager.InflateDelegate {
 					public static class: java.lang.Class<androidx.appcompat.widget.AppCompatDrawableManager.AsldcInflateDelegate>;
 					public createFromXmlInner(context: globalAndroid.content.Context, parser: org.xmlpull.v1.XmlPullParser, attrs: globalAndroid.util.AttributeSet, theme: globalAndroid.content.res.Resources.Theme | null): globalAndroid.graphics.drawable.Drawable;
@@ -7687,9 +7687,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatEditText implements androidx.core.view.TintableBackgroundView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatEditText>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7715,9 +7715,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatHintHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatHintHelper>;
 			}
@@ -7725,9 +7725,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatImageButton implements androidx.core.view.TintableBackgroundView, androidx.core.widget.TintableImageSourceView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatImageButton>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7758,9 +7758,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatImageHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatImageHelper>;
 				public constructor(view: globalAndroid.widget.ImageView);
@@ -7771,9 +7771,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatImageView implements androidx.core.view.TintableBackgroundView, androidx.core.widget.TintableImageSourceView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatImageView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7804,9 +7804,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatMultiAutoCompleteTextView implements androidx.core.view.TintableBackgroundView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7829,9 +7829,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatPopupWindow {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatPopupWindow>;
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
@@ -7844,9 +7844,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatProgressBarHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatProgressBarHelper>;
 			}
@@ -7854,9 +7854,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatRadioButton implements androidx.core.widget.TintableCompoundButton {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatRadioButton>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7876,9 +7876,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatRatingBar {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatRatingBar>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7890,9 +7890,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatSeekBar {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatSeekBar>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7906,9 +7906,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatSeekBarHelper extends androidx.appcompat.widget.AppCompatProgressBarHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatSeekBarHelper>;
 			}
@@ -7916,9 +7916,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatSpinner implements androidx.core.view.TintableBackgroundView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatSpinner>;
 				public constructor(context: globalAndroid.content.Context);
@@ -7954,7 +7954,7 @@ declare module androidx {
 				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
 				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
-			export module AppCompatSpinner {
+			export namespace AppCompatSpinner {
 				export class DropDownAdapter {
 					public static class: java.lang.Class<androidx.appcompat.widget.AppCompatSpinner.DropDownAdapter>;
 					public constructor(adapter: globalAndroid.widget.SpinnerAdapter | null, dropDownTheme: globalAndroid.content.res.Resources.Theme | null);
@@ -7992,9 +7992,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatTextClassifierHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatTextClassifierHelper>;
 				public setTextClassifier(textClassifier: any): void;
@@ -8004,9 +8004,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatTextHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatTextHelper>;
 			}
@@ -8014,9 +8014,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatTextView implements androidx.core.view.TintableBackgroundView, androidx.core.widget.AutoSizeableTextView {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatTextView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -8068,9 +8068,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatTextViewAutoSizeHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatTextViewAutoSizeHelper>;
 			}
@@ -8078,9 +8078,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class AppCompatToggleButton {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatToggleButton>;
 				public constructor(context: globalAndroid.content.Context);
@@ -8091,9 +8091,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ButtonBarLayout {
 				public static class: java.lang.Class<androidx.appcompat.widget.ButtonBarLayout>;
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -8105,9 +8105,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ContentFrameLayout {
 				public static class: java.lang.Class<androidx.appcompat.widget.ContentFrameLayout>;
 				public constructor(context: globalAndroid.content.Context);
@@ -8126,7 +8126,7 @@ declare module androidx {
 				public onAttachedToWindow(): void;
 				public onDetachedFromWindow(): void;
 			}
-			export module ContentFrameLayout {
+			export namespace ContentFrameLayout {
 				export class OnAttachListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.ContentFrameLayout.OnAttachListener>;
 					/**
@@ -8145,9 +8145,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class DecorContentParent {
 				public static class: java.lang.Class<androidx.appcompat.widget.DecorContentParent>;
 				/**
@@ -8201,9 +8201,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class DecorToolbar {
 				public static class: java.lang.Class<androidx.appcompat.widget.DecorToolbar>;
 				/**
@@ -8331,9 +8331,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class DialogTitle extends androidx.appcompat.widget.AppCompatTextView {
 				public static class: java.lang.Class<androidx.appcompat.widget.DialogTitle>;
 				public constructor(context: globalAndroid.content.Context);
@@ -8357,9 +8357,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class DrawableUtils {
 				public static class: java.lang.Class<androidx.appcompat.widget.DrawableUtils>;
 				public static INSETS_NONE: globalAndroid.graphics.Rect;
@@ -8371,9 +8371,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class DropDownListView {
 				public static class: java.lang.Class<androidx.appcompat.widget.DropDownListView>;
 				public static readonly INVALID_POSITION = -1;
@@ -8392,7 +8392,7 @@ declare module androidx {
 				public onDetachedFromWindow(): void;
 				public onForwardedEvent(event: globalAndroid.view.MotionEvent, activePointerId: number): boolean;
 			}
-			export module DropDownListView {
+			export namespace DropDownListView {
 				export class GateKeeperDrawable extends androidx.appcompat.graphics.drawable.DrawableWrapper {
 					public static class: java.lang.Class<androidx.appcompat.widget.DropDownListView.GateKeeperDrawable>;
 					public setState(stateSet: androidNative.Array<number>): boolean;
@@ -8412,9 +8412,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class FitWindowsFrameLayout implements androidx.appcompat.widget.FitWindowsViewGroup {
 				public static class: java.lang.Class<androidx.appcompat.widget.FitWindowsFrameLayout>;
 				public constructor(context: globalAndroid.content.Context);
@@ -8427,9 +8427,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class FitWindowsLinearLayout implements androidx.appcompat.widget.FitWindowsViewGroup {
 				public static class: java.lang.Class<androidx.appcompat.widget.FitWindowsLinearLayout>;
 				public constructor(context: globalAndroid.content.Context);
@@ -8442,9 +8442,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class FitWindowsViewGroup {
 				public static class: java.lang.Class<androidx.appcompat.widget.FitWindowsViewGroup>;
 				/**
@@ -8456,7 +8456,7 @@ declare module androidx {
 				public constructor();
 				public setOnFitSystemWindowsListener(param0: androidx.appcompat.widget.FitWindowsViewGroup.OnFitSystemWindowsListener): void;
 			}
-			export module FitWindowsViewGroup {
+			export namespace FitWindowsViewGroup {
 				export class OnFitSystemWindowsListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.FitWindowsViewGroup.OnFitSystemWindowsListener>;
 					/**
@@ -8473,9 +8473,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export abstract class ForwardingListener {
 				public static class: java.lang.Class<androidx.appcompat.widget.ForwardingListener>;
 				public constructor(src: globalAndroid.view.View);
@@ -8486,7 +8486,7 @@ declare module androidx {
 				public onForwardingStarted(): boolean;
 				public onForwardingStopped(): boolean;
 			}
-			export module ForwardingListener {
+			export namespace ForwardingListener {
 				export class DisallowIntercept {
 					public static class: java.lang.Class<androidx.appcompat.widget.ForwardingListener.DisallowIntercept>;
 					public run(): void;
@@ -8500,9 +8500,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class LinearLayoutCompat {
 				public static class: java.lang.Class<androidx.appcompat.widget.LinearLayoutCompat>;
 				public static readonly HORIZONTAL = 0;
@@ -8548,7 +8548,7 @@ declare module androidx {
 				public onInitializeAccessibilityEvent(event: globalAndroid.view.accessibility.AccessibilityEvent): void;
 				public onInitializeAccessibilityNodeInfo(info: globalAndroid.view.accessibility.AccessibilityNodeInfo): void;
 			}
-			export module LinearLayoutCompat {
+			export namespace LinearLayoutCompat {
 				export class DividerMode {
 					public static class: java.lang.Class<androidx.appcompat.widget.LinearLayoutCompat.DividerMode>;
 					/**
@@ -8583,9 +8583,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ListPopupWindow extends androidx.appcompat.view.menu.ShowableListMenu {
 				public static class: java.lang.Class<androidx.appcompat.widget.ListPopupWindow>;
 				public static readonly POSITION_PROMPT_ABOVE = 0;
@@ -8654,7 +8654,7 @@ declare module androidx {
 				public setOverlapAnchor(overlapAnchor: boolean): void;
 				public getListView(): globalAndroid.widget.ListView;
 			}
-			export module ListPopupWindow {
+			export namespace ListPopupWindow {
 				export class ListSelectorHider {
 					public static class: java.lang.Class<androidx.appcompat.widget.ListPopupWindow.ListSelectorHider>;
 					public run(): void;
@@ -8682,9 +8682,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class MenuItemHoverListener {
 				public static class: java.lang.Class<androidx.appcompat.widget.MenuItemHoverListener>;
 				/**
@@ -8702,9 +8702,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class MenuPopupWindow extends androidx.appcompat.widget.ListPopupWindow implements androidx.appcompat.widget.MenuItemHoverListener {
 				public static class: java.lang.Class<androidx.appcompat.widget.MenuPopupWindow>;
 				public constructor(context: globalAndroid.content.Context);
@@ -8724,7 +8724,7 @@ declare module androidx {
 				public isShowing(): boolean;
 				public getListView(): globalAndroid.widget.ListView;
 			}
-			export module MenuPopupWindow {
+			export namespace MenuPopupWindow {
 				export class MenuDropDownListView extends androidx.appcompat.widget.DropDownListView {
 					public static class: java.lang.Class<androidx.appcompat.widget.MenuPopupWindow.MenuDropDownListView>;
 					public constructor(context: globalAndroid.content.Context, hijackFocus: boolean);
@@ -8738,9 +8738,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class PopupMenu {
 				public static class: java.lang.Class<androidx.appcompat.widget.PopupMenu>;
 				public constructor(context: globalAndroid.content.Context, anchor: globalAndroid.view.View);
@@ -8757,7 +8757,7 @@ declare module androidx {
 				public setOnMenuItemClickListener(listener: androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener | null): void;
 				public setOnDismissListener(listener: androidx.appcompat.widget.PopupMenu.OnDismissListener | null): void;
 			}
-			export module PopupMenu {
+			export namespace PopupMenu {
 				export class OnDismissListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.PopupMenu.OnDismissListener>;
 					/**
@@ -8785,9 +8785,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ResourcesWrapper {
 				public static class: java.lang.Class<androidx.appcompat.widget.ResourcesWrapper>;
 				public constructor(resources: globalAndroid.content.res.Resources);
@@ -8840,9 +8840,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class RtlSpacingHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.RtlSpacingHelper>;
 				public static readonly UNDEFINED = -2147483648;
@@ -8858,9 +8858,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ScrollingTabContainerView {
 				public static class: java.lang.Class<androidx.appcompat.widget.ScrollingTabContainerView>;
 				public mVisibilityAnim: globalAndroid.view.ViewPropertyAnimator;
@@ -8883,7 +8883,7 @@ declare module androidx {
 				public onItemSelected(adapterView: globalAndroid.widget.AdapterView<any>, view: globalAndroid.view.View, position: number, id: number): void;
 				public onNothingSelected(adapterView: globalAndroid.widget.AdapterView<any>): void;
 			}
-			export module ScrollingTabContainerView {
+			export namespace ScrollingTabContainerView {
 				export class TabAdapter {
 					public static class: java.lang.Class<androidx.appcompat.widget.ScrollingTabContainerView.TabAdapter>;
 					public getCount(): number;
@@ -8919,9 +8919,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class SearchView extends androidx.appcompat.widget.LinearLayoutCompat implements androidx.appcompat.view.CollapsibleActionView {
 				public static class: java.lang.Class<androidx.appcompat.widget.SearchView>;
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -8965,7 +8965,7 @@ declare module androidx {
 				public onSaveInstanceState(): globalAndroid.os.Parcelable;
 				public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 			}
-			export module SearchView {
+			export namespace SearchView {
 				export class AutoCompleteTextViewReflector {
 					public static class: java.lang.Class<androidx.appcompat.widget.SearchView.AutoCompleteTextViewReflector>;
 				}
@@ -9046,9 +9046,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ShareActionProvider extends androidx.core.view.ActionProvider {
 				public static class: java.lang.Class<androidx.appcompat.widget.ShareActionProvider>;
 				public static readonly DEFAULT_SHARE_HISTORY_FILE_NAME = "share_history.xml";
@@ -9061,7 +9061,7 @@ declare module androidx {
 				public setShareHistoryFileName(shareHistoryFile: string): void;
 				public setShareIntent(shareIntent: globalAndroid.content.Intent): void;
 			}
-			export module ShareActionProvider {
+			export namespace ShareActionProvider {
 				export class OnShareTargetSelectedListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.ShareActionProvider.OnShareTargetSelectedListener>;
 					/**
@@ -9087,9 +9087,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class SuggestionsAdapter extends androidx.cursoradapter.widget.ResourceCursorAdapter {
 				public static class: java.lang.Class<androidx.appcompat.widget.SuggestionsAdapter>;
 				/** @deprecated */
@@ -9122,7 +9122,7 @@ declare module androidx {
 				public getCursor(): globalAndroid.database.Cursor;
 				public changeCursor(param0: globalAndroid.database.Cursor): void;
 			}
-			export module SuggestionsAdapter {
+			export namespace SuggestionsAdapter {
 				export class ChildViewCache {
 					public static class: java.lang.Class<androidx.appcompat.widget.SuggestionsAdapter.ChildViewCache>;
 					public mText1: globalAndroid.widget.TextView;
@@ -9137,9 +9137,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class SwitchCompat {
 				public static class: java.lang.Class<androidx.appcompat.widget.SwitchCompat>;
 				public constructor(context: globalAndroid.content.Context);
@@ -9199,9 +9199,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ThemeUtils {
 				public static class: java.lang.Class<androidx.appcompat.widget.ThemeUtils>;
 				public static createDisabledStateList(textColor: number, disabledTextColor: number): globalAndroid.content.res.ColorStateList;
@@ -9213,9 +9213,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ThemedSpinnerAdapter {
 				public static class: java.lang.Class<androidx.appcompat.widget.ThemedSpinnerAdapter>;
 				/**
@@ -9229,7 +9229,7 @@ declare module androidx {
 				public setDropDownViewTheme(param0: globalAndroid.content.res.Resources.Theme | null): void;
 				public getDropDownViewTheme(): globalAndroid.content.res.Resources.Theme | null;
 			}
-			export module ThemedSpinnerAdapter {
+			export namespace ThemedSpinnerAdapter {
 				export class Helper {
 					public static class: java.lang.Class<androidx.appcompat.widget.ThemedSpinnerAdapter.Helper>;
 					public constructor(context: globalAndroid.content.Context);
@@ -9242,9 +9242,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class TintContextWrapper {
 				public static class: java.lang.Class<androidx.appcompat.widget.TintContextWrapper>;
 				public static wrap(context: globalAndroid.content.Context): globalAndroid.content.Context;
@@ -9257,9 +9257,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class TintInfo {
 				public static class: java.lang.Class<androidx.appcompat.widget.TintInfo>;
 				public mTintList: globalAndroid.content.res.ColorStateList;
@@ -9271,9 +9271,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class TintResources extends androidx.appcompat.widget.ResourcesWrapper {
 				public static class: java.lang.Class<androidx.appcompat.widget.TintResources>;
 				public constructor(resources: globalAndroid.content.res.Resources);
@@ -9285,9 +9285,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class TintTypedArray {
 				public static class: java.lang.Class<androidx.appcompat.widget.TintTypedArray>;
 				public static obtainStyledAttributes(context: globalAndroid.content.Context, set: globalAndroid.util.AttributeSet, attrs: androidNative.Array<number>): androidx.appcompat.widget.TintTypedArray;
@@ -9329,9 +9329,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class Toolbar {
 				public static class: java.lang.Class<androidx.appcompat.widget.Toolbar>;
 				public constructor(context: globalAndroid.content.Context);
@@ -9422,7 +9422,7 @@ declare module androidx {
 				public setCollapsible(collapsible: boolean): void;
 				public setMenuCallbacks(pcb: androidx.appcompat.view.menu.MenuPresenter.Callback, mcb: androidx.appcompat.view.menu.MenuBuilder.Callback): void;
 			}
-			export module Toolbar {
+			export namespace Toolbar {
 				export class ExpandedActionViewMenuPresenter extends androidx.appcompat.view.menu.MenuPresenter {
 					public static class: java.lang.Class<androidx.appcompat.widget.Toolbar.ExpandedActionViewMenuPresenter>;
 					public initForMenu(context: globalAndroid.content.Context, menu: androidx.appcompat.view.menu.MenuBuilder): void;
@@ -9483,9 +9483,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ToolbarWidgetWrapper extends androidx.appcompat.widget.DecorToolbar {
 				public static class: java.lang.Class<androidx.appcompat.widget.ToolbarWidgetWrapper>;
 				public constructor(toolbar: androidx.appcompat.widget.Toolbar, style: boolean);
@@ -9582,9 +9582,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class TooltipCompat {
 				public static class: java.lang.Class<androidx.appcompat.widget.TooltipCompat>;
 				public static setTooltipText(view: globalAndroid.view.View, tooltipText: string | null): void;
@@ -9593,9 +9593,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class TooltipCompatHandler {
 				public static class: java.lang.Class<androidx.appcompat.widget.TooltipCompatHandler>;
 				public static setTooltipText(view: globalAndroid.view.View, tooltipText: string): void;
@@ -9608,9 +9608,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class TooltipPopup {
 				public static class: java.lang.Class<androidx.appcompat.widget.TooltipPopup>;
 			}
@@ -9618,9 +9618,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class VectorEnabledTintResources {
 				public static class: java.lang.Class<androidx.appcompat.widget.VectorEnabledTintResources>;
 				public static readonly MAX_SDK_WHERE_REQUIRED = 20;
@@ -9634,9 +9634,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ViewStubCompat {
 				public static class: java.lang.Class<androidx.appcompat.widget.ViewStubCompat>;
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -9654,7 +9654,7 @@ declare module androidx {
 				public inflate(): globalAndroid.view.View;
 				public setOnInflateListener(inflateListener: androidx.appcompat.widget.ViewStubCompat.OnInflateListener): void;
 			}
-			export module ViewStubCompat {
+			export namespace ViewStubCompat {
 				export class OnInflateListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.ViewStubCompat.OnInflateListener>;
 					/**
@@ -9671,9 +9671,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class ViewUtils {
 				public static class: java.lang.Class<androidx.appcompat.widget.ViewUtils>;
 				public static isLayoutRtl(view: globalAndroid.view.View): boolean;
@@ -9684,9 +9684,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module appcompat {
-		export module widget {
+declare namespace androidx {
+	export namespace appcompat {
+		export namespace widget {
 			export class WithHint {
 				public static class: java.lang.Class<androidx.appcompat.widget.WithHint>;
 				/**
@@ -9702,10 +9702,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module arch {
-		export module core {
-			export module executor {
+declare namespace androidx {
+	export namespace arch {
+		export namespace core {
+			export namespace executor {
 				export class ArchTaskExecutor extends androidx.arch.core.executor.TaskExecutor {
 					public static class: java.lang.Class<androidx.arch.core.executor.ArchTaskExecutor>;
 					public static getInstance(): androidx.arch.core.executor.ArchTaskExecutor;
@@ -9721,10 +9721,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module arch {
-		export module core {
-			export module executor {
+declare namespace androidx {
+	export namespace arch {
+		export namespace core {
+			export namespace executor {
 				export class DefaultTaskExecutor extends androidx.arch.core.executor.TaskExecutor {
 					public static class: java.lang.Class<androidx.arch.core.executor.DefaultTaskExecutor>;
 					public constructor();
@@ -9737,10 +9737,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module arch {
-		export module core {
-			export module executor {
+declare namespace androidx {
+	export namespace arch {
+		export namespace core {
+			export namespace executor {
 				export abstract class TaskExecutor {
 					public static class: java.lang.Class<androidx.arch.core.executor.TaskExecutor>;
 					public constructor();
@@ -9754,10 +9754,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module arch {
-		export module core {
-			export module internal {
+declare namespace androidx {
+	export namespace arch {
+		export namespace core {
+			export namespace internal {
 				export class FastSafeIterableMap<K, V>  extends androidx.arch.core.internal.SafeIterableMap<any,any> {
 					public static class: java.lang.Class<androidx.arch.core.internal.FastSafeIterableMap<any,any>>;
 					public constructor();
@@ -9772,10 +9772,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module arch {
-		export module core {
-			export module internal {
+declare namespace androidx {
+	export namespace arch {
+		export namespace core {
+			export namespace internal {
 				export class SafeIterableMap<K, V>  extends java.lang.Iterable<java.util.Map.Entry<any,any>> {
 					public static class: java.lang.Class<androidx.arch.core.internal.SafeIterableMap<any,any>>;
 					public constructor();
@@ -9793,7 +9793,7 @@ declare module androidx {
 					public hashCode(): number;
 					public toString(): string;
 				}
-				export module SafeIterableMap {
+				export namespace SafeIterableMap {
 					export class AscendingIterator<K, V>  extends androidx.arch.core.internal.SafeIterableMap.ListIterator<any,any> {
 						public static class: java.lang.Class<androidx.arch.core.internal.SafeIterableMap.AscendingIterator<any,any>>;
 						public supportRemove(param0: androidx.arch.core.internal.SafeIterableMap.Entry<any,any>): void;
@@ -9842,10 +9842,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module arch {
-		export module core {
-			export module util {
+declare namespace androidx {
+	export namespace arch {
+		export namespace core {
+			export namespace util {
 				export class Function<I, O>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.arch.core.util.Function<any,any>>;
 					/**
@@ -9862,15 +9862,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module asynclayoutinflater {
-		export module view {
+declare namespace androidx {
+	export namespace asynclayoutinflater {
+		export namespace view {
 			export class AsyncLayoutInflater {
 				public static class: java.lang.Class<androidx.asynclayoutinflater.view.AsyncLayoutInflater>;
 				public constructor(context: globalAndroid.content.Context);
 				public inflate(resid: number, parent: globalAndroid.view.ViewGroup | null, callback: androidx.asynclayoutinflater.view.AsyncLayoutInflater.OnInflateFinishedListener): void;
 			}
-			export module AsyncLayoutInflater {
+			export namespace AsyncLayoutInflater {
 				export class BasicInflater {
 					public static class: java.lang.Class<androidx.asynclayoutinflater.view.AsyncLayoutInflater.BasicInflater>;
 					public cloneInContext(newContext: globalAndroid.content.Context): globalAndroid.view.LayoutInflater;
@@ -9904,9 +9904,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cardview {
-		export module widget {
+declare namespace androidx {
+	export namespace cardview {
+		export namespace widget {
 			export class CardView {
 				public static class: java.lang.Class<androidx.cardview.widget.CardView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -9940,9 +9940,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cardview {
-		export module widget {
+declare namespace androidx {
+	export namespace cardview {
+		export namespace widget {
 			export class CardViewApi17Impl extends androidx.cardview.widget.CardViewBaseImpl {
 				public static class: java.lang.Class<androidx.cardview.widget.CardViewApi17Impl>;
 				public initStatic(): void;
@@ -9965,9 +9965,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cardview {
-		export module widget {
+declare namespace androidx {
+	export namespace cardview {
+		export namespace widget {
 			export class CardViewApi21Impl extends androidx.cardview.widget.CardViewImpl {
 				public static class: java.lang.Class<androidx.cardview.widget.CardViewApi21Impl>;
 				public initialize(cardView: androidx.cardview.widget.CardViewDelegate, context: globalAndroid.content.Context, backgroundColor: globalAndroid.content.res.ColorStateList, radius: number, elevation: number, maxElevation: number): void;
@@ -10004,9 +10004,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cardview {
-		export module widget {
+declare namespace androidx {
+	export namespace cardview {
+		export namespace widget {
 			export class CardViewBaseImpl extends androidx.cardview.widget.CardViewImpl {
 				public static class: java.lang.Class<androidx.cardview.widget.CardViewBaseImpl>;
 				public initStatic(): void;
@@ -10043,9 +10043,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cardview {
-		export module widget {
+declare namespace androidx {
+	export namespace cardview {
+		export namespace widget {
 			export class CardViewDelegate {
 				public static class: java.lang.Class<androidx.cardview.widget.CardViewDelegate>;
 				/**
@@ -10073,9 +10073,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cardview {
-		export module widget {
+declare namespace androidx {
+	export namespace cardview {
+		export namespace widget {
 			export class CardViewImpl {
 				public static class: java.lang.Class<androidx.cardview.widget.CardViewImpl>;
 				/**
@@ -10119,9 +10119,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cardview {
-		export module widget {
+declare namespace androidx {
+	export namespace cardview {
+		export namespace widget {
 			export class RoundRectDrawable {
 				public static class: java.lang.Class<androidx.cardview.widget.RoundRectDrawable>;
 				public draw(canvas: globalAndroid.graphics.Canvas): void;
@@ -10142,9 +10142,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cardview {
-		export module widget {
+declare namespace androidx {
+	export namespace cardview {
+		export namespace widget {
 			export class RoundRectDrawableWithShadow {
 				public static class: java.lang.Class<androidx.cardview.widget.RoundRectDrawableWithShadow>;
 				public setAlpha(alpha: number): void;
@@ -10156,7 +10156,7 @@ declare module androidx {
 				public getOpacity(): number;
 				public draw(canvas: globalAndroid.graphics.Canvas): void;
 			}
-			export module RoundRectDrawableWithShadow {
+			export namespace RoundRectDrawableWithShadow {
 				export class RoundRectHelper {
 					public static class: java.lang.Class<androidx.cardview.widget.RoundRectDrawableWithShadow.RoundRectHelper>;
 					/**
@@ -10173,8 +10173,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class ArrayMap<K, V>  extends java.util.Map<any,any> {
 			public static class: java.lang.Class<androidx.collection.ArrayMap<any,any>>;
 			public constructor(capacity: number);
@@ -10193,8 +10193,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class ArraySet<E>  extends java.lang.Object {
 			public static class: java.lang.Class<androidx.collection.ArraySet<any>>;
 			public constructor();
@@ -10228,8 +10228,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class CircularArray<E>  extends java.lang.Object {
 			public static class: java.lang.Class<androidx.collection.CircularArray<any>>;
 			public constructor();
@@ -10250,8 +10250,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class CircularIntArray {
 			public static class: java.lang.Class<androidx.collection.CircularIntArray>;
 			public constructor();
@@ -10272,8 +10272,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class ContainerHelpers {
 			public static class: java.lang.Class<androidx.collection.ContainerHelpers>;
 			public static idealIntArraySize(need: number): number;
@@ -10284,8 +10284,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class LongSparseArray<E>  extends java.lang.Cloneable {
 			public static class: java.lang.Class<androidx.collection.LongSparseArray<any>>;
 			public constructor();
@@ -10318,8 +10318,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class LruCache<K, V>  extends java.lang.Object {
 			public static class: java.lang.Class<androidx.collection.LruCache<any,any>>;
 			public constructor(maxSize: number);
@@ -10345,8 +10345,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export abstract class MapCollections<K, V>  extends java.lang.Object {
 			public static class: java.lang.Class<androidx.collection.MapCollections<any,any>>;
 			public static containsAllHelper(map: java.util.Map<any,any>, collection: java.util.Collection<any>): boolean;
@@ -10368,7 +10368,7 @@ declare module androidx {
 			public colRemoveAt(param0: number): void;
 			public colClear(): void;
 		}
-		export module MapCollections {
+		export namespace MapCollections {
 			export class ArrayIterator<T>  extends java.util.Iterator<any> {
 				public static class: java.lang.Class<androidx.collection.MapCollections.ArrayIterator<any>>;
 				public hasNext(): boolean;
@@ -10443,8 +10443,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class SimpleArrayMap<K, V>  extends java.lang.Object {
 			public static class: java.lang.Class<androidx.collection.SimpleArrayMap<any,any>>;
 			public constructor();
@@ -10477,8 +10477,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module collection {
+declare namespace androidx {
+	export namespace collection {
 		export class SparseArrayCompat<E>  extends java.lang.Cloneable {
 			public static class: java.lang.Class<androidx.collection.SparseArrayCompat<any>>;
 			public constructor();
@@ -10512,9 +10512,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module coordinatorlayout {
-		export module widget {
+declare namespace androidx {
+	export namespace coordinatorlayout {
+		export namespace widget {
 			export class CoordinatorLayout implements androidx.core.view.NestedScrollingParent2 {
 				public static class: java.lang.Class<androidx.coordinatorlayout.widget.CoordinatorLayout>;
 				public constructor(context: globalAndroid.content.Context);
@@ -10581,7 +10581,7 @@ declare module androidx {
 				public onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
 				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
 			}
-			export module CoordinatorLayout {
+			export namespace CoordinatorLayout {
 				export class AttachedBehavior {
 					public static class: java.lang.Class<androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior>;
 					/**
@@ -10696,9 +10696,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module coordinatorlayout {
-		export module widget {
+declare namespace androidx {
+	export namespace coordinatorlayout {
+		export namespace widget {
 			export class DirectedAcyclicGraph<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.coordinatorlayout.widget.DirectedAcyclicGraph<any>>;
 				public constructor();
@@ -10715,9 +10715,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module coordinatorlayout {
-		export module widget {
+declare namespace androidx {
+	export namespace coordinatorlayout {
+		export namespace widget {
 			export class ViewGroupUtils {
 				public static class: java.lang.Class<androidx.coordinatorlayout.widget.ViewGroupUtils>;
 				public static getDescendantRect(parent: globalAndroid.view.ViewGroup, descendant: globalAndroid.view.View, out: globalAndroid.graphics.Rect): void;
@@ -10726,9 +10726,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module accessibilityservice {
+declare namespace androidx {
+	export namespace core {
+		export namespace accessibilityservice {
 			export class AccessibilityServiceInfoCompat {
 				public static class: java.lang.Class<androidx.core.accessibilityservice.AccessibilityServiceInfoCompat>;
 				public static readonly CAPABILITY_CAN_RETRIEVE_WINDOW_CONTENT = 1;
@@ -10752,9 +10752,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class ActivityCompat extends androidx.core.content.ContextCompat {
 				public static class: java.lang.Class<androidx.core.app.ActivityCompat>;
 				public constructor();
@@ -10776,7 +10776,7 @@ declare module androidx {
 				public static shouldShowRequestPermissionRationale(activity: globalAndroid.app.Activity, permission: string): boolean;
 				public static requestDragAndDropPermissions(activity: globalAndroid.app.Activity, dragEvent: globalAndroid.view.DragEvent): androidx.core.view.DragAndDropPermissionsCompat | null;
 			}
-			export module ActivityCompat {
+			export namespace ActivityCompat {
 				export class OnRequestPermissionsResultCallback {
 					public static class: java.lang.Class<androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback>;
 					/**
@@ -10827,9 +10827,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class ActivityManagerCompat {
 				public static class: java.lang.Class<androidx.core.app.ActivityManagerCompat>;
 				public static isLowRamDevice(activityManager: globalAndroid.app.ActivityManager): boolean;
@@ -10838,9 +10838,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class ActivityOptionsCompat {
 				public static class: java.lang.Class<androidx.core.app.ActivityOptionsCompat>;
 				public static readonly EXTRA_USAGE_TIME_REPORT = "android.activity.usage_time";
@@ -10860,7 +10860,7 @@ declare module androidx {
 				public update(otherOptions: androidx.core.app.ActivityOptionsCompat): void;
 				public requestUsageTimeReport(receiver: globalAndroid.app.PendingIntent): void;
 			}
-			export module ActivityOptionsCompat {
+			export namespace ActivityOptionsCompat {
 				export class ActivityOptionsCompatImpl extends androidx.core.app.ActivityOptionsCompat {
 					public static class: java.lang.Class<androidx.core.app.ActivityOptionsCompat.ActivityOptionsCompatImpl>;
 					public toBundle(): globalAndroid.os.Bundle;
@@ -10874,9 +10874,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class AlarmManagerCompat {
 				public static class: java.lang.Class<androidx.core.app.AlarmManagerCompat>;
 				public static setAlarmClock(alarmManager: globalAndroid.app.AlarmManager, triggerTime: number, showIntent: globalAndroid.app.PendingIntent, operation: globalAndroid.app.PendingIntent): void;
@@ -10888,9 +10888,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class AppComponentFactory {
 				public static class: java.lang.Class<androidx.core.app.AppComponentFactory>;
 				public constructor();
@@ -10909,9 +10909,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class AppLaunchChecker {
 				public static class: java.lang.Class<androidx.core.app.AppLaunchChecker>;
 				public static hasStartedFromLauncher(context: globalAndroid.content.Context): boolean;
@@ -10923,9 +10923,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class AppOpsManagerCompat {
 				public static class: java.lang.Class<androidx.core.app.AppOpsManagerCompat>;
 				public static readonly MODE_ALLOWED = 0;
@@ -10942,15 +10942,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class BundleCompat {
 				public static class: java.lang.Class<androidx.core.app.BundleCompat>;
 				public static getBinder(bundle: globalAndroid.os.Bundle, key: string | null): globalAndroid.os.IBinder | null;
 				public static putBinder(bundle: globalAndroid.os.Bundle, key: string | null, binder: globalAndroid.os.IBinder | null): void;
 			}
-			export module BundleCompat {
+			export namespace BundleCompat {
 				export class BundleCompatBaseImpl {
 					public static class: java.lang.Class<androidx.core.app.BundleCompat.BundleCompatBaseImpl>;
 					public static getBinder(bundle: globalAndroid.os.Bundle, key: string): globalAndroid.os.IBinder;
@@ -10961,9 +10961,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class ComponentActivity implements androidx.core.view.KeyEventDispatcher.Component {
 				public static class: java.lang.Class<androidx.core.app.ComponentActivity>;
 				public constructor();
@@ -10974,7 +10974,7 @@ declare module androidx {
 				public dispatchKeyEvent(event: globalAndroid.view.KeyEvent): boolean;
 				public superDispatchKeyEvent(param0: globalAndroid.view.KeyEvent): boolean;
 			}
-			export module ComponentActivity {
+			export namespace ComponentActivity {
 				export class ExtraData {
 					public static class: java.lang.Class<androidx.core.app.ComponentActivity.ExtraData>;
 					public constructor();
@@ -10984,9 +10984,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class CoreComponentFactory {
 				public static class: java.lang.Class<androidx.core.app.CoreComponentFactory>;
 				public constructor();
@@ -10996,7 +10996,7 @@ declare module androidx {
 				public instantiateProvider(cl: java.lang.ClassLoader, className: string): globalAndroid.content.ContentProvider;
 				public instantiateService(cl: java.lang.ClassLoader, className: string, intent: globalAndroid.content.Intent): globalAndroid.app.Service;
 			}
-			export module CoreComponentFactory {
+			export namespace CoreComponentFactory {
 				export class CompatWrapped {
 					public static class: java.lang.Class<androidx.core.app.CoreComponentFactory.CompatWrapped>;
 					/**
@@ -11013,9 +11013,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class DialogCompat {
 				public static class: java.lang.Class<androidx.core.app.DialogCompat>;
 				public static requireViewById(dialog: globalAndroid.app.Dialog, id: number): globalAndroid.view.View;
@@ -11024,9 +11024,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class FrameMetricsAggregator {
 				public static class: java.lang.Class<androidx.core.app.FrameMetricsAggregator>;
 				public static readonly TOTAL_INDEX = 0;
@@ -11056,7 +11056,7 @@ declare module androidx {
 				public reset(): androidNative.Array<globalAndroid.util.SparseIntArray> | null;
 				public getMetrics(): androidNative.Array<globalAndroid.util.SparseIntArray> | null;
 			}
-			export module FrameMetricsAggregator {
+			export namespace FrameMetricsAggregator {
 				export class FrameMetricsApi24Impl extends androidx.core.app.FrameMetricsAggregator.FrameMetricsBaseImpl {
 					public static class: java.lang.Class<androidx.core.app.FrameMetricsAggregator.FrameMetricsApi24Impl>;
 					public add(activity: globalAndroid.app.Activity): void;
@@ -11087,9 +11087,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export abstract class JobIntentService {
 				public static class: java.lang.Class<androidx.core.app.JobIntentService>;
 				public constructor();
@@ -11104,7 +11104,7 @@ declare module androidx {
 				public isStopped(): boolean;
 				public onStopCurrentWork(): boolean;
 			}
-			export module JobIntentService {
+			export namespace JobIntentService {
 				export class CommandProcessor extends globalAndroid.os.AsyncTask<java.lang.Void,java.lang.Void,java.lang.Void> {
 					public static class: java.lang.Class<androidx.core.app.JobIntentService.CommandProcessor>;
 					public doInBackground(params: androidNative.Array<java.lang.Void>): java.lang.Void;
@@ -11155,7 +11155,7 @@ declare module androidx {
 					public onStopJob(params: any): boolean;
 					public dequeueWork(): androidx.core.app.JobIntentService.GenericWorkItem;
 				}
-				export module JobServiceEngineImpl {
+				export namespace JobServiceEngineImpl {
 					export class WrapperWorkItem extends androidx.core.app.JobIntentService.GenericWorkItem {
 						public static class: java.lang.Class<androidx.core.app.JobIntentService.JobServiceEngineImpl.WrapperWorkItem>;
 						public getIntent(): globalAndroid.content.Intent;
@@ -11176,9 +11176,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class NavUtils {
 				public static class: java.lang.Class<androidx.core.app.NavUtils>;
 				public static readonly PARENT_ACTIVITY = "android.support.PARENT_ACTIVITY";
@@ -11195,9 +11195,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class NotificationBuilderWithBuilderAccessor {
 				public static class: java.lang.Class<androidx.core.app.NotificationBuilderWithBuilderAccessor>;
 				/**
@@ -11213,9 +11213,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class NotificationCompat {
 				public static class: java.lang.Class<androidx.core.app.NotificationCompat>;
 				public static readonly DEFAULT_ALL = -1;
@@ -11311,7 +11311,7 @@ declare module androidx {
 				/** @deprecated */
 				public constructor();
 			}
-			export module NotificationCompat {
+			export namespace NotificationCompat {
 				export class Action {
 					public static class: java.lang.Class<androidx.core.app.NotificationCompat.Action>;
 					public static readonly SEMANTIC_ACTION_NONE = 0;
@@ -11339,7 +11339,7 @@ declare module androidx {
 					public getDataOnlyRemoteInputs(): androidNative.Array<androidx.core.app.RemoteInput>;
 					public getShowsUserInterface(): boolean;
 				}
-				export module Action {
+				export namespace Action {
 					export class Builder {
 						public static class: java.lang.Class<androidx.core.app.NotificationCompat.Action.Builder>;
 						public constructor(icon: number, title: string, intent: globalAndroid.app.PendingIntent);
@@ -11515,7 +11515,7 @@ declare module androidx {
 					public getUnreadConversation(): androidx.core.app.NotificationCompat.CarExtender.UnreadConversation;
 					public extend(param0: androidx.core.app.NotificationCompat.Builder): androidx.core.app.NotificationCompat.Builder;
 				}
-				export module CarExtender {
+				export namespace CarExtender {
 					export class UnreadConversation {
 						public static class: java.lang.Class<androidx.core.app.NotificationCompat.CarExtender.UnreadConversation>;
 						public getMessages(): androidNative.Array<string>;
@@ -11526,7 +11526,7 @@ declare module androidx {
 						public getParticipant(): string;
 						public getLatestTimestamp(): number;
 					}
-					export module UnreadConversation {
+					export namespace UnreadConversation {
 						export class Builder {
 							public static class: java.lang.Class<androidx.core.app.NotificationCompat.CarExtender.UnreadConversation.Builder>;
 							public constructor(name: string);
@@ -11599,7 +11599,7 @@ declare module androidx {
 					public addCompatExtras(extras: globalAndroid.os.Bundle): void;
 					public restoreFromCompatExtras(extras: globalAndroid.os.Bundle): void;
 				}
-				export module MessagingStyle {
+				export namespace MessagingStyle {
 					export class Message {
 						public static class: java.lang.Class<androidx.core.app.NotificationCompat.MessagingStyle.Message>;
 						public constructor(text: string, timestamp: number, person: androidx.core.app.Person | null);
@@ -11744,9 +11744,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class NotificationCompatBuilder extends androidx.core.app.NotificationBuilderWithBuilderAccessor {
 				public static class: java.lang.Class<androidx.core.app.NotificationCompatBuilder>;
 				public getBuilder(): globalAndroid.app.Notification.Builder;
@@ -11757,9 +11757,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class NotificationCompatExtras {
 				public static class: java.lang.Class<androidx.core.app.NotificationCompatExtras>;
 				public static readonly EXTRA_LOCAL_ONLY = "android.support.localOnly";
@@ -11773,9 +11773,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class NotificationCompatJellybean {
 				public static class: java.lang.Class<androidx.core.app.NotificationCompatJellybean>;
 				public static readonly TAG = "NotificationCompat";
@@ -11790,9 +11790,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export abstract class NotificationCompatSideChannelService {
 				public static class: java.lang.Class<androidx.core.app.NotificationCompatSideChannelService>;
 				public constructor();
@@ -11801,7 +11801,7 @@ declare module androidx {
 				public cancel(param0: string, param1: number, param2: string): void;
 				public cancelAll(param0: string): void;
 			}
-			export module NotificationCompatSideChannelService {
+			export namespace NotificationCompatSideChannelService {
 				export class NotificationSideChannelStub extends globalAndroid.support.v4.app.INotificationSideChannel.Stub {
 					public static class: java.lang.Class<androidx.core.app.NotificationCompatSideChannelService.NotificationSideChannelStub>;
 					public notify(packageName: string, id: number, tag: string, notification: globalAndroid.app.Notification): void;
@@ -11816,9 +11816,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class NotificationManagerCompat {
 				public static class: java.lang.Class<androidx.core.app.NotificationManagerCompat>;
 				public static readonly EXTRA_USE_SIDE_CHANNEL = "android.support.useSideChannel";
@@ -11840,7 +11840,7 @@ declare module androidx {
 				public getImportance(): number;
 				public static getEnabledListenerPackages(context: globalAndroid.content.Context): java.util.Set<string>;
 			}
-			export module NotificationManagerCompat {
+			export namespace NotificationManagerCompat {
 				export class CancelTask extends androidx.core.app.NotificationManagerCompat.Task {
 					public static class: java.lang.Class<androidx.core.app.NotificationManagerCompat.CancelTask>;
 					public send(service: globalAndroid.support.v4.app.INotificationSideChannel): void;
@@ -11863,7 +11863,7 @@ declare module androidx {
 					public onServiceConnected(componentName: globalAndroid.content.ComponentName, iBinder: globalAndroid.os.IBinder): void;
 					public onServiceDisconnected(componentName: globalAndroid.content.ComponentName): void;
 				}
-				export module SideChannelManager {
+				export namespace SideChannelManager {
 					export class ListenerRecord {
 						public static class: java.lang.Class<androidx.core.app.NotificationManagerCompat.SideChannelManager.ListenerRecord>;
 					}
@@ -11884,9 +11884,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class Person {
 				public static class: java.lang.Class<androidx.core.app.Person>;
 				public static fromBundle(bundle: globalAndroid.os.Bundle): androidx.core.app.Person;
@@ -11903,7 +11903,7 @@ declare module androidx {
 				public isBot(): boolean;
 				public isImportant(): boolean;
 			}
-			export module Person {
+			export namespace Person {
 				export class Builder {
 					public static class: java.lang.Class<androidx.core.app.Person.Builder>;
 					public constructor();
@@ -11920,9 +11920,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class RemoteActionCompat {
 				public static class: java.lang.Class<androidx.core.app.RemoteActionCompat>;
 				public constructor(icon: androidx.core.graphics.drawable.IconCompat, title: string, contentDescription: string, intent: globalAndroid.app.PendingIntent);
@@ -11944,9 +11944,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class RemoteInput {
 				public static class: java.lang.Class<androidx.core.app.RemoteInput>;
 				public static readonly RESULTS_CLIP_LABEL = "android.remoteinput.results";
@@ -11967,7 +11967,7 @@ declare module androidx {
 				public static setResultsSource(intent: globalAndroid.content.Intent, source: number): void;
 				public static getResultsSource(intent: globalAndroid.content.Intent): number;
 			}
-			export module RemoteInput {
+			export namespace RemoteInput {
 				export class Builder {
 					public static class: java.lang.Class<androidx.core.app.RemoteInput.Builder>;
 					public constructor(resultKey: string);
@@ -11993,9 +11993,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class ServiceCompat {
 				public static class: java.lang.Class<androidx.core.app.ServiceCompat>;
 				public static readonly START_STICKY = 1;
@@ -12003,7 +12003,7 @@ declare module androidx {
 				public static readonly STOP_FOREGROUND_DETACH = 2;
 				public static stopForeground(service: globalAndroid.app.Service, flags: number): void;
 			}
-			export module ServiceCompat {
+			export namespace ServiceCompat {
 				export class StopForegroundFlags {
 					public static class: java.lang.Class<androidx.core.app.ServiceCompat.StopForegroundFlags>;
 					/**
@@ -12018,9 +12018,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class ShareCompat {
 				public static class: java.lang.Class<androidx.core.app.ShareCompat>;
 				public static readonly EXTRA_CALLING_PACKAGE = "androidx.core.app.EXTRA_CALLING_PACKAGE";
@@ -12030,7 +12030,7 @@ declare module androidx {
 				public static configureMenuItem(item: globalAndroid.view.MenuItem, shareIntent: androidx.core.app.ShareCompat.IntentBuilder): void;
 				public static configureMenuItem(menu: globalAndroid.view.Menu, menuItemId: number, shareIntent: androidx.core.app.ShareCompat.IntentBuilder): void;
 			}
-			export module ShareCompat {
+			export namespace ShareCompat {
 				export class IntentBuilder {
 					public static class: java.lang.Class<androidx.core.app.ShareCompat.IntentBuilder>;
 					public static from(launchingActivity: globalAndroid.app.Activity): androidx.core.app.ShareCompat.IntentBuilder;
@@ -12082,9 +12082,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export abstract class SharedElementCallback {
 				public static class: java.lang.Class<androidx.core.app.SharedElementCallback>;
 				public constructor();
@@ -12096,7 +12096,7 @@ declare module androidx {
 				public onCreateSnapshotView(context: globalAndroid.content.Context, snapshot: globalAndroid.os.Parcelable): globalAndroid.view.View;
 				public onSharedElementsArrived(sharedElementNames: java.util.List<string>, sharedElements: java.util.List<globalAndroid.view.View>, listener: androidx.core.app.SharedElementCallback.OnSharedElementsReadyListener): void;
 			}
-			export module SharedElementCallback {
+			export namespace SharedElementCallback {
 				export class OnSharedElementsReadyListener {
 					public static class: java.lang.Class<androidx.core.app.SharedElementCallback.OnSharedElementsReadyListener>;
 					/**
@@ -12113,9 +12113,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module app {
+declare namespace androidx {
+	export namespace core {
+		export namespace app {
 			export class TaskStackBuilder extends java.lang.Iterable<globalAndroid.content.Intent> {
 				public static class: java.lang.Class<androidx.core.app.TaskStackBuilder>;
 				public static create(context: globalAndroid.content.Context): androidx.core.app.TaskStackBuilder;
@@ -12138,7 +12138,7 @@ declare module androidx {
 				public getPendingIntent(requestCode: number, flags: number, options: globalAndroid.os.Bundle | null): globalAndroid.app.PendingIntent | null;
 				public getIntents(): androidNative.Array<globalAndroid.content.Intent>;
 			}
-			export module TaskStackBuilder {
+			export namespace TaskStackBuilder {
 				export class SupportParentable {
 					public static class: java.lang.Class<androidx.core.app.TaskStackBuilder.SupportParentable>;
 					/**
@@ -12155,9 +12155,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
 			export class ContentResolverCompat {
 				public static class: java.lang.Class<androidx.core.content.ContentResolverCompat>;
 				public static query(resolver: globalAndroid.content.ContentResolver, uri: globalAndroid.net.Uri, projection: androidNative.Array<string>, selection: string, selectionArgs: androidNative.Array<string>, sortOrder: string, cancellationSignal: androidx.core.os.CancellationSignal): globalAndroid.database.Cursor;
@@ -12166,9 +12166,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
 			export class ContextCompat {
 				public static class: java.lang.Class<androidx.core.content.ContextCompat>;
 				public constructor();
@@ -12192,7 +12192,7 @@ declare module androidx {
 				public static getSystemService(context: globalAndroid.content.Context, serviceClass: java.lang.Class<any>): any;
 				public static getSystemServiceName(context: globalAndroid.content.Context, serviceClass: java.lang.Class<any>): string | null;
 			}
-			export module ContextCompat {
+			export namespace ContextCompat {
 				export class LegacyServiceMapHolder {
 					public static class: java.lang.Class<androidx.core.content.ContextCompat.LegacyServiceMapHolder>;
 				}
@@ -12205,9 +12205,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
 			export class FileProvider {
 				public static class: java.lang.Class<androidx.core.content.FileProvider>;
 				public constructor();
@@ -12221,7 +12221,7 @@ declare module androidx {
 				public delete(uri: globalAndroid.net.Uri, selection: string | null, selectionArgs: androidNative.Array<string> | null): number;
 				public openFile(uri: globalAndroid.net.Uri, mode: string): globalAndroid.os.ParcelFileDescriptor;
 			}
-			export module FileProvider {
+			export namespace FileProvider {
 				export class PathStrategy {
 					public static class: java.lang.Class<androidx.core.content.FileProvider.PathStrategy>;
 					/**
@@ -12247,9 +12247,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
 			export class IntentCompat {
 				public static class: java.lang.Class<androidx.core.content.IntentCompat>;
 				public static readonly EXTRA_HTML_TEXT = "android.intent.extra.HTML_TEXT";
@@ -12261,9 +12261,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
 			export class MimeTypeFilter {
 				public static class: java.lang.Class<androidx.core.content.MimeTypeFilter>;
 				public static matches(mimeType: string | null, filter: string): boolean;
@@ -12275,9 +12275,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
 			export class PermissionChecker {
 				public static class: java.lang.Class<androidx.core.content.PermissionChecker>;
 				public static readonly PERMISSION_GRANTED = 0;
@@ -12288,7 +12288,7 @@ declare module androidx {
 				public static checkCallingPermission(context: globalAndroid.content.Context, permission: string, packageName: string | null): number;
 				public static checkCallingOrSelfPermission(context: globalAndroid.content.Context, permission: string): number;
 			}
-			export module PermissionChecker {
+			export namespace PermissionChecker {
 				export class PermissionResult {
 					public static class: java.lang.Class<androidx.core.content.PermissionChecker.PermissionResult>;
 					/**
@@ -12303,13 +12303,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
 			export class SharedPreferencesCompat {
 				public static class: java.lang.Class<androidx.core.content.SharedPreferencesCompat>;
 			}
-			export module SharedPreferencesCompat {
+			export namespace SharedPreferencesCompat {
 				export class EditorCompat {
 					public static class: java.lang.Class<androidx.core.content.SharedPreferencesCompat.EditorCompat>;
 					/** @deprecated */
@@ -12317,7 +12317,7 @@ declare module androidx {
 					/** @deprecated */
 					public apply(editor: globalAndroid.content.SharedPreferences.Editor): void;
 				}
-				export module EditorCompat {
+				export namespace EditorCompat {
 					export class Helper {
 						public static class: java.lang.Class<androidx.core.content.SharedPreferencesCompat.EditorCompat.Helper>;
 						public apply(editor: globalAndroid.content.SharedPreferences.Editor): void;
@@ -12328,10 +12328,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module pm {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace pm {
 				export class ActivityInfoCompat {
 					public static class: java.lang.Class<androidx.core.content.pm.ActivityInfoCompat>;
 					public static readonly CONFIG_UI_MODE = 512;
@@ -12341,10 +12341,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module pm {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace pm {
 				export class PackageInfoCompat {
 					public static class: java.lang.Class<androidx.core.content.pm.PackageInfoCompat>;
 					public static getLongVersionCode(info: globalAndroid.content.pm.PackageInfo): number;
@@ -12354,16 +12354,16 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module pm {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace pm {
 				export class PermissionInfoCompat {
 					public static class: java.lang.Class<androidx.core.content.pm.PermissionInfoCompat>;
 					public static getProtection(permissionInfo: globalAndroid.content.pm.PermissionInfo): number;
 					public static getProtectionFlags(permissionInfo: globalAndroid.content.pm.PermissionInfo): number;
 				}
-				export module PermissionInfoCompat {
+				export namespace PermissionInfoCompat {
 					export class Protection {
 						public static class: java.lang.Class<androidx.core.content.pm.PermissionInfoCompat.Protection>;
 						/**
@@ -12388,10 +12388,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module pm {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace pm {
 				export class ShortcutInfoCompat {
 					public static class: java.lang.Class<androidx.core.content.pm.ShortcutInfoCompat>;
 					public toShortcutInfo(): any;
@@ -12404,7 +12404,7 @@ declare module androidx {
 					public getIntents(): androidNative.Array<globalAndroid.content.Intent>;
 					public getCategories(): java.util.Set<string> | null;
 				}
-				export module ShortcutInfoCompat {
+				export namespace ShortcutInfoCompat {
 					export class Builder {
 						public static class: java.lang.Class<androidx.core.content.pm.ShortcutInfoCompat.Builder>;
 						public constructor(context: globalAndroid.content.Context, id: string);
@@ -12428,10 +12428,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module pm {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace pm {
 				export class ShortcutManagerCompat {
 					public static class: java.lang.Class<androidx.core.content.pm.ShortcutManagerCompat>;
 					public static isRequestPinShortcutSupported(context: globalAndroid.content.Context): boolean;
@@ -12443,10 +12443,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace res {
 				export class ColorStateListInflaterCompat {
 					public static class: java.lang.Class<androidx.core.content.res.ColorStateListInflaterCompat>;
 					public static inflate(resources: globalAndroid.content.res.Resources, resId: number, theme: globalAndroid.content.res.Resources.Theme | null): globalAndroid.content.res.ColorStateList | null;
@@ -12458,10 +12458,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace res {
 				export class ComplexColorCompat {
 					public static class: java.lang.Class<androidx.core.content.res.ComplexColorCompat>;
 					public getShader(): globalAndroid.graphics.Shader | null;
@@ -12478,10 +12478,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace res {
 				export class ConfigurationHelper {
 					public static class: java.lang.Class<androidx.core.content.res.ConfigurationHelper>;
 					public static getDensityDpi(resources: globalAndroid.content.res.Resources): number;
@@ -12491,10 +12491,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace res {
 				export class FontResourcesParserCompat {
 					public static class: java.lang.Class<androidx.core.content.res.FontResourcesParserCompat>;
 					public static readonly FETCH_STRATEGY_BLOCKING = 0;
@@ -12503,7 +12503,7 @@ declare module androidx {
 					public static parse(parser: org.xmlpull.v1.XmlPullParser, resources: globalAndroid.content.res.Resources): androidx.core.content.res.FontResourcesParserCompat.FamilyResourceEntry | null;
 					public static readCerts(resources: globalAndroid.content.res.Resources, certsId: number): java.util.List<java.util.List<androidNative.Array<number>>>;
 				}
-				export module FontResourcesParserCompat {
+				export namespace FontResourcesParserCompat {
 					export class FamilyResourceEntry {
 						public static class: java.lang.Class<androidx.core.content.res.FontResourcesParserCompat.FamilyResourceEntry>;
 						/**
@@ -12550,14 +12550,14 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace res {
 				export class GradientColorInflaterCompat {
 					public static class: java.lang.Class<androidx.core.content.res.GradientColorInflaterCompat>;
 				}
-				export module GradientColorInflaterCompat {
+				export namespace GradientColorInflaterCompat {
 					export class ColorStops {
 						public static class: java.lang.Class<androidx.core.content.res.GradientColorInflaterCompat.ColorStops>;
 					}
@@ -12567,10 +12567,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace res {
 				export class GrowingArrayUtils {
 					public static class: java.lang.Class<androidx.core.content.res.GrowingArrayUtils>;
 					public static append(array: androidNative.Array<any>, currentSize: number, element: any): androidNative.Array<any>;
@@ -12586,10 +12586,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace res {
 				export class ResourcesCompat {
 					public static class: java.lang.Class<androidx.core.content.res.ResourcesCompat>;
 					public static getDrawable(res: globalAndroid.content.res.Resources, id: number, theme: globalAndroid.content.res.Resources.Theme | null): globalAndroid.graphics.drawable.Drawable | null;
@@ -12601,7 +12601,7 @@ declare module androidx {
 					public static getFont(context: globalAndroid.content.Context, id: number, fontCallback: androidx.core.content.res.ResourcesCompat.FontCallback, handler: globalAndroid.os.Handler | null): void;
 					public static getFont(context: globalAndroid.content.Context, id: number, value: globalAndroid.util.TypedValue, style: number, fontCallback: androidx.core.content.res.ResourcesCompat.FontCallback | null): globalAndroid.graphics.Typeface;
 				}
-				export module ResourcesCompat {
+				export namespace ResourcesCompat {
 					export abstract class FontCallback {
 						public static class: java.lang.Class<androidx.core.content.res.ResourcesCompat.FontCallback>;
 						public constructor();
@@ -12616,10 +12616,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module content {
-			export module res {
+declare namespace androidx {
+	export namespace core {
+		export namespace content {
+			export namespace res {
 				export class TypedArrayUtils {
 					public static class: java.lang.Class<androidx.core.content.res.TypedArrayUtils>;
 					public static hasAttribute(parser: org.xmlpull.v1.XmlPullParser, attrName: string): boolean;
@@ -12647,9 +12647,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module database {
+declare namespace androidx {
+	export namespace core {
+		export namespace database {
 			export class CursorWindowCompat {
 				public static class: java.lang.Class<androidx.core.database.CursorWindowCompat>;
 				public static create(name: string | null, windowSizeBytes: number): globalAndroid.database.CursorWindow;
@@ -12658,9 +12658,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module database {
+declare namespace androidx {
+	export namespace core {
+		export namespace database {
 			export class DatabaseUtilsCompat {
 				public static class: java.lang.Class<androidx.core.database.DatabaseUtilsCompat>;
 				/** @deprecated */
@@ -12672,10 +12672,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module database {
-			export module sqlite {
+declare namespace androidx {
+	export namespace core {
+		export namespace database {
+			export namespace sqlite {
 				export class SQLiteCursorCompat {
 					public static class: java.lang.Class<androidx.core.database.sqlite.SQLiteCursorCompat>;
 					public static setFillWindowForwardOnly(cursor: globalAndroid.database.sqlite.SQLiteCursor, fillWindowForwardOnly: boolean): void;
@@ -12685,9 +12685,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class BitmapCompat {
 				public static class: java.lang.Class<androidx.core.graphics.BitmapCompat>;
 				public static hasMipMap(bitmap: globalAndroid.graphics.Bitmap): boolean;
@@ -12698,9 +12698,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class ColorUtils {
 				public static class: java.lang.Class<androidx.core.graphics.ColorUtils>;
 				public static compositeColors(foreground: number, background: number): number;
@@ -12729,9 +12729,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class PaintCompat {
 				public static class: java.lang.Class<androidx.core.graphics.PaintCompat>;
 				public static hasGlyph(paint: globalAndroid.graphics.Paint, string: string): boolean;
@@ -12740,9 +12740,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class PathParser {
 				public static class: java.lang.Class<androidx.core.graphics.PathParser>;
 				public static createPathFromPathData(pathData: string): globalAndroid.graphics.Path;
@@ -12752,7 +12752,7 @@ declare module androidx {
 				public static updateNodes(target: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, source: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>): void;
 				public static interpolatePathDataNodes(target: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, from: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, to: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, fraction: number): boolean;
 			}
-			export module PathParser {
+			export namespace PathParser {
 				export class ExtractFloatResult {
 					public static class: java.lang.Class<androidx.core.graphics.PathParser.ExtractFloatResult>;
 				}
@@ -12768,9 +12768,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class PathSegment {
 				public static class: java.lang.Class<androidx.core.graphics.PathSegment>;
 				public constructor(start: globalAndroid.graphics.PointF, startFraction: number, end: globalAndroid.graphics.PointF, endFraction: number);
@@ -12786,9 +12786,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class PathUtils {
 				public static class: java.lang.Class<androidx.core.graphics.PathUtils>;
 				public static flatten(path: globalAndroid.graphics.Path): java.util.Collection<androidx.core.graphics.PathSegment>;
@@ -12798,9 +12798,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class TypefaceCompat {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompat>;
 				public static findFromCache(resources: globalAndroid.content.res.Resources, id: number, style: number): globalAndroid.graphics.Typeface | null;
@@ -12812,9 +12812,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class TypefaceCompatApi21Impl extends androidx.core.graphics.TypefaceCompatBaseImpl {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatApi21Impl>;
 				public createFromFontInfo(context: globalAndroid.content.Context, cancellationSignal: globalAndroid.os.CancellationSignal, fonts: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, style: number): globalAndroid.graphics.Typeface;
@@ -12823,9 +12823,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class TypefaceCompatApi24Impl extends androidx.core.graphics.TypefaceCompatBaseImpl {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatApi24Impl>;
 				public static isUsable(): boolean;
@@ -12836,9 +12836,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class TypefaceCompatApi26Impl extends androidx.core.graphics.TypefaceCompatApi21Impl {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatApi26Impl>;
 				public mFontFamily: java.lang.Class<any>;
@@ -12865,9 +12865,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class TypefaceCompatApi28Impl extends androidx.core.graphics.TypefaceCompatApi26Impl {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatApi28Impl>;
 				public constructor();
@@ -12878,9 +12878,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class TypefaceCompatBaseImpl {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatBaseImpl>;
 				public findBestInfo(fonts: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>, style: number): androidx.core.provider.FontsContractCompat.FontInfo;
@@ -12889,7 +12889,7 @@ declare module androidx {
 				public createFromFontFamilyFilesResourceEntry(context: globalAndroid.content.Context, entry: androidx.core.content.res.FontResourcesParserCompat.FontFamilyFilesResourceEntry, resources: globalAndroid.content.res.Resources, style: number): globalAndroid.graphics.Typeface | null;
 				public createFromResourcesFontFile(context: globalAndroid.content.Context, resources: globalAndroid.content.res.Resources, id: number, path: string, style: number): globalAndroid.graphics.Typeface | null;
 			}
-			export module TypefaceCompatBaseImpl {
+			export namespace TypefaceCompatBaseImpl {
 				export class StyleExtractor<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatBaseImpl.StyleExtractor<any>>;
 					/**
@@ -12908,9 +12908,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
 			export class TypefaceCompatUtil {
 				public static class: java.lang.Class<androidx.core.graphics.TypefaceCompatUtil>;
 				public static getTempFile(context: globalAndroid.content.Context): java.io.File | null;
@@ -12924,10 +12924,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class DrawableCompat {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.DrawableCompat>;
 					/** @deprecated */
@@ -12955,10 +12955,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class IconCompat extends androidx.versionedparcelable.CustomVersionedParcelable {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.IconCompat>;
 					public static readonly TYPE_UNKNOWN = -1;
@@ -12997,7 +12997,7 @@ declare module androidx {
 					public static createFromIcon(context: globalAndroid.content.Context, icon: any): androidx.core.graphics.drawable.IconCompat | null;
 					public static createFromIcon(icon: any): androidx.core.graphics.drawable.IconCompat | null;
 				}
-				export module IconCompat {
+				export namespace IconCompat {
 					export class IconType {
 						public static class: java.lang.Class<androidx.core.graphics.drawable.IconCompat.IconType>;
 						/**
@@ -13013,10 +13013,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class IconCompatParcelizer {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.IconCompatParcelizer>;
 					public constructor();
@@ -13028,10 +13028,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export abstract class RoundedBitmapDrawable {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.RoundedBitmapDrawable>;
 					public getPaint(): globalAndroid.graphics.Paint;
@@ -13066,10 +13066,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class RoundedBitmapDrawable21 extends androidx.core.graphics.drawable.RoundedBitmapDrawable {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.RoundedBitmapDrawable21>;
 					public constructor(res: globalAndroid.content.res.Resources, bitmap: globalAndroid.graphics.Bitmap);
@@ -13082,17 +13082,17 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class RoundedBitmapDrawableFactory {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.RoundedBitmapDrawableFactory>;
 					public static create(res: globalAndroid.content.res.Resources, bitmap: globalAndroid.graphics.Bitmap | null): androidx.core.graphics.drawable.RoundedBitmapDrawable;
 					public static create(res: globalAndroid.content.res.Resources, filepath: string): androidx.core.graphics.drawable.RoundedBitmapDrawable;
 					public static create(res: globalAndroid.content.res.Resources, is: java.io.InputStream): androidx.core.graphics.drawable.RoundedBitmapDrawable;
 				}
-				export module RoundedBitmapDrawableFactory {
+				export namespace RoundedBitmapDrawableFactory {
 					export class DefaultRoundedBitmapDrawable extends androidx.core.graphics.drawable.RoundedBitmapDrawable {
 						public static class: java.lang.Class<androidx.core.graphics.drawable.RoundedBitmapDrawableFactory.DefaultRoundedBitmapDrawable>;
 						public setMipMap(mipMap: boolean): void;
@@ -13104,10 +13104,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class TintAwareDrawable {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.TintAwareDrawable>;
 					/**
@@ -13128,10 +13128,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class WrappedDrawable {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.WrappedDrawable>;
 					/**
@@ -13150,10 +13150,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class WrappedDrawableApi14 implements androidx.core.graphics.drawable.WrappedDrawable, androidx.core.graphics.drawable.TintAwareDrawable {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.WrappedDrawableApi14>;
 					public jumpToCurrentState(): void;
@@ -13201,10 +13201,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class WrappedDrawableApi21 extends androidx.core.graphics.drawable.WrappedDrawableApi14 {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.WrappedDrawableApi21>;
 					public setHotspot(x: number, y: number): void;
@@ -13228,10 +13228,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace core {
+		export namespace graphics {
+			export namespace drawable {
 				export class WrappedDrawableState {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.WrappedDrawableState>;
 					public newDrawable(): globalAndroid.graphics.drawable.Drawable;
@@ -13243,10 +13243,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module hardware {
-			export module display {
+declare namespace androidx {
+	export namespace core {
+		export namespace hardware {
+			export namespace display {
 				export class DisplayManagerCompat {
 					public static class: java.lang.Class<androidx.core.hardware.display.DisplayManagerCompat>;
 					public static readonly DISPLAY_CATEGORY_PRESENTATION = "android.hardware.display.category.PRESENTATION";
@@ -13260,10 +13260,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module hardware {
-			export module fingerprint {
+declare namespace androidx {
+	export namespace core {
+		export namespace hardware {
+			export namespace fingerprint {
 				export class FingerprintManagerCompat {
 					public static class: java.lang.Class<androidx.core.hardware.fingerprint.FingerprintManagerCompat>;
 					public static from(context: globalAndroid.content.Context): androidx.core.hardware.fingerprint.FingerprintManagerCompat;
@@ -13271,7 +13271,7 @@ declare module androidx {
 					public isHardwareDetected(): boolean;
 					public authenticate(crypto: androidx.core.hardware.fingerprint.FingerprintManagerCompat.CryptoObject | null, flags: number, cancel: androidx.core.os.CancellationSignal | null, callback: androidx.core.hardware.fingerprint.FingerprintManagerCompat.AuthenticationCallback, handler: globalAndroid.os.Handler | null): void;
 				}
-				export module FingerprintManagerCompat {
+				export namespace FingerprintManagerCompat {
 					export abstract class AuthenticationCallback {
 						public static class: java.lang.Class<androidx.core.hardware.fingerprint.FingerprintManagerCompat.AuthenticationCallback>;
 						public constructor();
@@ -13300,10 +13300,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module internal {
-			export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace internal {
+			export namespace view {
 				export class SupportMenu {
 					public static class: java.lang.Class<androidx.core.internal.view.SupportMenu>;
 					/**
@@ -13326,10 +13326,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module internal {
-			export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace internal {
+			export namespace view {
 				export class SupportMenuItem {
 					public static class: java.lang.Class<androidx.core.internal.view.SupportMenuItem>;
 					/**
@@ -13399,10 +13399,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module internal {
-			export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace internal {
+			export namespace view {
 				export class SupportSubMenu extends androidx.core.internal.view.SupportMenu {
 					public static class: java.lang.Class<androidx.core.internal.view.SupportSubMenu>;
 					/**
@@ -13425,9 +13425,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module math {
+declare namespace androidx {
+	export namespace core {
+		export namespace math {
 			export class MathUtils {
 				public static class: java.lang.Class<androidx.core.math.MathUtils>;
 				public static clamp(value: number, min: number, max: number): number;
@@ -13436,9 +13436,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module net {
+declare namespace androidx {
+	export namespace core {
+		export namespace net {
 			export class ConnectivityManagerCompat {
 				public static class: java.lang.Class<androidx.core.net.ConnectivityManagerCompat>;
 				public static readonly RESTRICT_BACKGROUND_STATUS_DISABLED = 1;
@@ -13448,7 +13448,7 @@ declare module androidx {
 				public static getNetworkInfoFromBroadcast(cm: globalAndroid.net.ConnectivityManager, intent: globalAndroid.content.Intent): globalAndroid.net.NetworkInfo | null;
 				public static getRestrictBackgroundStatus(cm: globalAndroid.net.ConnectivityManager): number;
 			}
-			export module ConnectivityManagerCompat {
+			export namespace ConnectivityManagerCompat {
 				export class RestrictBackgroundStatus {
 					public static class: java.lang.Class<androidx.core.net.ConnectivityManagerCompat.RestrictBackgroundStatus>;
 					/**
@@ -13463,13 +13463,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module net {
+declare namespace androidx {
+	export namespace core {
+		export namespace net {
 			export class DatagramSocketWrapper {
 				public static class: java.lang.Class<androidx.core.net.DatagramSocketWrapper>;
 			}
-			export module DatagramSocketWrapper {
+			export namespace DatagramSocketWrapper {
 				export class DatagramSocketImplWrapper {
 					public static class: java.lang.Class<androidx.core.net.DatagramSocketWrapper.DatagramSocketImplWrapper>;
 					public accept(newSocket: java.net.SocketImpl): void;
@@ -13492,9 +13492,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module net {
+declare namespace androidx {
+	export namespace core {
+		export namespace net {
 			export class TrafficStatsCompat {
 				public static class: java.lang.Class<androidx.core.net.TrafficStatsCompat>;
 				/** @deprecated */
@@ -13518,9 +13518,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class BuildCompat {
 				public static class: java.lang.Class<androidx.core.os.BuildCompat>;
 				/** @deprecated */
@@ -13539,9 +13539,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class CancellationSignal {
 				public static class: java.lang.Class<androidx.core.os.CancellationSignal>;
 				public constructor();
@@ -13551,7 +13551,7 @@ declare module androidx {
 				public setOnCancelListener(listener: androidx.core.os.CancellationSignal.OnCancelListener | null): void;
 				public getCancellationSignalObject(): any;
 			}
-			export module CancellationSignal {
+			export namespace CancellationSignal {
 				export class OnCancelListener {
 					public static class: java.lang.Class<androidx.core.os.CancellationSignal.OnCancelListener>;
 					/**
@@ -13568,9 +13568,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class ConfigurationCompat {
 				public static class: java.lang.Class<androidx.core.os.ConfigurationCompat>;
 				public static getLocales(configuration: globalAndroid.content.res.Configuration): androidx.core.os.LocaleListCompat;
@@ -13579,9 +13579,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class EnvironmentCompat {
 				public static class: java.lang.Class<androidx.core.os.EnvironmentCompat>;
 				public static readonly MEDIA_UNKNOWN = "unknown";
@@ -13591,9 +13591,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class HandlerCompat {
 				public static class: java.lang.Class<androidx.core.os.HandlerCompat>;
 				public static createAsync(looper: globalAndroid.os.Looper): globalAndroid.os.Handler;
@@ -13604,9 +13604,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class LocaleListCompat {
 				public static class: java.lang.Class<androidx.core.os.LocaleListCompat>;
 				public static wrap(localeList: any): androidx.core.os.LocaleListCompat;
@@ -13630,9 +13630,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class LocaleListCompatWrapper extends androidx.core.os.LocaleListInterface {
 				public static class: java.lang.Class<androidx.core.os.LocaleListCompatWrapper>;
 				public getLocaleList(): any;
@@ -13653,9 +13653,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class LocaleListInterface {
 				public static class: java.lang.Class<androidx.core.os.LocaleListInterface>;
 				/**
@@ -13683,9 +13683,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class LocaleListPlatformWrapper extends androidx.core.os.LocaleListInterface {
 				public static class: java.lang.Class<androidx.core.os.LocaleListPlatformWrapper>;
 				public getLocaleList(): any;
@@ -13706,9 +13706,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class MessageCompat {
 				public static class: java.lang.Class<androidx.core.os.MessageCompat>;
 				public static setAsynchronous(message: globalAndroid.os.Message, async: boolean): void;
@@ -13718,9 +13718,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class OperationCanceledException {
 				public static class: java.lang.Class<androidx.core.os.OperationCanceledException>;
 				public constructor();
@@ -13730,9 +13730,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class ParcelCompat {
 				public static class: java.lang.Class<androidx.core.os.ParcelCompat>;
 				public static readBoolean(in_: globalAndroid.os.Parcel): boolean;
@@ -13742,15 +13742,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class ParcelableCompat {
 				public static class: java.lang.Class<androidx.core.os.ParcelableCompat>;
 				/** @deprecated */
 				public static newCreator(callbacks: androidx.core.os.ParcelableCompatCreatorCallbacks<any>): globalAndroid.os.Parcelable.Creator<any>;
 			}
-			export module ParcelableCompat {
+			export namespace ParcelableCompat {
 				export class ParcelableCompatCreatorHoneycombMR2<T>  extends globalAndroid.os.Parcelable.ClassLoaderCreator<any> {
 					public static class: java.lang.Class<androidx.core.os.ParcelableCompat.ParcelableCompatCreatorHoneycombMR2<any>>;
 					public createFromParcel(in_: globalAndroid.os.Parcel): any;
@@ -13762,9 +13762,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class ParcelableCompatCreatorCallbacks<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.core.os.ParcelableCompatCreatorCallbacks<any>>;
 				/**
@@ -13782,9 +13782,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class TraceCompat {
 				public static class: java.lang.Class<androidx.core.os.TraceCompat>;
 				public static beginSection(sectionName: string): void;
@@ -13794,9 +13794,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module os {
+declare namespace androidx {
+	export namespace core {
+		export namespace os {
 			export class UserManagerCompat {
 				public static class: java.lang.Class<androidx.core.os.UserManagerCompat>;
 				public static isUserUnlocked(context: globalAndroid.content.Context): boolean;
@@ -13805,9 +13805,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module provider {
+declare namespace androidx {
+	export namespace core {
+		export namespace provider {
 			export class FontRequest {
 				public static class: java.lang.Class<androidx.core.provider.FontRequest>;
 				public constructor(providerAuthority: string, providerPackage: string, query: string, certificates: java.util.List<java.util.List<androidNative.Array<number>>>);
@@ -13824,9 +13824,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module provider {
+declare namespace androidx {
+	export namespace core {
+		export namespace provider {
 			export class FontsContractCompat {
 				public static class: java.lang.Class<androidx.core.provider.FontsContractCompat>;
 				public static readonly PARCEL_FONT_RESULTS = "font_results";
@@ -13838,7 +13838,7 @@ declare module androidx {
 				public static fetchFonts(context: globalAndroid.content.Context, cancellationSignal: globalAndroid.os.CancellationSignal | null, request: androidx.core.provider.FontRequest): androidx.core.provider.FontsContractCompat.FontFamilyResult;
 				public static getProvider(packageManager: globalAndroid.content.pm.PackageManager, request: androidx.core.provider.FontRequest, resources: globalAndroid.content.res.Resources | null): globalAndroid.content.pm.ProviderInfo | null;
 			}
-			export module FontsContractCompat {
+			export namespace FontsContractCompat {
 				export class Columns {
 					public static class: java.lang.Class<androidx.core.provider.FontsContractCompat.Columns>;
 					public static readonly FILE_ID = "file_id";
@@ -13885,7 +13885,7 @@ declare module androidx {
 					public onTypefaceRetrieved(typeface: globalAndroid.graphics.Typeface): void;
 					public onTypefaceRequestFailed(reason: number): void;
 				}
-				export module FontRequestCallback {
+				export namespace FontRequestCallback {
 					export class FontRequestFailReason {
 						public static class: java.lang.Class<androidx.core.provider.FontsContractCompat.FontRequestCallback.FontRequestFailReason>;
 						/**
@@ -13904,9 +13904,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module provider {
+declare namespace androidx {
+	export namespace core {
+		export namespace provider {
 			export class SelfDestructiveThread {
 				public static class: java.lang.Class<androidx.core.provider.SelfDestructiveThread>;
 				public constructor(threadName: string, priority: number, destructAfterMillisec: number);
@@ -13915,7 +13915,7 @@ declare module androidx {
 				public postAndReply(callable: java.util.concurrent.Callable<any>, reply: androidx.core.provider.SelfDestructiveThread.ReplyCallback<any>): void;
 				public postAndWait(callable: java.util.concurrent.Callable<any>, timeoutMillis: number): any;
 			}
-			export module SelfDestructiveThread {
+			export namespace SelfDestructiveThread {
 				export class ReplyCallback<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.core.provider.SelfDestructiveThread.ReplyCallback<any>>;
 					/**
@@ -13932,10 +13932,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module telephony {
-			export module mbms {
+declare namespace androidx {
+	export namespace core {
+		export namespace telephony {
+			export namespace mbms {
 				export class MbmsHelper {
 					public static class: java.lang.Class<androidx.core.telephony.mbms.MbmsHelper>;
 					public static getBestNameForService(context: globalAndroid.content.Context, serviceInfo: any): string | null;
@@ -13945,9 +13945,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
 			export class BidiFormatter {
 				public static class: java.lang.Class<androidx.core.text.BidiFormatter>;
 				public static getInstance(): androidx.core.text.BidiFormatter;
@@ -13961,7 +13961,7 @@ declare module androidx {
 				public unicodeWrap(str: string, isolate: boolean): string;
 				public unicodeWrap(str: string): string;
 			}
-			export module BidiFormatter {
+			export namespace BidiFormatter {
 				export class Builder {
 					public static class: java.lang.Class<androidx.core.text.BidiFormatter.Builder>;
 					public constructor();
@@ -13979,9 +13979,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
 			export class HtmlCompat {
 				public static class: java.lang.Class<androidx.core.text.HtmlCompat>;
 				public static readonly TO_HTML_PARAGRAPH_LINES_CONSECUTIVE = 0;
@@ -14003,9 +14003,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
 			export class ICUCompat {
 				public static class: java.lang.Class<androidx.core.text.ICUCompat>;
 				public static maximizeAndGetScript(locale: java.util.Locale): string | null;
@@ -14014,9 +14014,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
 			export class PrecomputedTextCompat extends android.text.Spannable {
 				public static class: java.lang.Class<androidx.core.text.PrecomputedTextCompat>;
 				public static create(text: string, params: androidx.core.text.PrecomputedTextCompat.Params): androidx.core.text.PrecomputedTextCompat;
@@ -14038,7 +14038,7 @@ declare module androidx {
 				public subSequence(start: number, end: number): string;
 				public toString(): string;
 			}
-			export module PrecomputedTextCompat {
+			export namespace PrecomputedTextCompat {
 				export class Params {
 					public static class: java.lang.Class<androidx.core.text.PrecomputedTextCompat.Params>;
 					public constructor(wrapped: any);
@@ -14050,7 +14050,7 @@ declare module androidx {
 					public hashCode(): number;
 					public toString(): string;
 				}
-				export module Params {
+				export namespace Params {
 					export class Builder {
 						public static class: java.lang.Class<androidx.core.text.PrecomputedTextCompat.Params.Builder>;
 						public constructor(paint: globalAndroid.text.TextPaint);
@@ -14063,7 +14063,7 @@ declare module androidx {
 				export class PrecomputedTextFutureTask extends java.util.concurrent.FutureTask<androidx.core.text.PrecomputedTextCompat> {
 					public static class: java.lang.Class<androidx.core.text.PrecomputedTextCompat.PrecomputedTextFutureTask>;
 				}
-				export module PrecomputedTextFutureTask {
+				export namespace PrecomputedTextFutureTask {
 					export class PrecomputedTextCallback extends java.util.concurrent.Callable<androidx.core.text.PrecomputedTextCompat> {
 						public static class: java.lang.Class<androidx.core.text.PrecomputedTextCompat.PrecomputedTextFutureTask.PrecomputedTextCallback>;
 						public call(): androidx.core.text.PrecomputedTextCompat;
@@ -14074,9 +14074,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
 			export class TextDirectionHeuristicCompat {
 				public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicCompat>;
 				/**
@@ -14094,9 +14094,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
 			export class TextDirectionHeuristicsCompat {
 				public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat>;
 				public static LTR: androidx.core.text.TextDirectionHeuristicCompat;
@@ -14106,7 +14106,7 @@ declare module androidx {
 				public static ANYRTL_LTR: androidx.core.text.TextDirectionHeuristicCompat;
 				public static LOCALE: androidx.core.text.TextDirectionHeuristicCompat;
 			}
-			export module TextDirectionHeuristicsCompat {
+			export namespace TextDirectionHeuristicsCompat {
 				export class AnyStrong extends androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionAlgorithm {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.AnyStrong>;
 					public checkRtl(cs: string, start: number, count: number): number;
@@ -14155,9 +14155,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
 			export class TextUtilsCompat {
 				public static class: java.lang.Class<androidx.core.text.TextUtilsCompat>;
 				public static htmlEncode(s: string): string;
@@ -14167,10 +14167,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
-			export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
+			export namespace util {
 				export class FindAddress {
 					public static class: java.lang.Class<androidx.core.text.util.FindAddress>;
 					public static matchHouseNumber(content: string, offset: number): java.util.regex.MatchResult;
@@ -14179,7 +14179,7 @@ declare module androidx {
 					public static isValidZipCode(zipCode: string): boolean;
 					public static isValidLocationName(location: string): boolean;
 				}
-				export module FindAddress {
+				export namespace FindAddress {
 					export class ZipRange {
 						public static class: java.lang.Class<androidx.core.text.util.FindAddress.ZipRange>;
 					}
@@ -14189,10 +14189,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module text {
-			export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace text {
+			export namespace util {
 				export class LinkifyCompat {
 					public static class: java.lang.Class<androidx.core.text.util.LinkifyCompat>;
 					public static addLinks(text: globalAndroid.text.Spannable, mask: number): boolean;
@@ -14204,7 +14204,7 @@ declare module androidx {
 					public static addLinks(spannable: globalAndroid.text.Spannable, pattern: java.util.regex.Pattern, scheme: string | null, matchFilter: globalAndroid.text.util.Linkify.MatchFilter | null, transformFilter: globalAndroid.text.util.Linkify.TransformFilter | null): boolean;
 					public static addLinks(spannable: globalAndroid.text.Spannable, pattern: java.util.regex.Pattern, defaultScheme: string | null, schemes: androidNative.Array<string> | null, matchFilter: globalAndroid.text.util.Linkify.MatchFilter | null, transformFilter: globalAndroid.text.util.Linkify.TransformFilter | null): boolean;
 				}
-				export module LinkifyCompat {
+				export namespace LinkifyCompat {
 					export class LinkSpec {
 						public static class: java.lang.Class<androidx.core.text.util.LinkifyCompat.LinkSpec>;
 					}
@@ -14223,9 +14223,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class AtomicFile {
 				public static class: java.lang.Class<androidx.core.util.AtomicFile>;
 				public constructor(baseName: java.io.File);
@@ -14241,9 +14241,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class Consumer<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.core.util.Consumer<any>>;
 				/**
@@ -14259,9 +14259,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class DebugUtils {
 				public static class: java.lang.Class<androidx.core.util.DebugUtils>;
 				public static buildShortClassTag(cls: any, out: java.lang.StringBuilder): void;
@@ -14270,9 +14270,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class LogWriter {
 				public static class: java.lang.Class<androidx.core.util.LogWriter>;
 				public constructor(tag: string);
@@ -14284,9 +14284,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class ObjectsCompat {
 				public static class: java.lang.Class<androidx.core.util.ObjectsCompat>;
 				public static equals(a: any, b: any): boolean;
@@ -14297,9 +14297,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class Pair<F, S>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.core.util.Pair<any,any>>;
 				public first: F;
@@ -14314,9 +14314,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class PatternsCompat {
 				public static class: java.lang.Class<androidx.core.util.PatternsCompat>;
 				public static IP_ADDRESS: java.util.regex.Pattern;
@@ -14330,13 +14330,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class Pools {
 				public static class: java.lang.Class<androidx.core.util.Pools>;
 			}
-			export module Pools {
+			export namespace Pools {
 				export class Pool<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.core.util.Pools.Pool<any>>;
 					/**
@@ -14369,9 +14369,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class Preconditions {
 				public static class: java.lang.Class<androidx.core.util.Preconditions>;
 				public static checkArgument(expression: boolean): void;
@@ -14388,9 +14388,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class Supplier<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.core.util.Supplier<any>>;
 				/**
@@ -14406,9 +14406,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module util {
+declare namespace androidx {
+	export namespace core {
+		export namespace util {
 			export class TimeUtils {
 				public static class: java.lang.Class<androidx.core.util.TimeUtils>;
 				public static readonly HUNDRED_DAY_FIELD_LEN = 19;
@@ -14421,9 +14421,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class AccessibilityDelegateCompat {
 				public static class: java.lang.Class<androidx.core.view.AccessibilityDelegateCompat>;
 				public constructor();
@@ -14438,7 +14438,7 @@ declare module androidx {
 				public getAccessibilityNodeProvider(host: globalAndroid.view.View): androidx.core.view.accessibility.AccessibilityNodeProviderCompat;
 				public performAccessibilityAction(host: globalAndroid.view.View, action: number, args: globalAndroid.os.Bundle): boolean;
 			}
-			export module AccessibilityDelegateCompat {
+			export namespace AccessibilityDelegateCompat {
 				export class AccessibilityDelegateAdapter {
 					public static class: java.lang.Class<androidx.core.view.AccessibilityDelegateCompat.AccessibilityDelegateAdapter>;
 					public dispatchPopulateAccessibilityEvent(host: globalAndroid.view.View, event: globalAndroid.view.accessibility.AccessibilityEvent): boolean;
@@ -14456,9 +14456,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export abstract class ActionProvider {
 				public static class: java.lang.Class<androidx.core.view.ActionProvider>;
 				public constructor(context: globalAndroid.content.Context);
@@ -14476,7 +14476,7 @@ declare module androidx {
 				public setVisibilityListener(listener: androidx.core.view.ActionProvider.VisibilityListener): void;
 				public reset(): void;
 			}
-			export module ActionProvider {
+			export namespace ActionProvider {
 				export class SubUiVisibilityListener {
 					public static class: java.lang.Class<androidx.core.view.ActionProvider.SubUiVisibilityListener>;
 					/**
@@ -14504,9 +14504,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class DisplayCutoutCompat {
 				public static class: java.lang.Class<androidx.core.view.DisplayCutoutCompat>;
 				public constructor(safeInsets: globalAndroid.graphics.Rect, boundingRects: java.util.List<globalAndroid.graphics.Rect>);
@@ -14523,9 +14523,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class DragAndDropPermissionsCompat {
 				public static class: java.lang.Class<androidx.core.view.DragAndDropPermissionsCompat>;
 				public static request(activity: globalAndroid.app.Activity, dragEvent: globalAndroid.view.DragEvent): androidx.core.view.DragAndDropPermissionsCompat | null;
@@ -14535,9 +14535,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class DragStartHelper {
 				public static class: java.lang.Class<androidx.core.view.DragStartHelper>;
 				public constructor(view: globalAndroid.view.View, listener: androidx.core.view.DragStartHelper.OnDragStartListener);
@@ -14547,7 +14547,7 @@ declare module androidx {
 				public onLongClick(v: globalAndroid.view.View): boolean;
 				public getTouchPosition(point: globalAndroid.graphics.Point): void;
 			}
-			export module DragStartHelper {
+			export namespace DragStartHelper {
 				export class OnDragStartListener {
 					public static class: java.lang.Class<androidx.core.view.DragStartHelper.OnDragStartListener>;
 					/**
@@ -14564,9 +14564,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class GestureDetectorCompat {
 				public static class: java.lang.Class<androidx.core.view.GestureDetectorCompat>;
 				public constructor(context: globalAndroid.content.Context, listener: globalAndroid.view.GestureDetector.OnGestureListener);
@@ -14576,7 +14576,7 @@ declare module androidx {
 				public setIsLongpressEnabled(enabled: boolean): void;
 				public setOnDoubleTapListener(listener: globalAndroid.view.GestureDetector.OnDoubleTapListener): void;
 			}
-			export module GestureDetectorCompat {
+			export namespace GestureDetectorCompat {
 				export class GestureDetectorCompatImpl {
 					public static class: java.lang.Class<androidx.core.view.GestureDetectorCompat.GestureDetectorCompatImpl>;
 					/**
@@ -14604,7 +14604,7 @@ declare module androidx {
 					public setIsLongpressEnabled(param0: boolean): void;
 					public setOnDoubleTapListener(param0: globalAndroid.view.GestureDetector.OnDoubleTapListener): void;
 				}
-				export module GestureDetectorCompatImplBase {
+				export namespace GestureDetectorCompatImplBase {
 					export class GestureHandler {
 						public static class: java.lang.Class<androidx.core.view.GestureDetectorCompat.GestureDetectorCompatImplBase.GestureHandler>;
 						public handleMessage(msg: globalAndroid.os.Message): void;
@@ -14625,9 +14625,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class GravityCompat {
 				public static class: java.lang.Class<androidx.core.view.GravityCompat>;
 				public static readonly RELATIVE_LAYOUT_DIRECTION = 8388608;
@@ -14643,9 +14643,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class InputDeviceCompat {
 				public static class: java.lang.Class<androidx.core.view.InputDeviceCompat>;
 				public static readonly SOURCE_CLASS_MASK = 255;
@@ -14674,15 +14674,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class KeyEventDispatcher {
 				public static class: java.lang.Class<androidx.core.view.KeyEventDispatcher>;
 				public static dispatchBeforeHierarchy(root: globalAndroid.view.View, event: globalAndroid.view.KeyEvent): boolean;
 				public static dispatchKeyEvent(component: androidx.core.view.KeyEventDispatcher.Component, root: globalAndroid.view.View | null, callback: globalAndroid.view.Window.Callback | null, event: globalAndroid.view.KeyEvent): boolean;
 			}
-			export module KeyEventDispatcher {
+			export namespace KeyEventDispatcher {
 				export class Component {
 					public static class: java.lang.Class<androidx.core.view.KeyEventDispatcher.Component>;
 					/**
@@ -14699,9 +14699,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class LayoutInflaterCompat {
 				public static class: java.lang.Class<androidx.core.view.LayoutInflaterCompat>;
 				/** @deprecated */
@@ -14710,7 +14710,7 @@ declare module androidx {
 				/** @deprecated */
 				public static getFactory(inflater: globalAndroid.view.LayoutInflater): androidx.core.view.LayoutInflaterFactory;
 			}
-			export module LayoutInflaterCompat {
+			export namespace LayoutInflaterCompat {
 				export class Factory2Wrapper {
 					public static class: java.lang.Class<androidx.core.view.LayoutInflaterCompat.Factory2Wrapper>;
 					public onCreateView(name: string, context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet): globalAndroid.view.View;
@@ -14722,9 +14722,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class LayoutInflaterFactory {
 				public static class: java.lang.Class<androidx.core.view.LayoutInflaterFactory>;
 				/**
@@ -14740,9 +14740,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class MarginLayoutParamsCompat {
 				public static class: java.lang.Class<androidx.core.view.MarginLayoutParamsCompat>;
 				public static getMarginStart(lp: globalAndroid.view.ViewGroup.MarginLayoutParams): number;
@@ -14758,9 +14758,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class MenuCompat {
 				public static class: java.lang.Class<androidx.core.view.MenuCompat>;
 				/** @deprecated */
@@ -14771,9 +14771,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class MenuItemCompat {
 				public static class: java.lang.Class<androidx.core.view.MenuItemCompat>;
 				public static readonly SHOW_AS_ACTION_NEVER = 0;
@@ -14813,7 +14813,7 @@ declare module androidx {
 				public static setIconTintMode(item: globalAndroid.view.MenuItem, tintMode: globalAndroid.graphics.PorterDuff.Mode): void;
 				public static getIconTintMode(item: globalAndroid.view.MenuItem): globalAndroid.graphics.PorterDuff.Mode;
 			}
-			export module MenuItemCompat {
+			export namespace MenuItemCompat {
 				export class OnActionExpandListener {
 					public static class: java.lang.Class<androidx.core.view.MenuItemCompat.OnActionExpandListener>;
 					/**
@@ -14832,9 +14832,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class MotionEventCompat {
 				public static class: java.lang.Class<androidx.core.view.MotionEventCompat>;
 				public static readonly ACTION_MASK = 255;
@@ -14920,9 +14920,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class NestedScrollingChild {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingChild>;
 				/**
@@ -14954,9 +14954,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class NestedScrollingChild2 extends androidx.core.view.NestedScrollingChild {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingChild2>;
 				/**
@@ -14998,9 +14998,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class NestedScrollingChild3 extends androidx.core.view.NestedScrollingChild2 {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingChild3>;
 				/**
@@ -15044,9 +15044,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class NestedScrollingChildHelper {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingChildHelper>;
 				public constructor(view: globalAndroid.view.View);
@@ -15072,9 +15072,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class NestedScrollingParent {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingParent>;
 				/**
@@ -15104,9 +15104,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class NestedScrollingParent2 extends androidx.core.view.NestedScrollingParent {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingParent2>;
 				/**
@@ -15146,9 +15146,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class NestedScrollingParent3 extends androidx.core.view.NestedScrollingParent2 {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingParent3>;
 				/**
@@ -15190,9 +15190,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class NestedScrollingParentHelper {
 				public static class: java.lang.Class<androidx.core.view.NestedScrollingParentHelper>;
 				public constructor(viewGroup: globalAndroid.view.ViewGroup);
@@ -15206,9 +15206,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class OnApplyWindowInsetsListener {
 				public static class: java.lang.Class<androidx.core.view.OnApplyWindowInsetsListener>;
 				/**
@@ -15224,9 +15224,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class OneShotPreDrawListener {
 				public static class: java.lang.Class<androidx.core.view.OneShotPreDrawListener>;
 				public static add(view: globalAndroid.view.View, runnable: java.lang.Runnable): androidx.core.view.OneShotPreDrawListener;
@@ -15239,9 +15239,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class PointerIconCompat {
 				public static class: java.lang.Class<androidx.core.view.PointerIconCompat>;
 				public static readonly TYPE_NULL = 0;
@@ -15276,9 +15276,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ScaleGestureDetectorCompat {
 				public static class: java.lang.Class<androidx.core.view.ScaleGestureDetectorCompat>;
 				/** @deprecated */
@@ -15292,9 +15292,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ScrollingView {
 				public static class: java.lang.Class<androidx.core.view.ScrollingView>;
 				/**
@@ -15320,9 +15320,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class TintableBackgroundView {
 				public static class: java.lang.Class<androidx.core.view.TintableBackgroundView>;
 				/**
@@ -15344,9 +15344,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class VelocityTrackerCompat {
 				public static class: java.lang.Class<androidx.core.view.VelocityTrackerCompat>;
 				/** @deprecated */
@@ -15358,9 +15358,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ViewCompat {
 				public static class: java.lang.Class<androidx.core.view.ViewCompat>;
 				public static readonly OVER_SCROLL_ALWAYS = 0;
@@ -15595,7 +15595,7 @@ declare module androidx {
 				public static isAccessibilityHeading(view: globalAndroid.view.View): boolean;
 				public static setAccessibilityHeading(view: globalAndroid.view.View, isHeading: boolean): void;
 			}
-			export module ViewCompat {
+			export namespace ViewCompat {
 				export class AccessibilityPaneVisibilityManager {
 					public static class: java.lang.Class<androidx.core.view.ViewCompat.AccessibilityPaneVisibilityManager>;
 					public onGlobalLayout(): void;
@@ -15682,9 +15682,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ViewConfigurationCompat {
 				public static class: java.lang.Class<androidx.core.view.ViewConfigurationCompat>;
 				/** @deprecated */
@@ -15700,9 +15700,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ViewGroupCompat {
 				public static class: java.lang.Class<androidx.core.view.ViewGroupCompat>;
 				public static readonly LAYOUT_MODE_CLIP_BOUNDS = 0;
@@ -15721,9 +15721,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ViewParentCompat {
 				public static class: java.lang.Class<androidx.core.view.ViewParentCompat>;
 				/** @deprecated */
@@ -15747,9 +15747,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ViewPropertyAnimatorCompat {
 				public static class: java.lang.Class<androidx.core.view.ViewPropertyAnimatorCompat>;
 				public setDuration(value: number): androidx.core.view.ViewPropertyAnimatorCompat;
@@ -15790,7 +15790,7 @@ declare module androidx {
 				public setListener(listener: androidx.core.view.ViewPropertyAnimatorListener): androidx.core.view.ViewPropertyAnimatorCompat;
 				public setUpdateListener(listener: androidx.core.view.ViewPropertyAnimatorUpdateListener): androidx.core.view.ViewPropertyAnimatorCompat;
 			}
-			export module ViewPropertyAnimatorCompat {
+			export namespace ViewPropertyAnimatorCompat {
 				export class ViewPropertyAnimatorListenerApi14 extends androidx.core.view.ViewPropertyAnimatorListener {
 					public static class: java.lang.Class<androidx.core.view.ViewPropertyAnimatorCompat.ViewPropertyAnimatorListenerApi14>;
 					public onAnimationStart(view: globalAndroid.view.View): void;
@@ -15805,9 +15805,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ViewPropertyAnimatorListener {
 				public static class: java.lang.Class<androidx.core.view.ViewPropertyAnimatorListener>;
 				/**
@@ -15827,9 +15827,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ViewPropertyAnimatorListenerAdapter extends androidx.core.view.ViewPropertyAnimatorListener {
 				public static class: java.lang.Class<androidx.core.view.ViewPropertyAnimatorListenerAdapter>;
 				public constructor();
@@ -15844,9 +15844,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class ViewPropertyAnimatorUpdateListener {
 				public static class: java.lang.Class<androidx.core.view.ViewPropertyAnimatorUpdateListener>;
 				/**
@@ -15862,9 +15862,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class WindowCompat {
 				public static class: java.lang.Class<androidx.core.view.WindowCompat>;
 				public static readonly FEATURE_ACTION_BAR = 8;
@@ -15876,9 +15876,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
 			export class WindowInsetsCompat {
 				public static class: java.lang.Class<androidx.core.view.WindowInsetsCompat>;
 				public constructor(src: androidx.core.view.WindowInsetsCompat);
@@ -15908,10 +15908,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module accessibility {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace accessibility {
 				export class AccessibilityClickableSpanCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityClickableSpanCompat>;
 					public static readonly SPAN_ID = "ACCESSIBILITY_CLICKABLE_SPAN_ID";
@@ -15923,10 +15923,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module accessibility {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace accessibility {
 				export class AccessibilityEventCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityEventCompat>;
 					public static readonly TYPE_VIEW_HOVER_ENTER = 128;
@@ -15975,10 +15975,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module accessibility {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace accessibility {
 				export class AccessibilityManagerCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityManagerCompat>;
 					/** @deprecated */
@@ -15994,7 +15994,7 @@ declare module androidx {
 					public static addTouchExplorationStateChangeListener(manager: globalAndroid.view.accessibility.AccessibilityManager, listener: androidx.core.view.accessibility.AccessibilityManagerCompat.TouchExplorationStateChangeListener): boolean;
 					public static removeTouchExplorationStateChangeListener(manager: globalAndroid.view.accessibility.AccessibilityManager, listener: androidx.core.view.accessibility.AccessibilityManagerCompat.TouchExplorationStateChangeListener): boolean;
 				}
-				export module AccessibilityManagerCompat {
+				export namespace AccessibilityManagerCompat {
 					export class AccessibilityStateChangeListener {
 						public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityManagerCompat.AccessibilityStateChangeListener>;
 						/**
@@ -16042,10 +16042,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module accessibility {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace accessibility {
 				export class AccessibilityNodeInfoCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityNodeInfoCompat>;
 					public mParentVirtualDescendantId: number;
@@ -16236,7 +16236,7 @@ declare module androidx {
 					public equals(obj: any): boolean;
 					public toString(): string;
 				}
-				export module AccessibilityNodeInfoCompat {
+				export namespace AccessibilityNodeInfoCompat {
 					export class AccessibilityActionCompat {
 						public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat>;
 						public static ACTION_FOCUS: androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat;
@@ -16317,10 +16317,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module accessibility {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace accessibility {
 				export class AccessibilityNodeProviderCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityNodeProviderCompat>;
 					public static readonly HOST_VIEW_ID = -1;
@@ -16332,7 +16332,7 @@ declare module androidx {
 					public findAccessibilityNodeInfosByText(text: string, virtualViewId: number): java.util.List<androidx.core.view.accessibility.AccessibilityNodeInfoCompat> | null;
 					public findFocus(focus: number): androidx.core.view.accessibility.AccessibilityNodeInfoCompat | null;
 				}
-				export module AccessibilityNodeProviderCompat {
+				export namespace AccessibilityNodeProviderCompat {
 					export class AccessibilityNodeProviderApi16 {
 						public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityNodeProviderCompat.AccessibilityNodeProviderApi16>;
 						public createAccessibilityNodeInfo(virtualViewId: number): globalAndroid.view.accessibility.AccessibilityNodeInfo;
@@ -16349,10 +16349,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module accessibility {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace accessibility {
 				export class AccessibilityRecordCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityRecordCompat>;
 					/** @deprecated */
@@ -16466,10 +16466,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module accessibility {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace accessibility {
 				export class AccessibilityWindowInfoCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityWindowInfoCompat>;
 					public static readonly TYPE_APPLICATION = 1;
@@ -16502,10 +16502,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module animation {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace animation {
 				export class PathInterpolatorApi14 {
 					public static class: java.lang.Class<androidx.core.view.animation.PathInterpolatorApi14>;
 					public getInterpolation(t: number): number;
@@ -16515,10 +16515,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module animation {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace animation {
 				export class PathInterpolatorCompat {
 					public static class: java.lang.Class<androidx.core.view.animation.PathInterpolatorCompat>;
 					public static create(path: globalAndroid.graphics.Path): globalAndroid.view.animation.Interpolator;
@@ -16530,10 +16530,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module inputmethod {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace inputmethod {
 				export class EditorInfoCompat {
 					public static class: java.lang.Class<androidx.core.view.inputmethod.EditorInfoCompat>;
 					public static readonly IME_FLAG_NO_PERSONALIZED_LEARNING = 16777216;
@@ -16548,10 +16548,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module inputmethod {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace inputmethod {
 				export class InputConnectionCompat {
 					public static class: java.lang.Class<androidx.core.view.inputmethod.InputConnectionCompat>;
 					public static readonly INPUT_CONTENT_GRANT_READ_URI_PERMISSION = 1;
@@ -16560,7 +16560,7 @@ declare module androidx {
 					/** @deprecated */
 					public constructor();
 				}
-				export module InputConnectionCompat {
+				export namespace InputConnectionCompat {
 					export class OnCommitContentListener {
 						public static class: java.lang.Class<androidx.core.view.inputmethod.InputConnectionCompat.OnCommitContentListener>;
 						/**
@@ -16578,10 +16578,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module view {
-			export module inputmethod {
+declare namespace androidx {
+	export namespace core {
+		export namespace view {
+			export namespace inputmethod {
 				export class InputContentInfoCompat {
 					public static class: java.lang.Class<androidx.core.view.inputmethod.InputContentInfoCompat>;
 					public constructor(contentUri: globalAndroid.net.Uri, description: globalAndroid.content.ClipDescription, linkUri: globalAndroid.net.Uri | null);
@@ -16593,7 +16593,7 @@ declare module androidx {
 					public requestPermission(): void;
 					public releasePermission(): void;
 				}
-				export module InputContentInfoCompat {
+				export namespace InputContentInfoCompat {
 					export class InputContentInfoCompatApi25Impl extends androidx.core.view.inputmethod.InputContentInfoCompat.InputContentInfoCompatImpl {
 						public static class: java.lang.Class<androidx.core.view.inputmethod.InputContentInfoCompat.InputContentInfoCompatApi25Impl>;
 						public getContentUri(): globalAndroid.net.Uri;
@@ -16639,9 +16639,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export abstract class AutoScrollHelper {
 				public static class: java.lang.Class<androidx.core.widget.AutoScrollHelper>;
 				public static readonly RELATIVE_UNSPECIFIED = 0.0;
@@ -16669,7 +16669,7 @@ declare module androidx {
 				public canTargetScrollHorizontally(param0: number): boolean;
 				public canTargetScrollVertically(param0: number): boolean;
 			}
-			export module AutoScrollHelper {
+			export namespace AutoScrollHelper {
 				export class ClampedScroller {
 					public static class: java.lang.Class<androidx.core.widget.AutoScrollHelper.ClampedScroller>;
 					public setRampUpDuration(durationMillis: number): void;
@@ -16693,9 +16693,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class AutoSizeableTextView {
 				public static class: java.lang.Class<androidx.core.widget.AutoSizeableTextView>;
 				/**
@@ -16727,9 +16727,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class CompoundButtonCompat {
 				public static class: java.lang.Class<androidx.core.widget.CompoundButtonCompat>;
 				public static setButtonTintList(button: globalAndroid.widget.CompoundButton, tint: globalAndroid.content.res.ColorStateList | null): void;
@@ -16742,9 +16742,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class ContentLoadingProgressBar {
 				public static class: java.lang.Class<androidx.core.widget.ContentLoadingProgressBar>;
 				public constructor(context: globalAndroid.content.Context);
@@ -16758,9 +16758,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class EdgeEffectCompat {
 				public static class: java.lang.Class<androidx.core.widget.EdgeEffectCompat>;
 				/** @deprecated */
@@ -16787,9 +16787,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class ImageViewCompat {
 				public static class: java.lang.Class<androidx.core.widget.ImageViewCompat>;
 				public static getImageTintList(view: globalAndroid.widget.ImageView): globalAndroid.content.res.ColorStateList | null;
@@ -16801,9 +16801,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class ListPopupWindowCompat {
 				public static class: java.lang.Class<androidx.core.widget.ListPopupWindowCompat>;
 				/** @deprecated */
@@ -16814,9 +16814,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class ListViewAutoScrollHelper extends androidx.core.widget.AutoScrollHelper {
 				public static class: java.lang.Class<androidx.core.widget.ListViewAutoScrollHelper>;
 				public constructor(target: globalAndroid.view.View);
@@ -16829,9 +16829,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class ListViewCompat {
 				public static class: java.lang.Class<androidx.core.widget.ListViewCompat>;
 				public static scrollListBy(listView: globalAndroid.widget.ListView, y: number): void;
@@ -16841,9 +16841,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class NestedScrollView implements androidx.core.view.NestedScrollingParent3, androidx.core.view.NestedScrollingChild3, androidx.core.view.ScrollingView {
 				public static class: java.lang.Class<androidx.core.widget.NestedScrollView>;
 				public constructor(context: globalAndroid.content.Context);
@@ -16953,7 +16953,7 @@ declare module androidx {
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
 			}
-			export module NestedScrollView {
+			export namespace NestedScrollView {
 				export class androidxcorewidgetNestedScrollViewAccessibilityDelegate extends androidx.core.view.AccessibilityDelegateCompat {
 					public static class: java.lang.Class<androidx.core.widget.NestedScrollView.AccessibilityDelegate>;
 					public performAccessibilityAction(host: globalAndroid.view.View, action: number, arguments_: globalAndroid.os.Bundle): boolean;
@@ -16984,9 +16984,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class PopupMenuCompat {
 				public static class: java.lang.Class<androidx.core.widget.PopupMenuCompat>;
 				public static getDragToOpenListener(popupMenu: any): globalAndroid.view.View.OnTouchListener | null;
@@ -16995,9 +16995,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class PopupWindowCompat {
 				public static class: java.lang.Class<androidx.core.widget.PopupWindowCompat>;
 				public static showAsDropDown(popup: globalAndroid.widget.PopupWindow, anchor: globalAndroid.view.View, xoff: number, yoff: number, gravity: number): void;
@@ -17010,9 +17010,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class ScrollerCompat {
 				public static class: java.lang.Class<androidx.core.widget.ScrollerCompat>;
 				/** @deprecated */
@@ -17056,9 +17056,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class TextViewCompat {
 				public static class: java.lang.Class<androidx.core.widget.TextViewCompat>;
 				public static readonly AUTO_SIZE_TEXT_TYPE_NONE = 0;
@@ -17089,7 +17089,7 @@ declare module androidx {
 				public static setTextMetricsParams(textView: globalAndroid.widget.TextView, params: androidx.core.text.PrecomputedTextCompat.Params): void;
 				public static setPrecomputedText(textView: globalAndroid.widget.TextView, precomputed: androidx.core.text.PrecomputedTextCompat): void;
 			}
-			export module TextViewCompat {
+			export namespace TextViewCompat {
 				export class AutoSizeTextType {
 					public static class: java.lang.Class<androidx.core.widget.TextViewCompat.AutoSizeTextType>;
 					/**
@@ -17111,9 +17111,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class TintableCompoundButton {
 				public static class: java.lang.Class<androidx.core.widget.TintableCompoundButton>;
 				/**
@@ -17135,9 +17135,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module core {
-		export module widget {
+declare namespace androidx {
+	export namespace core {
+		export namespace widget {
 			export class TintableImageSourceView {
 				public static class: java.lang.Class<androidx.core.widget.TintableImageSourceView>;
 				/**
@@ -17159,9 +17159,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cursoradapter {
-		export module widget {
+declare namespace androidx {
+	export namespace cursoradapter {
+		export namespace widget {
 			export abstract class CursorAdapter implements androidx.cursoradapter.widget.CursorFilter.CursorFilterClient {
 				public static class: java.lang.Class<androidx.cursoradapter.widget.CursorAdapter>;
 				public mDataValid: boolean;
@@ -17203,7 +17203,7 @@ declare module androidx {
 				public runQueryOnBackgroundThread(param0: string): globalAndroid.database.Cursor;
 				public changeCursor(param0: globalAndroid.database.Cursor): void;
 			}
-			export module CursorAdapter {
+			export namespace CursorAdapter {
 				export class ChangeObserver {
 					public static class: java.lang.Class<androidx.cursoradapter.widget.CursorAdapter.ChangeObserver>;
 					public deliverSelfNotifications(): boolean;
@@ -17219,16 +17219,16 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cursoradapter {
-		export module widget {
+declare namespace androidx {
+	export namespace cursoradapter {
+		export namespace widget {
 			export class CursorFilter {
 				public static class: java.lang.Class<androidx.cursoradapter.widget.CursorFilter>;
 				public convertResultToString(resultValue: any): string;
 				public performFiltering(constraint: string): globalAndroid.widget.Filter.FilterResults;
 				public publishResults(constraint: string, results: globalAndroid.widget.Filter.FilterResults): void;
 			}
-			export module CursorFilter {
+			export namespace CursorFilter {
 				export class CursorFilterClient {
 					public static class: java.lang.Class<androidx.cursoradapter.widget.CursorFilter.CursorFilterClient>;
 					/**
@@ -17251,9 +17251,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cursoradapter {
-		export module widget {
+declare namespace androidx {
+	export namespace cursoradapter {
+		export namespace widget {
 			export abstract class ResourceCursorAdapter extends androidx.cursoradapter.widget.CursorAdapter {
 				public static class: java.lang.Class<androidx.cursoradapter.widget.ResourceCursorAdapter>;
 				/** @deprecated */
@@ -17278,9 +17278,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module cursoradapter {
-		export module widget {
+declare namespace androidx {
+	export namespace cursoradapter {
+		export namespace widget {
 			export class SimpleCursorAdapter extends androidx.cursoradapter.widget.ResourceCursorAdapter {
 				public static class: java.lang.Class<androidx.cursoradapter.widget.SimpleCursorAdapter>;
 				public mFrom: androidNative.Array<number>;
@@ -17314,7 +17314,7 @@ declare module androidx {
 				public getCursor(): globalAndroid.database.Cursor;
 				public changeCursor(param0: globalAndroid.database.Cursor): void;
 			}
-			export module SimpleCursorAdapter {
+			export namespace SimpleCursorAdapter {
 				export class CursorToStringConverter {
 					public static class: java.lang.Class<androidx.cursoradapter.widget.SimpleCursorAdapter.CursorToStringConverter>;
 					/**
@@ -17342,9 +17342,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module customview {
-		export module view {
+declare namespace androidx {
+	export namespace customview {
+		export namespace view {
 			export abstract class AbsSavedState {
 				public static class: java.lang.Class<androidx.customview.view.AbsSavedState>;
 				public static EMPTY_STATE: androidx.customview.view.AbsSavedState;
@@ -17360,9 +17360,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module customview {
-		export module widget {
+declare namespace androidx {
+	export namespace customview {
+		export namespace widget {
 			export abstract class ExploreByTouchHelper extends androidx.core.view.AccessibilityDelegateCompat {
 				public static class: java.lang.Class<androidx.customview.widget.ExploreByTouchHelper>;
 				public static readonly INVALID_ID = -2147483648;
@@ -17395,7 +17395,7 @@ declare module androidx {
 				public onPopulateNodeForHost(node: androidx.core.view.accessibility.AccessibilityNodeInfoCompat): void;
 				public onPerformActionForVirtualView(param0: number, param1: number, param2: globalAndroid.os.Bundle | null): boolean;
 			}
-			export module ExploreByTouchHelper {
+			export namespace ExploreByTouchHelper {
 				export class MyNodeProvider extends androidx.core.view.accessibility.AccessibilityNodeProviderCompat {
 					public static class: java.lang.Class<androidx.customview.widget.ExploreByTouchHelper.MyNodeProvider>;
 					public createAccessibilityNodeInfo(virtualViewId: number): androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
@@ -17407,15 +17407,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module customview {
-		export module widget {
+declare namespace androidx {
+	export namespace customview {
+		export namespace widget {
 			export class FocusStrategy {
 				public static class: java.lang.Class<androidx.customview.widget.FocusStrategy>;
 				public static findNextFocusInRelativeDirection(focusables: any, collectionAdapter: androidx.customview.widget.FocusStrategy.CollectionAdapter<any,any>, adapter: androidx.customview.widget.FocusStrategy.BoundsAdapter<any>, focused: any, direction: number, isLayoutRtl: boolean, wrap: boolean): any;
 				public static findNextFocusInAbsoluteDirection(focusables: any, collectionAdapter: androidx.customview.widget.FocusStrategy.CollectionAdapter<any,any>, adapter: androidx.customview.widget.FocusStrategy.BoundsAdapter<any>, focused: any, focusedRect: globalAndroid.graphics.Rect, direction: number): any;
 			}
-			export module FocusStrategy {
+			export namespace FocusStrategy {
 				export class BoundsAdapter<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.customview.widget.FocusStrategy.BoundsAdapter<any>>;
 					/**
@@ -17449,9 +17449,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module customview {
-		export module widget {
+declare namespace androidx {
+	export namespace customview {
+		export namespace widget {
 			export class ViewDragHelper {
 				public static class: java.lang.Class<androidx.customview.widget.ViewDragHelper>;
 				public static readonly INVALID_POINTER = -1;
@@ -17495,7 +17495,7 @@ declare module androidx {
 				public isViewUnder(view: globalAndroid.view.View | null, x: number, y: number): boolean;
 				public findTopChildUnder(x: number, y: number): globalAndroid.view.View | null;
 			}
-			export module ViewDragHelper {
+			export namespace ViewDragHelper {
 				export abstract class Callback {
 					public static class: java.lang.Class<androidx.customview.widget.ViewDragHelper.Callback>;
 					public constructor();
@@ -17518,9 +17518,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module documentfile {
-		export module provider {
+declare namespace androidx {
+	export namespace documentfile {
+		export namespace provider {
 			export abstract class DocumentFile {
 				public static class: java.lang.Class<androidx.documentfile.provider.DocumentFile>;
 				public static fromFile(file: java.io.File): androidx.documentfile.provider.DocumentFile;
@@ -17550,9 +17550,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module documentfile {
-		export module provider {
+declare namespace androidx {
+	export namespace documentfile {
+		export namespace provider {
 			export class DocumentsContractApi19 {
 				public static class: java.lang.Class<androidx.documentfile.provider.DocumentsContractApi19>;
 				public static isVirtual(context: globalAndroid.content.Context, self: globalAndroid.net.Uri): boolean;
@@ -17571,9 +17571,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module documentfile {
-		export module provider {
+declare namespace androidx {
+	export namespace documentfile {
+		export namespace provider {
 			export class RawDocumentFile extends androidx.documentfile.provider.DocumentFile {
 				public static class: java.lang.Class<androidx.documentfile.provider.RawDocumentFile>;
 				public createFile(mimeType: string, displayName: string): androidx.documentfile.provider.DocumentFile | null;
@@ -17597,9 +17597,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module documentfile {
-		export module provider {
+declare namespace androidx {
+	export namespace documentfile {
+		export namespace provider {
 			export class SingleDocumentFile extends androidx.documentfile.provider.DocumentFile {
 				public static class: java.lang.Class<androidx.documentfile.provider.SingleDocumentFile>;
 				public createFile(mimeType: string, displayName: string): androidx.documentfile.provider.DocumentFile;
@@ -17623,9 +17623,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module documentfile {
-		export module provider {
+declare namespace androidx {
+	export namespace documentfile {
+		export namespace provider {
 			export class TreeDocumentFile extends androidx.documentfile.provider.DocumentFile {
 				public static class: java.lang.Class<androidx.documentfile.provider.TreeDocumentFile>;
 				public createFile(mimeType: string, displayName: string): androidx.documentfile.provider.DocumentFile | null;
@@ -17649,9 +17649,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module drawerlayout {
-		export module widget {
+declare namespace androidx {
+	export namespace drawerlayout {
+		export namespace widget {
 			export class DrawerLayout {
 				public static class: java.lang.Class<androidx.drawerlayout.widget.DrawerLayout>;
 				public static readonly STATE_IDLE = 0;
@@ -17722,7 +17722,7 @@ declare module androidx {
 				public onSaveInstanceState(): globalAndroid.os.Parcelable;
 				public addView(child: globalAndroid.view.View, index: number, params: globalAndroid.view.ViewGroup.LayoutParams): void;
 			}
-			export module DrawerLayout {
+			export namespace DrawerLayout {
 				export class androidxdrawerlayoutwidgetDrawerLayoutAccessibilityDelegate extends androidx.core.view.AccessibilityDelegateCompat {
 					public static class: java.lang.Class<androidx.drawerlayout.widget.DrawerLayout.AccessibilityDelegate>;
 					public onInitializeAccessibilityNodeInfo(host: globalAndroid.view.View, info: androidx.core.view.accessibility.AccessibilityNodeInfoCompat): void;
@@ -17803,9 +17803,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class BackStackRecord extends androidx.fragment.app.FragmentTransaction implements androidx.fragment.app.FragmentManager.BackStackEntry, androidx.fragment.app.FragmentManagerImpl.OpGenerator {
 				public static class: java.lang.Class<androidx.fragment.app.BackStackRecord>;
 				public toString(): string;
@@ -17860,7 +17860,7 @@ declare module androidx {
 				public isEmpty(): boolean;
 				public generateOps(param0: java.util.ArrayList<androidx.fragment.app.BackStackRecord>, param1: java.util.ArrayList<java.lang.Boolean>): boolean;
 			}
-			export module BackStackRecord {
+			export namespace BackStackRecord {
 				export class Op {
 					public static class: java.lang.Class<androidx.fragment.app.BackStackRecord.Op>;
 				}
@@ -17869,9 +17869,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class BackStackState {
 				public static class: java.lang.Class<androidx.fragment.app.BackStackState>;
 				public static CREATOR: globalAndroid.os.Parcelable.Creator<androidx.fragment.app.BackStackState>;
@@ -17885,9 +17885,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class DialogFragment extends androidx.fragment.app.Fragment {
 				public static class: java.lang.Class<androidx.fragment.app.DialogFragment>;
 				public static readonly STYLE_NORMAL = 0;
@@ -17930,9 +17930,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class Fragment implements androidx.lifecycle.LifecycleOwner, androidx.lifecycle.ViewModelStoreOwner {
 				public static class: java.lang.Class<androidx.fragment.app.Fragment>;
 				public getLifecycle(): androidx.lifecycle.Lifecycle;
@@ -18059,7 +18059,7 @@ declare module androidx {
 				public startPostponedEnterTransition(): void;
 				public dump(prefix: string, fd: java.io.FileDescriptor | null, writer: java.io.PrintWriter, args: androidNative.Array<string> | null): void;
 			}
-			export module Fragment {
+			export namespace Fragment {
 				export class AnimationInfo {
 					public static class: java.lang.Class<androidx.fragment.app.Fragment.AnimationInfo>;
 				}
@@ -18091,9 +18091,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentActivity extends androidx.activity.ComponentActivity implements androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback, androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentActivity>;
 				public constructor();
@@ -18149,7 +18149,7 @@ declare module androidx {
 				public getLifecycle(): androidx.lifecycle.Lifecycle;
 				public getViewModelStore(): androidx.lifecycle.ViewModelStore;
 			}
-			export module FragmentActivity {
+			export namespace FragmentActivity {
 				export class HostCallbacks extends androidx.fragment.app.FragmentHostCallback<androidx.fragment.app.FragmentActivity> implements androidx.lifecycle.ViewModelStoreOwner {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentActivity.HostCallbacks>;
 					public constructor(context: globalAndroid.content.Context, handler: globalAndroid.os.Handler, windowAnimations: number);
@@ -18178,9 +18178,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export abstract class FragmentContainer {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentContainer>;
 				public constructor();
@@ -18193,9 +18193,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentController {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentController>;
 				public static createController(callbacks: androidx.fragment.app.FragmentHostCallback<any>): androidx.fragment.app.FragmentController;
@@ -18259,9 +18259,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentFactory {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentFactory>;
 				public constructor();
@@ -18272,9 +18272,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export abstract class FragmentHostCallback<E>  extends androidx.fragment.app.FragmentContainer {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentHostCallback<any>>;
 				public constructor();
@@ -18298,9 +18298,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export abstract class FragmentManager {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentManager>;
 				public static readonly POP_BACK_STACK_INCLUSIVE = 1;
@@ -18335,7 +18335,7 @@ declare module androidx {
 				public static enableDebugLogging(enabled: boolean): void;
 				public isStateSaved(): boolean;
 			}
-			export module FragmentManager {
+			export namespace FragmentManager {
 				export class BackStackEntry {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentManager.BackStackEntry>;
 					/**
@@ -18391,9 +18391,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentManagerImpl extends androidx.fragment.app.FragmentManager {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentManagerImpl>;
 				public static readonly ANIM_STYLE_OPEN_ENTER = 1;
@@ -18472,7 +18472,7 @@ declare module androidx {
 				public onCreateView(parent: globalAndroid.view.View | null, name: string, context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet): globalAndroid.view.View | null;
 				public onCreateView(name: string, context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet): globalAndroid.view.View;
 			}
-			export module FragmentManagerImpl {
+			export namespace FragmentManagerImpl {
 				export class AnimateOnHWLayerIfNeededListener extends androidx.fragment.app.FragmentManagerImpl.AnimationListenerWrapper {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentManagerImpl.AnimateOnHWLayerIfNeededListener>;
 					public onAnimationEnd(animation: globalAndroid.view.animation.Animation): void;
@@ -18538,9 +18538,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentManagerNonConfig {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentManagerNonConfig>;
 			}
@@ -18548,9 +18548,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentManagerState {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentManagerState>;
 				public static CREATOR: globalAndroid.os.Parcelable.Creator<androidx.fragment.app.FragmentManagerState>;
@@ -18563,9 +18563,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentManagerViewModel extends androidx.lifecycle.ViewModel {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentManagerViewModel>;
 				public onCleared(): void;
@@ -18577,9 +18577,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export abstract class FragmentPagerAdapter extends androidx.viewpager.widget.PagerAdapter {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentPagerAdapter>;
 				public constructor();
@@ -18609,9 +18609,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentState {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentState>;
 				public static CREATOR: globalAndroid.os.Parcelable.Creator<androidx.fragment.app.FragmentState>;
@@ -18623,9 +18623,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export abstract class FragmentStatePagerAdapter extends androidx.viewpager.widget.PagerAdapter {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentStatePagerAdapter>;
 				public constructor();
@@ -18654,9 +18654,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentTabHost {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentTabHost>;
 				public constructor(context: globalAndroid.content.Context);
@@ -18673,7 +18673,7 @@ declare module androidx {
 				public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 				public onTabChanged(tabId: string | null): void;
 			}
-			export module FragmentTabHost {
+			export namespace FragmentTabHost {
 				export class DummyTabFactory {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentTabHost.DummyTabFactory>;
 					public constructor(context: globalAndroid.content.Context);
@@ -18693,9 +18693,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export abstract class FragmentTransaction {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentTransaction>;
 				public static readonly TRANSIT_ENTER_MASK = 4096;
@@ -18743,15 +18743,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentTransition {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentTransition>;
 				public static calculateFragments(transaction: androidx.fragment.app.BackStackRecord, transitioningFragments: globalAndroid.util.SparseArray<androidx.fragment.app.FragmentTransition.FragmentContainerTransition>, isReordered: boolean): void;
 				public static calculatePopFragments(transaction: androidx.fragment.app.BackStackRecord, transitioningFragments: globalAndroid.util.SparseArray<androidx.fragment.app.FragmentTransition.FragmentContainerTransition>, isReordered: boolean): void;
 			}
-			export module FragmentTransition {
+			export namespace FragmentTransition {
 				export class FragmentContainerTransition {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentTransition.FragmentContainerTransition>;
 					public lastIn: androidx.fragment.app.Fragment;
@@ -18766,9 +18766,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class FragmentTransitionCompat21 extends androidx.fragment.app.FragmentTransitionImpl {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentTransitionCompat21>;
 				public canHandle(transition: any): boolean;
@@ -18793,9 +18793,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export abstract class FragmentTransitionImpl {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentTransitionImpl>;
 				public constructor();
@@ -18823,9 +18823,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class ListFragment extends androidx.fragment.app.Fragment {
 				public static class: java.lang.Class<androidx.fragment.app.ListFragment>;
 				public constructor();
@@ -18850,9 +18850,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module fragment {
-		export module app {
+declare namespace androidx {
+	export namespace fragment {
+		export namespace app {
 			export class SuperNotCalledException {
 				public static class: java.lang.Class<androidx.fragment.app.SuperNotCalledException>;
 				public constructor(msg: string);
@@ -18861,10 +18861,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module interpolator {
-		export module view {
-			export module animation {
+declare namespace androidx {
+	export namespace interpolator {
+		export namespace view {
+			export namespace animation {
 				export class FastOutLinearInInterpolator extends androidx.interpolator.view.animation.LookupTableInterpolator {
 					public static class: java.lang.Class<androidx.interpolator.view.animation.FastOutLinearInInterpolator>;
 					public constructor(values: androidNative.Array<number>);
@@ -18875,10 +18875,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module interpolator {
-		export module view {
-			export module animation {
+declare namespace androidx {
+	export namespace interpolator {
+		export namespace view {
+			export namespace animation {
 				export class FastOutSlowInInterpolator extends androidx.interpolator.view.animation.LookupTableInterpolator {
 					public static class: java.lang.Class<androidx.interpolator.view.animation.FastOutSlowInInterpolator>;
 					public constructor(values: androidNative.Array<number>);
@@ -18889,10 +18889,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module interpolator {
-		export module view {
-			export module animation {
+declare namespace androidx {
+	export namespace interpolator {
+		export namespace view {
+			export namespace animation {
 				export class LinearOutSlowInInterpolator extends androidx.interpolator.view.animation.LookupTableInterpolator {
 					public static class: java.lang.Class<androidx.interpolator.view.animation.LinearOutSlowInInterpolator>;
 					public constructor(values: androidNative.Array<number>);
@@ -18903,10 +18903,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module interpolator {
-		export module view {
-			export module animation {
+declare namespace androidx {
+	export namespace interpolator {
+		export namespace view {
+			export namespace animation {
 				export abstract class LookupTableInterpolator {
 					public static class: java.lang.Class<androidx.interpolator.view.animation.LookupTableInterpolator>;
 					public constructor(values: androidNative.Array<number>);
@@ -18917,9 +18917,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module legacy {
-		export module app {
+declare namespace androidx {
+	export namespace legacy {
+		export namespace app {
 			export class ActionBarDrawerToggle extends androidx.drawerlayout.widget.DrawerLayout.DrawerListener {
 				public static class: java.lang.Class<androidx.legacy.app.ActionBarDrawerToggle>;
 				public constructor(activity: globalAndroid.app.Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, drawerImageRes: number, openDrawerContentDescRes: number, closeDrawerContentDescRes: number);
@@ -18940,7 +18940,7 @@ declare module androidx {
 				public onDrawerClosed(param0: globalAndroid.view.View): void;
 				public onDrawerStateChanged(param0: number): void;
 			}
-			export module ActionBarDrawerToggle {
+			export namespace ActionBarDrawerToggle {
 				export class Delegate {
 					public static class: java.lang.Class<androidx.legacy.app.ActionBarDrawerToggle.Delegate>;
 					/**
@@ -18982,9 +18982,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module legacy {
-		export module content {
+declare namespace androidx {
+	export namespace legacy {
+		export namespace content {
 			export abstract class WakefulBroadcastReceiver {
 				public static class: java.lang.Class<androidx.legacy.content.WakefulBroadcastReceiver>;
 				public constructor();
@@ -18995,9 +18995,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module legacy {
-		export module widget {
+declare namespace androidx {
+	export namespace legacy {
+		export namespace widget {
 			export class Space {
 				public static class: java.lang.Class<androidx.legacy.widget.Space>;
 				/** @deprecated */
@@ -19015,8 +19015,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class AndroidViewModel extends androidx.lifecycle.ViewModel {
 			public static class: java.lang.Class<androidx.lifecycle.AndroidViewModel>;
 			public constructor();
@@ -19026,12 +19026,12 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class ClassesInfoCache {
 			public static class: java.lang.Class<androidx.lifecycle.ClassesInfoCache>;
 		}
-		export module ClassesInfoCache {
+		export namespace ClassesInfoCache {
 			export class CallbackInfo {
 				public static class: java.lang.Class<androidx.lifecycle.ClassesInfoCache.CallbackInfo>;
 			}
@@ -19044,8 +19044,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class CompositeGeneratedAdaptersObserver extends androidx.lifecycle.GenericLifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.CompositeGeneratedAdaptersObserver>;
 			public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
@@ -19054,8 +19054,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export abstract class ComputableLiveData<T>  extends java.lang.Object {
 			public static class: java.lang.Class<androidx.lifecycle.ComputableLiveData<any>>;
 			public constructor();
@@ -19067,8 +19067,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class FullLifecycleObserver extends androidx.lifecycle.LifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.FullLifecycleObserver>;
 			/**
@@ -19093,8 +19093,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class FullLifecycleObserverAdapter extends androidx.lifecycle.GenericLifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.FullLifecycleObserverAdapter>;
 			public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
@@ -19103,8 +19103,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class GeneratedAdapter {
 			public static class: java.lang.Class<androidx.lifecycle.GeneratedAdapter>;
 			/**
@@ -19119,8 +19119,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class GenericLifecycleObserver extends androidx.lifecycle.LifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.GenericLifecycleObserver>;
 			/**
@@ -19135,8 +19135,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export abstract class Lifecycle {
 			public static class: java.lang.Class<androidx.lifecycle.Lifecycle>;
 			public constructor();
@@ -19144,7 +19144,7 @@ declare module androidx {
 			public removeObserver(param0: androidx.lifecycle.LifecycleObserver): void;
 			public getCurrentState(): androidx.lifecycle.Lifecycle.State;
 		}
-		export module Lifecycle {
+		export namespace Lifecycle {
 			export class Event {
 				public static class: java.lang.Class<androidx.lifecycle.Lifecycle.Event>;
 				public static ON_CREATE: androidx.lifecycle.Lifecycle.Event;
@@ -19172,8 +19172,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class LifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.LifecycleObserver>;
 			/**
@@ -19186,8 +19186,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class LifecycleOwner {
 			public static class: java.lang.Class<androidx.lifecycle.LifecycleOwner>;
 			/**
@@ -19202,8 +19202,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class LifecycleRegistry extends androidx.lifecycle.Lifecycle {
 			public static class: java.lang.Class<androidx.lifecycle.LifecycleRegistry>;
 			public constructor();
@@ -19215,7 +19215,7 @@ declare module androidx {
 			public getObserverCount(): number;
 			public getCurrentState(): androidx.lifecycle.Lifecycle.State;
 		}
-		export module LifecycleRegistry {
+		export namespace LifecycleRegistry {
 			export class ObserverWithState {
 				public static class: java.lang.Class<androidx.lifecycle.LifecycleRegistry.ObserverWithState>;
 			}
@@ -19223,8 +19223,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class LifecycleRegistryOwner extends androidx.lifecycle.LifecycleOwner {
 			public static class: java.lang.Class<androidx.lifecycle.LifecycleRegistryOwner>;
 			/**
@@ -19241,8 +19241,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class Lifecycling {
 			public static class: java.lang.Class<androidx.lifecycle.Lifecycling>;
 			public static getAdapterName(className: string): string;
@@ -19250,8 +19250,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export abstract class LiveData<T>  extends java.lang.Object {
 			public static class: java.lang.Class<androidx.lifecycle.LiveData<any>>;
 			public constructor();
@@ -19267,7 +19267,7 @@ declare module androidx {
 			public hasObservers(): boolean;
 			public hasActiveObservers(): boolean;
 		}
-		export module LiveData {
+		export namespace LiveData {
 			export class AlwaysActiveObserver extends androidx.lifecycle.LiveData.ObserverWrapper {
 				public static class: java.lang.Class<androidx.lifecycle.LiveData.AlwaysActiveObserver>;
 			}
@@ -19283,8 +19283,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class MediatorLiveData<T>  extends androidx.lifecycle.MutableLiveData<any> {
 			public static class: java.lang.Class<androidx.lifecycle.MediatorLiveData<any>>;
 			public constructor();
@@ -19293,7 +19293,7 @@ declare module androidx {
 			public onActive(): void;
 			public onInactive(): void;
 		}
-		export module MediatorLiveData {
+		export namespace MediatorLiveData {
 			export class Source<V>  extends androidx.lifecycle.Observer<any> {
 				public static class: java.lang.Class<androidx.lifecycle.MediatorLiveData.Source<any>>;
 				public onChanged(v: any): void;
@@ -19303,8 +19303,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class MethodCallsLogger {
 			public static class: java.lang.Class<androidx.lifecycle.MethodCallsLogger>;
 			public constructor();
@@ -19313,8 +19313,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class MutableLiveData<T>  extends androidx.lifecycle.LiveData<any> {
 			public static class: java.lang.Class<androidx.lifecycle.MutableLiveData<any>>;
 			public constructor();
@@ -19324,8 +19324,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class Observer<T>  extends java.lang.Object {
 			public static class: java.lang.Class<androidx.lifecycle.Observer<any>>;
 			/**
@@ -19340,8 +19340,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class OnLifecycleEvent {
 			public static class: java.lang.Class<androidx.lifecycle.OnLifecycleEvent>;
 			/**
@@ -19356,8 +19356,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class ReflectiveGenericLifecycleObserver extends androidx.lifecycle.GenericLifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.ReflectiveGenericLifecycleObserver>;
 			public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
@@ -19366,8 +19366,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class ReportFragment {
 			public static class: java.lang.Class<androidx.lifecycle.ReportFragment>;
 			public constructor();
@@ -19379,7 +19379,7 @@ declare module androidx {
 			public onStop(): void;
 			public onDestroy(): void;
 		}
-		export module ReportFragment {
+		export namespace ReportFragment {
 			export class ActivityInitializationListener {
 				public static class: java.lang.Class<androidx.lifecycle.ReportFragment.ActivityInitializationListener>;
 				/**
@@ -19399,8 +19399,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class SingleGeneratedAdapterObserver extends androidx.lifecycle.GenericLifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.SingleGeneratedAdapterObserver>;
 			public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
@@ -19409,8 +19409,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class Transformations {
 			public static class: java.lang.Class<androidx.lifecycle.Transformations>;
 			public static map(source: androidx.lifecycle.LiveData<any>, mapFunction: androidx.arch.core.util.Function<any,any>): androidx.lifecycle.LiveData<any>;
@@ -19419,8 +19419,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export abstract class ViewModel {
 			public static class: java.lang.Class<androidx.lifecycle.ViewModel>;
 			public constructor();
@@ -19429,8 +19429,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class ViewModelProvider {
 			public static class: java.lang.Class<androidx.lifecycle.ViewModelProvider>;
 			public constructor(owner: androidx.lifecycle.ViewModelStoreOwner, factory: androidx.lifecycle.ViewModelProvider.Factory);
@@ -19438,7 +19438,7 @@ declare module androidx {
 			public get(modelClass: java.lang.Class<any>): androidx.lifecycle.ViewModel;
 			public get(key: string, modelClass: java.lang.Class<any>): androidx.lifecycle.ViewModel;
 		}
-		export module ViewModelProvider {
+		export namespace ViewModelProvider {
 			export class AndroidViewModelFactory extends androidx.lifecycle.ViewModelProvider.NewInstanceFactory {
 				public static class: java.lang.Class<androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory>;
 				public static getInstance(application: globalAndroid.app.Application): androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
@@ -19468,8 +19468,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class ViewModelStore {
 			public static class: java.lang.Class<androidx.lifecycle.ViewModelStore>;
 			public constructor();
@@ -19478,8 +19478,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module lifecycle {
+declare namespace androidx {
+	export namespace lifecycle {
 		export class ViewModelStoreOwner {
 			public static class: java.lang.Class<androidx.lifecycle.ViewModelStoreOwner>;
 			/**
@@ -19494,9 +19494,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module loader {
-		export module app {
+declare namespace androidx {
+	export namespace loader {
+		export namespace app {
 			export abstract class LoaderManager {
 				public static class: java.lang.Class<androidx.loader.app.LoaderManager>;
 				public constructor();
@@ -19511,7 +19511,7 @@ declare module androidx {
 				public static enableDebugLogging(enabled: boolean): void;
 				public hasRunningLoaders(): boolean;
 			}
-			export module LoaderManager {
+			export namespace LoaderManager {
 				export class LoaderCallbacks<D>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.loader.app.LoaderManager.LoaderCallbacks<any>>;
 					/**
@@ -19532,9 +19532,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module loader {
-		export module app {
+declare namespace androidx {
+	export namespace loader {
+		export namespace app {
 			export class LoaderManagerImpl extends androidx.loader.app.LoaderManager {
 				public static class: java.lang.Class<androidx.loader.app.LoaderManagerImpl>;
 				public initLoader(id: number, args: globalAndroid.os.Bundle | null, callback: androidx.loader.app.LoaderManager.LoaderCallbacks<any>): androidx.loader.content.Loader<any>;
@@ -19547,7 +19547,7 @@ declare module androidx {
 				public dump(prefix: string, fd: java.io.FileDescriptor, writer: java.io.PrintWriter, args: androidNative.Array<string>): void;
 				public hasRunningLoaders(): boolean;
 			}
-			export module LoaderManagerImpl {
+			export namespace LoaderManagerImpl {
 				export class LoaderInfo<D>  extends androidx.lifecycle.MutableLiveData<any> implements androidx.loader.content.Loader.OnLoadCompleteListener<any> {
 					public static class: java.lang.Class<androidx.loader.app.LoaderManagerImpl.LoaderInfo<any>>;
 					public onActive(): void;
@@ -19576,9 +19576,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module loader {
-		export module content {
+declare namespace androidx {
+	export namespace loader {
+		export namespace content {
 			export abstract class AsyncTaskLoader<D>  extends androidx.loader.content.Loader<any> {
 				public static class: java.lang.Class<androidx.loader.content.AsyncTaskLoader<any>>;
 				public constructor(context: globalAndroid.content.Context);
@@ -19594,7 +19594,7 @@ declare module androidx {
 				/** @deprecated */
 				public dump(prefix: string, fd: java.io.FileDescriptor, writer: java.io.PrintWriter, args: androidNative.Array<string>): void;
 			}
-			export module AsyncTaskLoader {
+			export namespace AsyncTaskLoader {
 				export class LoadTask extends androidx.loader.content.ModernAsyncTask<java.lang.Void,java.lang.Void,any> implements java.lang.Runnable {
 					public static class: java.lang.Class<androidx.loader.content.AsyncTaskLoader.LoadTask>;
 					public doInBackground(param0: androidNative.Array<any>): any;
@@ -19610,9 +19610,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module loader {
-		export module content {
+declare namespace androidx {
+	export namespace loader {
+		export namespace content {
 			export class CursorLoader extends androidx.loader.content.AsyncTaskLoader<globalAndroid.database.Cursor> {
 				public static class: java.lang.Class<androidx.loader.content.CursorLoader>;
 				public loadInBackground(): any;
@@ -19644,9 +19644,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module loader {
-		export module content {
+declare namespace androidx {
+	export namespace loader {
+		export namespace content {
 			export class Loader<D>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.loader.content.Loader<any>>;
 				public constructor(context: globalAndroid.content.Context);
@@ -19682,7 +19682,7 @@ declare module androidx {
 				/** @deprecated */
 				public dump(prefix: string, fd: java.io.FileDescriptor, writer: java.io.PrintWriter, args: androidNative.Array<string>): void;
 			}
-			export module Loader {
+			export namespace Loader {
 				export class ForceLoadContentObserver {
 					public static class: java.lang.Class<androidx.loader.content.Loader.ForceLoadContentObserver>;
 					public constructor(this$0: androidx.loader.content.Loader<any>);
@@ -19716,9 +19716,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module loader {
-		export module content {
+declare namespace androidx {
+	export namespace loader {
+		export namespace content {
 			export abstract class ModernAsyncTask<Params, Progress, Result>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.loader.content.ModernAsyncTask<any,any,any>>;
 				public static THREAD_POOL_EXECUTOR: java.util.concurrent.Executor;
@@ -19739,7 +19739,7 @@ declare module androidx {
 				public static execute(runnable: java.lang.Runnable): void;
 				public publishProgress(values: androidNative.Array<Progress>): void;
 			}
-			export module ModernAsyncTask {
+			export namespace ModernAsyncTask {
 				export class AsyncTaskResult<Data>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.loader.content.ModernAsyncTask.AsyncTaskResult<any>>;
 				}
@@ -19763,9 +19763,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module localbroadcastmanager {
-		export module content {
+declare namespace androidx {
+	export namespace localbroadcastmanager {
+		export namespace content {
 			export class LocalBroadcastManager {
 				public static class: java.lang.Class<androidx.localbroadcastmanager.content.LocalBroadcastManager>;
 				public static getInstance(context: globalAndroid.content.Context): androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -19774,7 +19774,7 @@ declare module androidx {
 				public sendBroadcast(intent: globalAndroid.content.Intent): boolean;
 				public sendBroadcastSync(intent: globalAndroid.content.Intent): void;
 			}
-			export module LocalBroadcastManager {
+			export namespace LocalBroadcastManager {
 				export class BroadcastRecord {
 					public static class: java.lang.Class<androidx.localbroadcastmanager.content.LocalBroadcastManager.BroadcastRecord>;
 				}
@@ -19787,8 +19787,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class AudioAttributesCompat extends androidx.versionedparcelable.VersionedParcelable {
 			public static class: java.lang.Class<androidx.media.AudioAttributesCompat>;
 			public static readonly CONTENT_TYPE_UNKNOWN = 0;
@@ -19828,7 +19828,7 @@ declare module androidx {
 			public static setForceLegacyBehavior(force: boolean): void;
 			public equals(o: any): boolean;
 		}
-		export module AudioAttributesCompat {
+		export namespace AudioAttributesCompat {
 			export class AttributeContentType {
 				public static class: java.lang.Class<androidx.media.AudioAttributesCompat.AttributeContentType>;
 				/**
@@ -19868,8 +19868,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class AudioAttributesCompatParcelizer {
 			public static class: java.lang.Class<androidx.media.AudioAttributesCompatParcelizer>;
 			public constructor();
@@ -19879,8 +19879,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class AudioAttributesImpl extends androidx.versionedparcelable.VersionedParcelable {
 			public static class: java.lang.Class<androidx.media.AudioAttributesImpl>;
 			/**
@@ -19909,8 +19909,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class AudioAttributesImplApi21 extends androidx.media.AudioAttributesImpl {
 			public static class: java.lang.Class<androidx.media.AudioAttributesImplApi21>;
 			public getAudioAttributes(): any;
@@ -19929,8 +19929,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class AudioAttributesImplApi21Parcelizer {
 			public static class: java.lang.Class<androidx.media.AudioAttributesImplApi21Parcelizer>;
 			public constructor();
@@ -19940,8 +19940,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class AudioAttributesImplBase extends androidx.media.AudioAttributesImpl {
 			public static class: java.lang.Class<androidx.media.AudioAttributesImplBase>;
 			public getAudioAttributes(): any;
@@ -19960,8 +19960,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class AudioAttributesImplBaseParcelizer {
 			public static class: java.lang.Class<androidx.media.AudioAttributesImplBaseParcelizer>;
 			public constructor();
@@ -19971,8 +19971,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaBrowserCompatUtils {
 			public static class: java.lang.Class<androidx.media.MediaBrowserCompatUtils>;
 			public static areSameOptions(options1: globalAndroid.os.Bundle, options2: globalAndroid.os.Bundle): boolean;
@@ -19981,8 +19981,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaBrowserProtocol {
 			public static class: java.lang.Class<androidx.media.MediaBrowserProtocol>;
 			public static readonly DATA_CALLBACK_TOKEN = "data_callback_token";
@@ -20025,8 +20025,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export abstract class MediaBrowserServiceCompat {
 			public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat>;
 			public static readonly SERVICE_INTERFACE = "android.media.browse.MediaBrowserService";
@@ -20056,7 +20056,7 @@ declare module androidx {
 			public notifyChildrenChanged(parentId: string, options: globalAndroid.os.Bundle): void;
 			public notifyChildrenChanged(remoteUserInfo: androidx.media.MediaSessionManager.RemoteUserInfo, parentId: string, options: globalAndroid.os.Bundle): void;
 		}
-		export module MediaBrowserServiceCompat {
+		export namespace MediaBrowserServiceCompat {
 			export class BrowserRoot {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat.BrowserRoot>;
 				public static readonly EXTRA_RECENT = "android.service.media.extra.RECENT";
@@ -20237,8 +20237,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaBrowserServiceCompatApi21 {
 			public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompatApi21>;
 			public static createService(context: globalAndroid.content.Context, serviceProxy: androidx.media.MediaBrowserServiceCompatApi21.ServiceCompatProxy): any;
@@ -20247,7 +20247,7 @@ declare module androidx {
 			public static setSessionToken(serviceObj: any, token: any): void;
 			public static notifyChildrenChanged(serviceObj: any, parentId: string): void;
 		}
-		export module MediaBrowserServiceCompatApi21 {
+		export namespace MediaBrowserServiceCompatApi21 {
 			export class BrowserRoot {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompatApi21.BrowserRoot>;
 			}
@@ -20278,13 +20278,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaBrowserServiceCompatApi23 {
 			public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompatApi23>;
 			public static createService(context: globalAndroid.content.Context, serviceProxy: androidx.media.MediaBrowserServiceCompatApi23.ServiceCompatProxy): any;
 		}
-		export module MediaBrowserServiceCompatApi23 {
+		export namespace MediaBrowserServiceCompatApi23 {
 			export class MediaBrowserServiceAdaptor extends androidx.media.MediaBrowserServiceCompatApi21.MediaBrowserServiceAdaptor {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompatApi23.MediaBrowserServiceAdaptor>;
 				public onLoadItem(itemId: string, result: any): void;
@@ -20308,15 +20308,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaBrowserServiceCompatApi26 {
 			public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompatApi26>;
 			public static createService(context: globalAndroid.content.Context, serviceProxy: androidx.media.MediaBrowserServiceCompatApi26.ServiceCompatProxy): any;
 			public static notifyChildrenChanged(serviceObj: any, parentId: string, options: globalAndroid.os.Bundle): void;
 			public static getBrowserRootHints(serviceObj: any): globalAndroid.os.Bundle;
 		}
-		export module MediaBrowserServiceCompatApi26 {
+		export namespace MediaBrowserServiceCompatApi26 {
 			export class MediaBrowserServiceAdaptor extends androidx.media.MediaBrowserServiceCompatApi23.MediaBrowserServiceAdaptor {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompatApi26.MediaBrowserServiceAdaptor>;
 				public onLoadChildren(parentId: string, result: any): void;
@@ -20348,14 +20348,14 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaSessionManager {
 			public static class: java.lang.Class<androidx.media.MediaSessionManager>;
 			public static getSessionManager(context: globalAndroid.content.Context): androidx.media.MediaSessionManager;
 			public isTrustedForMediaControl(userInfo: androidx.media.MediaSessionManager.RemoteUserInfo): boolean;
 		}
-		export module MediaSessionManager {
+		export namespace MediaSessionManager {
 			export class MediaSessionManagerImpl {
 				public static class: java.lang.Class<androidx.media.MediaSessionManager.MediaSessionManagerImpl>;
 				/**
@@ -20399,8 +20399,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaSessionManagerImplApi21 extends androidx.media.MediaSessionManagerImplBase {
 			public static class: java.lang.Class<androidx.media.MediaSessionManagerImplApi21>;
 			public isTrustedForMediaControl(userInfo: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
@@ -20410,15 +20410,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaSessionManagerImplApi28 extends androidx.media.MediaSessionManagerImplApi21 {
 			public static class: java.lang.Class<androidx.media.MediaSessionManagerImplApi28>;
 			public isTrustedForMediaControl(userInfo: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 			public getContext(): globalAndroid.content.Context;
 			public isTrustedForMediaControl(param0: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 		}
-		export module MediaSessionManagerImplApi28 {
+		export namespace MediaSessionManagerImplApi28 {
 			export class RemoteUserInfoImplApi28 extends androidx.media.MediaSessionManager.RemoteUserInfoImpl {
 				public static class: java.lang.Class<androidx.media.MediaSessionManagerImplApi28.RemoteUserInfoImplApi28>;
 				public getPackageName(): string;
@@ -20431,15 +20431,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class MediaSessionManagerImplBase extends androidx.media.MediaSessionManager.MediaSessionManagerImpl {
 			public static class: java.lang.Class<androidx.media.MediaSessionManagerImplBase>;
 			public getContext(): globalAndroid.content.Context;
 			public isTrustedForMediaControl(userInfo: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 			public isTrustedForMediaControl(param0: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 		}
-		export module MediaSessionManagerImplBase {
+		export namespace MediaSessionManagerImplBase {
 			export class RemoteUserInfoImplBase extends androidx.media.MediaSessionManager.RemoteUserInfoImpl {
 				public static class: java.lang.Class<androidx.media.MediaSessionManagerImplBase.RemoteUserInfoImplBase>;
 				public getPackageName(): string;
@@ -20452,8 +20452,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export abstract class VolumeProviderCompat {
 			public static class: java.lang.Class<androidx.media.VolumeProviderCompat>;
 			public static readonly VOLUME_CONTROL_FIXED = 0;
@@ -20469,7 +20469,7 @@ declare module androidx {
 			public setCallback(callback: androidx.media.VolumeProviderCompat.Callback): void;
 			public getVolumeProvider(): any;
 		}
-		export module VolumeProviderCompat {
+		export namespace VolumeProviderCompat {
 			export abstract class Callback {
 				public static class: java.lang.Class<androidx.media.VolumeProviderCompat.Callback>;
 				public constructor();
@@ -20488,14 +20488,14 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
+declare namespace androidx {
+	export namespace media {
 		export class VolumeProviderCompatApi21 {
 			public static class: java.lang.Class<androidx.media.VolumeProviderCompatApi21>;
 			public static createVolumeProvider(volumeControl: number, maxVolume: number, currentVolume: number, delegate: androidx.media.VolumeProviderCompatApi21.Delegate): any;
 			public static setCurrentVolume(volumeProviderObj: any, currentVolume: number): void;
 		}
-		export module VolumeProviderCompatApi21 {
+		export namespace VolumeProviderCompatApi21 {
 			export class Delegate {
 				public static class: java.lang.Class<androidx.media.VolumeProviderCompatApi21.Delegate>;
 				/**
@@ -20513,13 +20513,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
-		export module app {
+declare namespace androidx {
+	export namespace media {
+		export namespace app {
 			export class NotificationCompat {
 				public static class: java.lang.Class<androidx.media.app.NotificationCompat>;
 			}
-			export module NotificationCompat {
+			export namespace NotificationCompat {
 				export class DecoratedMediaCustomViewStyle extends androidx.media.app.NotificationCompat.MediaStyle {
 					public static class: java.lang.Class<androidx.media.app.NotificationCompat.DecoratedMediaCustomViewStyle>;
 					public constructor(builder: androidx.core.app.NotificationCompat.Builder);
@@ -20547,9 +20547,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module media {
-		export module session {
+declare namespace androidx {
+	export namespace media {
+		export namespace session {
 			export class MediaButtonReceiver {
 				public static class: java.lang.Class<androidx.media.session.MediaButtonReceiver>;
 				public constructor();
@@ -20559,7 +20559,7 @@ declare module androidx {
 				public static buildMediaButtonPendingIntent(context: globalAndroid.content.Context, mbrComponent: globalAndroid.content.ComponentName, action: number): globalAndroid.app.PendingIntent;
 				public static getMediaButtonReceiverComponent(context: globalAndroid.content.Context): globalAndroid.content.ComponentName;
 			}
-			export module MediaButtonReceiver {
+			export namespace MediaButtonReceiver {
 				export class MediaButtonConnectionCallback extends globalAndroid.support.v4.media.MediaBrowserCompat.ConnectionCallback {
 					public static class: java.lang.Class<androidx.media.session.MediaButtonReceiver.MediaButtonConnectionCallback>;
 					public onConnected(): void;
@@ -20571,8 +20571,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module print {
+declare namespace androidx {
+	export namespace print {
 		export class PrintHelper {
 			public static class: java.lang.Class<androidx.print.PrintHelper>;
 			public static readonly SCALE_MODE_FIT = 1;
@@ -20594,7 +20594,7 @@ declare module androidx {
 			public printBitmap(jobName: string, imageFile: globalAndroid.net.Uri): void;
 			public printBitmap(jobName: string, imageFile: globalAndroid.net.Uri, callback: androidx.print.PrintHelper.OnPrintFinishCallback | null): void;
 		}
-		export module PrintHelper {
+		export namespace PrintHelper {
 			export class OnPrintFinishCallback {
 				public static class: java.lang.Class<androidx.print.PrintHelper.OnPrintFinishCallback>;
 				/**
@@ -20622,9 +20622,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class AdapterHelper extends androidx.recyclerview.widget.OpReorderer.Callback {
 				public static class: java.lang.Class<androidx.recyclerview.widget.AdapterHelper>;
 				public applyPendingUpdatesToPosition(position: number): number;
@@ -20633,7 +20633,7 @@ declare module androidx {
 				public obtainUpdateOp(param0: number, param1: number, param2: number, param3: any): androidx.recyclerview.widget.AdapterHelper.UpdateOp;
 				public recycleUpdateOp(param0: androidx.recyclerview.widget.AdapterHelper.UpdateOp): void;
 			}
-			export module AdapterHelper {
+			export namespace AdapterHelper {
 				export class Callback {
 					public static class: java.lang.Class<androidx.recyclerview.widget.AdapterHelper.Callback>;
 					/**
@@ -20670,9 +20670,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class AdapterListUpdateCallback extends androidx.recyclerview.widget.ListUpdateCallback {
 				public static class: java.lang.Class<androidx.recyclerview.widget.AdapterListUpdateCallback>;
 				public constructor(adapter: androidx.recyclerview.widget.RecyclerView.Adapter<any>);
@@ -20689,16 +20689,16 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class AsyncDifferConfig<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.recyclerview.widget.AsyncDifferConfig<any>>;
 				public getMainThreadExecutor(): java.util.concurrent.Executor;
 				public getBackgroundThreadExecutor(): java.util.concurrent.Executor;
 				public getDiffCallback(): androidx.recyclerview.widget.DiffUtil.ItemCallback<T>;
 			}
-			export module AsyncDifferConfig {
+			export namespace AsyncDifferConfig {
 				export class Builder<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.recyclerview.widget.AsyncDifferConfig.Builder<any>>;
 					public constructor(diffCallback: androidx.recyclerview.widget.DiffUtil.ItemCallback<T>);
@@ -20711,9 +20711,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class AsyncListDiffer<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.recyclerview.widget.AsyncListDiffer<any>>;
 				public constructor(adapter: androidx.recyclerview.widget.RecyclerView.Adapter<any>, diffCallback: androidx.recyclerview.widget.DiffUtil.ItemCallback<T>);
@@ -20721,7 +20721,7 @@ declare module androidx {
 				public getCurrentList(): java.util.List<T>;
 				public submitList(newList: java.util.List<T> | null): void;
 			}
-			export module AsyncListDiffer {
+			export namespace AsyncListDiffer {
 				export class MainThreadExecutor {
 					public static class: java.lang.Class<androidx.recyclerview.widget.AsyncListDiffer.MainThreadExecutor>;
 					public execute(command: java.lang.Runnable): void;
@@ -20731,9 +20731,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class AsyncListUtil<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.recyclerview.widget.AsyncListUtil<any>>;
 				public constructor(klass: java.lang.Class<T>, tileSize: number, dataCallback: androidx.recyclerview.widget.AsyncListUtil.DataCallback<T>, viewCallback: androidx.recyclerview.widget.AsyncListUtil.ViewCallback);
@@ -20742,7 +20742,7 @@ declare module androidx {
 				public getItem(position: number): T | null;
 				public getItemCount(): number;
 			}
-			export module AsyncListUtil {
+			export namespace AsyncListUtil {
 				export abstract class DataCallback<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.recyclerview.widget.AsyncListUtil.DataCallback<any>>;
 					public constructor();
@@ -20767,9 +20767,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class BatchingListUpdateCallback extends androidx.recyclerview.widget.ListUpdateCallback {
 				public static class: java.lang.Class<androidx.recyclerview.widget.BatchingListUpdateCallback>;
 				public constructor(callback: androidx.recyclerview.widget.ListUpdateCallback);
@@ -20787,14 +20787,14 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ChildHelper {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ChildHelper>;
 				public toString(): string;
 			}
-			export module ChildHelper {
+			export namespace ChildHelper {
 				export class Bucket {
 					public static class: java.lang.Class<androidx.recyclerview.widget.ChildHelper.Bucket>;
 					public toString(): string;
@@ -20835,9 +20835,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class DefaultItemAnimator extends androidx.recyclerview.widget.SimpleItemAnimator {
 				public static class: java.lang.Class<androidx.recyclerview.widget.DefaultItemAnimator>;
 				public constructor();
@@ -20854,7 +20854,7 @@ declare module androidx {
 				public canReuseUpdatedViewHolder(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): boolean;
 				public canReuseUpdatedViewHolder(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, payloads: java.util.List<any>): boolean;
 			}
-			export module DefaultItemAnimator {
+			export namespace DefaultItemAnimator {
 				export class ChangeInfo {
 					public static class: java.lang.Class<androidx.recyclerview.widget.DefaultItemAnimator.ChangeInfo>;
 					public oldHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder;
@@ -20878,15 +20878,15 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class DiffUtil {
 				public static class: java.lang.Class<androidx.recyclerview.widget.DiffUtil>;
 				public static calculateDiff(cb: androidx.recyclerview.widget.DiffUtil.Callback): androidx.recyclerview.widget.DiffUtil.DiffResult;
 				public static calculateDiff(cb: androidx.recyclerview.widget.DiffUtil.Callback, detectMoves: boolean): androidx.recyclerview.widget.DiffUtil.DiffResult;
 			}
-			export module DiffUtil {
+			export namespace DiffUtil {
 				export abstract class Callback {
 					public static class: java.lang.Class<androidx.recyclerview.widget.DiffUtil.Callback>;
 					public constructor();
@@ -20928,9 +20928,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class DividerItemDecoration extends androidx.recyclerview.widget.RecyclerView.ItemDecoration {
 				public static class: java.lang.Class<androidx.recyclerview.widget.DividerItemDecoration>;
 				public static readonly HORIZONTAL = 0;
@@ -20950,9 +20950,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class FastScroller extends androidx.recyclerview.widget.RecyclerView.ItemDecoration implements androidx.recyclerview.widget.RecyclerView.OnItemTouchListener {
 				public static class: java.lang.Class<androidx.recyclerview.widget.FastScroller>;
 				public attachToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView | null): void;
@@ -20969,7 +20969,7 @@ declare module androidx {
 				public onTouchEvent(param0: androidx.recyclerview.widget.RecyclerView, param1: globalAndroid.view.MotionEvent): void;
 				public onRequestDisallowInterceptTouchEvent(param0: boolean): void;
 			}
-			export module FastScroller {
+			export namespace FastScroller {
 				export class AnimatorListener {
 					public static class: java.lang.Class<androidx.recyclerview.widget.FastScroller.AnimatorListener>;
 					public onAnimationEnd(animation: globalAndroid.animation.Animator): void;
@@ -20984,16 +20984,16 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class GapWorker {
 				public static class: java.lang.Class<androidx.recyclerview.widget.GapWorker>;
 				public add(recyclerView: androidx.recyclerview.widget.RecyclerView): void;
 				public remove(recyclerView: androidx.recyclerview.widget.RecyclerView): void;
 				public run(): void;
 			}
-			export module GapWorker {
+			export namespace GapWorker {
 				export class LayoutPrefetchRegistryImpl extends androidx.recyclerview.widget.RecyclerView.LayoutManager.LayoutPrefetchRegistry {
 					public static class: java.lang.Class<androidx.recyclerview.widget.GapWorker.LayoutPrefetchRegistryImpl>;
 					public addPosition(layoutPosition: number, pixelDistance: number): void;
@@ -21013,9 +21013,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class GridLayoutManager extends androidx.recyclerview.widget.LinearLayoutManager {
 				public static class: java.lang.Class<androidx.recyclerview.widget.GridLayoutManager>;
 				public static readonly DEFAULT_SPAN_COUNT = -1;
@@ -21054,7 +21054,7 @@ declare module androidx {
 				public computeScrollVectorForPosition(param0: number): globalAndroid.graphics.PointF | null;
 				public prepareForDrop(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
 			}
-			export module GridLayoutManager {
+			export namespace GridLayoutManager {
 				export class DefaultSpanSizeLookup extends androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup {
 					public static class: java.lang.Class<androidx.recyclerview.widget.GridLayoutManager.DefaultSpanSizeLookup>;
 					public constructor();
@@ -21087,9 +21087,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ItemTouchHelper extends androidx.recyclerview.widget.RecyclerView.ItemDecoration implements androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ItemTouchHelper>;
 				public static readonly UP = 1;
@@ -21123,7 +21123,7 @@ declare module androidx {
 				public onChildViewAttachedToWindow(param0: globalAndroid.view.View): void;
 				public onChildViewDetachedFromWindow(param0: globalAndroid.view.View): void;
 			}
-			export module ItemTouchHelper {
+			export namespace ItemTouchHelper {
 				export abstract class Callback {
 					public static class: java.lang.Class<androidx.recyclerview.widget.ItemTouchHelper.Callback>;
 					public static readonly DEFAULT_DRAG_ANIMATION_DURATION = 200;
@@ -21197,9 +21197,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ItemTouchUIUtil {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ItemTouchUIUtil>;
 				/**
@@ -21221,9 +21221,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ItemTouchUIUtilImpl extends androidx.recyclerview.widget.ItemTouchUIUtil {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ItemTouchUIUtilImpl>;
 				public onDraw(c: globalAndroid.graphics.Canvas, recyclerView: androidx.recyclerview.widget.RecyclerView, view: globalAndroid.view.View, dX: number, dY: number, actionState: number, isCurrentlyActive: boolean): void;
@@ -21239,9 +21239,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class LayoutState {
 				public static class: java.lang.Class<androidx.recyclerview.widget.LayoutState>;
 				public toString(): string;
@@ -21250,9 +21250,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class LinearLayoutManager extends androidx.recyclerview.widget.RecyclerView.LayoutManager implements androidx.recyclerview.widget.ItemTouchHelper.ViewDropHandler, androidx.recyclerview.widget.RecyclerView.SmoothScroller.ScrollVectorProvider {
 				public static class: java.lang.Class<androidx.recyclerview.widget.LinearLayoutManager>;
 				public static readonly HORIZONTAL = 0;
@@ -21315,7 +21315,7 @@ declare module androidx {
 				public prepareForDrop(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
 				public computeScrollVectorForPosition(param0: number): globalAndroid.graphics.PointF | null;
 			}
-			export module LinearLayoutManager {
+			export namespace LinearLayoutManager {
 				export class AnchorInfo {
 					public static class: java.lang.Class<androidx.recyclerview.widget.LinearLayoutManager.AnchorInfo>;
 					public toString(): string;
@@ -21349,9 +21349,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class LinearSmoothScroller extends androidx.recyclerview.widget.RecyclerView.SmoothScroller {
 				public static class: java.lang.Class<androidx.recyclerview.widget.LinearSmoothScroller>;
 				public static readonly SNAP_TO_START = -1;
@@ -21382,9 +21382,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class LinearSnapHelper extends androidx.recyclerview.widget.SnapHelper {
 				public static class: java.lang.Class<androidx.recyclerview.widget.LinearSnapHelper>;
 				public constructor();
@@ -21396,9 +21396,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export abstract class ListAdapter<T, VH>  extends androidx.recyclerview.widget.RecyclerView.Adapter<any> {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ListAdapter<any,any>>;
 				public constructor();
@@ -21412,9 +21412,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ListUpdateCallback {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ListUpdateCallback>;
 				/**
@@ -21436,9 +21436,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class MessageThreadUtil<T>  extends androidx.recyclerview.widget.ThreadUtil<any> {
 				public static class: java.lang.Class<androidx.recyclerview.widget.MessageThreadUtil<any>>;
 				public getMainThreadProxy(callback: androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<any>): androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<any>;
@@ -21446,7 +21446,7 @@ declare module androidx {
 				public getMainThreadProxy(param0: androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<any>): androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<any>;
 				public getBackgroundProxy(param0: androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<any>): androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<any>;
 			}
-			export module MessageThreadUtil {
+			export namespace MessageThreadUtil {
 				export class MessageQueue {
 					public static class: java.lang.Class<androidx.recyclerview.widget.MessageThreadUtil.MessageQueue>;
 				}
@@ -21465,13 +21465,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class OpReorderer {
 				public static class: java.lang.Class<androidx.recyclerview.widget.OpReorderer>;
 			}
-			export module OpReorderer {
+			export namespace OpReorderer {
 				export class Callback {
 					public static class: java.lang.Class<androidx.recyclerview.widget.OpReorderer.Callback>;
 					/**
@@ -21490,9 +21490,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export abstract class OrientationHelper {
 				public static class: java.lang.Class<androidx.recyclerview.widget.OrientationHelper>;
 				public mLayoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager;
@@ -21524,9 +21524,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class PagerSnapHelper extends androidx.recyclerview.widget.SnapHelper {
 				public static class: java.lang.Class<androidx.recyclerview.widget.PagerSnapHelper>;
 				public constructor();
@@ -21539,9 +21539,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class RecyclerView implements androidx.core.view.ScrollingView, androidx.core.view.NestedScrollingChild2 {
 				public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView>;
 				public static readonly HORIZONTAL = 0;
@@ -21700,7 +21700,7 @@ declare module androidx {
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
 			}
-			export module RecyclerView {
+			export namespace RecyclerView {
 				export abstract class Adapter<VH>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.Adapter<any>>;
 					public constructor();
@@ -21774,7 +21774,7 @@ declare module androidx {
 					public constructor();
 					public createEdgeEffect(view: androidx.recyclerview.widget.RecyclerView, direction: number): globalAndroid.widget.EdgeEffect;
 				}
-				export module EdgeEffectFactory {
+				export namespace EdgeEffectFactory {
 					export class EdgeDirection {
 						public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.EdgeEffectFactory.EdgeDirection>;
 						/**
@@ -21821,7 +21821,7 @@ declare module androidx {
 					public dispatchAnimationsFinished(): void;
 					public obtainHolderInfo(): androidx.recyclerview.widget.RecyclerView.ItemAnimator.ItemHolderInfo;
 				}
-				export module ItemAnimator {
+				export namespace ItemAnimator {
 					export class AdapterChanges {
 						public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.ItemAnimator.AdapterChanges>;
 						/**
@@ -22032,7 +22032,7 @@ declare module androidx {
 					public performAccessibilityActionForItem(recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State, view: globalAndroid.view.View, action: number, args: globalAndroid.os.Bundle | null): boolean;
 					public static getProperties(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number, defStyleRes: number): androidx.recyclerview.widget.RecyclerView.LayoutManager.Properties;
 				}
-				export module LayoutManager {
+				export namespace LayoutManager {
 					export class LayoutPrefetchRegistry {
 						public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.LayoutManager.LayoutPrefetchRegistry>;
 						/**
@@ -22126,7 +22126,7 @@ declare module androidx {
 					public getRecycledView(viewType: number): androidx.recyclerview.widget.RecyclerView.ViewHolder | null;
 					public putRecycledView(scrap: androidx.recyclerview.widget.RecyclerView.ViewHolder): void;
 				}
-				export module RecycledViewPool {
+				export namespace RecycledViewPool {
 					export class ScrapData {
 						public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.RecycledViewPool.ScrapData>;
 					}
@@ -22199,7 +22199,7 @@ declare module androidx {
 					public onSeekTargetStep(param0: number, param1: number, param2: androidx.recyclerview.widget.RecyclerView.State, param3: androidx.recyclerview.widget.RecyclerView.SmoothScroller.Action): void;
 					public onTargetFound(param0: globalAndroid.view.View, param1: androidx.recyclerview.widget.RecyclerView.State, param2: androidx.recyclerview.widget.RecyclerView.SmoothScroller.Action): void;
 				}
-				export module SmoothScroller {
+				export namespace SmoothScroller {
 					export class Action {
 						public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.SmoothScroller.Action>;
 						public static readonly UNDEFINED_DURATION = -2147483648;
@@ -22283,9 +22283,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class RecyclerViewAccessibilityDelegate extends androidx.core.view.AccessibilityDelegateCompat {
 				public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerViewAccessibilityDelegate>;
 				public constructor();
@@ -22296,7 +22296,7 @@ declare module androidx {
 				public onInitializeAccessibilityEvent(host: globalAndroid.view.View, event: globalAndroid.view.accessibility.AccessibilityEvent): void;
 				public getItemDelegate(): androidx.core.view.AccessibilityDelegateCompat;
 			}
-			export module RecyclerViewAccessibilityDelegate {
+			export namespace RecyclerViewAccessibilityDelegate {
 				export class ItemDelegate extends androidx.core.view.AccessibilityDelegateCompat {
 					public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerViewAccessibilityDelegate.ItemDelegate>;
 					public constructor();
@@ -22310,9 +22310,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ScrollbarHelper {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ScrollbarHelper>;
 			}
@@ -22320,9 +22320,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export abstract class SimpleItemAnimator extends androidx.recyclerview.widget.RecyclerView.ItemAnimator {
 				public static class: java.lang.Class<androidx.recyclerview.widget.SimpleItemAnimator>;
 				public constructor();
@@ -22359,9 +22359,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export abstract class SnapHelper extends androidx.recyclerview.widget.RecyclerView.OnFlingListener {
 				public static class: java.lang.Class<androidx.recyclerview.widget.SnapHelper>;
 				public constructor();
@@ -22379,9 +22379,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class SortedList<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.recyclerview.widget.SortedList<any>>;
 				public static readonly INVALID_POSITION = -1;
@@ -22405,7 +22405,7 @@ declare module androidx {
 				public indexOf(item: T): number;
 				public clear(): void;
 			}
-			export module SortedList {
+			export namespace SortedList {
 				export class BatchedCallback<T2>  extends androidx.recyclerview.widget.SortedList.Callback<any> {
 					public static class: java.lang.Class<androidx.recyclerview.widget.SortedList.BatchedCallback<any>>;
 					public constructor();
@@ -22444,9 +22444,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export abstract class SortedListAdapterCallback<T2>  extends androidx.recyclerview.widget.SortedList.Callback<any> {
 				public static class: java.lang.Class<androidx.recyclerview.widget.SortedListAdapterCallback<any>>;
 				public constructor();
@@ -22465,9 +22465,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class StaggeredGridLayoutManager extends androidx.recyclerview.widget.RecyclerView.LayoutManager implements androidx.recyclerview.widget.RecyclerView.SmoothScroller.ScrollVectorProvider {
 				public static class: java.lang.Class<androidx.recyclerview.widget.StaggeredGridLayoutManager>;
 				public static readonly HORIZONTAL = 0;
@@ -22539,7 +22539,7 @@ declare module androidx {
 				public onFocusSearchFailed(focused: globalAndroid.view.View, direction: number, recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State): globalAndroid.view.View | null;
 				public computeScrollVectorForPosition(param0: number): globalAndroid.graphics.PointF | null;
 			}
-			export module StaggeredGridLayoutManager {
+			export namespace StaggeredGridLayoutManager {
 				export class AnchorInfo {
 					public static class: java.lang.Class<androidx.recyclerview.widget.StaggeredGridLayoutManager.AnchorInfo>;
 				}
@@ -22561,7 +22561,7 @@ declare module androidx {
 					public getFullSpanItem(position: number): androidx.recyclerview.widget.StaggeredGridLayoutManager.LazySpanLookup.FullSpanItem;
 					public getFirstFullSpanItemInRange(minPos: number, maxPos: number, gapDir: number, hasUnwantedGapAfter: boolean): androidx.recyclerview.widget.StaggeredGridLayoutManager.LazySpanLookup.FullSpanItem;
 				}
-				export module LazySpanLookup {
+				export namespace LazySpanLookup {
 					export class FullSpanItem {
 						public static class: java.lang.Class<androidx.recyclerview.widget.StaggeredGridLayoutManager.LazySpanLookup.FullSpanItem>;
 						public static CREATOR: globalAndroid.os.Parcelable.Creator<androidx.recyclerview.widget.StaggeredGridLayoutManager.LazySpanLookup.FullSpanItem>;
@@ -22594,9 +22594,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ThreadUtil<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ThreadUtil<any>>;
 				/**
@@ -22610,7 +22610,7 @@ declare module androidx {
 				public getMainThreadProxy(param0: androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<T>): androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<T>;
 				public getBackgroundProxy(param0: androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<T>): androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<T>;
 			}
-			export module ThreadUtil {
+			export namespace ThreadUtil {
 				export class BackgroundCallback<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<any>>;
 					/**
@@ -22648,9 +22648,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class TileList<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.recyclerview.widget.TileList<any>>;
 				public constructor(tileSize: number);
@@ -22661,7 +22661,7 @@ declare module androidx {
 				public addOrReplace(newTile: androidx.recyclerview.widget.TileList.Tile<T>): androidx.recyclerview.widget.TileList.Tile<T>;
 				public removeAtPos(startPosition: number): androidx.recyclerview.widget.TileList.Tile<T>;
 			}
-			export module TileList {
+			export namespace TileList {
 				export class Tile<T>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.recyclerview.widget.TileList.Tile<any>>;
 					public mItems: androidNative.Array<T>;
@@ -22674,13 +22674,13 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ViewBoundsCheck {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ViewBoundsCheck>;
 			}
-			export module ViewBoundsCheck {
+			export namespace ViewBoundsCheck {
 				export class BoundFlags {
 					public static class: java.lang.Class<androidx.recyclerview.widget.ViewBoundsCheck.BoundFlags>;
 				}
@@ -22721,14 +22721,14 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module recyclerview {
-		export module widget {
+declare namespace androidx {
+	export namespace recyclerview {
+		export namespace widget {
 			export class ViewInfoStore {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ViewInfoStore>;
 				public onViewDetached(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): void;
 			}
-			export module ViewInfoStore {
+			export namespace ViewInfoStore {
 				export class InfoRecord {
 					public static class: java.lang.Class<androidx.recyclerview.widget.ViewInfoStore.InfoRecord>;
 				}
@@ -22754,9 +22754,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module slidingpanelayout {
-		export module widget {
+declare namespace androidx {
+	export namespace slidingpanelayout {
+		export namespace widget {
 			export class SlidingPaneLayout {
 				public static class: java.lang.Class<androidx.slidingpanelayout.widget.SlidingPaneLayout>;
 				public constructor(context: globalAndroid.content.Context);
@@ -22806,7 +22806,7 @@ declare module androidx {
 				public onSaveInstanceState(): globalAndroid.os.Parcelable;
 				public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 			}
-			export module SlidingPaneLayout {
+			export namespace SlidingPaneLayout {
 				export class androidxslidingpanelayoutwidgetSlidingPaneLayoutAccessibilityDelegate extends androidx.core.view.AccessibilityDelegateCompat {
 					public static class: java.lang.Class<androidx.slidingpanelayout.widget.SlidingPaneLayout.AccessibilityDelegate>;
 					public onInitializeAccessibilityNodeInfo(host: globalAndroid.view.View, info: androidx.core.view.accessibility.AccessibilityNodeInfoCompat): void;
@@ -22876,9 +22876,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module swiperefreshlayout {
-		export module widget {
+declare namespace androidx {
+	export namespace swiperefreshlayout {
+		export namespace widget {
 			export class CircleImageView {
 				public static class: java.lang.Class<androidx.swiperefreshlayout.widget.CircleImageView>;
 				public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
@@ -22888,7 +22888,7 @@ declare module androidx {
 				public setBackgroundColorRes(colorRes: number): void;
 				public setBackgroundColor(color: number): void;
 			}
-			export module CircleImageView {
+			export namespace CircleImageView {
 				export class OvalShadow {
 					public static class: java.lang.Class<androidx.swiperefreshlayout.widget.CircleImageView.OvalShadow>;
 					public onResize(width: number, height: number): void;
@@ -22899,9 +22899,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module swiperefreshlayout {
-		export module widget {
+declare namespace androidx {
+	export namespace swiperefreshlayout {
+		export namespace widget {
 			export class CircularProgressDrawable {
 				public static class: java.lang.Class<androidx.swiperefreshlayout.widget.CircularProgressDrawable>;
 				public static readonly LARGE = 0;
@@ -22939,7 +22939,7 @@ declare module androidx {
 				public start(): void;
 				public stop(): void;
 			}
-			export module CircularProgressDrawable {
+			export namespace CircularProgressDrawable {
 				export class ProgressDrawableSize {
 					public static class: java.lang.Class<androidx.swiperefreshlayout.widget.CircularProgressDrawable.ProgressDrawableSize>;
 					/**
@@ -22957,9 +22957,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module swiperefreshlayout {
-		export module widget {
+declare namespace androidx {
+	export namespace swiperefreshlayout {
+		export namespace widget {
 			export class SwipeRefreshLayout implements androidx.core.view.NestedScrollingParent, androidx.core.view.NestedScrollingChild {
 				public static class: java.lang.Class<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>;
 				public static readonly LARGE = 0;
@@ -23029,7 +23029,7 @@ declare module androidx {
 				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
 				public dispatchNestedPreFling(param0: number, param1: number): boolean;
 			}
-			export module SwipeRefreshLayout {
+			export namespace SwipeRefreshLayout {
 				export class OnChildScrollUpCallback {
 					public static class: java.lang.Class<androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnChildScrollUpCallback>;
 					/**
@@ -23057,12 +23057,12 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class AnimatorUtils {
 			public static class: java.lang.Class<androidx.transition.AnimatorUtils>;
 		}
-		export module AnimatorUtils {
+		export namespace AnimatorUtils {
 			export class AnimatorPauseListenerCompat {
 				public static class: java.lang.Class<androidx.transition.AnimatorUtils.AnimatorPauseListenerCompat>;
 				/**
@@ -23080,8 +23080,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ArcMotion extends androidx.transition.PathMotion {
 			public static class: java.lang.Class<androidx.transition.ArcMotion>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23097,8 +23097,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class AutoTransition extends androidx.transition.TransitionSet {
 			public static class: java.lang.Class<androidx.transition.AutoTransition>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23107,8 +23107,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ChangeBounds extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.ChangeBounds>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23120,7 +23120,7 @@ declare module androidx {
 			public captureEndValues(transitionValues: androidx.transition.TransitionValues): void;
 			public createAnimator(sceneRoot: globalAndroid.view.ViewGroup, startValues: androidx.transition.TransitionValues | null, endValues: androidx.transition.TransitionValues | null): globalAndroid.animation.Animator | null;
 		}
-		export module ChangeBounds {
+		export namespace ChangeBounds {
 			export class ViewBounds {
 				public static class: java.lang.Class<androidx.transition.ChangeBounds.ViewBounds>;
 			}
@@ -23128,8 +23128,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ChangeClipBounds extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.ChangeClipBounds>;
 			public getTransitionProperties(): androidNative.Array<string>;
@@ -23142,8 +23142,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ChangeImageTransform extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.ChangeImageTransform>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23156,8 +23156,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ChangeScroll extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.ChangeScroll>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23170,8 +23170,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ChangeTransform extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.ChangeTransform>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23185,7 +23185,7 @@ declare module androidx {
 			public captureEndValues(transitionValues: androidx.transition.TransitionValues): void;
 			public createAnimator(sceneRoot: globalAndroid.view.ViewGroup, startValues: androidx.transition.TransitionValues, endValues: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 		}
-		export module ChangeTransform {
+		export namespace ChangeTransform {
 			export class GhostListener extends androidx.transition.TransitionListenerAdapter {
 				public static class: java.lang.Class<androidx.transition.ChangeTransform.GhostListener>;
 				public onTransitionEnd(transition: androidx.transition.Transition): void;
@@ -23210,8 +23210,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class CircularPropagation extends androidx.transition.VisibilityPropagation {
 			public static class: java.lang.Class<androidx.transition.CircularPropagation>;
 			public constructor();
@@ -23221,8 +23221,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class Explode extends androidx.transition.Visibility {
 			public static class: java.lang.Class<androidx.transition.Explode>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23237,8 +23237,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class Fade extends androidx.transition.Visibility {
 			public static class: java.lang.Class<androidx.transition.Fade>;
 			public static readonly IN = 1;
@@ -23252,7 +23252,7 @@ declare module androidx {
 			public onDisappear(sceneRoot: globalAndroid.view.ViewGroup, startValues: androidx.transition.TransitionValues, startVisibility: number, endValues: androidx.transition.TransitionValues, endVisibility: number): globalAndroid.animation.Animator;
 			public onDisappear(sceneRoot: globalAndroid.view.ViewGroup, view: globalAndroid.view.View, startValues: androidx.transition.TransitionValues, endValues: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 		}
-		export module Fade {
+		export namespace Fade {
 			export class FadeAnimatorListener {
 				public static class: java.lang.Class<androidx.transition.Fade.FadeAnimatorListener>;
 				public onAnimationStart(animation: globalAndroid.animation.Animator): void;
@@ -23262,8 +23262,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class FloatArrayEvaluator extends globalAndroid.animation.TypeEvaluator<androidNative.Array<number>> {
 			public static class: java.lang.Class<androidx.transition.FloatArrayEvaluator>;
 			public evaluate(fraction: number, startValue: androidNative.Array<number>, endValue: androidNative.Array<number>): androidNative.Array<number>;
@@ -23271,8 +23271,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class FragmentTransitionSupport extends androidx.fragment.app.FragmentTransitionImpl {
 			public static class: java.lang.Class<androidx.transition.FragmentTransitionSupport>;
 			public constructor();
@@ -23297,8 +23297,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class GhostViewApi14 implements androidx.transition.GhostViewImpl {
 			public static class: java.lang.Class<androidx.transition.GhostViewApi14>;
 			public onAttachedToWindow(): void;
@@ -23312,8 +23312,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class GhostViewApi21 extends androidx.transition.GhostViewImpl {
 			public static class: java.lang.Class<androidx.transition.GhostViewApi21>;
 			public setVisibility(visibility: number): void;
@@ -23324,8 +23324,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class GhostViewImpl {
 			public static class: java.lang.Class<androidx.transition.GhostViewImpl>;
 			/**
@@ -23342,40 +23342,40 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class GhostViewUtils {
 			public static class: java.lang.Class<androidx.transition.GhostViewUtils>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ImageViewUtils {
 			public static class: java.lang.Class<androidx.transition.ImageViewUtils>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class MatrixUtils {
 			public static class: java.lang.Class<androidx.transition.MatrixUtils>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ObjectAnimatorUtils {
 			public static class: java.lang.Class<androidx.transition.ObjectAnimatorUtils>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export abstract class PathMotion {
 			public static class: java.lang.Class<androidx.transition.PathMotion>;
 			public constructor();
@@ -23385,8 +23385,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class PathProperty<T>  extends globalAndroid.util.Property<any,java.lang.Float> {
 			public static class: java.lang.Class<androidx.transition.PathProperty<any>>;
 			public get(object: any): java.lang.Float;
@@ -23395,8 +23395,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class PatternPathMotion extends androidx.transition.PathMotion {
 			public static class: java.lang.Class<androidx.transition.PatternPathMotion>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23409,16 +23409,16 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class PropertyValuesHolderUtils {
 			public static class: java.lang.Class<androidx.transition.PropertyValuesHolderUtils>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class RectEvaluator extends globalAndroid.animation.TypeEvaluator<globalAndroid.graphics.Rect> {
 			public static class: java.lang.Class<androidx.transition.RectEvaluator>;
 			public evaluate(fraction: number, startValue: globalAndroid.graphics.Rect, endValue: globalAndroid.graphics.Rect): globalAndroid.graphics.Rect;
@@ -23426,8 +23426,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class Scene {
 			public static class: java.lang.Class<androidx.transition.Scene>;
 			public static getSceneForLayout(sceneRoot: globalAndroid.view.ViewGroup, layoutId: number, context: globalAndroid.content.Context): androidx.transition.Scene;
@@ -23442,8 +23442,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class SidePropagation extends androidx.transition.VisibilityPropagation {
 			public static class: java.lang.Class<androidx.transition.SidePropagation>;
 			public constructor();
@@ -23454,8 +23454,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class Slide extends androidx.transition.Visibility {
 			public static class: java.lang.Class<androidx.transition.Slide>;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -23470,7 +23470,7 @@ declare module androidx {
 			public onDisappear(sceneRoot: globalAndroid.view.ViewGroup, startValues: androidx.transition.TransitionValues, startVisibility: number, endValues: androidx.transition.TransitionValues, endVisibility: number): globalAndroid.animation.Animator;
 			public onDisappear(sceneRoot: globalAndroid.view.ViewGroup, view: globalAndroid.view.View, startValues: androidx.transition.TransitionValues, endValues: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 		}
-		export module Slide {
+		export namespace Slide {
 			export class CalculateSlide {
 				public static class: java.lang.Class<androidx.transition.Slide.CalculateSlide>;
 				/**
@@ -23509,12 +23509,12 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class Styleable {
 			public static class: java.lang.Class<androidx.transition.Styleable>;
 		}
-		export module Styleable {
+		export namespace Styleable {
 			export class ArcMotion {
 				public static class: java.lang.Class<androidx.transition.Styleable.ArcMotion>;
 				/**
@@ -23642,8 +23642,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export abstract class Transition {
 			public static class: java.lang.Class<androidx.transition.Transition>;
 			public static readonly MATCH_INSTANCE = 1;
@@ -23705,7 +23705,7 @@ declare module androidx {
 			public clone(): androidx.transition.Transition;
 			public getName(): string;
 		}
-		export module Transition {
+		export namespace Transition {
 			export class AnimationInfo {
 				public static class: java.lang.Class<androidx.transition.Transition.AnimationInfo>;
 			}
@@ -23749,8 +23749,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class TransitionInflater {
 			public static class: java.lang.Class<androidx.transition.TransitionInflater>;
 			public static from(context: globalAndroid.content.Context): androidx.transition.TransitionInflater;
@@ -23760,8 +23760,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class TransitionListenerAdapter extends androidx.transition.Transition.TransitionListener {
 			public static class: java.lang.Class<androidx.transition.TransitionListenerAdapter>;
 			public constructor();
@@ -23779,8 +23779,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class TransitionManager {
 			public static class: java.lang.Class<androidx.transition.TransitionManager>;
 			public constructor();
@@ -23793,7 +23793,7 @@ declare module androidx {
 			public static beginDelayedTransition(sceneRoot: globalAndroid.view.ViewGroup, transition: androidx.transition.Transition | null): void;
 			public static endTransitions(sceneRoot: globalAndroid.view.ViewGroup): void;
 		}
-		export module TransitionManager {
+		export namespace TransitionManager {
 			export class MultiListener {
 				public static class: java.lang.Class<androidx.transition.TransitionManager.MultiListener>;
 				public onViewAttachedToWindow(v: globalAndroid.view.View): void;
@@ -23804,8 +23804,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export abstract class TransitionPropagation {
 			public static class: java.lang.Class<androidx.transition.TransitionPropagation>;
 			public constructor();
@@ -23816,8 +23816,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class TransitionSet extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.TransitionSet>;
 			public static readonly ORDERING_TOGETHER = 0;
@@ -23872,7 +23872,7 @@ declare module androidx {
 			public setEpicenterCallback(epicenterCallback: androidx.transition.Transition.EpicenterCallback): void;
 			public clone(): androidx.transition.Transition;
 		}
-		export module TransitionSet {
+		export namespace TransitionSet {
 			export class TransitionSetListener extends androidx.transition.TransitionListenerAdapter {
 				public static class: java.lang.Class<androidx.transition.TransitionSet.TransitionSetListener>;
 				public onTransitionStart(transition: androidx.transition.Transition): void;
@@ -23887,12 +23887,12 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class TransitionUtils {
 			public static class: java.lang.Class<androidx.transition.TransitionUtils>;
 		}
-		export module TransitionUtils {
+		export namespace TransitionUtils {
 			export class MatrixEvaluator extends globalAndroid.animation.TypeEvaluator<globalAndroid.graphics.Matrix> {
 				public static class: java.lang.Class<androidx.transition.TransitionUtils.MatrixEvaluator>;
 				public evaluate(fraction: number, startValue: globalAndroid.graphics.Matrix, endValue: globalAndroid.graphics.Matrix): globalAndroid.graphics.Matrix;
@@ -23901,8 +23901,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class TransitionValues {
 			public static class: java.lang.Class<androidx.transition.TransitionValues>;
 			public values: java.util.Map<string,any>;
@@ -23915,20 +23915,20 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class TransitionValuesMaps {
 			public static class: java.lang.Class<androidx.transition.TransitionValuesMaps>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class TranslationAnimationCreator {
 			public static class: java.lang.Class<androidx.transition.TranslationAnimationCreator>;
 		}
-		export module TranslationAnimationCreator {
+		export namespace TranslationAnimationCreator {
 			export class TransitionPositionListener {
 				public static class: java.lang.Class<androidx.transition.TranslationAnimationCreator.TransitionPositionListener>;
 				public onAnimationCancel(animation: globalAndroid.animation.Animator): void;
@@ -23940,8 +23940,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewGroupOverlayApi14 extends androidx.transition.ViewOverlayApi14 implements androidx.transition.ViewGroupOverlayImpl {
 			public static class: java.lang.Class<androidx.transition.ViewGroupOverlayApi14>;
 			public add(drawable: globalAndroid.graphics.drawable.Drawable): void;
@@ -23957,8 +23957,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewGroupOverlayApi18 extends androidx.transition.ViewGroupOverlayImpl {
 			public static class: java.lang.Class<androidx.transition.ViewGroupOverlayApi18>;
 			public add(drawable: globalAndroid.graphics.drawable.Drawable): void;
@@ -23974,8 +23974,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewGroupOverlayImpl extends androidx.transition.ViewOverlayImpl {
 			public static class: java.lang.Class<androidx.transition.ViewGroupOverlayImpl>;
 			/**
@@ -23998,32 +23998,32 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewGroupUtils {
 			public static class: java.lang.Class<androidx.transition.ViewGroupUtils>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewGroupUtilsApi14 {
 			public static class: java.lang.Class<androidx.transition.ViewGroupUtilsApi14>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewGroupUtilsApi18 {
 			public static class: java.lang.Class<androidx.transition.ViewGroupUtilsApi18>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewOverlayApi14 extends androidx.transition.ViewOverlayImpl {
 			public static class: java.lang.Class<androidx.transition.ViewOverlayApi14>;
 			public mOverlayViewGroup: androidx.transition.ViewOverlayApi14.OverlayViewGroup;
@@ -24033,7 +24033,7 @@ declare module androidx {
 			public add(param0: globalAndroid.graphics.drawable.Drawable): void;
 			public remove(param0: globalAndroid.graphics.drawable.Drawable): void;
 		}
-		export module ViewOverlayApi14 {
+		export namespace ViewOverlayApi14 {
 			export class OverlayViewGroup {
 				public static class: java.lang.Class<androidx.transition.ViewOverlayApi14.OverlayViewGroup>;
 				public dispatchTouchEvent(ev: globalAndroid.view.MotionEvent): boolean;
@@ -24050,7 +24050,7 @@ declare module androidx {
 				public invalidateChildInParentFast(left: number, top: number, dirty: globalAndroid.graphics.Rect): globalAndroid.view.ViewParent;
 				public invalidateChildInParent(location: androidNative.Array<number>, dirty: globalAndroid.graphics.Rect): globalAndroid.view.ViewParent;
 			}
-			export module OverlayViewGroup {
+			export namespace OverlayViewGroup {
 				export class TouchInterceptor {
 					public static class: java.lang.Class<androidx.transition.ViewOverlayApi14.OverlayViewGroup.TouchInterceptor>;
 				}
@@ -24059,8 +24059,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewOverlayApi18 extends androidx.transition.ViewOverlayImpl {
 			public static class: java.lang.Class<androidx.transition.ViewOverlayApi18>;
 			public add(drawable: globalAndroid.graphics.drawable.Drawable): void;
@@ -24072,8 +24072,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewOverlayImpl {
 			public static class: java.lang.Class<androidx.transition.ViewOverlayImpl>;
 			/**
@@ -24092,16 +24092,16 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewUtils {
 			public static class: java.lang.Class<androidx.transition.ViewUtils>;
 		}
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewUtilsApi19 extends androidx.transition.ViewUtilsBase {
 			public static class: java.lang.Class<androidx.transition.ViewUtilsApi19>;
 			public setTransitionAlpha(view: globalAndroid.view.View, alpha: number): void;
@@ -24112,8 +24112,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewUtilsApi21 extends androidx.transition.ViewUtilsApi19 {
 			public static class: java.lang.Class<androidx.transition.ViewUtilsApi21>;
 			public transformMatrixToGlobal(view: globalAndroid.view.View, matrix: globalAndroid.graphics.Matrix): void;
@@ -24123,8 +24123,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewUtilsApi22 extends androidx.transition.ViewUtilsApi21 {
 			public static class: java.lang.Class<androidx.transition.ViewUtilsApi22>;
 			public setLeftTopRightBottom(v: globalAndroid.view.View, left: number, top: number, right: number, bottom: number): void;
@@ -24132,8 +24132,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class ViewUtilsBase {
 			public static class: java.lang.Class<androidx.transition.ViewUtilsBase>;
 			public setTransitionAlpha(view: globalAndroid.view.View, alpha: number): void;
@@ -24148,8 +24148,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export abstract class Visibility extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.Visibility>;
 			public static readonly MODE_IN = 1;
@@ -24169,7 +24169,7 @@ declare module androidx {
 			public onDisappear(sceneRoot: globalAndroid.view.ViewGroup, view: globalAndroid.view.View, startValues: androidx.transition.TransitionValues, endValues: androidx.transition.TransitionValues): globalAndroid.animation.Animator;
 			public isTransitionRequired(startValues: androidx.transition.TransitionValues, newValues: androidx.transition.TransitionValues): boolean;
 		}
-		export module Visibility {
+		export namespace Visibility {
 			export class DisappearListener implements androidx.transition.Transition.TransitionListener, androidx.transition.AnimatorUtils.AnimatorPauseListenerCompat {
 				public static class: java.lang.Class<androidx.transition.Visibility.DisappearListener>;
 				public onAnimationPause(animation: globalAndroid.animation.Animator): void;
@@ -24207,8 +24207,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export abstract class VisibilityPropagation extends androidx.transition.TransitionPropagation {
 			public static class: java.lang.Class<androidx.transition.VisibilityPropagation>;
 			public constructor();
@@ -24221,8 +24221,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class WindowIdApi14 extends androidx.transition.WindowIdImpl {
 			public static class: java.lang.Class<androidx.transition.WindowIdApi14>;
 			public equals(o: any): boolean;
@@ -24231,8 +24231,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class WindowIdApi18 extends androidx.transition.WindowIdImpl {
 			public static class: java.lang.Class<androidx.transition.WindowIdApi18>;
 			public equals(o: any): boolean;
@@ -24241,8 +24241,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module transition {
+declare namespace androidx {
+	export namespace transition {
 		export class WindowIdImpl {
 			public static class: java.lang.Class<androidx.transition.WindowIdImpl>;
 			/**
@@ -24255,10 +24255,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export class AndroidResources {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AndroidResources>;
 					public static STYLEABLE_ANIMATOR: androidNative.Array<number>;
@@ -24302,10 +24302,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export class Animatable2Compat {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.Animatable2Compat>;
 					/**
@@ -24321,7 +24321,7 @@ declare module androidx {
 					public unregisterAnimationCallback(param0: androidx.vectordrawable.graphics.drawable.Animatable2Compat.AnimationCallback): boolean;
 					public clearAnimationCallbacks(): void;
 				}
-				export module Animatable2Compat {
+				export namespace Animatable2Compat {
 					export abstract class AnimationCallback {
 						public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.Animatable2Compat.AnimationCallback>;
 						public constructor();
@@ -24334,10 +24334,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export class AnimatedVectorDrawableCompat extends androidx.vectordrawable.graphics.drawable.VectorDrawableCommon implements androidx.vectordrawable.graphics.drawable.Animatable2Compat {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat>;
 					public mutate(): globalAndroid.graphics.drawable.Drawable;
@@ -24382,7 +24382,7 @@ declare module androidx {
 					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
 					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 				}
-				export module AnimatedVectorDrawableCompat {
+				export namespace AnimatedVectorDrawableCompat {
 					export class AnimatedVectorDrawableCompatState {
 						public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat.AnimatedVectorDrawableCompatState>;
 						public constructor(context: globalAndroid.content.Context, copy: androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat.AnimatedVectorDrawableCompatState, owner: globalAndroid.graphics.drawable.Drawable.Callback, res: globalAndroid.content.res.Resources);
@@ -24406,10 +24406,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export class AnimationUtilsCompat {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AnimationUtilsCompat>;
 					public static loadInterpolator(context: globalAndroid.content.Context, id: number): globalAndroid.view.animation.Interpolator;
@@ -24419,17 +24419,17 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export class AnimatorInflaterCompat {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AnimatorInflaterCompat>;
 					public static loadAnimator(context: globalAndroid.content.Context, id: number): globalAndroid.animation.Animator;
 					public static loadAnimator(context: globalAndroid.content.Context, resources: globalAndroid.content.res.Resources, theme: globalAndroid.content.res.Resources.Theme, id: number): globalAndroid.animation.Animator;
 					public static loadAnimator(context: globalAndroid.content.Context, resources: globalAndroid.content.res.Resources, theme: globalAndroid.content.res.Resources.Theme, id: number, pathErrorScale: number): globalAndroid.animation.Animator;
 				}
-				export module AnimatorInflaterCompat {
+				export namespace AnimatorInflaterCompat {
 					export class PathDataEvaluator extends globalAndroid.animation.TypeEvaluator<androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>> {
 						public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AnimatorInflaterCompat.PathDataEvaluator>;
 						public evaluate(fraction: number, startPathData: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>, endPathData: androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>): androidNative.Array<androidx.core.graphics.PathParser.PathDataNode>;
@@ -24440,10 +24440,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export class ArgbEvaluator {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.ArgbEvaluator>;
 					public constructor();
@@ -24455,10 +24455,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export class PathInterpolatorCompat {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.PathInterpolatorCompat>;
 					public static readonly MAX_NUM_POINTS = 3000;
@@ -24472,10 +24472,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export abstract class VectorDrawableCommon implements androidx.core.graphics.drawable.TintAwareDrawable {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.VectorDrawableCommon>;
 					public setColorFilter(color: number, mode: globalAndroid.graphics.PorterDuff.Mode): void;
@@ -24505,10 +24505,10 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module vectordrawable {
-		export module graphics {
-			export module drawable {
+declare namespace androidx {
+	export namespace vectordrawable {
+		export namespace graphics {
+			export namespace drawable {
 				export class VectorDrawableCompat extends androidx.vectordrawable.graphics.drawable.VectorDrawableCommon {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.VectorDrawableCompat>;
 					public mutate(): globalAndroid.graphics.drawable.Drawable;
@@ -24544,7 +24544,7 @@ declare module androidx {
 					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
 					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 				}
-				export module VectorDrawableCompat {
+				export namespace VectorDrawableCompat {
 					export class VClipPath extends androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VPath {
 						public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VClipPath>;
 						public constructor(copy: androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VPath);
@@ -24653,8 +24653,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export abstract class CustomVersionedParcelable extends androidx.versionedparcelable.VersionedParcelable {
 			public static class: java.lang.Class<androidx.versionedparcelable.CustomVersionedParcelable>;
 			public constructor();
@@ -24664,8 +24664,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export class NonParcelField {
 			public static class: java.lang.Class<androidx.versionedparcelable.NonParcelField>;
 			/**
@@ -24678,8 +24678,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export class ParcelField {
 			public static class: java.lang.Class<androidx.versionedparcelable.ParcelField>;
 			/**
@@ -24696,8 +24696,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export class ParcelImpl {
 			public static class: java.lang.Class<androidx.versionedparcelable.ParcelImpl>;
 			public static CREATOR: globalAndroid.os.Parcelable.Creator<androidx.versionedparcelable.ParcelImpl>;
@@ -24710,8 +24710,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export class ParcelUtils {
 			public static class: java.lang.Class<androidx.versionedparcelable.ParcelUtils>;
 			public static toParcelable(obj: androidx.versionedparcelable.VersionedParcelable): globalAndroid.os.Parcelable;
@@ -24724,8 +24724,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export abstract class VersionedParcel {
 			public static class: java.lang.Class<androidx.versionedparcelable.VersionedParcel>;
 			public mReadCache: androidx.collection.ArrayMap<string,java.lang.reflect.Method>;
@@ -24839,7 +24839,7 @@ declare module androidx {
 			public readFromParcel(parcelCls: string, versionedParcel: androidx.versionedparcelable.VersionedParcel): androidx.versionedparcelable.VersionedParcelable;
 			public writeToParcel(val: androidx.versionedparcelable.VersionedParcelable, versionedParcel: androidx.versionedparcelable.VersionedParcel): void;
 		}
-		export module VersionedParcel {
+		export namespace VersionedParcel {
 			export class ParcelException {
 				public static class: java.lang.Class<androidx.versionedparcelable.VersionedParcel.ParcelException>;
 				public constructor(source: java.lang.Throwable);
@@ -24848,8 +24848,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export class VersionedParcelParcel extends androidx.versionedparcelable.VersionedParcel {
 			public static class: java.lang.Class<androidx.versionedparcelable.VersionedParcelParcel>;
 			public readField(fieldId: number): boolean;
@@ -24909,8 +24909,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export class VersionedParcelStream extends androidx.versionedparcelable.VersionedParcel {
 			public static class: java.lang.Class<androidx.versionedparcelable.VersionedParcelStream>;
 			public constructor(readCache: androidx.collection.ArrayMap<string,java.lang.reflect.Method>, writeCache: androidx.collection.ArrayMap<string,java.lang.reflect.Method>, parcelizerCache: androidx.collection.ArrayMap<string,java.lang.Class<any>>);
@@ -24971,7 +24971,7 @@ declare module androidx {
 			public readBundle(def: globalAndroid.os.Bundle, fieldId: number): globalAndroid.os.Bundle;
 			public readBundle(): globalAndroid.os.Bundle;
 		}
-		export module VersionedParcelStream {
+		export namespace VersionedParcelStream {
 			export class FieldBuffer {
 				public static class: java.lang.Class<androidx.versionedparcelable.VersionedParcelStream.FieldBuffer>;
 			}
@@ -24979,8 +24979,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export class VersionedParcelable {
 			public static class: java.lang.Class<androidx.versionedparcelable.VersionedParcelable>;
 			/**
@@ -24993,8 +24993,8 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module versionedparcelable {
+declare namespace androidx {
+	export namespace versionedparcelable {
 		export class VersionedParcelize {
 			public static class: java.lang.Class<androidx.versionedparcelable.VersionedParcelize>;
 			/**
@@ -25019,9 +25019,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module viewpager {
-		export module widget {
+declare namespace androidx {
+	export namespace viewpager {
+		export namespace widget {
 			export abstract class PagerAdapter {
 				public static class: java.lang.Class<androidx.viewpager.widget.PagerAdapter>;
 				public static readonly POSITION_UNCHANGED = -1;
@@ -25057,9 +25057,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module viewpager {
-		export module widget {
+declare namespace androidx {
+	export namespace viewpager {
+		export namespace widget {
 			export class PagerTabStrip extends androidx.viewpager.widget.PagerTitleStrip {
 				public static class: java.lang.Class<androidx.viewpager.widget.PagerTabStrip>;
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
@@ -25081,9 +25081,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module viewpager {
-		export module widget {
+declare namespace androidx {
+	export namespace viewpager {
+		export namespace widget {
 			export class PagerTitleStrip {
 				public static class: java.lang.Class<androidx.viewpager.widget.PagerTitleStrip>;
 				public constructor(context: globalAndroid.content.Context);
@@ -25100,7 +25100,7 @@ declare module androidx {
 				public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
 				public onLayout(changed: boolean, l: number, t: number, r: number, b: number): void;
 			}
-			export module PagerTitleStrip {
+			export namespace PagerTitleStrip {
 				export class PageListener implements androidx.viewpager.widget.ViewPager.OnPageChangeListener, androidx.viewpager.widget.ViewPager.OnAdapterChangeListener {
 					public static class: java.lang.Class<androidx.viewpager.widget.PagerTitleStrip.PageListener>;
 					public onPageScrolled(position: number, positionOffset: number, positionOffsetPixels: number): void;
@@ -25122,9 +25122,9 @@ declare module androidx {
 	}
 }
 
-declare module androidx {
-	export module viewpager {
-		export module widget {
+declare namespace androidx {
+	export namespace viewpager {
+		export namespace widget {
 			export class ViewPager {
 				public static class: java.lang.Class<androidx.viewpager.widget.ViewPager>;
 				public static readonly SCROLL_STATE_IDLE = 0;
@@ -25188,7 +25188,7 @@ declare module androidx {
 				public checkLayoutParams(p: globalAndroid.view.ViewGroup.LayoutParams): boolean;
 				public generateLayoutParams(attrs: globalAndroid.util.AttributeSet): globalAndroid.view.ViewGroup.LayoutParams;
 			}
-			export module ViewPager {
+			export namespace ViewPager {
 				export class DecorView {
 					public static class: java.lang.Class<androidx.viewpager.widget.ViewPager.DecorView>;
 					/**
@@ -25284,11 +25284,11 @@ declare module androidx {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class AnimationUtils {
 						public static class: java.lang.Class<com.google.android.material.animation.AnimationUtils>;
 						public static LINEAR_INTERPOLATOR: globalAndroid.animation.TimeInterpolator;
@@ -25305,11 +25305,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class AnimatorSetCompat {
 						public static class: java.lang.Class<com.google.android.material.animation.AnimatorSetCompat>;
 						public constructor();
@@ -25321,11 +25321,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class ArgbEvaluatorCompat extends globalAndroid.animation.TypeEvaluator<java.lang.Integer> {
 						public static class: java.lang.Class<com.google.android.material.animation.ArgbEvaluatorCompat>;
 						public constructor();
@@ -25338,11 +25338,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class ChildrenAlphaProperty extends globalAndroid.util.Property<globalAndroid.view.ViewGroup,java.lang.Float> {
 						public static class: java.lang.Class<com.google.android.material.animation.ChildrenAlphaProperty>;
 						public static CHILDREN_ALPHA: globalAndroid.util.Property<globalAndroid.view.ViewGroup,java.lang.Float>;
@@ -25355,11 +25355,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class DrawableAlphaProperty extends globalAndroid.util.Property<globalAndroid.graphics.drawable.Drawable,java.lang.Integer> {
 						public static class: java.lang.Class<com.google.android.material.animation.DrawableAlphaProperty>;
 						public static DRAWABLE_ALPHA_COMPAT: globalAndroid.util.Property<globalAndroid.graphics.drawable.Drawable,java.lang.Integer>;
@@ -25372,11 +25372,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class ImageMatrixProperty extends globalAndroid.util.Property<globalAndroid.widget.ImageView,globalAndroid.graphics.Matrix> {
 						public static class: java.lang.Class<com.google.android.material.animation.ImageMatrixProperty>;
 						public constructor();
@@ -25389,11 +25389,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class MatrixEvaluator extends globalAndroid.animation.TypeEvaluator<globalAndroid.graphics.Matrix> {
 						public static class: java.lang.Class<com.google.android.material.animation.MatrixEvaluator>;
 						public constructor();
@@ -25405,11 +25405,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class MotionSpec {
 						public static class: java.lang.Class<com.google.android.material.animation.MotionSpec>;
 						public constructor();
@@ -25429,11 +25429,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class MotionTiming {
 						public static class: java.lang.Class<com.google.android.material.animation.MotionTiming>;
 						public constructor(delay: number, duration: number);
@@ -25454,11 +25454,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class Positioning {
 						public static class: java.lang.Class<com.google.android.material.animation.Positioning>;
 						public gravity: number;
@@ -25472,11 +25472,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module animation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace animation {
 					export class TransformationListener<T>  extends java.lang.Object {
 						public static class: java.lang.Class<com.google.android.material.animation.TransformationListener<any>>;
 						/**
@@ -25496,11 +25496,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module appbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace appbar {
 					export class AppBarLayout {
 						public static class: java.lang.Class<com.google.android.material.appbar.AppBarLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -25534,7 +25534,7 @@ declare module com {
 						/** @deprecated */
 						public getTargetElevation(): number;
 					}
-					export module AppBarLayout {
+					export namespace AppBarLayout {
 						export class BaseBehavior<T>  extends com.google.android.material.appbar.HeaderBehavior<any> {
 							public static class: java.lang.Class<com.google.android.material.appbar.AppBarLayout.BaseBehavior<any>>;
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -25562,7 +25562,7 @@ declare module com {
 							public onRestoreInstanceState(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: any, state: globalAndroid.os.Parcelable): void;
 							public onRestoreInstanceState(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, appBarLayout: any, state: globalAndroid.os.Parcelable): void;
 						}
-						export module BaseBehavior {
+						export namespace BaseBehavior {
 							export abstract class BaseDragCallback<T>  extends java.lang.Object {
 								public static class: java.lang.Class<com.google.android.material.appbar.AppBarLayout.BaseBehavior.BaseDragCallback<any>>;
 								public constructor();
@@ -25593,7 +25593,7 @@ declare module com {
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 							public constructor();
 						}
-						export module Behavior {
+						export namespace Behavior {
 							export abstract class DragCallback extends com.google.android.material.appbar.AppBarLayout.BaseBehavior.BaseDragCallback<com.google.android.material.appbar.AppBarLayout> {
 								public static class: java.lang.Class<com.google.android.material.appbar.AppBarLayout.Behavior.DragCallback>;
 								public constructor();
@@ -25619,7 +25619,7 @@ declare module com {
 							public setScrollInterpolator(interpolator: globalAndroid.view.animation.Interpolator): void;
 							public getScrollInterpolator(): globalAndroid.view.animation.Interpolator;
 						}
-						export module LayoutParams {
+						export namespace LayoutParams {
 							export class ScrollFlags {
 								public static class: java.lang.Class<com.google.android.material.appbar.AppBarLayout.LayoutParams.ScrollFlags>;
 								/**
@@ -25658,11 +25658,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module appbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace appbar {
 					export class CollapsingToolbarLayout {
 						public static class: java.lang.Class<com.google.android.material.appbar.CollapsingToolbarLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -25724,7 +25724,7 @@ declare module com {
 						public generateLayoutParams(attrs: globalAndroid.util.AttributeSet): globalAndroid.widget.FrameLayout.LayoutParams;
 						public generateLayoutParams(p: globalAndroid.view.ViewGroup.LayoutParams): globalAndroid.widget.FrameLayout.LayoutParams;
 					}
-					export module CollapsingToolbarLayout {
+					export namespace CollapsingToolbarLayout {
 						export class LayoutParams {
 							public static class: java.lang.Class<com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams>;
 							public static readonly COLLAPSE_MODE_OFF = 0;
@@ -25754,11 +25754,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module appbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace appbar {
 					export abstract class HeaderBehavior<V>  extends com.google.android.material.appbar.ViewOffsetBehavior<any> {
 						public static class: java.lang.Class<com.google.android.material.appbar.HeaderBehavior<any>>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -25766,7 +25766,7 @@ declare module com {
 						public onInterceptTouchEvent(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: any, ev: globalAndroid.view.MotionEvent): boolean;
 						public onTouchEvent(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: any, ev: globalAndroid.view.MotionEvent): boolean;
 					}
-					export module HeaderBehavior {
+					export namespace HeaderBehavior {
 						export class FlingRunnable {
 							public static class: java.lang.Class<com.google.android.material.appbar.HeaderBehavior.FlingRunnable>;
 							public run(): void;
@@ -25778,11 +25778,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module appbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace appbar {
 					export abstract class HeaderScrollingViewBehavior extends com.google.android.material.appbar.ViewOffsetBehavior<globalAndroid.view.View> {
 						public static class: java.lang.Class<com.google.android.material.appbar.HeaderScrollingViewBehavior>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -25799,11 +25799,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module appbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace appbar {
 					export class ViewOffsetBehavior<V>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
 						public static class: java.lang.Class<com.google.android.material.appbar.ViewOffsetBehavior<any>>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -25825,11 +25825,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module appbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace appbar {
 					export class ViewOffsetHelper {
 						public static class: java.lang.Class<com.google.android.material.appbar.ViewOffsetHelper>;
 						public constructor(view: globalAndroid.view.View);
@@ -25851,11 +25851,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module appbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace appbar {
 					export class ViewUtilsLollipop {
 						public static class: java.lang.Class<com.google.android.material.appbar.ViewUtilsLollipop>;
 					}
@@ -25865,11 +25865,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module behavior {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace behavior {
 					export class HideBottomViewOnScrollBehavior<V>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
 						public static class: java.lang.Class<com.google.android.material.behavior.HideBottomViewOnScrollBehavior<any>>;
 						public static readonly ENTER_ANIMATION_DURATION = 225;
@@ -25890,11 +25890,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module behavior {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace behavior {
 					export class SwipeDismissBehavior<V>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
 						public static class: java.lang.Class<com.google.android.material.behavior.SwipeDismissBehavior<any>>;
 						public static readonly STATE_IDLE = 0;
@@ -25916,7 +25916,7 @@ declare module com {
 						public canSwipeDismissView(view: globalAndroid.view.View): boolean;
 						public getDragState(): number;
 					}
-					export module SwipeDismissBehavior {
+					export namespace SwipeDismissBehavior {
 						export class OnDismissListener {
 							public static class: java.lang.Class<com.google.android.material.behavior.SwipeDismissBehavior.OnDismissListener>;
 							/**
@@ -25941,11 +25941,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomappbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomappbar {
 					export class BottomAppBar extends androidx.appcompat.widget.Toolbar implements androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior {
 						public static class: java.lang.Class<com.google.android.material.bottomappbar.BottomAppBar>;
 						public static readonly FAB_ALIGNMENT_MODE_CENTER = 0;
@@ -25982,7 +25982,7 @@ declare module com {
 						public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 						public getBehavior(): androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any>;
 					}
-					export module BottomAppBar {
+					export namespace BottomAppBar {
 						export class Behavior extends com.google.android.material.behavior.HideBottomViewOnScrollBehavior<com.google.android.material.bottomappbar.BottomAppBar> {
 							public static class: java.lang.Class<com.google.android.material.bottomappbar.BottomAppBar.Behavior>;
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -26031,11 +26031,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomappbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomappbar {
 					export class BottomAppBarTopEdgeTreatment extends com.google.android.material.shape.EdgeTreatment {
 						public static class: java.lang.Class<com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment>;
 						public constructor();
@@ -26048,11 +26048,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomnavigation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomnavigation {
 					export class BottomNavigationItemView implements androidx.appcompat.view.menu.MenuView.ItemView {
 						public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationItemView>;
 						public static readonly INVALID_ITEM_POSITION = -1;
@@ -26095,11 +26095,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomnavigation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomnavigation {
 					export class BottomNavigationMenu extends androidx.appcompat.view.menu.MenuBuilder {
 						public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationMenu>;
 						public static readonly MAX_ITEM_COUNT = 5;
@@ -26117,11 +26117,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomnavigation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomnavigation {
 					export class BottomNavigationMenuView implements androidx.appcompat.view.menu.MenuView {
 						public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationMenuView>;
 						public constructor(context: globalAndroid.content.Context);
@@ -26162,11 +26162,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomnavigation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomnavigation {
 					export class BottomNavigationPresenter extends androidx.appcompat.view.menu.MenuPresenter {
 						public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationPresenter>;
 						public constructor();
@@ -26195,7 +26195,7 @@ declare module com {
 						public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 						public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 					}
-					export module BottomNavigationPresenter {
+					export namespace BottomNavigationPresenter {
 						export class SavedState {
 							public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationPresenter.SavedState>;
 							public static CREATOR: globalAndroid.os.Parcelable.Creator<com.google.android.material.bottomnavigation.BottomNavigationPresenter.SavedState>;
@@ -26209,11 +26209,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomnavigation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomnavigation {
 					export class BottomNavigationView {
 						public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationView>;
 						public constructor(context: globalAndroid.content.Context);
@@ -26249,7 +26249,7 @@ declare module com {
 						public onSaveInstanceState(): globalAndroid.os.Parcelable;
 						public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 					}
-					export module BottomNavigationView {
+					export namespace BottomNavigationView {
 						export class OnNavigationItemReselectedListener {
 							public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemReselectedListener>;
 							/**
@@ -26288,11 +26288,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomnavigation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomnavigation {
 					export class LabelVisibilityMode {
 						public static class: java.lang.Class<com.google.android.material.bottomnavigation.LabelVisibilityMode>;
 						/**
@@ -26312,11 +26312,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomsheet {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomsheet {
 					export class BottomSheetBehavior<V>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
 						public static class: java.lang.Class<com.google.android.material.bottomsheet.BottomSheetBehavior<any>>;
 						public static readonly STATE_DRAGGING = 1;
@@ -26357,7 +26357,7 @@ declare module com {
 						public getState(): number;
 						public static from(view: globalAndroid.view.View): com.google.android.material.bottomsheet.BottomSheetBehavior<any>;
 					}
-					export module BottomSheetBehavior {
+					export namespace BottomSheetBehavior {
 						export abstract class BottomSheetCallback {
 							public static class: java.lang.Class<com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback>;
 							public constructor();
@@ -26394,11 +26394,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomsheet {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomsheet {
 					export class BottomSheetDialog extends androidx.appcompat.app.AppCompatDialog {
 						public static class: java.lang.Class<com.google.android.material.bottomsheet.BottomSheetDialog>;
 						public constructor(context: globalAndroid.content.Context, theme: number);
@@ -26421,11 +26421,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module bottomsheet {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace bottomsheet {
 					export class BottomSheetDialogFragment extends androidx.appcompat.app.AppCompatDialogFragment {
 						public static class: java.lang.Class<com.google.android.material.bottomsheet.BottomSheetDialogFragment>;
 						public constructor();
@@ -26439,11 +26439,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module button {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace button {
 					export class MaterialButton extends androidx.appcompat.widget.AppCompatButton {
 						public static class: java.lang.Class<com.google.android.material.button.MaterialButton>;
 						public static readonly ICON_GRAVITY_START = 1;
@@ -26503,7 +26503,7 @@ declare module com {
 						public getAutoSizeMaxTextSize(): number;
 						public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 					}
-					export module MaterialButton {
+					export namespace MaterialButton {
 						export class IconGravity {
 							public static class: java.lang.Class<com.google.android.material.button.MaterialButton.IconGravity>;
 							/**
@@ -26520,11 +26520,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module button {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace button {
 					export class MaterialButtonBackgroundDrawable {
 						public static class: java.lang.Class<com.google.android.material.button.MaterialButtonBackgroundDrawable>;
 						public setColorFilter(colorFilter: globalAndroid.graphics.ColorFilter): void;
@@ -26535,11 +26535,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module button {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace button {
 					export class MaterialButtonHelper {
 						public static class: java.lang.Class<com.google.android.material.button.MaterialButtonHelper>;
 						public constructor(button: com.google.android.material.button.MaterialButton);
@@ -26551,11 +26551,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module canvas {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace canvas {
 					export class CanvasCompat {
 						public static class: java.lang.Class<com.google.android.material.canvas.CanvasCompat>;
 						public static saveLayerAlpha(canvas: globalAndroid.graphics.Canvas, bounds: globalAndroid.graphics.RectF, alpha: number): number;
@@ -26567,11 +26567,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module card {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace card {
 					export class MaterialCardView extends androidx.cardview.widget.CardView {
 						public static class: java.lang.Class<com.google.android.material.card.MaterialCardView>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
@@ -26600,11 +26600,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module card {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace card {
 					export class MaterialCardViewHelper {
 						public static class: java.lang.Class<com.google.android.material.card.MaterialCardViewHelper>;
 						public constructor(card: com.google.android.material.card.MaterialCardView);
@@ -26616,11 +26616,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module checkbox {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace checkbox {
 					export class MaterialCheckBox extends androidx.appcompat.widget.AppCompatCheckBox {
 						public static class: java.lang.Class<com.google.android.material.checkbox.MaterialCheckBox>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -26639,11 +26639,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module chip {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace chip {
 					export class Chip extends androidx.appcompat.widget.AppCompatCheckBox implements com.google.android.material.chip.ChipDrawable.Delegate {
 						public static class: java.lang.Class<com.google.android.material.chip.Chip>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -26805,7 +26805,7 @@ declare module com {
 						public setSupportButtonTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 						public getSupportButtonTintMode(): globalAndroid.graphics.PorterDuff.Mode | null;
 					}
-					export module Chip {
+					export namespace Chip {
 						export class ChipTouchHelper extends androidx.customview.widget.ExploreByTouchHelper {
 							public static class: java.lang.Class<com.google.android.material.chip.Chip.ChipTouchHelper>;
 							public getVirtualViewAt(x: number, y: number): number;
@@ -26821,11 +26821,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module chip {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace chip {
 					export class ChipDrawable extends com.google.android.material.shape.MaterialShapeDrawable implements androidx.core.graphics.drawable.TintAwareDrawable {
 						public static class: java.lang.Class<com.google.android.material.chip.ChipDrawable>;
 						public static createFromAttributes(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number, defStyleRes: number): com.google.android.material.chip.ChipDrawable;
@@ -26973,7 +26973,7 @@ declare module com {
 						public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
 						public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 					}
-					export module ChipDrawable {
+					export namespace ChipDrawable {
 						export class Delegate {
 							public static class: java.lang.Class<com.google.android.material.chip.ChipDrawable.Delegate>;
 							/**
@@ -26992,11 +26992,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module chip {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace chip {
 					export class ChipGroup extends com.google.android.material.internal.FlowLayout {
 						public static class: java.lang.Class<com.google.android.material.chip.ChipGroup>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -27038,7 +27038,7 @@ declare module com {
 						public setSingleSelection(singleSelection: boolean): void;
 						public setSingleSelection(id: number): void;
 					}
-					export module ChipGroup {
+					export namespace ChipGroup {
 						export class CheckedStateTracker {
 							public static class: java.lang.Class<com.google.android.material.chip.ChipGroup.CheckedStateTracker>;
 							public onCheckedChanged(buttonView: globalAndroid.widget.CompoundButton, isChecked: boolean): void;
@@ -27073,11 +27073,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
 					export class CircularRevealCompat {
 						public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealCompat>;
 						public static createCircularReveal(view: com.google.android.material.circularreveal.CircularRevealWidget, centerX: number, centerY: number, endRadius: number): globalAndroid.animation.Animator;
@@ -27090,11 +27090,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
 					export class CircularRevealFrameLayout implements com.google.android.material.circularreveal.CircularRevealWidget {
 						public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealFrameLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -27123,11 +27123,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
 					export class CircularRevealGridLayout implements com.google.android.material.circularreveal.CircularRevealWidget {
 						public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealGridLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -27156,11 +27156,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
 					export class CircularRevealHelper {
 						public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealHelper>;
 						public static readonly BITMAP_SHADER = 0;
@@ -27179,7 +27179,7 @@ declare module com {
 						public draw(canvas: globalAndroid.graphics.Canvas): void;
 						public isOpaque(): boolean;
 					}
-					export module CircularRevealHelper {
+					export namespace CircularRevealHelper {
 						export class Delegate {
 							public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealHelper.Delegate>;
 							/**
@@ -27209,11 +27209,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
 					export class CircularRevealLinearLayout implements com.google.android.material.circularreveal.CircularRevealWidget {
 						public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealLinearLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -27242,11 +27242,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
 					export class CircularRevealRelativeLayout implements com.google.android.material.circularreveal.CircularRevealWidget {
 						public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealRelativeLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -27275,11 +27275,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
 					export class CircularRevealWidget extends com.google.android.material.circularreveal.CircularRevealHelper.Delegate {
 						public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealWidget>;
 						/**
@@ -27313,7 +27313,7 @@ declare module com {
 						public actualDraw(param0: globalAndroid.graphics.Canvas): void;
 						public actualIsOpaque(): boolean;
 					}
-					export module CircularRevealWidget {
+					export namespace CircularRevealWidget {
 						export class CircularRevealEvaluator extends globalAndroid.animation.TypeEvaluator<com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo> {
 							public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealWidget.CircularRevealEvaluator>;
 							public static CIRCULAR_REVEAL: globalAndroid.animation.TypeEvaluator<com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo>;
@@ -27351,12 +27351,12 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
-					export module cardview {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
+					export namespace cardview {
 						export class CircularRevealCardView extends androidx.cardview.widget.CardView implements com.google.android.material.circularreveal.CircularRevealWidget {
 							public static class: java.lang.Class<com.google.android.material.circularreveal.cardview.CircularRevealCardView>;
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
@@ -27388,12 +27388,12 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module circularreveal {
-					export module coordinatorlayout {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace circularreveal {
+					export namespace coordinatorlayout {
 						export class CircularRevealCoordinatorLayout extends androidx.coordinatorlayout.widget.CoordinatorLayout implements com.google.android.material.circularreveal.CircularRevealWidget {
 							public static class: java.lang.Class<com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>;
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
@@ -27435,11 +27435,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module color {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace color {
 					export class MaterialColors {
 						public static class: java.lang.Class<com.google.android.material.color.MaterialColors>;
 						public static readonly ALPHA_FULL = 1.0;
@@ -27461,11 +27461,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module drawable {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace drawable {
 					export class DrawableUtils {
 						public static class: java.lang.Class<com.google.android.material.drawable.DrawableUtils>;
 						public static updateTintFilter(drawable: globalAndroid.graphics.drawable.Drawable, tint: globalAndroid.content.res.ColorStateList | null, tintMode: globalAndroid.graphics.PorterDuff.Mode | null): globalAndroid.graphics.PorterDuffColorFilter | null;
@@ -27476,11 +27476,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module expandable {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace expandable {
 					export class ExpandableTransformationWidget extends com.google.android.material.expandable.ExpandableWidget {
 						public static class: java.lang.Class<com.google.android.material.expandable.ExpandableTransformationWidget>;
 						/**
@@ -27504,11 +27504,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module expandable {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace expandable {
 					export class ExpandableWidget {
 						public static class: java.lang.Class<com.google.android.material.expandable.ExpandableWidget>;
 						/**
@@ -27528,11 +27528,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module expandable {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace expandable {
 					export class ExpandableWidgetHelper {
 						public static class: java.lang.Class<com.google.android.material.expandable.ExpandableWidgetHelper>;
 						public constructor(widget: com.google.android.material.expandable.ExpandableWidget);
@@ -27549,11 +27549,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module floatingactionbutton {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace floatingactionbutton {
 					export class FloatingActionButton extends com.google.android.material.internal.VisibilityAwareImageButton implements androidx.core.view.TintableBackgroundView, androidx.core.widget.TintableImageSourceView, com.google.android.material.expandable.ExpandableTransformationWidget {
 						public static class: java.lang.Class<com.google.android.material.floatingactionbutton.FloatingActionButton>;
 						public static readonly SIZE_MINI = 1;
@@ -27647,7 +27647,7 @@ declare module com {
 						public setExpandedComponentIdHint(param0: number): void;
 						public setExpanded(param0: boolean): boolean;
 					}
-					export module FloatingActionButton {
+					export namespace FloatingActionButton {
 						export class BaseBehavior<T>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
 							public static class: java.lang.Class<com.google.android.material.floatingactionbutton.FloatingActionButton.BaseBehavior<any>>;
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -27706,17 +27706,17 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module floatingactionbutton {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace floatingactionbutton {
 					export class FloatingActionButtonImpl {
 						public static class: java.lang.Class<com.google.android.material.floatingactionbutton.FloatingActionButtonImpl>;
 						public addOnHideAnimationListener(listener: globalAndroid.animation.Animator.AnimatorListener): void;
 						public removeOnHideAnimationListener(listener: globalAndroid.animation.Animator.AnimatorListener): void;
 					}
-					export module FloatingActionButtonImpl {
+					export namespace FloatingActionButtonImpl {
 						export class DisabledElevationAnimation extends com.google.android.material.floatingactionbutton.FloatingActionButtonImpl.ShadowAnimatorImpl {
 							public static class: java.lang.Class<com.google.android.material.floatingactionbutton.FloatingActionButtonImpl.DisabledElevationAnimation>;
 							public getTargetShadowSize(): number;
@@ -27772,16 +27772,16 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module floatingactionbutton {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace floatingactionbutton {
 					export class FloatingActionButtonImplLollipop extends com.google.android.material.floatingactionbutton.FloatingActionButtonImpl {
 						public static class: java.lang.Class<com.google.android.material.floatingactionbutton.FloatingActionButtonImplLollipop>;
 						public getElevation(): number;
 					}
-					export module FloatingActionButtonImplLollipop {
+					export namespace FloatingActionButtonImplLollipop {
 						export class AlwaysStatefulGradientDrawable {
 							public static class: java.lang.Class<com.google.android.material.floatingactionbutton.FloatingActionButtonImplLollipop.AlwaysStatefulGradientDrawable>;
 							public isStateful(): boolean;
@@ -27793,11 +27793,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class BaselineLayout {
 						public static class: java.lang.Class<com.google.android.material.internal.BaselineLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -27813,11 +27813,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class CheckableImageButton extends androidx.appcompat.widget.AppCompatImageButton {
 						public static class: java.lang.Class<com.google.android.material.internal.CheckableImageButton>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -27842,11 +27842,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class CircularBorderDrawable {
 						public static class: java.lang.Class<com.google.android.material.internal.CircularBorderDrawable>;
 						public constructor();
@@ -27864,7 +27864,7 @@ declare module com {
 						public isStateful(): boolean;
 						public onStateChange(state: androidNative.Array<number>): boolean;
 					}
-					export module CircularBorderDrawable {
+					export namespace CircularBorderDrawable {
 						export class CircularBorderState {
 							public static class: java.lang.Class<com.google.android.material.internal.CircularBorderDrawable.CircularBorderState>;
 							public newDrawable(): globalAndroid.graphics.drawable.Drawable;
@@ -27877,11 +27877,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class CircularBorderDrawableLollipop extends com.google.android.material.internal.CircularBorderDrawable {
 						public static class: java.lang.Class<com.google.android.material.internal.CircularBorderDrawableLollipop>;
 						public constructor();
@@ -27893,11 +27893,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class CollapsingTextHelper {
 						public static class: java.lang.Class<com.google.android.material.internal.CollapsingTextHelper>;
 						public constructor(view: globalAndroid.view.View);
@@ -27945,11 +27945,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class ContextUtils {
 						public static class: java.lang.Class<com.google.android.material.internal.ContextUtils>;
 						public constructor();
@@ -27961,11 +27961,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class DescendantOffsetUtils {
 						public static class: java.lang.Class<com.google.android.material.internal.DescendantOffsetUtils>;
 						public constructor();
@@ -27978,11 +27978,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class DrawableUtils {
 						public static class: java.lang.Class<com.google.android.material.internal.DrawableUtils>;
 						public static setContainerConstantState(drawable: globalAndroid.graphics.drawable.DrawableContainer, constantState: globalAndroid.graphics.drawable.Drawable.ConstantState): boolean;
@@ -27993,11 +27993,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class Experimental {
 						public static class: java.lang.Class<com.google.android.material.internal.Experimental>;
 						/**
@@ -28015,11 +28015,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class FlowLayout {
 						public static class: java.lang.Class<com.google.android.material.internal.FlowLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -28041,11 +28041,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class ForegroundLinearLayout extends androidx.appcompat.widget.LinearLayoutCompat {
 						public static class: java.lang.Class<com.google.android.material.internal.ForegroundLinearLayout>;
 						public mForegroundInPadding: boolean;
@@ -28071,11 +28071,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class NavigationMenu extends androidx.appcompat.view.menu.MenuBuilder {
 						public static class: java.lang.Class<com.google.android.material.internal.NavigationMenu>;
 						public constructor(context: globalAndroid.content.Context);
@@ -28091,11 +28091,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class NavigationMenuItemView extends com.google.android.material.internal.ForegroundLinearLayout implements androidx.appcompat.view.menu.MenuView.ItemView {
 						public static class: java.lang.Class<com.google.android.material.internal.NavigationMenuItemView>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -28133,11 +28133,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class NavigationMenuPresenter extends androidx.appcompat.view.menu.MenuPresenter {
 						public static class: java.lang.Class<com.google.android.material.internal.NavigationMenuPresenter>;
 						public constructor();
@@ -28185,7 +28185,7 @@ declare module com {
 						public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 						public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 					}
-					export module NavigationMenuPresenter {
+					export namespace NavigationMenuPresenter {
 						export class HeaderViewHolder extends com.google.android.material.internal.NavigationMenuPresenter.ViewHolder {
 							public static class: java.lang.Class<com.google.android.material.internal.NavigationMenuPresenter.HeaderViewHolder>;
 							public constructor(itemView: globalAndroid.view.View);
@@ -28257,11 +28257,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class NavigationMenuView extends androidx.recyclerview.widget.RecyclerView implements androidx.appcompat.view.menu.MenuView {
 						public static class: java.lang.Class<com.google.android.material.internal.NavigationMenuView>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
@@ -28295,11 +28295,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class NavigationSubMenu extends androidx.appcompat.view.menu.SubMenuBuilder {
 						public static class: java.lang.Class<com.google.android.material.internal.NavigationSubMenu>;
 						public constructor(context: globalAndroid.content.Context, parentMenu: androidx.appcompat.view.menu.MenuBuilder, item: androidx.appcompat.view.menu.MenuItemImpl);
@@ -28314,11 +28314,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class ParcelableSparseArray extends globalAndroid.util.SparseArray<globalAndroid.os.Parcelable> implements globalAndroid.os.Parcelable {
 						public static class: java.lang.Class<com.google.android.material.internal.ParcelableSparseArray>;
 						public static CREATOR: globalAndroid.os.Parcelable.Creator<com.google.android.material.internal.ParcelableSparseArray>;
@@ -28333,11 +28333,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class ScrimInsetsFrameLayout {
 						public static class: java.lang.Class<com.google.android.material.internal.ScrimInsetsFrameLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -28354,11 +28354,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class StateListAnimator {
 						public static class: java.lang.Class<com.google.android.material.internal.StateListAnimator>;
 						public constructor();
@@ -28366,7 +28366,7 @@ declare module com {
 						public setState(state: androidNative.Array<number>): void;
 						public jumpToCurrentState(): void;
 					}
-					export module StateListAnimator {
+					export namespace StateListAnimator {
 						export class Tuple {
 							public static class: java.lang.Class<com.google.android.material.internal.StateListAnimator.Tuple>;
 						}
@@ -28377,11 +28377,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class TextScale extends androidx.transition.Transition {
 						public static class: java.lang.Class<com.google.android.material.internal.TextScale>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -28396,11 +28396,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class ThemeEnforcement {
 						public static class: java.lang.Class<com.google.android.material.internal.ThemeEnforcement>;
 						public static obtainStyledAttributes(context: globalAndroid.content.Context, set: globalAndroid.util.AttributeSet, attrs: androidNative.Array<number>, defStyleAttr: number, defStyleRes: number, textAppearanceResIndices: androidNative.Array<number>): globalAndroid.content.res.TypedArray;
@@ -28417,11 +28417,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class TouchDelegateGroup {
 						public static class: java.lang.Class<com.google.android.material.internal.TouchDelegateGroup>;
 						public constructor(ancestor: globalAndroid.view.View);
@@ -28437,11 +28437,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class TouchTargetUtils {
 						public static class: java.lang.Class<com.google.android.material.internal.TouchTargetUtils>;
 						public constructor();
@@ -28456,11 +28456,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class ViewUtils {
 						public static class: java.lang.Class<com.google.android.material.internal.ViewUtils>;
 						public constructor();
@@ -28473,11 +28473,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace internal {
 					export class VisibilityAwareImageButton {
 						public static class: java.lang.Class<com.google.android.material.internal.VisibilityAwareImageButton>;
 						public constructor(context: globalAndroid.content.Context);
@@ -28493,11 +28493,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module math {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace math {
 					export class MathUtils {
 						public static class: java.lang.Class<com.google.android.material.math.MathUtils>;
 						public static readonly DEFAULT_EPSILON = 9.999999747378752E-5;
@@ -28512,11 +28512,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module navigation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace navigation {
 					export class NavigationView extends com.google.android.material.internal.ScrimInsetsFrameLayout {
 						public static class: java.lang.Class<com.google.android.material.navigation.NavigationView>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -28553,7 +28553,7 @@ declare module com {
 						public setItemTextAppearance(resId: number): void;
 						public setItemIconSize(iconSize: number): void;
 					}
-					export module NavigationView {
+					export namespace NavigationView {
 						export class OnNavigationItemSelectedListener {
 							public static class: java.lang.Class<com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener>;
 							/**
@@ -28581,11 +28581,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module radiobutton {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace radiobutton {
 					export class MaterialRadioButton extends androidx.appcompat.widget.AppCompatRadioButton {
 						public static class: java.lang.Class<com.google.android.material.radiobutton.MaterialRadioButton>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -28604,11 +28604,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module resources {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace resources {
 					export class CancelableFontCallback extends com.google.android.material.resources.TextAppearanceFontCallback {
 						public static class: java.lang.Class<com.google.android.material.resources.CancelableFontCallback>;
 						public constructor();
@@ -28617,7 +28617,7 @@ declare module com {
 						public onFontRetrievalFailed(reason: number): void;
 						public cancel(): void;
 					}
-					export module CancelableFontCallback {
+					export namespace CancelableFontCallback {
 						export class ApplyFont {
 							public static class: java.lang.Class<com.google.android.material.resources.CancelableFontCallback.ApplyFont>;
 							/**
@@ -28636,11 +28636,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module resources {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace resources {
 					export class MaterialAttributes {
 						public static class: java.lang.Class<com.google.android.material.resources.MaterialAttributes>;
 						public constructor();
@@ -28653,11 +28653,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module resources {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace resources {
 					export class MaterialResources {
 						public static class: java.lang.Class<com.google.android.material.resources.MaterialResources>;
 						public static getColorStateList(context: globalAndroid.content.Context, attributes: globalAndroid.content.res.TypedArray, index: number): globalAndroid.content.res.ColorStateList | null;
@@ -28671,11 +28671,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module resources {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace resources {
 					export class TextAppearance {
 						public static class: java.lang.Class<com.google.android.material.resources.TextAppearance>;
 						public textSize: number;
@@ -28705,11 +28705,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module resources {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace resources {
 					export class TextAppearanceConfig {
 						public static class: java.lang.Class<com.google.android.material.resources.TextAppearanceConfig>;
 						public constructor();
@@ -28722,11 +28722,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module resources {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace resources {
 					export abstract class TextAppearanceFontCallback {
 						public static class: java.lang.Class<com.google.android.material.resources.TextAppearanceFontCallback>;
 						public constructor();
@@ -28739,11 +28739,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module ripple {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace ripple {
 					export class RippleUtils {
 						public static class: java.lang.Class<com.google.android.material.ripple.RippleUtils>;
 						public static USE_FRAMEWORK_RIPPLE: boolean;
@@ -28755,11 +28755,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shadow {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shadow {
 					export class ShadowDrawableWrapper extends androidx.appcompat.graphics.drawable.DrawableWrapper {
 						public static class: java.lang.Class<com.google.android.material.shadow.ShadowDrawableWrapper>;
 						public constructor(drawable: globalAndroid.graphics.drawable.Drawable);
@@ -28789,11 +28789,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shadow {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shadow {
 					export class ShadowRenderer {
 						public static class: java.lang.Class<com.google.android.material.shadow.ShadowRenderer>;
 						public constructor();
@@ -28809,11 +28809,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shadow {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shadow {
 					export class ShadowViewDelegate {
 						public static class: java.lang.Class<com.google.android.material.shadow.ShadowViewDelegate>;
 						/**
@@ -28837,11 +28837,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class CornerFamily {
 						public static class: java.lang.Class<com.google.android.material.shape.CornerFamily>;
 						/**
@@ -28859,11 +28859,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class CornerTreatment {
 						public static class: java.lang.Class<com.google.android.material.shape.CornerTreatment>;
 						public cornerSize: number;
@@ -28879,11 +28879,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class CutCornerTreatment extends com.google.android.material.shape.CornerTreatment {
 						public static class: java.lang.Class<com.google.android.material.shape.CutCornerTreatment>;
 						public constructor();
@@ -28896,11 +28896,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class EdgeTreatment {
 						public static class: java.lang.Class<com.google.android.material.shape.EdgeTreatment>;
 						public constructor();
@@ -28912,11 +28912,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class InterpolateOnScrollPositionChangeHelper {
 						public static class: java.lang.Class<com.google.android.material.shape.InterpolateOnScrollPositionChangeHelper>;
 						public constructor(shapedView: globalAndroid.view.View, materialShapeDrawable: com.google.android.material.shape.MaterialShapeDrawable, containingScrollView: globalAndroid.widget.ScrollView);
@@ -28932,11 +28932,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class MaterialShapeDrawable implements androidx.core.graphics.drawable.TintAwareDrawable {
 						public static class: java.lang.Class<com.google.android.material.shape.MaterialShapeDrawable>;
 						public static readonly SHADOW_COMPAT_MODE_DEFAULT = 0;
@@ -29015,7 +29015,7 @@ declare module com {
 						public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
 						public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 					}
-					export module MaterialShapeDrawable {
+					export namespace MaterialShapeDrawable {
 						export class CompatibilityShadowMode {
 							public static class: java.lang.Class<com.google.android.material.shape.MaterialShapeDrawable.CompatibilityShadowMode>;
 							/**
@@ -29037,11 +29037,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class MaterialShapeUtils {
 						public static class: java.lang.Class<com.google.android.material.shape.MaterialShapeUtils>;
 						public constructor();
@@ -29052,11 +29052,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class RoundedCornerTreatment extends com.google.android.material.shape.CornerTreatment {
 						public static class: java.lang.Class<com.google.android.material.shape.RoundedCornerTreatment>;
 						public constructor();
@@ -29069,11 +29069,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class ShapeAppearanceModel {
 						public static class: java.lang.Class<com.google.android.material.shape.ShapeAppearanceModel>;
 						public constructor();
@@ -29113,11 +29113,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class ShapePath {
 						public static class: java.lang.Class<com.google.android.material.shape.ShapePath>;
 						public startX: number;
@@ -29132,7 +29132,7 @@ declare module com {
 						public addArc(left: number, top: number, right: number, bottom: number, startAngle: number, sweepAngle: number): void;
 						public applyToPath(transform: globalAndroid.graphics.Matrix, path: globalAndroid.graphics.Path): void;
 					}
-					export module ShapePath {
+					export namespace ShapePath {
 						export class ArcShadowOperation extends com.google.android.material.shape.ShapePath.ShadowCompatOperation {
 							public static class: java.lang.Class<com.google.android.material.shape.ShapePath.ArcShadowOperation>;
 							public constructor(operation: com.google.android.material.shape.ShapePath.PathArcOperation);
@@ -29186,11 +29186,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class ShapePathModel extends com.google.android.material.shape.ShapeAppearanceModel {
 						public static class: java.lang.Class<com.google.android.material.shape.ShapePathModel>;
 						public constructor(shapeAppearanceModel: com.google.android.material.shape.ShapeAppearanceModel);
@@ -29204,11 +29204,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module shape {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace shape {
 					export class TriangleEdgeTreatment extends com.google.android.material.shape.EdgeTreatment {
 						public static class: java.lang.Class<com.google.android.material.shape.TriangleEdgeTreatment>;
 						public constructor();
@@ -29221,11 +29221,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module snackbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace snackbar {
 					export abstract class BaseTransientBottomBar<B>  extends java.lang.Object {
 						public static class: java.lang.Class<com.google.android.material.snackbar.BaseTransientBottomBar<any>>;
 						public static readonly ANIMATION_MODE_SLIDE = 0;
@@ -29257,7 +29257,7 @@ declare module com {
 						public isShownOrQueued(): boolean;
 						public getNewBehavior(): com.google.android.material.behavior.SwipeDismissBehavior<any>;
 					}
-					export module BaseTransientBottomBar {
+					export namespace BaseTransientBottomBar {
 						export class AnimationMode {
 							public static class: java.lang.Class<com.google.android.material.snackbar.BaseTransientBottomBar.AnimationMode>;
 							/**
@@ -29278,7 +29278,7 @@ declare module com {
 							public onDismissed(transientBottomBar: B, event: number): void;
 							public onShown(transientBottomBar: B): void;
 						}
-						export module BaseCallback {
+						export namespace BaseCallback {
 							export class DismissEvent {
 								public static class: java.lang.Class<com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback.DismissEvent>;
 								/**
@@ -29365,11 +29365,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module snackbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace snackbar {
 					export class ContentViewCallback {
 						public static class: java.lang.Class<com.google.android.material.snackbar.ContentViewCallback>;
 						/**
@@ -29389,11 +29389,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module snackbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace snackbar {
 					export class Snackbar extends com.google.android.material.snackbar.BaseTransientBottomBar<com.google.android.material.snackbar.Snackbar> {
 						public static class: java.lang.Class<com.google.android.material.snackbar.Snackbar>;
 						public static readonly LENGTH_INDEFINITE = -2;
@@ -29415,7 +29415,7 @@ declare module com {
 						/** @deprecated */
 						public setCallback(callback: com.google.android.material.snackbar.Snackbar.Callback): com.google.android.material.snackbar.Snackbar;
 					}
-					export module Snackbar {
+					export namespace Snackbar {
 						export class Callback extends com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback<com.google.android.material.snackbar.Snackbar> {
 							public static class: java.lang.Class<com.google.android.material.snackbar.Snackbar.Callback>;
 							public static readonly DISMISS_EVENT_SWIPE = 0;
@@ -29451,11 +29451,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module snackbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace snackbar {
 					export class SnackbarContentLayout implements com.google.android.material.snackbar.ContentViewCallback {
 						public static class: java.lang.Class<com.google.android.material.snackbar.SnackbarContentLayout>;
 						public constructor(context: globalAndroid.content.Context);
@@ -29475,11 +29475,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module snackbar {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace snackbar {
 					export class SnackbarManager {
 						public static class: java.lang.Class<com.google.android.material.snackbar.SnackbarManager>;
 						public show(duration: number, callback: com.google.android.material.snackbar.SnackbarManager.Callback): void;
@@ -29491,7 +29491,7 @@ declare module com {
 						public isCurrent(callback: com.google.android.material.snackbar.SnackbarManager.Callback): boolean;
 						public isCurrentOrNext(callback: com.google.android.material.snackbar.SnackbarManager.Callback): boolean;
 					}
-					export module SnackbarManager {
+					export namespace SnackbarManager {
 						export class Callback {
 							public static class: java.lang.Class<com.google.android.material.snackbar.SnackbarManager.Callback>;
 							/**
@@ -29515,11 +29515,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module stateful {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace stateful {
 					export class ExtendableSavedState extends androidx.customview.view.AbsSavedState {
 						public static class: java.lang.Class<com.google.android.material.stateful.ExtendableSavedState>;
 						public extendableStates: androidx.collection.SimpleArrayMap<string,globalAndroid.os.Bundle>;
@@ -29536,11 +29536,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module switchmaterial {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace switchmaterial {
 					export class SwitchMaterial extends androidx.appcompat.widget.SwitchCompat {
 						public static class: java.lang.Class<com.google.android.material.switchmaterial.SwitchMaterial>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -29555,11 +29555,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module tabs {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace tabs {
 					export class TabItem {
 						public static class: java.lang.Class<com.google.android.material.tabs.TabItem>;
 						public text: string;
@@ -29574,11 +29574,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module tabs {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace tabs {
 					export class TabLayout {
 						public static class: java.lang.Class<com.google.android.material.tabs.TabLayout>;
 						public static readonly MODE_SCROLLABLE = 0;
@@ -29657,7 +29657,7 @@ declare module com {
 						public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
 						public generateLayoutParams(attrs: globalAndroid.util.AttributeSet): globalAndroid.widget.FrameLayout.LayoutParams;
 					}
-					export module TabLayout {
+					export namespace TabLayout {
 						export class AdapterChangeListener extends androidx.viewpager.widget.ViewPager.OnAdapterChangeListener {
 							public static class: java.lang.Class<com.google.android.material.tabs.TabLayout.AdapterChangeListener>;
 							public onAdapterChanged(viewPager: androidx.viewpager.widget.ViewPager, oldAdapter: androidx.viewpager.widget.PagerAdapter | null, newAdapter: androidx.viewpager.widget.PagerAdapter | null): void;
@@ -29804,11 +29804,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module textfield {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace textfield {
 					export class CutoutDrawable {
 						public static class: java.lang.Class<com.google.android.material.textfield.CutoutDrawable>;
 						public draw(canvas: globalAndroid.graphics.Canvas): void;
@@ -29819,11 +29819,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module textfield {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace textfield {
 					export class IndicatorViewController {
 						public static class: java.lang.Class<com.google.android.material.textfield.IndicatorViewController>;
 						public constructor(textInputView: com.google.android.material.textfield.TextInputLayout);
@@ -29834,11 +29834,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module textfield {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace textfield {
 					export class TextInputEditText extends androidx.appcompat.widget.AppCompatEditText {
 						public static class: java.lang.Class<com.google.android.material.textfield.TextInputEditText>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -29857,11 +29857,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module textfield {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace textfield {
 					export class TextInputLayout {
 						public static class: java.lang.Class<com.google.android.material.textfield.TextInputLayout>;
 						public static readonly BOX_BACKGROUND_NONE = 0;
@@ -29936,7 +29936,7 @@ declare module com {
 						public onLayout(changed: boolean, left: number, top: number, right: number, bottom: number): void;
 						public drawableStateChanged(): void;
 					}
-					export module TextInputLayout {
+					export namespace TextInputLayout {
 						export class comgoogleandroidmaterialtextfieldTextInputLayoutAccessibilityDelegate extends androidx.core.view.AccessibilityDelegateCompat {
 							public static class: java.lang.Class<com.google.android.material.textfield.TextInputLayout.AccessibilityDelegate>;
 							public constructor();
@@ -29968,11 +29968,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module theme {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace theme {
 					export class MaterialComponentsViewInflater extends androidx.appcompat.app.AppCompatViewInflater {
 						public static class: java.lang.Class<com.google.android.material.theme.MaterialComponentsViewInflater>;
 						public constructor();
@@ -29986,11 +29986,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module transformation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace transformation {
 					export abstract class ExpandableBehavior extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<globalAndroid.view.View> {
 						public static class: java.lang.Class<com.google.android.material.transformation.ExpandableBehavior>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -30008,11 +30008,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module transformation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace transformation {
 					export abstract class ExpandableTransformationBehavior extends com.google.android.material.transformation.ExpandableBehavior {
 						public static class: java.lang.Class<com.google.android.material.transformation.ExpandableTransformationBehavior>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -30026,11 +30026,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module transformation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace transformation {
 					export abstract class FabTransformationBehavior extends com.google.android.material.transformation.ExpandableTransformationBehavior {
 						public static class: java.lang.Class<com.google.android.material.transformation.FabTransformationBehavior>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -30040,7 +30040,7 @@ declare module com {
 						public onCreateExpandedStateChangeAnimation(dependency: globalAndroid.view.View, child: globalAndroid.view.View, expanded: boolean, isAnimating: boolean): globalAndroid.animation.AnimatorSet;
 						public onCreateMotionSpec(param0: globalAndroid.content.Context, param1: boolean): com.google.android.material.transformation.FabTransformationBehavior.FabTransformationSpec;
 					}
-					export module FabTransformationBehavior {
+					export namespace FabTransformationBehavior {
 						export class FabTransformationSpec {
 							public static class: java.lang.Class<com.google.android.material.transformation.FabTransformationBehavior.FabTransformationSpec>;
 							public timings: com.google.android.material.animation.MotionSpec;
@@ -30054,11 +30054,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module transformation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace transformation {
 					export class FabTransformationScrimBehavior extends com.google.android.material.transformation.ExpandableTransformationBehavior {
 						public static class: java.lang.Class<com.google.android.material.transformation.FabTransformationScrimBehavior>;
 						public static readonly EXPAND_DELAY = 75;
@@ -30077,11 +30077,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module transformation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace transformation {
 					export class FabTransformationSheetBehavior extends com.google.android.material.transformation.FabTransformationBehavior {
 						public static class: java.lang.Class<com.google.android.material.transformation.FabTransformationSheetBehavior>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -30095,11 +30095,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module transformation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace transformation {
 					export class TransformationChildCard extends com.google.android.material.circularreveal.cardview.CircularRevealCardView {
 						public static class: java.lang.Class<com.google.android.material.transformation.TransformationChildCard>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
@@ -30122,11 +30122,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module android {
-			export module material {
-				export module transformation {
+declare namespace com {
+	export namespace google {
+		export namespace android {
+			export namespace material {
+				export namespace transformation {
 					export class TransformationChildLayout extends com.google.android.material.circularreveal.CircularRevealFrameLayout {
 						public static class: java.lang.Class<com.google.android.material.transformation.TransformationChildLayout>;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);

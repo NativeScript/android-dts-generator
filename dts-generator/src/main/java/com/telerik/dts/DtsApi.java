@@ -524,7 +524,7 @@ public class DtsApi {
     private int openPackage(JavaClass currClass) {
         List<String> wanted = enclosingNamespaces(currClass);
         for (int idx = commonPrefixLength(wanted); idx < wanted.size(); idx++) {
-            sbContent.appendln(getTabs(idx) + (idx == 0 ? "declare " : "export ") + "module " + wanted.get(idx) + " {");
+            sbContent.appendln(getTabs(idx) + (idx == 0 ? "declare " : "export ") + "namespace " + wanted.get(idx) + " {");
             openNamespaces.add(wanted.get(idx));
         }
         return openNamespaces.size();
