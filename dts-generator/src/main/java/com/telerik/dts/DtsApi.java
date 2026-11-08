@@ -63,7 +63,6 @@ public class DtsApi {
 
     private StringBuilder2 sbContent;
     private Set<String> references;
-    private JavaClass prevClass;
     private String currentFileClassname;
     private Set<String> baseMethodNames;
     private List<Method> baseMethods;
@@ -73,6 +72,7 @@ public class DtsApi {
     private boolean nullableUnknownTypes;
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
+    private final List<String> openNamespaces = new ArrayList<>();
     private int indent = 0;
     private boolean allGenericImplements;
     private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
@@ -126,8 +126,6 @@ public class DtsApi {
     }
 
     public String generateDtsContent(List<JavaClass> javaClasses) {
-        this.prevClass = null;
-
         if ((javaClasses != null) && (javaClasses.size() > 0)) {
             references = new HashSet<>();
             sbContent = new StringBuilder2();
@@ -163,7 +161,8 @@ public class DtsApi {
                         currentFileClassname.contains(".debugger.") ||
                         currentFileClassname.endsWith("package-info") ||
                         currentFileClassname.endsWith("module-info") ||
-                        currentFileClassname.endsWith("Kt")) {
+                        currentFileClassname.endsWith("Kt") ||
+                        hasEmptyNameSegment(currentFileClassname)) {
                     continue;
                 }
 
@@ -179,8 +178,8 @@ public class DtsApi {
                 boolean isInterface = currClass.isInterface();
                 boolean isAbstract = currClass.isAbstract();
 
-                this.indent = closePackage(this.prevClass, currClass);
-                this.indent = openPackage(this.prevClass, currClass);
+                this.indent = closePackage(currClass);
+                this.indent = openPackage(currClass);
 
                 String tabs = getTabs(this.indent);
 
@@ -262,9 +261,8 @@ public class DtsApi {
                     String innerClassAlias = "export type " + getSimpleClassname(currClass) + " = " + getFullClassNameConcatenated(currClass);
                     sbContent.appendln(tabs + innerClassAlias);
                 }
-                this.prevClass = currClass;
             }
-            closePackage(prevClass, null);
+            closePackage(null);
             // process class scope end
 
             String[] refs = references.toArray(new String[references.size()]);
@@ -502,101 +500,39 @@ public class DtsApi {
         return className;
     }
 
-    private int closePackage(JavaClass prevClass, JavaClass currClass) {
-        int indent = 0;
-
-        if (prevClass == null) {
-            return indent;
+    // Any class in a nesting chain can be skipped (internal, obfuscated, synthetic), so the previous
+    // class says nothing reliable about which namespaces are open.
+    private int closePackage(JavaClass currClass) {
+        List<String> wanted = currClass == null ? Collections.emptyList() : enclosingNamespaces(currClass);
+        int common = commonPrefixLength(wanted);
+        while (openNamespaces.size() > common) {
+            openNamespaces.remove(openNamespaces.size() - 1);
+            sbContent.appendln(getTabs(openNamespaces.size()) + "}");
         }
-
-        String prevClassName = prevClass.getClassName();
-        int prevDotCount = prevClassName.length() - prevClassName.replace(".", "").length();
-        int prevDollarCount = prevClassName.length() - prevClassName.replace("$", "").length();
-        int prevCount = prevDotCount + prevDollarCount;
-
-        if (currClass == null) {
-            indent = prevCount;
-            while (indent > 0) {
-                String tabs = getTabs(--indent);
-                sbContent.appendln(tabs + "}");
-            }
-            return indent;
-        }
-
-        String currClassName = currClass.getClassName();
-        int currDotCount = currClassName.length() - currClassName.replace(".", "").length();
-        int currDollarCount = currClassName.length() - currClassName.replace("$", "").length();
-        int currCount = currDotCount + currDollarCount;
-
-        while (prevCount > currCount) {
-            String tabs = getTabs(--prevCount);
-            sbContent.appendln(tabs + "}");
-        }
-
-        boolean isNested = isNested(currClass);
-
-        if (!isNested) {
-            throw new UnsupportedOperationException("TODO: implement");
-            // String prevClassName = prevClass.getClassName();
-            // int dotCount = prevClassName.length() -
-            // prevClassName.replace(".", "").length();
-            // int dollarCount = prevClassName.length() -
-            // prevClassName.replace("$", "").length();
-            // indent = dotCount + dollarCount;
-            //
-            // String[] prevParts = prevClassName.replace('$',
-            // '.').split("\\.");
-            // String[] currParts = currClass.getClassName().replace('$',
-            // '.').split("\\.");
-            //
-            // int diffIdx = 0;
-            // while ((diffIdx < prevParts.length) && (diffIdx <
-            // currParts.length) &&
-            // prevParts[diffIdx].equals(currParts[diffIdx])) {
-            // ++diffIdx;
-            // }
-            //
-            // int count = prevParts.length - diffIdx - 1;
-            // while (count-- > 0) {
-            // String tabs = getTabs(--indent);
-            // ps.println(tabs + "}");
-            // }
-        }
-
-        return indent;
+        return openNamespaces.size();
     }
 
-    private int openPackage(JavaClass prevClass, JavaClass currClass) {
-        int indent = 0;
-
-        String prevClassName = (prevClass != null) ? prevClass.getClassName() : "";
-        String[] prevParts = prevClassName.replace('$', '.').split("\\.");
-        String[] currParts = currClass.getClassName().replace('$', '.').split("\\.");
-
-        int diffIdx = 0;
-        while ((diffIdx < prevParts.length) && (diffIdx < currParts.length)
-                && prevParts[diffIdx].equals(currParts[diffIdx])) {
-            ++diffIdx;
+    private int openPackage(JavaClass currClass) {
+        List<String> wanted = enclosingNamespaces(currClass);
+        for (int idx = commonPrefixLength(wanted); idx < wanted.size(); idx++) {
+            sbContent.appendln(getTabs(idx) + (idx == 0 ? "declare " : "export ") + "module " + wanted.get(idx) + " {");
+            openNamespaces.add(wanted.get(idx));
         }
+        return openNamespaces.size();
+    }
 
-        indent = diffIdx;
-        for (int idx = diffIdx; idx < currParts.length - 1; idx++) {
-            ++indent;
-            String tabs = getTabs(idx);
-            if (idx == 0) {
-                sbContent.append(tabs + "declare ");
-            } else {
-                sbContent.append(tabs + "export ");
-            }
-            sbContent.appendln("module " + currParts[idx] + " {");
+    private List<String> enclosingNamespaces(JavaClass javaClass) {
+        String[] parts = javaClass.getClassName().split("[.$]");
+        return Arrays.asList(parts).subList(0, parts.length - 1);
+    }
+
+    private int commonPrefixLength(List<String> wanted) {
+        int common = 0;
+        while (common < openNamespaces.size() && common < wanted.size()
+                && openNamespaces.get(common).equals(wanted.get(common))) {
+            common++;
         }
-
-        if (isNested(currClass) && (prevParts.length < currParts.length)) {
-            String tabs = getTabs(prevParts.length - 1);
-            sbContent.appendln(tabs + "export module " + prevParts[prevParts.length - 1] + " {");
-        }
-
-        return indent;
+        return common;
     }
 
     private void processInterfaceConstructor(JavaClass classInterface, TypeDefinition typeDefinition, List<Method> allInterfacesMethods) {
@@ -1249,6 +1185,10 @@ public class DtsApi {
             }
             ObjectType objType = (ObjectType) type;
             String typeName = objType.getClassName();
+            if (hasEmptyNameSegment(typeName)) {
+                tsType.append("any");
+                return;
+            }
             if (typeName.contains("$")) {
                 typeName = typeName.replaceAll("\\$", "\\.");
             }
@@ -1374,9 +1314,15 @@ public class DtsApi {
     }
 
     // HELPER METHODS
-    private boolean isNested(JavaClass javaClass) {
-        boolean isNested = javaClass.getClassName().contains("$");
-        return isNested;
+    // A name like Foo$$serializer (kotlinx.serialization) has an empty segment between the two
+    // separators, which no namespace path can spell.
+    private static boolean hasEmptyNameSegment(String binaryName) {
+        for (String part : binaryName.split("[.$]", -1)) {
+            if (part.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String getSimpleClassname(JavaClass javaClass) {
