@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /// <reference path="android-declarations.d.ts"/>
 
 declare namespace android {

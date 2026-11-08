@@ -60,8 +60,10 @@ public class Generator {
             DtsApi.loadGenerics(inputGenericsFile);
         }
 
+        // Generated overloads and namespace merges trip lint rules no one can act on in this file.
+        this.fileHelper.writeToFile("/* eslint-disable */\n", this.outFileName, false);
         if(!this.skipDeclarations) {
-            this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, false);
+            this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, true);
         }
 
         while (ClassRepo.hasNext()) {
