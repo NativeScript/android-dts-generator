@@ -980,35 +980,18 @@ public class DtsApi {
     }
 
     private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
-        LocalVariableTable table = m.getLocalVariableTable();
-        LocalVariable[] variables = table != null ? table.getLocalVariableTable() : null;
+        Type[] types = this.getArgumentTypes(m);
+        String[] names = getParameterNames(m, types.length);
 
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         int idx = 0;
-        for (Type type : this.getArgumentTypes(m)) {
+        for (Type type : types) {
             if (idx > 0) {
                 sb.append(", ");
             }
 
-            int localVarIndex = m.isStatic() ? idx : idx + 1; // skip "this" variable name
-            LocalVariable localVariable = variables != null && variables.length > localVarIndex
-                    ? variables[localVarIndex]
-                    : null;
-
-            if (localVariable != null) {
-                String name = localVariable.getName();
-                if (reservedJsKeywords.contains(name)) {
-                    System.out.println(String.format("Appending _ to reserved JS keyword %s", name));
-                    sb.append(name + "_");
-                } else {
-                    sb.append(name);
-                }
-            } else {
-                // interface declarations will fallback to paramN since they don't have names in the bytecode
-                sb.append("param");
-                sb.append(idx);
-            }
+            sb.append(names[idx]);
             int paramIndex = idx;
             idx++;
             sb.append(": ");
@@ -1027,6 +1010,65 @@ public class DtsApi {
         sb.append(")");
         String sig = sb.toString();
         return sig;
+    }
+
+
+    // Parameter names come from the LocalVariableTable entry that occupies the parameter's slot at
+    // pc 0. The table's array order is not parameter order: Kotlin inlining puts locals such as
+    // $i$a$-apply-... ahead of the parameters.
+    private String[] getParameterNames(Method m, int count) {
+        LocalVariableTable table = m.getLocalVariableTable();
+        Type[] descriptorTypes = m.getArgumentTypes();
+        // The generic signature leaves out the synthetic leading parameters javac adds (the outer
+        // instance of an inner class, an enum's name and ordinal). Only the signature's parameters
+        // are declared, but the synthetic ones still take up slots.
+        int synthetic = Math.max(0, descriptorTypes.length - count);
+
+        int slot = m.isStatic() ? 0 : 1;
+        for (int i = 0; i < synthetic; i++) {
+            slot += descriptorTypes[i].getSize();
+        }
+
+        String[] names = new String[count];
+        Set<String> used = new HashSet<>();
+        for (int idx = 0; idx < count; idx++) {
+            LocalVariable variable = table != null ? table.getLocalVariable(slot, 0) : null;
+            String name = parameterName(m, variable != null ? variable.getName() : null, idx);
+            String unique = name;
+            for (int n = 1; !used.add(unique); n++) {
+                unique = name + n;
+            }
+            names[idx] = unique;
+
+            int descriptorIndex = synthetic + idx;
+            slot += descriptorIndex < descriptorTypes.length ? descriptorTypes[descriptorIndex].getSize() : 1;
+        }
+        return names;
+    }
+
+    private String parameterName(Method m, String name, int idx) {
+        if (name == null) {
+            // interface declarations will fallback to paramN since they don't have names in the bytecode
+            return "param" + idx;
+        }
+        if (name.equals("<set-?>")) {
+            // Kotlin's name for a property setter's value parameter.
+            String method = m.getName();
+            return method.startsWith("set") && method.length() > 3
+                    ? Character.toLowerCase(method.charAt(3)) + method.substring(4)
+                    : "value";
+        }
+        if (name.startsWith("$this$")) {
+            // Kotlin's name for an extension function's receiver.
+            return "receiver";
+        }
+        if (!jsFieldPattern.matcher(name).matches()) {
+            return "param" + idx;
+        }
+        if (reservedJsKeywords.contains(name)) {
+            return name + "_";
+        }
+        return name;
     }
 
     //field related
