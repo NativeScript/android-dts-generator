@@ -25,12 +25,19 @@ public final class Nullability {
         return hasSimpleName(annotations, "NonNull;");
     }
 
+    /** The annotations on the parameter at a descriptor index. */
     public static AnnotationEntry[] parameterAnnotations(Method method, int index) {
         ParameterAnnotationEntry[] parameters = method.getParameterAnnotationEntries();
-        if (parameters == null || index >= parameters.length || parameters[index] == null) {
+        if (parameters == null) {
             return null;
         }
-        return parameters[index].getAnnotationEntries();
+        // javac can leave synthetic leading parameters, such as an inner class constructor's outer
+        // instance, out of the annotations, so the entries line up with the descriptor's tail.
+        int entry = index - Math.max(0, method.getArgumentTypes().length - parameters.length);
+        if (entry < 0 || entry >= parameters.length || parameters[entry] == null) {
+            return null;
+        }
+        return parameters[entry].getAnnotationEntries();
     }
 
     /** null is only expressible for reference types; a primitive never needs the union. */

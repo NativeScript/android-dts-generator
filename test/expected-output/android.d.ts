@@ -2447,7 +2447,7 @@ declare namespace android {
 							}
 							export class MessageHandler {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.MediaSessionImplBase.MessageHandler>;
-								public constructor(this$0: android.support.v4.media.session.MediaSessionCompat.MediaSessionImplBase, looper: android.os.Looper);
+								public constructor(outer: android.support.v4.media.session.MediaSessionCompat.MediaSessionImplBase, looper: android.os.Looper);
 								public handleMessage(msg: android.os.Message): void;
 							}
 						}
@@ -4683,7 +4683,7 @@ declare namespace androidx {
 				}
 				export class ActionModeCallbackWrapperV9 extends androidx.appcompat.view.ActionMode.Callback {
 					public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegateImpl.ActionModeCallbackWrapperV9>;
-					public constructor(this$0: androidx.appcompat.app.AppCompatDelegateImpl, wrapped: androidx.appcompat.view.ActionMode.Callback);
+					public constructor(outer: androidx.appcompat.app.AppCompatDelegateImpl, wrapped: androidx.appcompat.view.ActionMode.Callback);
 					public onCreateActionMode(mode: androidx.appcompat.view.ActionMode, menu: globalAndroid.view.Menu): boolean;
 					public onPrepareActionMode(mode: androidx.appcompat.view.ActionMode, menu: globalAndroid.view.Menu): boolean;
 					public onActionItemClicked(mode: androidx.appcompat.view.ActionMode, item: globalAndroid.view.MenuItem): boolean;
@@ -5108,7 +5108,7 @@ declare namespace androidx {
 				export class ActionModeImpl extends androidx.appcompat.view.ActionMode implements androidx.appcompat.view.menu.MenuBuilder.Callback {
 					public static class: java.lang.Class<androidx.appcompat.app.WindowDecorActionBar.ActionModeImpl>;
 					public constructor();
-					public constructor(this$0: androidx.appcompat.app.WindowDecorActionBar, context: globalAndroid.content.Context, callback: androidx.appcompat.view.ActionMode.Callback);
+					public constructor(outer: androidx.appcompat.app.WindowDecorActionBar, context: globalAndroid.content.Context, callback: androidx.appcompat.view.ActionMode.Callback);
 					public getMenuInflater(): globalAndroid.view.MenuInflater;
 					public getMenu(): globalAndroid.view.Menu;
 					public finish(): void;
@@ -5137,7 +5137,7 @@ declare namespace androidx {
 				export class TabImpl extends androidx.appcompat.app.ActionBar.Tab {
 					public static class: java.lang.Class<androidx.appcompat.app.WindowDecorActionBar.TabImpl>;
 					public constructor();
-					public constructor(this$0: androidx.appcompat.app.WindowDecorActionBar);
+					public constructor(outer: androidx.appcompat.app.WindowDecorActionBar);
 					public getTag(): any;
 					public setTag(tag: any): androidx.appcompat.app.ActionBar.Tab;
 					public getCallback(): androidx.appcompat.app.ActionBar.TabListener;
@@ -6895,7 +6895,7 @@ declare namespace androidx {
 			export namespace AbsActionBarView {
 				export class VisibilityAnimListener extends androidx.core.view.ViewPropertyAnimatorListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.AbsActionBarView.VisibilityAnimListener>;
-					public constructor(this$0: androidx.appcompat.widget.AbsActionBarView);
+					public constructor(outer: androidx.appcompat.widget.AbsActionBarView);
 					public withFinalVisibility(animation: androidx.core.view.ViewPropertyAnimatorCompat, visibility: number): androidx.appcompat.widget.AbsActionBarView.VisibilityAnimListener;
 					public onAnimationStart(view: globalAndroid.view.View): void;
 					public onAnimationEnd(view: globalAndroid.view.View): void;
@@ -8910,7 +8910,7 @@ declare namespace androidx {
 				}
 				export class VisibilityAnimListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.ScrollingTabContainerView.VisibilityAnimListener>;
-					public constructor(this$0: androidx.appcompat.widget.ScrollingTabContainerView);
+					public constructor(outer: androidx.appcompat.widget.ScrollingTabContainerView);
 					public withFinalVisibility(animation: globalAndroid.view.ViewPropertyAnimator, visibility: number): androidx.appcompat.widget.ScrollingTabContainerView.VisibilityAnimListener;
 					public onAnimationStart(animator: globalAndroid.animation.Animator): void;
 					public onAnimationEnd(animator: globalAndroid.animation.Animator): void;
@@ -18155,7 +18155,7 @@ declare namespace androidx {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentActivity.HostCallbacks>;
 					public constructor(context: globalAndroid.content.Context, handler: globalAndroid.os.Handler, windowAnimations: number);
 					public constructor();
-					public constructor(this$0: androidx.fragment.app.FragmentActivity);
+					public constructor(outer: androidx.fragment.app.FragmentActivity);
 					public getViewModelStore(): androidx.lifecycle.ViewModelStore;
 					public onDump(prefix: string, fd: java.io.FileDescriptor | null, writer: java.io.PrintWriter, args: androidNative.Array<string> | null): void;
 					public onShouldSaveFragmentState(fragment: androidx.fragment.app.Fragment): boolean;
@@ -19686,7 +19686,7 @@ declare namespace androidx {
 			export namespace Loader {
 				export class ForceLoadContentObserver {
 					public static class: java.lang.Class<androidx.loader.content.Loader.ForceLoadContentObserver>;
-					public constructor(this$0: androidx.loader.content.Loader<any>);
+					public constructor(outer: androidx.loader.content.Loader<any>);
 					public deliverSelfNotifications(): boolean;
 					public onChange(selfChange: boolean): void;
 				}
@@ -22134,7 +22134,7 @@ declare namespace androidx {
 				}
 				export class Recycler {
 					public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.Recycler>;
-					public constructor(this$0: androidx.recyclerview.widget.RecyclerView);
+					public constructor(outer: androidx.recyclerview.widget.RecyclerView);
 					public clear(): void;
 					public setViewCacheSize(viewCount: number): void;
 					public getScrapList(): java.util.List<androidx.recyclerview.widget.RecyclerView.ViewHolder>;
@@ -29779,7 +29779,7 @@ declare namespace com {
 						}
 						export class TabView {
 							public static class: java.lang.Class<com.google.android.material.tabs.TabLayout.TabView>;
-							public constructor(this$0: com.google.android.material.tabs.TabLayout, context: globalAndroid.content.Context);
+							public constructor(outer: com.google.android.material.tabs.TabLayout, context: globalAndroid.content.Context);
 							public drawableStateChanged(): void;
 							public performClick(): boolean;
 							public setSelected(selected: boolean): void;

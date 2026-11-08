@@ -34,7 +34,7 @@ class Bounded<E>(val error: E) where E : Throwable, E : Copyable<E>
 
 // An inner class constructor takes the outer instance first.
 class Cache {
-    inner class Editor(val key: String) {
+    inner class Editor(val key: String, val note: String?) {
         fun commit(): Boolean = true
     }
 }

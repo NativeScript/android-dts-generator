@@ -1005,7 +1005,15 @@ public class DtsApi {
     }
 
     private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
-        Type[] types = this.getArgumentTypes(m);
+        Type[] signatureTypes = this.getArgumentTypes(m);
+        Type[] descriptorTypes = m.getArgumentTypes();
+        // The generic signature leaves out the synthetic leading parameters javac and kotlinc add,
+        // the outer instance of an inner class's constructor. The runtime matches a call against
+        // the descriptor, so those are declared from it, ahead of the signature's parameters.
+        int leading = Math.max(0, descriptorTypes.length - signatureTypes.length);
+        Type[] types = new Type[leading + signatureTypes.length];
+        System.arraycopy(descriptorTypes, 0, types, 0, leading);
+        System.arraycopy(signatureTypes, 0, types, leading, signatureTypes.length);
         String[] names = getParameterNames(m, types.length);
 
         StringBuilder sb = new StringBuilder();
@@ -1039,15 +1047,7 @@ public class DtsApi {
     private String[] getParameterNames(Method m, int count) {
         LocalVariableTable table = m.getLocalVariableTable();
         Type[] descriptorTypes = m.getArgumentTypes();
-        // The generic signature leaves out the synthetic leading parameters javac adds (the outer
-        // instance of an inner class, an enum's name and ordinal). Only the signature's parameters
-        // are declared, but the synthetic ones still take up slots.
-        int synthetic = Math.max(0, descriptorTypes.length - count);
-
         int slot = m.isStatic() ? 0 : 1;
-        for (int i = 0; i < synthetic; i++) {
-            slot += descriptorTypes[i].getSize();
-        }
 
         String[] names = new String[count];
         Set<String> used = new HashSet<>();
@@ -1060,11 +1060,12 @@ public class DtsApi {
             }
             names[idx] = unique;
 
-            int descriptorIndex = synthetic + idx;
-            slot += descriptorIndex < descriptorTypes.length ? descriptorTypes[descriptorIndex].getSize() : 1;
+            slot += idx < descriptorTypes.length ? descriptorTypes[idx].getSize() : 1;
         }
         return names;
     }
+
+    private static final Pattern outerInstanceName = Pattern.compile("^this\\$\\d+$");
 
     private String parameterName(Method m, String name, int idx) {
         if (name == null) {
@@ -1081,6 +1082,10 @@ public class DtsApi {
         if (name.startsWith("$this$")) {
             // Kotlin's name for an extension function's receiver.
             return "receiver";
+        }
+        if (outerInstanceName.matcher(name).matches()) {
+            // javac and kotlinc's name for the outer instance an inner class's constructor takes.
+            return "outer";
         }
         if (!jsFieldPattern.matcher(name).matches()) {
             return "param" + idx;

@@ -18,8 +18,9 @@ declare namespace fixture {
 	export namespace Cache {
 		export class Editor {
 			public static class: java.lang.Class<fixture.Cache.Editor>;
-			public constructor(key: string);
+			public constructor(outer: fixture.Cache, key: string, note: string | null);
 			public getKey(): string;
+			public getNote(): string | null;
 			public commit(): boolean;
 		}
 	}
@@ -93,8 +94,8 @@ declare namespace fixture {
 	export namespace JavaOuter {
 		export class Inner {
 			public static class: java.lang.Class<fixture.JavaOuter.Inner>;
-			public constructor(items: java.util.List<string>, size: number);
-			public constructor(this$0: fixture.JavaOuter, count: number);
+			public constructor(outer: fixture.JavaOuter, items: java.util.List<string>, size: number);
+			public constructor(outer: fixture.JavaOuter, count: number);
 		}
 	}
 }
