@@ -162,7 +162,7 @@ public class DtsApi {
                         currentFileClassname.endsWith("package-info") ||
                         currentFileClassname.endsWith("module-info") ||
                         currentFileClassname.endsWith("Kt") ||
-                        hasEmptyNameSegment(currentFileClassname)) {
+                        hasUnspellableNameSegment(currentFileClassname)) {
                     continue;
                 }
 
@@ -269,25 +269,7 @@ public class DtsApi {
             Arrays.sort(refs);
         }
 
-        String content = replaceIgnoredNamespaces(sbContent.toString());
-
-        return content;
-    }
-
-    private String replaceIgnoredNamespaces(String content) {
-        String regexFormat = "(?<Replace>%s(?:(?:\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>]*>)*)(?<Suffix>[^a-zA-Z\\d]+)";
-        // these namespaces are not known in some android api levels, so we cannot use them in android-support for instance, so we are replacing them with any
-        for (String ignoredNamespace : this.getIgnoredNamespaces()) {
-            String regexString = String.format(regexFormat, ignoredNamespace.replace(".", "\\."));
-            content = content.replaceAll(regexString, "any$2");
-            regexString = String.format(regexFormat, getGlobalAliasedClassName(ignoredNamespace).replace(".", "\\."));
-            content = content.replaceAll(regexString, "any$2");
-        }
-
-        // replace "extends any" with "extends java.lang.Object"
-        content = content.replace(" extends any ", String.format(" extends %s ", DtsApi.JavaLangObject));
-
-        return content;
+        return sbContent.toString();
     }
 
     public static String serializeGenerics() {
@@ -382,19 +364,21 @@ public class DtsApi {
 
             List<ReferenceType> interfaces = typeDefinition.getInterfaces();
             if (parent != null) {
+                String parentType = getTypeScriptTypeFromJavaType(parent, typeDefinition);
                 result.append(" extends ");
-                result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
+                result.append(isAnyType(parentType) ? DtsApi.JavaLangObject : parentType);
             }
             if (interfaces.size() == 1 || (this.allGenericImplements && interfaces.size() > 0)) {
-                result.append(" implements ");
-
+                List<String> implemented = new ArrayList<>();
                 for (ReferenceType referenceType : interfaces) {
                     String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
-                    if (!this.isPrimitiveTSType(tsType)) {
-                        result.append(tsType + ", ");
+                    if (!this.isPrimitiveTSType(tsType) && !isAnyType(tsType)) {
+                        implemented.add(tsType);
                     }
                 }
-                result.deleteCharAt(result.lastIndexOf(","));
+                if (!implemented.isEmpty()) {
+                    result.append(" implements ").append(String.join(", ", implemented));
+                }
             }
             return result.toString();
         } else {
@@ -415,6 +399,9 @@ public class DtsApi {
             implementsSegmentSb.append(" implements ");
 
             for (JavaClass clazz : interfaces) {
+                if (isUnusableSupertype(clazz)) {
+                    continue;
+                }
                 String implementedInterface = clazz.getClassName().replaceAll("\\$", "\\.");
                 if (!typeBelongsInCurrentTopLevelNamespace(implementedInterface)) {
                     implementedInterface = getAliasedClassName(implementedInterface);
@@ -423,12 +410,15 @@ public class DtsApi {
                 implementsSegmentSb.append(implementedInterface + ", ");
             }
 
-            implementsSegment = implementsSegmentSb.substring(0, implementsSegmentSb.lastIndexOf(","));
+            int lastComma = implementsSegmentSb.lastIndexOf(",");
+            implementsSegment = lastComma < 0 ? "" : implementsSegmentSb.substring(0, lastComma);
 
         }
 
         if (superClass != null) {
-            String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
+            String extendedClass = isUnusableSupertype(superClass)
+                    ? DtsApi.JavaLangObject
+                    : superClass.getClassName().replaceAll("\\$", "\\.");
 
             if (!extendedClass.equals(DtsApi.JavaLangObject)) {
                 // check for type override
@@ -439,7 +429,9 @@ public class DtsApi {
                 }
             }
 
-            if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
+            if (isAnyType(extendedClass)) {
+                extendedClass = DtsApi.JavaLangObject;
+            } else if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
                 extendedClass = getAliasedClassName(extendedClass);
             }
 
@@ -447,6 +439,16 @@ public class DtsApi {
         } else {
             return implementsSegment;
         }
+    }
+
+    // java.lang.Object, ignored types, overrides and private Google classes all come out as any,
+    // possibly followed by a comment naming the type, and a class can neither extend nor implement any.
+    private static boolean isAnyType(String tsType) {
+        return tsType.equals("any") || tsType.startsWith("any /*");
+    }
+
+    private boolean isUnusableSupertype(JavaClass clazz) {
+        return hasUnspellableNameSegment(clazz.getClassName()) || isIgnoredType(clazz.getClassName().replace('$', '.'));
     }
 
     private String getAliasedClassName(String className) {
@@ -998,14 +1000,9 @@ public class DtsApi {
 
             String paramTypeName = getTypeScriptTypeFromJavaType(type, typeDefinition);
 
-            // TODO: Pete:
-            if (paramTypeName.startsWith("java.util.function")) {
-                sb.append("any /* " + paramTypeName + "*/");
-            } else {
-                addReference(type);
-                Boolean kotlinNullable = this.currentClassKotlin.isParameterNullable(m.getName(), m.getSignature(), paramIndex);
-                sb.append(withNull(paramTypeName, isNullable(type, Nullability.parameterAnnotations(m, paramIndex), kotlinNullable)));
-            }
+            addReference(type);
+            Boolean kotlinNullable = this.currentClassKotlin.isParameterNullable(m.getName(), m.getSignature(), paramIndex);
+            sb.append(withNull(paramTypeName, isNullable(type, Nullability.parameterAnnotations(m, paramIndex), kotlinNullable)));
         }
         sb.append(")");
         String sig = sb.toString();
@@ -1177,7 +1174,7 @@ public class DtsApi {
                 convertToTypeScriptType(type, typeDefinition, sb);
                 tsType = sb.toString();
 
-                if (tsType.startsWith("java.util.function") || isPrivateGoogleApiClass(tsType)) {
+                if (isPrivateGoogleApiClass(tsType)) {
                     tsType = "any /* " + tsType + "*/";
                 }
         }
@@ -1227,12 +1224,18 @@ public class DtsApi {
             }
             ObjectType objType = (ObjectType) type;
             String typeName = objType.getClassName();
-            if (hasEmptyNameSegment(typeName)) {
+            if (hasUnspellableNameSegment(typeName)) {
                 tsType.append("any");
                 return;
             }
             if (typeName.contains("$")) {
                 typeName = typeName.replaceAll("\\$", "\\.");
+            }
+
+            // Replaced as a whole, generic arguments included.
+            if (isIgnoredType(typeName)) {
+                tsType.append("any");
+                return;
             }
 
             if (this.typeOverrides.containsKey(typeName)) {
@@ -1356,11 +1359,12 @@ public class DtsApi {
     }
 
     // HELPER METHODS
-    // A name like Foo$$serializer (kotlinx.serialization) has an empty segment between the two
-    // separators, which no namespace path can spell.
-    private static boolean hasEmptyNameSegment(String binaryName) {
+    // Names a namespace path cannot spell: Foo$$serializer (kotlinx.serialization) has an empty
+    // segment, and Kotlin names some file facades -Base64 precisely to hide them from Java.
+    private static boolean hasUnspellableNameSegment(String binaryName) {
         for (String part : binaryName.split("[.$]", -1)) {
-            if (part.isEmpty()) {
+            if (part.isEmpty() || !Character.isJavaIdentifierStart(part.codePointAt(0))
+                    || !part.codePoints().allMatch(Character::isJavaIdentifierPart)) {
                 return true;
             }
         }
@@ -1533,6 +1537,15 @@ public class DtsApi {
         result.add("com.tom_roush.pdfbox.pdmodel.common.function"); // com.tom_roush:pdfbox-android:1.8.10.0
 
         return result;
+    }
+
+    private boolean isIgnoredType(String dottedClassName) {
+        for (String ignored : getIgnoredNamespaces()) {
+            if (dottedClassName.equals(ignored) || dottedClassName.startsWith(ignored + ".")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isIgnoredNamespace() {

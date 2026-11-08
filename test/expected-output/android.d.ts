@@ -72,10 +72,10 @@ declare module android {
 			export module media {
 				export class MediaBrowserCompat {
 					public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat>;
-					public static EXTRA_PAGE: string = "any";
-					public static EXTRA_PAGE_SIZE: string = "any_SIZE";
-					public static EXTRA_MEDIA_ID: string = "any_ID";
-					public static EXTRA_DOWNLOAD_PROGRESS: string = "any_PROGRESS";
+					public static EXTRA_PAGE: string = "android.media.browse.extra.PAGE";
+					public static EXTRA_PAGE_SIZE: string = "android.media.browse.extra.PAGE_SIZE";
+					public static EXTRA_MEDIA_ID: string = "android.media.browse.extra.MEDIA_ID";
+					public static EXTRA_DOWNLOAD_PROGRESS: string = "android.media.browse.extra.DOWNLOAD_PROGRESS";
 					public static CUSTOM_ACTION_DOWNLOAD: string = "android.support.v4.media.action.DOWNLOAD";
 					public static CUSTOM_ACTION_REMOVE_DOWNLOADED_FILE: string = "android.support.v4.media.action.REMOVE_DOWNLOADED_FILE";
 					public constructor(context: android.content.Context, serviceComponent: android.content.ComponentName, callback: android.support.v4.media.MediaBrowserCompat.ConnectionCallback, rootHints: android.os.Bundle);
@@ -1594,7 +1594,7 @@ declare module android {
 						}
 						export abstract class TransportControls {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.TransportControls>;
-							public static EXTRA_LEGACY_STREAM_TYPE: string = "any_STREAM_TYPE";
+							public static EXTRA_LEGACY_STREAM_TYPE: string = "android.media.session.extra.LEGACY_STREAM_TYPE";
 							public prepare(): void;
 							public prepareFromMediaId(param0: string, param1: android.os.Bundle): void;
 							public prepareFromSearch(param0: string, param1: android.os.Bundle): void;
@@ -7706,7 +7706,7 @@ declare module androidx {
 				public setTextAppearance(context: globalAndroid.content.Context, resId: number): void;
 				public onCreateInputConnection(outAttrs: globalAndroid.view.inputmethod.EditorInfo): globalAndroid.view.inputmethod.InputConnection;
 				public setCustomSelectionActionModeCallback(actionModeCallback: globalAndroid.view.ActionMode.Callback): void;
-				public setTextClassifier(textClassifier: any | null): void;
+				public setTextClassifier(textClassifier: any): void;
 				public getTextClassifier(): any;
 				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
 				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
@@ -7997,7 +7997,7 @@ declare module androidx {
 		export module widget {
 			export class AppCompatTextClassifierHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.AppCompatTextClassifierHelper>;
-				public setTextClassifier(textClassifier: any | null): void;
+				public setTextClassifier(textClassifier: any): void;
 				public getTextClassifier(): any;
 			}
 		}
@@ -8052,7 +8052,7 @@ declare module androidx {
 				public setTextMetricsParamsCompat(params: androidx.core.text.PrecomputedTextCompat.Params): void;
 				public setPrecomputedText(precomputed: androidx.core.text.PrecomputedTextCompat): void;
 				public getText(): string;
-				public setTextClassifier(textClassifier: any | null): void;
+				public setTextClassifier(textClassifier: any): void;
 				public getTextClassifier(): any;
 				public setTextFuture(future: java.util.concurrent.Future<androidx.core.text.PrecomputedTextCompat> | null): void;
 				public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
@@ -14020,7 +14020,7 @@ declare module androidx {
 			export class PrecomputedTextCompat extends android.text.Spannable {
 				public static class: java.lang.Class<androidx.core.text.PrecomputedTextCompat>;
 				public static create(text: string, params: androidx.core.text.PrecomputedTextCompat.Params): androidx.core.text.PrecomputedTextCompat;
-				public getPrecomputedText(): any | null;
+				public getPrecomputedText(): any;
 				public getParams(): androidx.core.text.PrecomputedTextCompat.Params;
 				public getParagraphCount(): number;
 				public getParagraphStart(paraIndex: number): number;
@@ -18150,7 +18150,7 @@ declare module androidx {
 				public getViewModelStore(): androidx.lifecycle.ViewModelStore;
 			}
 			export module FragmentActivity {
-				export class HostCallbacks extends androidx.fragment.app.FragmentHostCallback<androidx.fragment.app.FragmentActivity> implements androidx.lifecycle.ViewModelStoreOwner  {
+				export class HostCallbacks extends androidx.fragment.app.FragmentHostCallback<androidx.fragment.app.FragmentActivity> implements androidx.lifecycle.ViewModelStoreOwner {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentActivity.HostCallbacks>;
 					public constructor(context: globalAndroid.content.Context, handler: globalAndroid.os.Handler, windowAnimations: number);
 					public constructor();
@@ -19271,7 +19271,7 @@ declare module androidx {
 			export class AlwaysActiveObserver extends androidx.lifecycle.LiveData.ObserverWrapper {
 				public static class: java.lang.Class<androidx.lifecycle.LiveData.AlwaysActiveObserver>;
 			}
-			export class LifecycleBoundObserver extends androidx.lifecycle.LiveData.ObserverWrapper implements androidx.lifecycle.GenericLifecycleObserver  {
+			export class LifecycleBoundObserver extends androidx.lifecycle.LiveData.ObserverWrapper implements androidx.lifecycle.GenericLifecycleObserver {
 				public static class: java.lang.Class<androidx.lifecycle.LiveData.LifecycleBoundObserver>;
 				public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
 				public onStateChanged(param0: androidx.lifecycle.LifecycleOwner, param1: androidx.lifecycle.Lifecycle.Event): void;
@@ -19548,7 +19548,7 @@ declare module androidx {
 				public hasRunningLoaders(): boolean;
 			}
 			export module LoaderManagerImpl {
-				export class LoaderInfo<D>  extends androidx.lifecycle.MutableLiveData<any> implements androidx.loader.content.Loader.OnLoadCompleteListener<any>  {
+				export class LoaderInfo<D>  extends androidx.lifecycle.MutableLiveData<any> implements androidx.loader.content.Loader.OnLoadCompleteListener<any> {
 					public static class: java.lang.Class<androidx.loader.app.LoaderManagerImpl.LoaderInfo<any>>;
 					public onActive(): void;
 					public onInactive(): void;
@@ -19595,7 +19595,7 @@ declare module androidx {
 				public dump(prefix: string, fd: java.io.FileDescriptor, writer: java.io.PrintWriter, args: androidNative.Array<string>): void;
 			}
 			export module AsyncTaskLoader {
-				export class LoadTask extends androidx.loader.content.ModernAsyncTask<java.lang.Void,java.lang.Void,any> implements java.lang.Runnable  {
+				export class LoadTask extends androidx.loader.content.ModernAsyncTask<java.lang.Void,java.lang.Void,any> implements java.lang.Runnable {
 					public static class: java.lang.Class<androidx.loader.content.AsyncTaskLoader.LoadTask>;
 					public doInBackground(param0: androidNative.Array<any>): any;
 					public doInBackground(params: androidNative.Array<java.lang.Void>): any;
@@ -20029,7 +20029,7 @@ declare module androidx {
 	export module media {
 		export abstract class MediaBrowserServiceCompat {
 			public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat>;
-			public static SERVICE_INTERFACE: string = "any";
+			public static SERVICE_INTERFACE: string = "android.media.browse.MediaBrowserService";
 			public static KEY_MEDIA_ITEM: string = "media_item";
 			public static KEY_SEARCH_RESULTS: string = "search_results";
 			public static RESULT_ERROR: number = -1;
@@ -20059,10 +20059,10 @@ declare module androidx {
 		export module MediaBrowserServiceCompat {
 			export class BrowserRoot {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat.BrowserRoot>;
-				public static EXTRA_RECENT: string = "any";
-				public static EXTRA_OFFLINE: string = "any";
-				public static EXTRA_SUGGESTED: string = "any";
-				public static EXTRA_SUGGESTION_KEYWORDS: string = "any_KEYWORDS";
+				public static EXTRA_RECENT: string = "android.service.media.extra.RECENT";
+				public static EXTRA_OFFLINE: string = "android.service.media.extra.OFFLINE";
+				public static EXTRA_SUGGESTED: string = "android.service.media.extra.SUGGESTED";
+				public static EXTRA_SUGGESTION_KEYWORDS: string = "android.service.media.extra.SUGGESTION_KEYWORDS";
 				public constructor(rootId: string, extras: globalAndroid.os.Bundle | null);
 				public getRootId(): string;
 				public getExtras(): globalAndroid.os.Bundle;
@@ -20371,7 +20371,7 @@ declare module androidx {
 			}
 			export class RemoteUserInfo {
 				public static class: java.lang.Class<androidx.media.MediaSessionManager.RemoteUserInfo>;
-				public static LEGACY_CONTROLLER: string = "any";
+				public static LEGACY_CONTROLLER: string = "android.media.session.MediaController";
 				public constructor(packageName: string, pid: number, uid: number);
 				public constructor(remoteUserInfo: any);
 				public getPackageName(): string;
@@ -28319,7 +28319,7 @@ declare module com {
 		export module android {
 			export module material {
 				export module internal {
-					export class ParcelableSparseArray extends globalAndroid.util.SparseArray<globalAndroid.os.Parcelable> implements globalAndroid.os.Parcelable  {
+					export class ParcelableSparseArray extends globalAndroid.util.SparseArray<globalAndroid.os.Parcelable> implements globalAndroid.os.Parcelable {
 						public static class: java.lang.Class<com.google.android.material.internal.ParcelableSparseArray>;
 						public static CREATOR: globalAndroid.os.Parcelable.Creator<com.google.android.material.internal.ParcelableSparseArray>;
 						public constructor();
