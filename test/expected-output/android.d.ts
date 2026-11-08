@@ -40,9 +40,6 @@ declare namespace android {
 							public notify(packageName: string, id: number, tag: string, notification: android.app.Notification): void;
 							public cancel(packageName: string, id: number, tag: string): void;
 							public cancelAll(packageName: string): void;
-							public notify(param0: string, param1: number, param2: string, param3: android.app.Notification): void;
-							public cancel(param0: string, param1: number, param2: string): void;
-							public cancelAll(param0: string): void;
 						}
 					}
 				}
@@ -154,8 +151,6 @@ declare namespace android {
 							public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.ItemCallback.StubApi23>;
 							public onItemLoaded(itemParcel: android.os.Parcel): void;
 							public onError(itemId: string): void;
-							public onItemLoaded(param0: android.os.Parcel): void;
-							public onError(param0: string): void;
 						}
 					}
 					export class ItemReceiver extends android.support.v4.os.ResultReceiver {
@@ -212,7 +207,7 @@ declare namespace android {
 						public getRoot(): string;
 						public getExtras(): android.os.Bundle | null;
 						public getSessionToken(): android.support.v4.media.session.MediaSessionCompat.Token;
-						public subscribe(parentId: string, options: android.os.Bundle, callback: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
+						public subscribe(parentId: string, options: android.os.Bundle | null, callback: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
 						public unsubscribe(parentId: string, callback: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
 						public getItem(mediaId: string, cb: android.support.v4.media.MediaBrowserCompat.ItemCallback): void;
 						public search(query: string, extras: android.os.Bundle, callback: android.support.v4.media.MediaBrowserCompat.SearchCallback): void;
@@ -223,16 +218,7 @@ declare namespace android {
 						public onServiceConnected(callback: android.os.Messenger, root: string, session: android.support.v4.media.session.MediaSessionCompat.Token, extra: android.os.Bundle): void;
 						public onConnectionFailed(callback: android.os.Messenger): void;
 						public onLoadChildren(callback: android.os.Messenger, parentId: string, list: java.util.List<any>, options: android.os.Bundle, notifyChildrenChangedOptions: android.os.Bundle): void;
-						public getNotifyChildrenChangedOptions(): android.os.Bundle;
-						public subscribe(param0: string, param1: android.os.Bundle | null, param2: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
-						public unsubscribe(param0: string, param1: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
-						public getItem(param0: string, param1: android.support.v4.media.MediaBrowserCompat.ItemCallback): void;
-						public search(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.MediaBrowserCompat.SearchCallback): void;
-						public sendCustomAction(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.MediaBrowserCompat.CustomActionCallback | null): void;
 						public getNotifyChildrenChangedOptions(): android.os.Bundle | null;
-						public onServiceConnected(param0: android.os.Messenger, param1: string, param2: android.support.v4.media.session.MediaSessionCompat.Token, param3: android.os.Bundle): void;
-						public onConnectionFailed(param0: android.os.Messenger): void;
-						public onLoadChildren(param0: android.os.Messenger, param1: string, param2: java.util.List<any>, param3: android.os.Bundle, param4: android.os.Bundle): void;
 					}
 					export class MediaBrowserImplApi23 extends android.support.v4.media.MediaBrowserCompat.MediaBrowserImplApi21 {
 						public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.MediaBrowserImplApi23>;
@@ -250,7 +236,6 @@ declare namespace android {
 						public getSessionToken(): android.support.v4.media.session.MediaSessionCompat.Token;
 						public subscribe(param0: string, param1: android.os.Bundle | null, param2: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
 						public unsubscribe(param0: string, param1: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
-						public getItem(param0: string, param1: android.support.v4.media.MediaBrowserCompat.ItemCallback): void;
 						public search(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.MediaBrowserCompat.SearchCallback): void;
 						public sendCustomAction(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.MediaBrowserCompat.CustomActionCallback | null): void;
 						public getNotifyChildrenChangedOptions(): android.os.Bundle | null;
@@ -272,8 +257,6 @@ declare namespace android {
 						public getRoot(): string;
 						public getExtras(): android.os.Bundle | null;
 						public getSessionToken(): android.support.v4.media.session.MediaSessionCompat.Token;
-						public subscribe(param0: string, param1: android.os.Bundle | null, param2: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
-						public unsubscribe(param0: string, param1: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
 						public getItem(param0: string, param1: android.support.v4.media.MediaBrowserCompat.ItemCallback): void;
 						public search(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.MediaBrowserCompat.SearchCallback): void;
 						public sendCustomAction(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.MediaBrowserCompat.CustomActionCallback | null): void;
@@ -291,7 +274,7 @@ declare namespace android {
 						public getRoot(): string;
 						public getExtras(): android.os.Bundle | null;
 						public getSessionToken(): android.support.v4.media.session.MediaSessionCompat.Token;
-						public subscribe(parentId: string, options: android.os.Bundle, callback: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
+						public subscribe(parentId: string, options: android.os.Bundle | null, callback: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
 						public unsubscribe(parentId: string, callback: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
 						public getItem(mediaId: string, cb: android.support.v4.media.MediaBrowserCompat.ItemCallback): void;
 						public search(query: string, extras: android.os.Bundle, callback: android.support.v4.media.MediaBrowserCompat.SearchCallback): void;
@@ -299,16 +282,7 @@ declare namespace android {
 						public onServiceConnected(callback: android.os.Messenger, root: string, session: android.support.v4.media.session.MediaSessionCompat.Token, extra: android.os.Bundle): void;
 						public onConnectionFailed(callback: android.os.Messenger): void;
 						public onLoadChildren(callback: android.os.Messenger, parentId: string, list: java.util.List<any>, options: android.os.Bundle, notifyChildrenChangedOptions: android.os.Bundle): void;
-						public getNotifyChildrenChangedOptions(): android.os.Bundle;
-						public subscribe(param0: string, param1: android.os.Bundle | null, param2: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
-						public unsubscribe(param0: string, param1: android.support.v4.media.MediaBrowserCompat.SubscriptionCallback): void;
-						public getItem(param0: string, param1: android.support.v4.media.MediaBrowserCompat.ItemCallback): void;
-						public search(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.MediaBrowserCompat.SearchCallback): void;
-						public sendCustomAction(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.MediaBrowserCompat.CustomActionCallback | null): void;
 						public getNotifyChildrenChangedOptions(): android.os.Bundle | null;
-						public onServiceConnected(param0: android.os.Messenger, param1: string, param2: android.support.v4.media.session.MediaSessionCompat.Token, param3: android.os.Bundle): void;
-						public onConnectionFailed(param0: android.os.Messenger): void;
-						public onLoadChildren(param0: android.os.Messenger, param1: string, param2: java.util.List<any>, param3: android.os.Bundle, param4: android.os.Bundle): void;
 					}
 					export namespace MediaBrowserImplBase {
 						export class MediaServiceConnection {
@@ -396,8 +370,6 @@ declare namespace android {
 							public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.SubscriptionCallback.StubApi21>;
 							public onChildrenLoaded(parentId: string, children: java.util.List<any>): void;
 							public onError(parentId: string): void;
-							public onChildrenLoaded(param0: string, param1: java.util.List<any>): void;
-							public onError(param0: string): void;
 						}
 						export class StubApi26 extends android.support.v4.media.MediaBrowserCompat.SubscriptionCallback.StubApi21 implements android.support.v4.media.MediaBrowserCompatApi26.SubscriptionCallback {
 							public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.SubscriptionCallback.StubApi26>;
@@ -405,10 +377,6 @@ declare namespace android {
 							public onChildrenLoaded(parentId: string, children: java.util.List<any>, options: android.os.Bundle): void;
 							public onError(parentId: string): void;
 							public onError(parentId: string, options: android.os.Bundle): void;
-							public onChildrenLoaded(param0: string, param1: java.util.List<any>, param2: android.os.Bundle): void;
-							public onError(param0: string, param1: android.os.Bundle): void;
-							public onChildrenLoaded(param0: string, param1: java.util.List<any>): void;
-							public onError(param0: string): void;
 						}
 					}
 				}
@@ -962,17 +930,6 @@ declare namespace android {
 								public onCaptioningEnabledChanged(enabled: boolean): void;
 								public onShuffleModeChanged(shuffleMode: number): void;
 								public onSessionReady(): void;
-								public onEvent(param0: string, param1: android.os.Bundle): void;
-								public onPlaybackStateChanged(param0: android.support.v4.media.session.PlaybackStateCompat): void;
-								public onMetadataChanged(param0: android.support.v4.media.MediaMetadataCompat): void;
-								public onQueueChanged(param0: java.util.List<android.support.v4.media.session.MediaSessionCompat.QueueItem>): void;
-								public onQueueTitleChanged(param0: string): void;
-								public onExtrasChanged(param0: android.os.Bundle): void;
-								public onVolumeInfoChanged(param0: android.support.v4.media.session.ParcelableVolumeInfo): void;
-								public onRepeatModeChanged(param0: number): void;
-								public onShuffleModeChangedRemoved(param0: boolean): void;
-								public onCaptioningEnabledChanged(param0: boolean): void;
-								public onShuffleModeChanged(param0: number): void;
 							}
 						}
 					}
@@ -1205,31 +1162,6 @@ declare namespace android {
 								public setShuffleModeEnabledRemoved(shuffleMode: boolean): void;
 								public setShuffleMode(shuffleMode: number): void;
 								public sendCustomAction(action: string, args: android.os.Bundle): void;
-								public sendCommand(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.session.MediaSessionCompat.ResultReceiverWrapper): void;
-								public sendMediaButton(param0: android.view.KeyEvent): boolean;
-								public registerCallbackListener(param0: android.support.v4.media.session.IMediaControllerCallback): void;
-								public unregisterCallbackListener(param0: android.support.v4.media.session.IMediaControllerCallback): void;
-								public adjustVolume(param0: number, param1: number, param2: string): void;
-								public setVolumeTo(param0: number, param1: number, param2: string): void;
-								public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-								public addQueueItemAt(param0: android.support.v4.media.MediaDescriptionCompat, param1: number): void;
-								public removeQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-								public removeQueueItemAt(param0: number): void;
-								public prepareFromMediaId(param0: string, param1: android.os.Bundle): void;
-								public prepareFromSearch(param0: string, param1: android.os.Bundle): void;
-								public prepareFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
-								public playFromMediaId(param0: string, param1: android.os.Bundle): void;
-								public playFromSearch(param0: string, param1: android.os.Bundle): void;
-								public playFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
-								public skipToQueueItem(param0: number): void;
-								public seekTo(param0: number): void;
-								public rate(param0: android.support.v4.media.RatingCompat): void;
-								public rateWithExtras(param0: android.support.v4.media.RatingCompat, param1: android.os.Bundle): void;
-								public setCaptioningEnabled(param0: boolean): void;
-								public setRepeatMode(param0: number): void;
-								public setShuffleModeEnabledRemoved(param0: boolean): void;
-								public setShuffleMode(param0: number): void;
-								public sendCustomAction(param0: string, param1: android.os.Bundle): void;
 							}
 						}
 					}
@@ -1322,13 +1254,6 @@ declare namespace android {
 								public onQueueTitleChanged(title: string): void;
 								public onExtrasChanged(extras: android.os.Bundle): void;
 								public onAudioInfoChanged(type: number, stream: number, control: number, max: number, current: number): void;
-								public onSessionEvent(param0: string, param1: android.os.Bundle): void;
-								public onPlaybackStateChanged(param0: any): void;
-								public onMetadataChanged(param0: any): void;
-								public onQueueChanged(param0: java.util.List<any>): void;
-								public onQueueTitleChanged(param0: string): void;
-								public onExtrasChanged(param0: android.os.Bundle): void;
-								public onAudioInfoChanged(param0: number, param1: number, param2: number, param3: number, param4: number): void;
 							}
 							export class StubCompat extends android.support.v4.media.session.IMediaControllerCallback.Stub {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.Callback.StubCompat>;
@@ -1345,17 +1270,6 @@ declare namespace android {
 								public onExtrasChanged(extras: android.os.Bundle): void;
 								public onVolumeInfoChanged(info: android.support.v4.media.session.ParcelableVolumeInfo): void;
 								public onSessionReady(): void;
-								public onEvent(param0: string, param1: android.os.Bundle): void;
-								public onPlaybackStateChanged(param0: android.support.v4.media.session.PlaybackStateCompat): void;
-								public onMetadataChanged(param0: android.support.v4.media.MediaMetadataCompat): void;
-								public onQueueChanged(param0: java.util.List<android.support.v4.media.session.MediaSessionCompat.QueueItem>): void;
-								public onQueueTitleChanged(param0: string): void;
-								public onExtrasChanged(param0: android.os.Bundle): void;
-								public onVolumeInfoChanged(param0: android.support.v4.media.session.ParcelableVolumeInfo): void;
-								public onRepeatModeChanged(param0: number): void;
-								public onShuffleModeChangedRemoved(param0: boolean): void;
-								public onCaptioningEnabledChanged(param0: boolean): void;
-								public onShuffleModeChanged(param0: number): void;
 							}
 						}
 						export class MediaControllerExtraData extends androidx.core.app.ComponentActivity.ExtraData {
@@ -1449,15 +1363,6 @@ declare namespace android {
 							public isSessionReady(): boolean;
 							public getPackageName(): string;
 							public getMediaController(): any;
-							public registerCallback(param0: android.support.v4.media.session.MediaControllerCompat.Callback, param1: android.os.Handler): void;
-							public unregisterCallback(param0: android.support.v4.media.session.MediaControllerCompat.Callback): void;
-							public dispatchMediaButtonEvent(param0: android.view.KeyEvent): boolean;
-							public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-							public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat, param1: number): void;
-							public removeQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-							public setVolumeTo(param0: number, param1: number): void;
-							public adjustVolume(param0: number, param1: number): void;
-							public sendCommand(param0: string, param1: android.os.Bundle, param2: android.os.ResultReceiver): void;
 						}
 						export namespace MediaControllerImplApi21 {
 							export class ExtraBinderRequestResultReceiver {
@@ -1474,11 +1379,6 @@ declare namespace android {
 								public onVolumeInfoChanged(info: android.support.v4.media.session.ParcelableVolumeInfo): void;
 								public onEvent(param0: string, param1: android.os.Bundle): void;
 								public onPlaybackStateChanged(param0: android.support.v4.media.session.PlaybackStateCompat): void;
-								public onMetadataChanged(param0: android.support.v4.media.MediaMetadataCompat): void;
-								public onQueueChanged(param0: java.util.List<android.support.v4.media.session.MediaSessionCompat.QueueItem>): void;
-								public onQueueTitleChanged(param0: string): void;
-								public onExtrasChanged(param0: android.os.Bundle): void;
-								public onVolumeInfoChanged(param0: android.support.v4.media.session.ParcelableVolumeInfo): void;
 								public onRepeatModeChanged(param0: number): void;
 								public onShuffleModeChangedRemoved(param0: boolean): void;
 								public onCaptioningEnabledChanged(param0: boolean): void;
@@ -1498,7 +1398,6 @@ declare namespace android {
 							public getQueue(): java.util.List<android.support.v4.media.session.MediaSessionCompat.QueueItem>;
 							public addQueueItem(description: android.support.v4.media.MediaDescriptionCompat, index: number): void;
 							public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-							public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat, param1: number): void;
 							public removeQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
 							public getQueueTitle(): string;
 							public getExtras(): android.os.Bundle;
@@ -1528,7 +1427,6 @@ declare namespace android {
 							public getQueue(): java.util.List<android.support.v4.media.session.MediaSessionCompat.QueueItem>;
 							public addQueueItem(description: android.support.v4.media.MediaDescriptionCompat, index: number): void;
 							public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-							public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat, param1: number): void;
 							public removeQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
 							public getQueueTitle(): string;
 							public getExtras(): android.os.Bundle;
@@ -1574,15 +1472,6 @@ declare namespace android {
 							public isSessionReady(): boolean;
 							public getPackageName(): string;
 							public getMediaController(): any;
-							public registerCallback(param0: android.support.v4.media.session.MediaControllerCompat.Callback, param1: android.os.Handler): void;
-							public unregisterCallback(param0: android.support.v4.media.session.MediaControllerCompat.Callback): void;
-							public dispatchMediaButtonEvent(param0: android.view.KeyEvent): boolean;
-							public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-							public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat, param1: number): void;
-							public removeQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-							public setVolumeTo(param0: number, param1: number): void;
-							public adjustVolume(param0: number, param1: number): void;
-							public sendCommand(param0: string, param1: android.os.Bundle, param2: android.os.ResultReceiver): void;
 						}
 						export class PlaybackInfo {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.PlaybackInfo>;
@@ -1637,9 +1526,8 @@ declare namespace android {
 							public rewind(): void;
 							public skipToNext(): void;
 							public skipToPrevious(): void;
-							public setRating(param0: android.support.v4.media.RatingCompat, param1: android.os.Bundle): void;
-							public setRating(rating: android.support.v4.media.RatingCompat): void;
 							public setRating(rating: android.support.v4.media.RatingCompat, extras: android.os.Bundle): void;
+							public setRating(rating: android.support.v4.media.RatingCompat): void;
 							public setCaptioningEnabled(enabled: boolean): void;
 							public setRepeatMode(repeatMode: number): void;
 							public setShuffleMode(shuffleMode: number): void;
@@ -1647,9 +1535,8 @@ declare namespace android {
 							public playFromSearch(query: string, extras: android.os.Bundle): void;
 							public playFromUri(uri: android.net.Uri, extras: android.os.Bundle): void;
 							public skipToQueueItem(id: number): void;
-							public sendCustomAction(param0: string, param1: android.os.Bundle): void;
-							public sendCustomAction(customAction: android.support.v4.media.session.PlaybackStateCompat.CustomAction, args: android.os.Bundle): void;
 							public sendCustomAction(action: string, args: android.os.Bundle): void;
+							public sendCustomAction(customAction: android.support.v4.media.session.PlaybackStateCompat.CustomAction, args: android.os.Bundle): void;
 						}
 						export class TransportControlsApi23 extends android.support.v4.media.session.MediaControllerCompat.TransportControlsApi21 {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.TransportControlsApi23>;
@@ -1683,15 +1570,13 @@ declare namespace android {
 							public skipToNext(): void;
 							public rewind(): void;
 							public skipToPrevious(): void;
-							public setRating(param0: android.support.v4.media.RatingCompat, param1: android.os.Bundle): void;
-							public setRating(rating: android.support.v4.media.RatingCompat): void;
 							public setRating(rating: android.support.v4.media.RatingCompat, extras: android.os.Bundle): void;
+							public setRating(rating: android.support.v4.media.RatingCompat): void;
 							public setCaptioningEnabled(enabled: boolean): void;
 							public setRepeatMode(repeatMode: number): void;
 							public setShuffleMode(shuffleMode: number): void;
-							public sendCustomAction(param0: string, param1: android.os.Bundle): void;
-							public sendCustomAction(customAction: android.support.v4.media.session.PlaybackStateCompat.CustomAction, args: android.os.Bundle): void;
 							public sendCustomAction(action: string, args: android.os.Bundle): void;
+							public sendCustomAction(customAction: android.support.v4.media.session.PlaybackStateCompat.CustomAction, args: android.os.Bundle): void;
 						}
 					}
 				}
@@ -1974,20 +1859,10 @@ declare namespace android {
 								public onSetRating(ratingObj: any): void;
 								public onSetRating(ratingObj: any, extras: android.os.Bundle): void;
 								public onCustomAction(action: string, extras: android.os.Bundle): void;
-								public onCommand(param0: string, param1: android.os.Bundle, param2: android.os.ResultReceiver): void;
-								public onMediaButtonEvent(param0: android.content.Intent): boolean;
-								public onPlayFromMediaId(param0: string, param1: android.os.Bundle): void;
-								public onPlayFromSearch(param0: string, param1: android.os.Bundle): void;
-								public onSkipToQueueItem(param0: number): void;
-								public onSeekTo(param0: number): void;
-								public onSetRating(param0: any): void;
-								public onSetRating(param0: any, param1: android.os.Bundle): void;
-								public onCustomAction(param0: string, param1: android.os.Bundle): void;
 							}
 							export class StubApi23 extends android.support.v4.media.session.MediaSessionCompat.Callback.StubApi21 implements android.support.v4.media.session.MediaSessionCompatApi23.Callback {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.Callback.StubApi23>;
 								public onPlayFromUri(uri: android.net.Uri, extras: android.os.Bundle): void;
-								public onPlayFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
 								public onCommand(param0: string, param1: android.os.Bundle, param2: android.os.ResultReceiver): void;
 								public onMediaButtonEvent(param0: android.content.Intent): boolean;
 								public onPlay(): void;
@@ -2003,7 +1878,6 @@ declare namespace android {
 								public onSeekTo(param0: number): void;
 								public onSetRating(ratingObj: any, extras: android.os.Bundle): void;
 								public onSetRating(param0: any): void;
-								public onSetRating(param0: any, param1: android.os.Bundle): void;
 								public onCustomAction(param0: string, param1: android.os.Bundle): void;
 							}
 							export class StubApi24 extends android.support.v4.media.session.MediaSessionCompat.Callback.StubApi23 implements android.support.v4.media.session.MediaSessionCompatApi24.Callback {
@@ -2012,9 +1886,6 @@ declare namespace android {
 								public onPrepareFromMediaId(mediaId: string, extras: android.os.Bundle): void;
 								public onPrepareFromSearch(query: string, extras: android.os.Bundle): void;
 								public onPrepareFromUri(uri: android.net.Uri, extras: android.os.Bundle): void;
-								public onPrepareFromMediaId(param0: string, param1: android.os.Bundle): void;
-								public onPrepareFromSearch(param0: string, param1: android.os.Bundle): void;
-								public onPrepareFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
 								public onPlayFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
 								public onCommand(param0: string, param1: android.os.Bundle, param2: android.os.ResultReceiver): void;
 								public onMediaButtonEvent(param0: android.content.Intent): boolean;
@@ -2031,7 +1902,6 @@ declare namespace android {
 								public onSeekTo(param0: number): void;
 								public onSetRating(ratingObj: any, extras: android.os.Bundle): void;
 								public onSetRating(param0: any): void;
-								public onSetRating(param0: any, param1: android.os.Bundle): void;
 								public onCustomAction(param0: string, param1: android.os.Bundle): void;
 							}
 						}
@@ -2099,7 +1969,6 @@ declare namespace android {
 						export class MediaSessionImplApi18 extends android.support.v4.media.session.MediaSessionCompat.MediaSessionImplBase {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.MediaSessionImplApi18>;
 							public setCallback(callback: android.support.v4.media.session.MediaSessionCompat.Callback, handler: android.os.Handler): void;
-							public setCallback(param0: android.support.v4.media.session.MediaSessionCompat.Callback, param1: android.os.Handler): void;
 							public setFlags(param0: number): void;
 							public setPlaybackToLocal(param0: number): void;
 							public setPlaybackToRemote(param0: androidx.media.VolumeProviderCompat): void;
@@ -2129,7 +1998,6 @@ declare namespace android {
 						export class MediaSessionImplApi19 extends android.support.v4.media.session.MediaSessionCompat.MediaSessionImplApi18 {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.MediaSessionImplApi19>;
 							public setCallback(callback: android.support.v4.media.session.MediaSessionCompat.Callback, handler: android.os.Handler): void;
-							public setCallback(param0: android.support.v4.media.session.MediaSessionCompat.Callback, param1: android.os.Handler): void;
 							public setFlags(param0: number): void;
 							public setPlaybackToLocal(param0: number): void;
 							public setPlaybackToRemote(param0: androidx.media.VolumeProviderCompat): void;
@@ -2184,24 +2052,6 @@ declare namespace android {
 							public setCurrentControllerInfo(remoteUserInfo: androidx.media.MediaSessionManager.RemoteUserInfo): void;
 							public getCallingPackage(): string;
 							public getCurrentControllerInfo(): androidx.media.MediaSessionManager.RemoteUserInfo;
-							public setCallback(param0: android.support.v4.media.session.MediaSessionCompat.Callback, param1: android.os.Handler): void;
-							public setFlags(param0: number): void;
-							public setPlaybackToLocal(param0: number): void;
-							public setPlaybackToRemote(param0: androidx.media.VolumeProviderCompat): void;
-							public setActive(param0: boolean): void;
-							public sendSessionEvent(param0: string, param1: android.os.Bundle): void;
-							public setPlaybackState(param0: android.support.v4.media.session.PlaybackStateCompat): void;
-							public setMetadata(param0: android.support.v4.media.MediaMetadataCompat): void;
-							public setSessionActivity(param0: android.app.PendingIntent): void;
-							public setMediaButtonReceiver(param0: android.app.PendingIntent): void;
-							public setQueue(param0: java.util.List<android.support.v4.media.session.MediaSessionCompat.QueueItem>): void;
-							public setQueueTitle(param0: string): void;
-							public setRatingType(param0: number): void;
-							public setCaptioningEnabled(param0: boolean): void;
-							public setRepeatMode(param0: number): void;
-							public setShuffleMode(param0: number): void;
-							public setExtras(param0: android.os.Bundle): void;
-							public setCurrentControllerInfo(param0: androidx.media.MediaSessionManager.RemoteUserInfo): void;
 						}
 						export namespace MediaSessionImplApi21 {
 							export class ExtraSession extends android.support.v4.media.session.IMediaSession.Stub {
@@ -2255,31 +2105,6 @@ declare namespace android {
 								public isShuffleModeEnabledRemoved(): boolean;
 								public getShuffleMode(): number;
 								public isTransportControlEnabled(): boolean;
-								public sendCommand(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.session.MediaSessionCompat.ResultReceiverWrapper): void;
-								public sendMediaButton(param0: android.view.KeyEvent): boolean;
-								public registerCallbackListener(param0: android.support.v4.media.session.IMediaControllerCallback): void;
-								public unregisterCallbackListener(param0: android.support.v4.media.session.IMediaControllerCallback): void;
-								public adjustVolume(param0: number, param1: number, param2: string): void;
-								public setVolumeTo(param0: number, param1: number, param2: string): void;
-								public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-								public addQueueItemAt(param0: android.support.v4.media.MediaDescriptionCompat, param1: number): void;
-								public removeQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-								public removeQueueItemAt(param0: number): void;
-								public prepareFromMediaId(param0: string, param1: android.os.Bundle): void;
-								public prepareFromSearch(param0: string, param1: android.os.Bundle): void;
-								public prepareFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
-								public playFromMediaId(param0: string, param1: android.os.Bundle): void;
-								public playFromSearch(param0: string, param1: android.os.Bundle): void;
-								public playFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
-								public skipToQueueItem(param0: number): void;
-								public seekTo(param0: number): void;
-								public rate(param0: android.support.v4.media.RatingCompat): void;
-								public rateWithExtras(param0: android.support.v4.media.RatingCompat, param1: android.os.Bundle): void;
-								public setCaptioningEnabled(param0: boolean): void;
-								public setRepeatMode(param0: number): void;
-								public setShuffleModeEnabledRemoved(param0: boolean): void;
-								public setShuffleMode(param0: number): void;
-								public sendCustomAction(param0: string, param1: android.os.Bundle): void;
 							}
 						}
 						export class MediaSessionImplApi28 extends android.support.v4.media.session.MediaSessionCompat.MediaSessionImplApi21 {
@@ -2310,7 +2135,6 @@ declare namespace android {
 							public getMediaSession(): any;
 							public getRemoteControlClient(): any;
 							public getCallingPackage(): string;
-							public setCurrentControllerInfo(param0: androidx.media.MediaSessionManager.RemoteUserInfo): void;
 						}
 						export class MediaSessionImplBase extends android.support.v4.media.session.MediaSessionCompat.MediaSessionImpl {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.MediaSessionImplBase>;
@@ -2341,24 +2165,6 @@ declare namespace android {
 							public setExtras(extras: android.os.Bundle): void;
 							public getCurrentControllerInfo(): androidx.media.MediaSessionManager.RemoteUserInfo;
 							public setCurrentControllerInfo(remoteUserInfo: androidx.media.MediaSessionManager.RemoteUserInfo): void;
-							public setCallback(param0: android.support.v4.media.session.MediaSessionCompat.Callback, param1: android.os.Handler): void;
-							public setFlags(param0: number): void;
-							public setPlaybackToLocal(param0: number): void;
-							public setPlaybackToRemote(param0: androidx.media.VolumeProviderCompat): void;
-							public setActive(param0: boolean): void;
-							public sendSessionEvent(param0: string, param1: android.os.Bundle): void;
-							public setPlaybackState(param0: android.support.v4.media.session.PlaybackStateCompat): void;
-							public setMetadata(param0: android.support.v4.media.MediaMetadataCompat): void;
-							public setSessionActivity(param0: android.app.PendingIntent): void;
-							public setMediaButtonReceiver(param0: android.app.PendingIntent): void;
-							public setQueue(param0: java.util.List<android.support.v4.media.session.MediaSessionCompat.QueueItem>): void;
-							public setQueueTitle(param0: string): void;
-							public setRatingType(param0: number): void;
-							public setCaptioningEnabled(param0: boolean): void;
-							public setRepeatMode(param0: number): void;
-							public setShuffleMode(param0: number): void;
-							public setExtras(param0: android.os.Bundle): void;
-							public setCurrentControllerInfo(param0: androidx.media.MediaSessionManager.RemoteUserInfo): void;
 						}
 						export namespace MediaSessionImplBase {
 							export class Command {
@@ -2419,31 +2225,6 @@ declare namespace android {
 								public isShuffleModeEnabledRemoved(): boolean;
 								public getShuffleMode(): number;
 								public isTransportControlEnabled(): boolean;
-								public sendCommand(param0: string, param1: android.os.Bundle, param2: android.support.v4.media.session.MediaSessionCompat.ResultReceiverWrapper): void;
-								public sendMediaButton(param0: android.view.KeyEvent): boolean;
-								public registerCallbackListener(param0: android.support.v4.media.session.IMediaControllerCallback): void;
-								public unregisterCallbackListener(param0: android.support.v4.media.session.IMediaControllerCallback): void;
-								public adjustVolume(param0: number, param1: number, param2: string): void;
-								public setVolumeTo(param0: number, param1: number, param2: string): void;
-								public addQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-								public addQueueItemAt(param0: android.support.v4.media.MediaDescriptionCompat, param1: number): void;
-								public removeQueueItem(param0: android.support.v4.media.MediaDescriptionCompat): void;
-								public removeQueueItemAt(param0: number): void;
-								public prepareFromMediaId(param0: string, param1: android.os.Bundle): void;
-								public prepareFromSearch(param0: string, param1: android.os.Bundle): void;
-								public prepareFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
-								public playFromMediaId(param0: string, param1: android.os.Bundle): void;
-								public playFromSearch(param0: string, param1: android.os.Bundle): void;
-								public playFromUri(param0: android.net.Uri, param1: android.os.Bundle): void;
-								public skipToQueueItem(param0: number): void;
-								public seekTo(param0: number): void;
-								public rate(param0: android.support.v4.media.RatingCompat): void;
-								public rateWithExtras(param0: android.support.v4.media.RatingCompat, param1: android.os.Bundle): void;
-								public setCaptioningEnabled(param0: boolean): void;
-								public setRepeatMode(param0: number): void;
-								public setShuffleModeEnabledRemoved(param0: boolean): void;
-								public setShuffleMode(param0: number): void;
-								public sendCustomAction(param0: string, param1: android.os.Bundle): void;
 							}
 							export class MessageHandler {
 								public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.MediaSessionImplBase.MessageHandler>;
@@ -3064,7 +2845,6 @@ declare namespace android {
 							public asBinder(): android.os.IBinder;
 							public getInterfaceDescriptor(): string;
 							public send(resultCode: number, resultData: android.os.Bundle): void;
-							public send(param0: number, param1: android.os.Bundle): void;
 						}
 					}
 				}
@@ -3090,7 +2870,6 @@ declare namespace android {
 					export class MyResultReceiver extends android.support.v4.os.IResultReceiver.Stub {
 						public static class: java.lang.Class<android.support.v4.os.ResultReceiver.MyResultReceiver>;
 						public send(resultCode: number, resultData: android.os.Bundle): void;
-						public send(param0: number, param1: android.os.Bundle): void;
 					}
 					export class MyRunnable {
 						public static class: java.lang.Class<android.support.v4.os.ResultReceiver.MyRunnable>;
@@ -3128,7 +2907,6 @@ declare namespace androidx {
 				public handleOnBackPressed(): boolean;
 				public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
 				public onRemoved(): void;
-				public onStateChanged(param0: androidx.lifecycle.LifecycleOwner, param1: androidx.lifecycle.Lifecycle.Event): void;
 			}
 			export class NonConfigurationInstances {
 				public static class: java.lang.Class<androidx.activity.ComponentActivity.NonConfigurationInstances>;
@@ -4190,10 +3968,6 @@ declare namespace androidx {
 				public onDrawerStateChanged(newState: number): void;
 				public getToolbarNavigationClickListener(): globalAndroid.view.View.OnClickListener;
 				public setToolbarNavigationClickListener(onToolbarNavigationClickListener: globalAndroid.view.View.OnClickListener): void;
-				public onDrawerSlide(param0: globalAndroid.view.View, param1: number): void;
-				public onDrawerOpened(param0: globalAndroid.view.View): void;
-				public onDrawerClosed(param0: globalAndroid.view.View): void;
-				public onDrawerStateChanged(param0: number): void;
 			}
 			export namespace ActionBarDrawerToggle {
 				export class Delegate {
@@ -4233,8 +4007,6 @@ declare namespace androidx {
 					public isNavigationVisible(): boolean;
 					public setActionBarUpIndicator(themeImage: globalAndroid.graphics.drawable.Drawable, contentDescRes: number): void;
 					public setActionBarDescription(contentDescRes: number): void;
-					public setActionBarUpIndicator(param0: globalAndroid.graphics.drawable.Drawable, param1: number): void;
-					public setActionBarDescription(param0: number): void;
 				}
 				export class ToolbarCompatDelegate extends androidx.appcompat.app.ActionBarDrawerToggle.Delegate {
 					public static class: java.lang.Class<androidx.appcompat.app.ActionBarDrawerToggle.ToolbarCompatDelegate>;
@@ -4243,8 +4015,6 @@ declare namespace androidx {
 					public getThemeUpIndicator(): globalAndroid.graphics.drawable.Drawable;
 					public getActionBarThemedContext(): globalAndroid.content.Context;
 					public isNavigationVisible(): boolean;
-					public setActionBarUpIndicator(param0: globalAndroid.graphics.drawable.Drawable, param1: number): void;
-					public setActionBarDescription(param0: number): void;
 				}
 			}
 		}
@@ -4385,10 +4155,8 @@ declare namespace androidx {
 			export class AlertDialog extends androidx.appcompat.app.AppCompatDialog {
 				public static class: java.lang.Class<androidx.appcompat.app.AlertDialog>;
 				public constructor(context: globalAndroid.content.Context, theme: number);
-				public constructor(context: globalAndroid.content.Context, cancelable: boolean, cancelListener: globalAndroid.content.DialogInterface.OnCancelListener);
-				public constructor(context: globalAndroid.content.Context);
-				public constructor(context: globalAndroid.content.Context, themeResId: number);
 				public constructor(context: globalAndroid.content.Context, cancelable: boolean, cancelListener: globalAndroid.content.DialogInterface.OnCancelListener | null);
+				public constructor(context: globalAndroid.content.Context);
 				public getButton(whichButton: number): globalAndroid.widget.Button;
 				public getListView(): globalAndroid.widget.ListView;
 				public setTitle(titleId: number): void;
@@ -4522,9 +4290,6 @@ declare namespace androidx {
 				public onKeyDown(keyCode: number, event: globalAndroid.view.KeyEvent): boolean;
 				public openOptionsMenu(): void;
 				public closeOptionsMenu(): void;
-				public onSupportActionModeStarted(param0: androidx.appcompat.view.ActionMode): void;
-				public onSupportActionModeFinished(param0: androidx.appcompat.view.ActionMode): void;
-				public onWindowStartingSupportActionMode(param0: androidx.appcompat.view.ActionMode.Callback): androidx.appcompat.view.ActionMode | null;
 				public superDispatchKeyEvent(param0: globalAndroid.view.KeyEvent): boolean;
 				public onRequestPermissionsResult(param0: number, param1: androidNative.Array<string>, param2: androidNative.Array<number>): void;
 				public getLifecycle(): androidx.lifecycle.Lifecycle;
@@ -4635,11 +4400,9 @@ declare namespace androidx {
 				public onStart(): void;
 				public onStop(): void;
 				public onPostResume(): void;
-				public setContentView(param0: number): void;
-				public setContentView(param0: globalAndroid.view.View, param1: globalAndroid.view.ViewGroup.LayoutParams): void;
-				public setContentView(v: globalAndroid.view.View): void;
 				public setContentView(resId: number): void;
 				public setContentView(v: globalAndroid.view.View, lp: globalAndroid.view.ViewGroup.LayoutParams): void;
+				public setContentView(v: globalAndroid.view.View): void;
 				public addContentView(v: globalAndroid.view.View, lp: globalAndroid.view.ViewGroup.LayoutParams): void;
 				public onSaveInstanceState(outState: globalAndroid.os.Bundle): void;
 				public onDestroy(): void;
@@ -4660,8 +4423,6 @@ declare namespace androidx {
 				public applyDayNight(): boolean;
 				public setLocalNightMode(mode: number): void;
 				public getDrawerToggleDelegate(): androidx.appcompat.app.ActionBarDrawerToggle.Delegate;
-				public onMenuItemSelected(param0: androidx.appcompat.view.menu.MenuBuilder, param1: globalAndroid.view.MenuItem): boolean;
-				public onMenuModeChange(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 			}
 			export namespace AppCompatDelegateImpl {
 				export class ActionBarDrawableToggleImpl extends androidx.appcompat.app.ActionBarDrawerToggle.Delegate {
@@ -4671,15 +4432,11 @@ declare namespace androidx {
 					public isNavigationVisible(): boolean;
 					public setActionBarUpIndicator(upDrawable: globalAndroid.graphics.drawable.Drawable, contentDescRes: number): void;
 					public setActionBarDescription(contentDescRes: number): void;
-					public setActionBarUpIndicator(param0: globalAndroid.graphics.drawable.Drawable, param1: number): void;
-					public setActionBarDescription(param0: number): void;
 				}
 				export class ActionMenuPresenterCallback extends androidx.appcompat.view.menu.MenuPresenter.Callback {
 					public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegateImpl.ActionMenuPresenterCallback>;
 					public onOpenSubMenu(subMenu: androidx.appcompat.view.menu.MenuBuilder): boolean;
 					public onCloseMenu(menu: androidx.appcompat.view.menu.MenuBuilder, allMenusAreClosing: boolean): void;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public onOpenSubMenu(param0: androidx.appcompat.view.menu.MenuBuilder): boolean;
 				}
 				export class ActionModeCallbackWrapperV9 extends androidx.appcompat.view.ActionMode.Callback {
 					public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegateImpl.ActionModeCallbackWrapperV9>;
@@ -4688,10 +4445,6 @@ declare namespace androidx {
 					public onPrepareActionMode(mode: androidx.appcompat.view.ActionMode, menu: globalAndroid.view.Menu): boolean;
 					public onActionItemClicked(mode: androidx.appcompat.view.ActionMode, item: globalAndroid.view.MenuItem): boolean;
 					public onDestroyActionMode(mode: androidx.appcompat.view.ActionMode): void;
-					public onCreateActionMode(param0: androidx.appcompat.view.ActionMode, param1: globalAndroid.view.Menu): boolean;
-					public onPrepareActionMode(param0: androidx.appcompat.view.ActionMode, param1: globalAndroid.view.Menu): boolean;
-					public onActionItemClicked(param0: androidx.appcompat.view.ActionMode, param1: globalAndroid.view.MenuItem): boolean;
-					public onDestroyActionMode(param0: androidx.appcompat.view.ActionMode): void;
 				}
 				export class AppCompatWindowCallback extends androidx.appcompat.view.WindowCallbackWrapper {
 					public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegateImpl.AppCompatWindowCallback>;
@@ -4737,8 +4490,6 @@ declare namespace androidx {
 					public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegateImpl.PanelMenuPresenterCallback>;
 					public onCloseMenu(menu: androidx.appcompat.view.menu.MenuBuilder, allMenusAreClosing: boolean): void;
 					public onOpenSubMenu(subMenu: androidx.appcompat.view.menu.MenuBuilder): boolean;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public onOpenSubMenu(param0: androidx.appcompat.view.menu.MenuBuilder): boolean;
 				}
 			}
 		}
@@ -4770,9 +4521,6 @@ declare namespace androidx {
 				public onSupportActionModeFinished(mode: androidx.appcompat.view.ActionMode): void;
 				public onWindowStartingSupportActionMode(callback: androidx.appcompat.view.ActionMode.Callback): androidx.appcompat.view.ActionMode | null;
 				public dispatchKeyEvent(event: globalAndroid.view.KeyEvent): boolean;
-				public onSupportActionModeStarted(param0: androidx.appcompat.view.ActionMode): void;
-				public onSupportActionModeFinished(param0: androidx.appcompat.view.ActionMode): void;
-				public onWindowStartingSupportActionMode(param0: androidx.appcompat.view.ActionMode.Callback): androidx.appcompat.view.ActionMode | null;
 			}
 		}
 	}
@@ -4855,17 +4603,13 @@ declare namespace androidx {
 			export class ToolbarActionBar extends androidx.appcompat.app.ActionBar {
 				public static class: java.lang.Class<androidx.appcompat.app.ToolbarActionBar>;
 				public getWrappedWindowCallback(): globalAndroid.view.Window.Callback;
-				public setCustomView(param0: globalAndroid.view.View, param1: androidx.appcompat.app.ActionBar.LayoutParams): void;
-				public setCustomView(param0: number): void;
-				public setCustomView(view: globalAndroid.view.View): void;
 				public setCustomView(view: globalAndroid.view.View, layoutParams: androidx.appcompat.app.ActionBar.LayoutParams): void;
 				public setCustomView(resId: number): void;
-				public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setIcon(resId: number): void;
+				public setCustomView(view: globalAndroid.view.View): void;
 				public setIcon(icon: globalAndroid.graphics.drawable.Drawable): void;
-				public setLogo(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setLogo(resId: number): void;
+				public setIcon(resId: number): void;
 				public setLogo(logo: globalAndroid.graphics.drawable.Drawable): void;
+				public setLogo(resId: number): void;
 				public setStackedBackgroundDrawable(d: globalAndroid.graphics.drawable.Drawable): void;
 				public setSplitBackgroundDrawable(d: globalAndroid.graphics.drawable.Drawable): void;
 				public setHomeButtonEnabled(enabled: boolean): void;
@@ -4884,17 +4628,14 @@ declare namespace androidx {
 				public setSelectedNavigationItem(position: number): void;
 				public getSelectedNavigationIndex(): number;
 				public getNavigationItemCount(): number;
-				public setTitle(param0: number): void;
-				public setTitle(title: string): void;
 				public setTitle(resId: number): void;
+				public setTitle(title: string): void;
 				public setWindowTitle(title: string): void;
 				public requestFocus(): boolean;
-				public setSubtitle(param0: number): void;
-				public setSubtitle(subtitle: string): void;
 				public setSubtitle(resId: number): void;
-				public setDisplayOptions(param0: number, param1: number): void;
-				public setDisplayOptions(options: number): void;
+				public setSubtitle(subtitle: string): void;
 				public setDisplayOptions(options: number, mask: number): void;
+				public setDisplayOptions(options: number): void;
 				public setDisplayUseLogoEnabled(useLogo: boolean): void;
 				public setDisplayShowHomeEnabled(showHome: boolean): void;
 				public setDisplayHomeAsUpEnabled(showHomeAsUp: boolean): void;
@@ -4908,16 +4649,10 @@ declare namespace androidx {
 				public setNavigationMode(mode: number): void;
 				public getDisplayOptions(): number;
 				public newTab(): androidx.appcompat.app.ActionBar.Tab;
-				/** @deprecated */
-				public addTab(param0: androidx.appcompat.app.ActionBar.Tab, param1: boolean): void;
-				/** @deprecated */
-				public addTab(param0: androidx.appcompat.app.ActionBar.Tab, param1: number): void;
-				/** @deprecated */
-				public addTab(param0: androidx.appcompat.app.ActionBar.Tab, param1: number, param2: boolean): void;
-				public addTab(tab: androidx.appcompat.app.ActionBar.Tab): void;
 				public addTab(tab: androidx.appcompat.app.ActionBar.Tab, setSelected: boolean): void;
 				public addTab(tab: androidx.appcompat.app.ActionBar.Tab, position: number): void;
 				public addTab(tab: androidx.appcompat.app.ActionBar.Tab, position: number, setSelected: boolean): void;
+				public addTab(tab: androidx.appcompat.app.ActionBar.Tab): void;
 				public removeTab(tab: androidx.appcompat.app.ActionBar.Tab): void;
 				public removeTabAt(position: number): void;
 				public removeAllTabs(): void;
@@ -4944,15 +4679,11 @@ declare namespace androidx {
 					public static class: java.lang.Class<androidx.appcompat.app.ToolbarActionBar.ActionMenuPresenterCallback>;
 					public onOpenSubMenu(subMenu: androidx.appcompat.view.menu.MenuBuilder): boolean;
 					public onCloseMenu(menu: androidx.appcompat.view.menu.MenuBuilder, allMenusAreClosing: boolean): void;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public onOpenSubMenu(param0: androidx.appcompat.view.menu.MenuBuilder): boolean;
 				}
 				export class MenuBuilderCallback extends androidx.appcompat.view.menu.MenuBuilder.Callback {
 					public static class: java.lang.Class<androidx.appcompat.app.ToolbarActionBar.MenuBuilderCallback>;
 					public onMenuItemSelected(menu: androidx.appcompat.view.menu.MenuBuilder, item: globalAndroid.view.MenuItem): boolean;
 					public onMenuModeChange(menu: androidx.appcompat.view.menu.MenuBuilder): void;
-					public onMenuItemSelected(param0: androidx.appcompat.view.menu.MenuBuilder, param1: globalAndroid.view.MenuItem): boolean;
-					public onMenuModeChange(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 				}
 				export class ToolbarCallbackWrapper extends androidx.appcompat.view.WindowCallbackWrapper {
 					public static class: java.lang.Class<androidx.appcompat.app.ToolbarActionBar.ToolbarCallbackWrapper>;
@@ -5014,8 +4745,8 @@ declare namespace androidx {
 				public addOnMenuVisibilityListener(listener: androidx.appcompat.app.ActionBar.OnMenuVisibilityListener): void;
 				public removeOnMenuVisibilityListener(listener: androidx.appcompat.app.ActionBar.OnMenuVisibilityListener): void;
 				public dispatchMenuVisibilityChanged(isVisible: boolean): void;
-				public setCustomView(param0: globalAndroid.view.View): void;
-				public setCustomView(param0: globalAndroid.view.View, param1: androidx.appcompat.app.ActionBar.LayoutParams): void;
+				public setCustomView(view: globalAndroid.view.View): void;
+				public setCustomView(view: globalAndroid.view.View, layoutParams: androidx.appcompat.app.ActionBar.LayoutParams): void;
 				public setCustomView(resId: number): void;
 				public setDisplayUseLogoEnabled(useLogo: boolean): void;
 				public setDisplayShowHomeEnabled(showHome: boolean): void;
@@ -5023,19 +4754,16 @@ declare namespace androidx {
 				public setDisplayShowTitleEnabled(showTitle: boolean): void;
 				public setDisplayShowCustomEnabled(showCustom: boolean): void;
 				public setHomeButtonEnabled(enable: boolean): void;
-				public setTitle(param0: string): void;
+				public setTitle(title: string): void;
 				public setTitle(resId: number): void;
-				public setSubtitle(param0: string): void;
+				public setSubtitle(subtitle: string): void;
 				public setSubtitle(resId: number): void;
 				public setSelectedNavigationItem(position: number): void;
 				public removeAllTabs(): void;
-				public setTitle(title: string): void;
 				public setWindowTitle(title: string): void;
 				public requestFocus(): boolean;
-				public setSubtitle(subtitle: string): void;
-				public setDisplayOptions(param0: number, param1: number): void;
-				public setDisplayOptions(options: number): void;
 				public setDisplayOptions(options: number, mask: number): void;
+				public setDisplayOptions(options: number): void;
 				public setBackgroundDrawable(d: globalAndroid.graphics.drawable.Drawable): void;
 				public setStackedBackgroundDrawable(d: globalAndroid.graphics.drawable.Drawable): void;
 				public setSplitBackgroundDrawable(d: globalAndroid.graphics.drawable.Drawable): void;
@@ -5045,16 +4773,10 @@ declare namespace androidx {
 				public getNavigationMode(): number;
 				public getDisplayOptions(): number;
 				public startActionMode(callback: androidx.appcompat.view.ActionMode.Callback): androidx.appcompat.view.ActionMode;
-				/** @deprecated */
-				public addTab(param0: androidx.appcompat.app.ActionBar.Tab, param1: boolean): void;
-				/** @deprecated */
-				public addTab(param0: androidx.appcompat.app.ActionBar.Tab, param1: number): void;
-				/** @deprecated */
-				public addTab(param0: androidx.appcompat.app.ActionBar.Tab, param1: number, param2: boolean): void;
-				public addTab(tab: androidx.appcompat.app.ActionBar.Tab): void;
-				public addTab(tab: androidx.appcompat.app.ActionBar.Tab, position: number): void;
 				public addTab(tab: androidx.appcompat.app.ActionBar.Tab, setSelected: boolean): void;
+				public addTab(tab: androidx.appcompat.app.ActionBar.Tab, position: number): void;
 				public addTab(tab: androidx.appcompat.app.ActionBar.Tab, position: number, setSelected: boolean): void;
+				public addTab(tab: androidx.appcompat.app.ActionBar.Tab): void;
 				public newTab(): androidx.appcompat.app.ActionBar.Tab;
 				public removeTab(tab: androidx.appcompat.app.ActionBar.Tab): void;
 				public removeTabAt(position: number): void;
@@ -5083,26 +4805,20 @@ declare namespace androidx {
 				public onContentScrollStarted(): void;
 				public onContentScrollStopped(): void;
 				public collapseActionView(): boolean;
-				public setCustomView(view: globalAndroid.view.View): void;
-				public setCustomView(view: globalAndroid.view.View, layoutParams: androidx.appcompat.app.ActionBar.LayoutParams): void;
 				public setListNavigationCallbacks(adapter: globalAndroid.widget.SpinnerAdapter, callback: androidx.appcompat.app.ActionBar.OnNavigationListener): void;
 				public getSelectedNavigationIndex(): number;
 				public getNavigationItemCount(): number;
 				public getTabCount(): number;
 				public setNavigationMode(mode: number): void;
 				public getTabAt(index: number): androidx.appcompat.app.ActionBar.Tab;
-				public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setIcon(resId: number): void;
 				public setIcon(icon: globalAndroid.graphics.drawable.Drawable): void;
+				public setIcon(resId: number): void;
 				public hasIcon(): boolean;
-				public setLogo(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setLogo(resId: number): void;
 				public setLogo(logo: globalAndroid.graphics.drawable.Drawable): void;
+				public setLogo(resId: number): void;
 				public hasLogo(): boolean;
 				public setDefaultDisplayHomeAsUpEnabled(enable: boolean): void;
 				public onKeyShortcut(keyCode: number, event: globalAndroid.view.KeyEvent): boolean;
-				public onWindowVisibilityChanged(param0: number): void;
-				public enableContentAnimations(param0: boolean): void;
 			}
 			export namespace WindowDecorActionBar {
 				export class ActionModeImpl extends androidx.appcompat.view.ActionMode implements androidx.appcompat.view.menu.MenuBuilder.Callback {
@@ -5115,12 +4831,10 @@ declare namespace androidx {
 					public invalidate(): void;
 					public dispatchOnCreate(): boolean;
 					public setCustomView(view: globalAndroid.view.View): void;
-					public setSubtitle(param0: number): void;
-					public setSubtitle(subtitle: string): void;
-					public setTitle(param0: number): void;
-					public setTitle(title: string): void;
-					public setTitle(resId: number): void;
 					public setSubtitle(resId: number): void;
+					public setSubtitle(subtitle: string): void;
+					public setTitle(resId: number): void;
+					public setTitle(title: string): void;
 					public getTitle(): string;
 					public getSubtitle(): string;
 					public setTitleOptionalHint(titleOptional: boolean): void;
@@ -5131,8 +4845,6 @@ declare namespace androidx {
 					public onSubMenuSelected(subMenu: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
 					public onCloseSubMenu(menu: androidx.appcompat.view.menu.SubMenuBuilder): void;
 					public onMenuModeChange(menu: androidx.appcompat.view.menu.MenuBuilder): void;
-					public onMenuItemSelected(param0: androidx.appcompat.view.menu.MenuBuilder, param1: globalAndroid.view.MenuItem): boolean;
-					public onMenuModeChange(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 				}
 				export class TabImpl extends androidx.appcompat.app.ActionBar.Tab {
 					public static class: java.lang.Class<androidx.appcompat.app.WindowDecorActionBar.TabImpl>;
@@ -5143,23 +4855,19 @@ declare namespace androidx {
 					public getCallback(): androidx.appcompat.app.ActionBar.TabListener;
 					public setTabListener(callback: androidx.appcompat.app.ActionBar.TabListener): androidx.appcompat.app.ActionBar.Tab;
 					public getCustomView(): globalAndroid.view.View;
-					public setCustomView(param0: number): androidx.appcompat.app.ActionBar.Tab;
-					public setCustomView(view: globalAndroid.view.View): androidx.appcompat.app.ActionBar.Tab;
 					public setCustomView(layoutResId: number): androidx.appcompat.app.ActionBar.Tab;
+					public setCustomView(view: globalAndroid.view.View): androidx.appcompat.app.ActionBar.Tab;
 					public getIcon(): globalAndroid.graphics.drawable.Drawable;
 					public getPosition(): number;
 					public setPosition(position: number): void;
 					public getText(): string;
-					public setIcon(param0: number): androidx.appcompat.app.ActionBar.Tab;
-					public setIcon(icon: globalAndroid.graphics.drawable.Drawable): androidx.appcompat.app.ActionBar.Tab;
 					public setIcon(resId: number): androidx.appcompat.app.ActionBar.Tab;
-					public setText(param0: number): androidx.appcompat.app.ActionBar.Tab;
-					public setText(text: string): androidx.appcompat.app.ActionBar.Tab;
+					public setIcon(icon: globalAndroid.graphics.drawable.Drawable): androidx.appcompat.app.ActionBar.Tab;
 					public setText(resId: number): androidx.appcompat.app.ActionBar.Tab;
+					public setText(text: string): androidx.appcompat.app.ActionBar.Tab;
 					public select(): void;
-					public setContentDescription(param0: string): androidx.appcompat.app.ActionBar.Tab;
-					public setContentDescription(resId: number): androidx.appcompat.app.ActionBar.Tab;
 					public setContentDescription(contentDesc: string): androidx.appcompat.app.ActionBar.Tab;
+					public setContentDescription(resId: number): androidx.appcompat.app.ActionBar.Tab;
 					public getContentDescription(): string;
 				}
 			}
@@ -5587,12 +5295,10 @@ declare namespace androidx {
 				public static class: java.lang.Class<androidx.appcompat.view.StandaloneActionMode>;
 				public constructor();
 				public constructor(context: globalAndroid.content.Context, view: androidx.appcompat.widget.ActionBarContextView, callback: androidx.appcompat.view.ActionMode.Callback, isFocusable: boolean);
-				public setTitle(param0: number): void;
-				public setTitle(title: string): void;
-				public setSubtitle(param0: number): void;
-				public setSubtitle(subtitle: string): void;
 				public setTitle(resId: number): void;
+				public setTitle(title: string): void;
 				public setSubtitle(resId: number): void;
+				public setSubtitle(subtitle: string): void;
 				public setTitleOptionalHint(titleOptional: boolean): void;
 				public isTitleOptional(): boolean;
 				public setCustomView(view: globalAndroid.view.View): void;
@@ -5609,8 +5315,6 @@ declare namespace androidx {
 				public onCloseSubMenu(menu: androidx.appcompat.view.menu.SubMenuBuilder): void;
 				public onMenuModeChange(menu: androidx.appcompat.view.menu.MenuBuilder): void;
 				public isUiFocusable(): boolean;
-				public onMenuItemSelected(param0: androidx.appcompat.view.menu.MenuBuilder, param1: globalAndroid.view.MenuItem): boolean;
-				public onMenuModeChange(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 			}
 		}
 	}
@@ -5649,10 +5353,6 @@ declare namespace androidx {
 					public onActionItemClicked(mode: androidx.appcompat.view.ActionMode, item: globalAndroid.view.MenuItem): boolean;
 					public onDestroyActionMode(mode: androidx.appcompat.view.ActionMode): void;
 					public getActionModeWrapper(mode: androidx.appcompat.view.ActionMode): globalAndroid.view.ActionMode;
-					public onCreateActionMode(param0: androidx.appcompat.view.ActionMode, param1: globalAndroid.view.Menu): boolean;
-					public onPrepareActionMode(param0: androidx.appcompat.view.ActionMode, param1: globalAndroid.view.Menu): boolean;
-					public onActionItemClicked(param0: androidx.appcompat.view.ActionMode, param1: globalAndroid.view.MenuItem): boolean;
-					public onDestroyActionMode(param0: androidx.appcompat.view.ActionMode): void;
 				}
 			}
 		}
@@ -5809,18 +5509,9 @@ declare namespace androidx {
 					public getIconTintList(): globalAndroid.content.res.ColorStateList;
 					public setIconTintMode(iconTintMode: globalAndroid.graphics.PorterDuff.Mode): globalAndroid.view.MenuItem;
 					public getIconTintMode(): globalAndroid.graphics.PorterDuff.Mode;
-					public setShowAsAction(param0: number): void;
 					public setShowAsActionFlags(param0: number): globalAndroid.view.MenuItem;
 					public setActionView(param0: globalAndroid.view.View): globalAndroid.view.MenuItem;
 					public setActionView(param0: number): globalAndroid.view.MenuItem;
-					public setSupportActionProvider(param0: androidx.core.view.ActionProvider): androidx.core.internal.view.SupportMenuItem;
-					public setContentDescription(param0: string): androidx.core.internal.view.SupportMenuItem;
-					public setTooltipText(param0: string): androidx.core.internal.view.SupportMenuItem;
-					public setShortcut(param0: string, param1: string, param2: number, param3: number): globalAndroid.view.MenuItem;
-					public setNumericShortcut(param0: string, param1: number): globalAndroid.view.MenuItem;
-					public setAlphabeticShortcut(param0: string, param1: number): globalAndroid.view.MenuItem;
-					public setIconTintList(param0: globalAndroid.content.res.ColorStateList): globalAndroid.view.MenuItem;
-					public setIconTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): globalAndroid.view.MenuItem;
 				}
 			}
 		}
@@ -5836,7 +5527,6 @@ declare namespace androidx {
 					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 					public constructor(context: globalAndroid.content.Context);
-					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyle: number);
 					public onConfigurationChanged(newConfig: globalAndroid.content.res.Configuration): void;
 					public setPadding(l: number, t: number, r: number, b: number): void;
 					public getItemData(): androidx.appcompat.view.menu.MenuItemImpl;
@@ -5858,13 +5548,7 @@ declare namespace androidx {
 					public needsDividerAfter(): boolean;
 					public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
 					public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
-					public initialize(param0: androidx.appcompat.view.menu.MenuItemImpl, param1: number): void;
-					public setTitle(param0: string): void;
 					public setEnabled(param0: boolean): void;
-					public setCheckable(param0: boolean): void;
-					public setChecked(param0: boolean): void;
-					public setShortcut(param0: boolean, param1: string): void;
-					public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
 					public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
 					public getSupportBackgroundTintList(): globalAndroid.content.res.ColorStateList | null;
 					public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
@@ -5928,14 +5612,6 @@ declare namespace androidx {
 					public collapseItemActionView(menu: androidx.appcompat.view.menu.MenuBuilder, item: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public getId(): number;
 					public setId(id: number): void;
-					public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
-					public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
-					public updateMenuView(param0: boolean): void;
-					public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-					public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-					public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public onSaveInstanceState(): globalAndroid.os.Parcelable;
 					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
@@ -5987,14 +5663,9 @@ declare namespace androidx {
 					public closeMenuOnSubMenuOpened(): boolean;
 					public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
 					public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
-					public updateMenuView(param0: boolean): void;
-					public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-					public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
 					public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public getId(): number;
-					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
 				export namespace CascadingMenuPopup {
 					export class CascadingMenuInfo {
@@ -6033,8 +5704,6 @@ declare namespace androidx {
 					public invokeItem(item: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public onItemClick(parent: globalAndroid.widget.AdapterView<any>, v: globalAndroid.view.View, position: number, id: number): void;
 					public getWindowAnimations(): number;
-					public invokeItem(param0: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-					public initialize(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 				}
 			}
 		}
@@ -6063,13 +5732,7 @@ declare namespace androidx {
 					public showsIcon(): boolean;
 					public setGroupDividerEnabled(groupDividerEnabled: boolean): void;
 					public adjustListItemSelectionBounds(rect: globalAndroid.graphics.Rect): void;
-					public initialize(param0: androidx.appcompat.view.menu.MenuItemImpl, param1: number): void;
-					public setTitle(param0: string): void;
 					public setEnabled(param0: boolean): void;
-					public setCheckable(param0: boolean): void;
-					public setChecked(param0: boolean): void;
-					public setShortcut(param0: boolean, param1: string): void;
-					public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
 				}
 			}
 		}
@@ -6103,15 +5766,6 @@ declare namespace androidx {
 					public getId(): number;
 					public onSaveInstanceState(): globalAndroid.os.Parcelable;
 					public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
-					public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
-					public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
-					public updateMenuView(param0: boolean): void;
-					public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-					public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-					public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
 				export namespace ListMenuPresenter {
 					export class MenuAdapter {
@@ -6229,7 +5883,6 @@ declare namespace androidx {
 					public collapseItemActionView(item: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public getExpandedItem(): androidx.appcompat.view.menu.MenuItemImpl;
 					public setOverrideVisibleItems(override: boolean): void;
-					public setGroupDividerEnabled(param0: boolean): void;
 				}
 				export namespace MenuBuilder {
 					export class Callback {
@@ -6277,8 +5930,6 @@ declare namespace androidx {
 					public onCloseMenu(menu: androidx.appcompat.view.menu.MenuBuilder, allMenusAreClosing: boolean): void;
 					public onOpenSubMenu(subMenu: androidx.appcompat.view.menu.MenuBuilder): boolean;
 					public onClick(dialog: globalAndroid.content.DialogInterface, which: number): void;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public onOpenSubMenu(param0: androidx.appcompat.view.menu.MenuBuilder): boolean;
 				}
 			}
 		}
@@ -6386,18 +6037,9 @@ declare namespace androidx {
 					public getContentDescription(): string;
 					public setTooltipText(tooltipText: string): androidx.core.internal.view.SupportMenuItem;
 					public getTooltipText(): string;
-					public setShowAsAction(param0: number): void;
 					public setShowAsActionFlags(param0: number): globalAndroid.view.MenuItem;
 					public setActionView(param0: globalAndroid.view.View): globalAndroid.view.MenuItem;
 					public setActionView(param0: number): globalAndroid.view.MenuItem;
-					public setSupportActionProvider(param0: androidx.core.view.ActionProvider): androidx.core.internal.view.SupportMenuItem;
-					public setContentDescription(param0: string): androidx.core.internal.view.SupportMenuItem;
-					public setTooltipText(param0: string): androidx.core.internal.view.SupportMenuItem;
-					public setShortcut(param0: string, param1: string, param2: number, param3: number): globalAndroid.view.MenuItem;
-					public setNumericShortcut(param0: string, param1: number): globalAndroid.view.MenuItem;
-					public setAlphabeticShortcut(param0: string, param1: number): globalAndroid.view.MenuItem;
-					public setIconTintList(param0: globalAndroid.content.res.ColorStateList): globalAndroid.view.MenuItem;
-					public setIconTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): globalAndroid.view.MenuItem;
 				}
 			}
 		}
@@ -6536,15 +6178,11 @@ declare namespace androidx {
 					public dismiss(): void;
 					public isShowing(): boolean;
 					public getListView(): globalAndroid.widget.ListView;
-					public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
-					public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
 					public updateMenuView(param0: boolean): void;
 					public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
 					public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
 					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
 					public flagActionItems(): boolean;
-					public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-					public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public onSaveInstanceState(): globalAndroid.os.Parcelable;
 					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
@@ -6578,7 +6216,6 @@ declare namespace androidx {
 					public isShowing(): boolean;
 					public setPresenterCallback(cb: androidx.appcompat.view.menu.MenuPresenter.Callback | null): void;
 					public getListView(): globalAndroid.widget.ListView;
-					public setPresenterCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
 				}
 			}
 		}
@@ -6788,14 +6425,9 @@ declare namespace androidx {
 					public setShowTitle(showTitle: boolean): void;
 					public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
 					public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
-					public updateMenuView(param0: boolean): void;
-					public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-					public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
 					public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 					public getId(): number;
-					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
 			}
 		}
@@ -6831,7 +6463,6 @@ declare namespace androidx {
 					public getActionViewStatesKey(): string;
 					public setGroupDividerEnabled(groupDividerEnabled: boolean): void;
 					public isGroupDividerEnabled(): boolean;
-					public setGroupDividerEnabled(param0: boolean): void;
 				}
 			}
 		}
@@ -6900,9 +6531,6 @@ declare namespace androidx {
 					public onAnimationStart(view: globalAndroid.view.View): void;
 					public onAnimationEnd(view: globalAndroid.view.View): void;
 					public onAnimationCancel(view: globalAndroid.view.View): void;
-					public onAnimationStart(param0: globalAndroid.view.View): void;
-					public onAnimationEnd(param0: globalAndroid.view.View): void;
-					public onAnimationCancel(param0: globalAndroid.view.View): void;
 				}
 			}
 		}
@@ -7052,29 +6680,6 @@ declare namespace androidx {
 				public saveToolbarHierarchyState(toolbarStates: globalAndroid.util.SparseArray<globalAndroid.os.Parcelable>): void;
 				public restoreToolbarHierarchyState(toolbarStates: globalAndroid.util.SparseArray<globalAndroid.os.Parcelable>): void;
 				public dismissPopups(): void;
-				public setWindowCallback(param0: globalAndroid.view.Window.Callback): void;
-				public setWindowTitle(param0: string): void;
-				public initFeature(param0: number): void;
-				public setUiOptions(param0: number): void;
-				public setIcon(param0: number): void;
-				public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setLogo(param0: number): void;
-				public setMenu(param0: globalAndroid.view.Menu, param1: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-				public saveToolbarHierarchyState(param0: globalAndroid.util.SparseArray<globalAndroid.os.Parcelable>): void;
-				public restoreToolbarHierarchyState(param0: globalAndroid.util.SparseArray<globalAndroid.os.Parcelable>): void;
-				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): boolean;
-				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
-				public onStopNestedScroll(param0: globalAndroid.view.View): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
-				public onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
-				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
-				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): boolean;
-				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
-				public onStopNestedScroll(param0: globalAndroid.view.View, param1: number): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: androidNative.Array<number>): void;
 			}
 			export namespace ActionBarOverlayLayout {
 				export class ActionBarVisibilityCallback {
@@ -7145,17 +6750,10 @@ declare namespace androidx {
 				public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 				public onSubUiVisibilityChanged(isVisible: boolean): void;
 				public setMenuView(menuView: androidx.appcompat.widget.ActionMenuView): void;
-				public onSubUiVisibilityChanged(param0: boolean): void;
-				public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
-				public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
-				public updateMenuView(param0: boolean): void;
 				public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-				public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
-				public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
 				public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 				public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
 				public getId(): number;
-				public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 			}
 			export namespace ActionMenuPresenter {
 				export class ActionButtonSubmenu extends androidx.appcompat.view.menu.MenuPopupHelper {
@@ -7212,8 +6810,6 @@ declare namespace androidx {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuPresenter.PopupPresenterCallback>;
 					public onOpenSubMenu(subMenu: androidx.appcompat.view.menu.MenuBuilder): boolean;
 					public onCloseMenu(menu: androidx.appcompat.view.menu.MenuBuilder, allMenusAreClosing: boolean): void;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public onOpenSubMenu(param0: androidx.appcompat.view.menu.MenuBuilder): boolean;
 				}
 				export class SavedState {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuPresenter.SavedState>;
@@ -7269,8 +6865,6 @@ declare namespace androidx {
 				public hasSupportDividerBeforeChildAt(childIndex: number): boolean;
 				public dispatchPopulateAccessibilityEvent(event: globalAndroid.view.accessibility.AccessibilityEvent): boolean;
 				public setExpandedActionViewsExclusive(exclusive: boolean): void;
-				public invokeItem(param0: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-				public initialize(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 			}
 			export namespace ActionMenuView {
 				export class ActionMenuChildView {
@@ -7290,8 +6884,6 @@ declare namespace androidx {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuView.ActionMenuPresenterCallback>;
 					public onCloseMenu(menu: androidx.appcompat.view.menu.MenuBuilder, allMenusAreClosing: boolean): void;
 					public onOpenSubMenu(subMenu: androidx.appcompat.view.menu.MenuBuilder): boolean;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public onOpenSubMenu(param0: androidx.appcompat.view.menu.MenuBuilder): boolean;
 				}
 				export class LayoutParams extends androidx.appcompat.widget.LinearLayoutCompat.LayoutParams {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuView.LayoutParams>;
@@ -7306,15 +6898,12 @@ declare namespace androidx {
 					public constructor(source: globalAndroid.view.ViewGroup.MarginLayoutParams);
 					public constructor(source: androidx.appcompat.widget.LinearLayoutCompat.LayoutParams);
 					public constructor(c: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
-					public constructor(other: globalAndroid.view.ViewGroup.LayoutParams);
 					public constructor(other: androidx.appcompat.widget.ActionMenuView.LayoutParams);
 				}
 				export class MenuBuilderCallback extends androidx.appcompat.view.menu.MenuBuilder.Callback {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuView.MenuBuilderCallback>;
 					public onMenuItemSelected(menu: androidx.appcompat.view.menu.MenuBuilder, item: globalAndroid.view.MenuItem): boolean;
 					public onMenuModeChange(menu: androidx.appcompat.view.menu.MenuBuilder): void;
-					public onMenuItemSelected(param0: androidx.appcompat.view.menu.MenuBuilder, param1: globalAndroid.view.MenuItem): boolean;
-					public onMenuModeChange(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 				}
 				export class OnMenuItemClickListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActionMenuView.OnMenuItemClickListener>;
@@ -7390,7 +6979,6 @@ declare namespace androidx {
 				export class DefaultSorter extends androidx.appcompat.widget.ActivityChooserModel.ActivitySorter {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserModel.DefaultSorter>;
 					public sort(intent: globalAndroid.content.Intent, activities: java.util.List<androidx.appcompat.widget.ActivityChooserModel.ActivityResolveInfo>, historicalRecords: java.util.List<androidx.appcompat.widget.ActivityChooserModel.HistoricalRecord>): void;
-					public sort(param0: globalAndroid.content.Intent, param1: java.util.List<androidx.appcompat.widget.ActivityChooserModel.ActivityResolveInfo>, param2: java.util.List<androidx.appcompat.widget.ActivityChooserModel.HistoricalRecord>): void;
 				}
 				export class HistoricalRecord {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserModel.HistoricalRecord>;
@@ -7446,7 +7034,6 @@ declare namespace androidx {
 				public setOnDismissListener(listener: globalAndroid.widget.PopupWindow.OnDismissListener): void;
 				public setInitialActivityCount(itemCount: number): void;
 				public setDefaultActionButtonContentDescription(resourceId: number): void;
-				public setActivityChooserModel(param0: androidx.appcompat.widget.ActivityChooserModel): void;
 			}
 			export namespace ActivityChooserView {
 				export class ActivityChooserViewAdapter {
@@ -7491,10 +7078,9 @@ declare namespace androidx {
 		export namespace widget {
 			export class AlertDialogLayout extends androidx.appcompat.widget.LinearLayoutCompat {
 				public static class: java.lang.Class<androidx.appcompat.widget.AlertDialogLayout>;
-				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
+				public constructor(context: globalAndroid.content.Context | null, attrs: globalAndroid.util.AttributeSet | null);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 				public constructor(context: globalAndroid.content.Context | null);
-				public constructor(context: globalAndroid.content.Context | null, attrs: globalAndroid.util.AttributeSet | null);
 				public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
 				public onLayout(changed: boolean, left: number, top: number, right: number, bottom: number): void;
 			}
@@ -7521,8 +7107,6 @@ declare namespace androidx {
 				public setTextAppearance(context: globalAndroid.content.Context, resId: number): void;
 				public onCreateInputConnection(outAttrs: globalAndroid.view.inputmethod.EditorInfo): globalAndroid.view.inputmethod.InputConnection;
 				public setCustomSelectionActionModeCallback(actionModeCallback: globalAndroid.view.ActionMode.Callback): void;
-				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
 		}
 	}
@@ -7569,11 +7153,6 @@ declare namespace androidx {
 				public getAutoSizeTextAvailableSizes(): androidNative.Array<number>;
 				public setSupportAllCaps(allCaps: boolean): void;
 				public setCustomSelectionActionModeCallback(actionModeCallback: globalAndroid.view.ActionMode.Callback): void;
-				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
-				public setAutoSizeTextTypeWithDefaults(param0: number): void;
-				public setAutoSizeTextTypeUniformWithConfiguration(param0: number, param1: number, param2: number, param3: number): void;
-				public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 			}
 		}
 	}
@@ -7594,8 +7173,6 @@ declare namespace androidx {
 				public getSupportButtonTintList(): globalAndroid.content.res.ColorStateList | null;
 				public setSupportButtonTintMode(tintMode: globalAndroid.graphics.PorterDuff.Mode | null): void;
 				public getSupportButtonTintMode(): globalAndroid.graphics.PorterDuff.Mode | null;
-				public setSupportButtonTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportButtonTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
 		}
 	}
@@ -7657,12 +7234,10 @@ declare namespace androidx {
 				export class AsldcInflateDelegate extends androidx.appcompat.widget.AppCompatDrawableManager.InflateDelegate {
 					public static class: java.lang.Class<androidx.appcompat.widget.AppCompatDrawableManager.AsldcInflateDelegate>;
 					public createFromXmlInner(context: globalAndroid.content.Context, parser: org.xmlpull.v1.XmlPullParser, attrs: globalAndroid.util.AttributeSet, theme: globalAndroid.content.res.Resources.Theme | null): globalAndroid.graphics.drawable.Drawable;
-					public createFromXmlInner(param0: globalAndroid.content.Context, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.util.AttributeSet, param3: globalAndroid.content.res.Resources.Theme | null): globalAndroid.graphics.drawable.Drawable;
 				}
 				export class AvdcInflateDelegate extends androidx.appcompat.widget.AppCompatDrawableManager.InflateDelegate {
 					public static class: java.lang.Class<androidx.appcompat.widget.AppCompatDrawableManager.AvdcInflateDelegate>;
 					public createFromXmlInner(context: globalAndroid.content.Context, parser: org.xmlpull.v1.XmlPullParser, attrs: globalAndroid.util.AttributeSet, theme: globalAndroid.content.res.Resources.Theme | null): globalAndroid.graphics.drawable.Drawable;
-					public createFromXmlInner(param0: globalAndroid.content.Context, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.util.AttributeSet, param3: globalAndroid.content.res.Resources.Theme | null): globalAndroid.graphics.drawable.Drawable;
 				}
 				export class ColorFilterLruCache extends androidx.collection.LruCache<java.lang.Integer,globalAndroid.graphics.PorterDuffColorFilter> {
 					public static class: java.lang.Class<androidx.appcompat.widget.AppCompatDrawableManager.ColorFilterLruCache>;
@@ -7682,7 +7257,6 @@ declare namespace androidx {
 				export class VdcInflateDelegate extends androidx.appcompat.widget.AppCompatDrawableManager.InflateDelegate {
 					public static class: java.lang.Class<androidx.appcompat.widget.AppCompatDrawableManager.VdcInflateDelegate>;
 					public createFromXmlInner(context: globalAndroid.content.Context, parser: org.xmlpull.v1.XmlPullParser, attrs: globalAndroid.util.AttributeSet, theme: globalAndroid.content.res.Resources.Theme | null): globalAndroid.graphics.drawable.Drawable;
-					public createFromXmlInner(param0: globalAndroid.content.Context, param1: org.xmlpull.v1.XmlPullParser, param2: globalAndroid.util.AttributeSet, param3: globalAndroid.content.res.Resources.Theme | null): globalAndroid.graphics.drawable.Drawable;
 				}
 			}
 		}
@@ -7710,8 +7284,6 @@ declare namespace androidx {
 				public setCustomSelectionActionModeCallback(actionModeCallback: globalAndroid.view.ActionMode.Callback): void;
 				public setTextClassifier(textClassifier: any): void;
 				public getTextClassifier(): any;
-				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
 		}
 	}
@@ -7751,10 +7323,6 @@ declare namespace androidx {
 				public getSupportImageTintMode(): globalAndroid.graphics.PorterDuff.Mode | null;
 				public drawableStateChanged(): void;
 				public hasOverlappingRendering(): boolean;
-				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
-				public setSupportImageTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportImageTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
 		}
 	}
@@ -7797,10 +7365,6 @@ declare namespace androidx {
 				public getSupportImageTintMode(): globalAndroid.graphics.PorterDuff.Mode | null;
 				public drawableStateChanged(): void;
 				public hasOverlappingRendering(): boolean;
-				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
-				public setSupportImageTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportImageTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
 		}
 	}
@@ -7824,8 +7388,6 @@ declare namespace androidx {
 				public drawableStateChanged(): void;
 				public setTextAppearance(context: globalAndroid.content.Context, resId: number): void;
 				public onCreateInputConnection(outAttrs: globalAndroid.view.inputmethod.EditorInfo): globalAndroid.view.inputmethod.InputConnection;
-				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
 		}
 	}
@@ -7871,8 +7433,6 @@ declare namespace androidx {
 				public getSupportButtonTintList(): globalAndroid.content.res.ColorStateList | null;
 				public setSupportButtonTintMode(tintMode: globalAndroid.graphics.PorterDuff.Mode | null): void;
 				public getSupportButtonTintMode(): globalAndroid.graphics.PorterDuff.Mode | null;
-				public setSupportButtonTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportButtonTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
 		}
 	}
@@ -7953,8 +7513,6 @@ declare namespace androidx {
 				public setSupportBackgroundTintMode(tintMode: globalAndroid.graphics.PorterDuff.Mode | null): void;
 				public getSupportBackgroundTintMode(): globalAndroid.graphics.PorterDuff.Mode | null;
 				public drawableStateChanged(): void;
-				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 			}
 			export namespace AppCompatSpinner {
 				export class DropDownAdapter {
@@ -8060,11 +7618,6 @@ declare namespace androidx {
 				public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
 				public setCompoundDrawablesWithIntrinsicBounds(left: number, top: number, right: number, bottom: number): void;
 				public setCompoundDrawablesRelativeWithIntrinsicBounds(start: number, top: number, end: number, bottom: number): void;
-				public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-				public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
-				public setAutoSizeTextTypeWithDefaults(param0: number): void;
-				public setAutoSizeTextTypeUniformWithConfiguration(param0: number, param1: number, param2: number, param3: number): void;
-				public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
 			}
 		}
 	}
@@ -8423,7 +7976,6 @@ declare namespace androidx {
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 				public setOnFitSystemWindowsListener(listener: androidx.appcompat.widget.FitWindowsViewGroup.OnFitSystemWindowsListener): void;
 				public fitSystemWindows(insets: globalAndroid.graphics.Rect): boolean;
-				public setOnFitSystemWindowsListener(param0: androidx.appcompat.widget.FitWindowsViewGroup.OnFitSystemWindowsListener): void;
 			}
 		}
 	}
@@ -8438,7 +7990,6 @@ declare namespace androidx {
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 				public setOnFitSystemWindowsListener(listener: androidx.appcompat.widget.FitWindowsViewGroup.OnFitSystemWindowsListener): void;
 				public fitSystemWindows(insets: globalAndroid.graphics.Rect): boolean;
-				public setOnFitSystemWindowsListener(param0: androidx.appcompat.widget.FitWindowsViewGroup.OnFitSystemWindowsListener): void;
 			}
 		}
 	}
@@ -8648,13 +8199,12 @@ declare namespace androidx {
 				public getSelectedItemPosition(): number;
 				public getSelectedItemId(): number;
 				public getSelectedView(): globalAndroid.view.View | null;
-				public getListView(): globalAndroid.widget.ListView | null;
+				public getListView(): globalAndroid.widget.ListView;
 				public onKeyDown(keyCode: number, event: globalAndroid.view.KeyEvent): boolean;
 				public onKeyUp(keyCode: number, event: globalAndroid.view.KeyEvent): boolean;
 				public onKeyPreIme(keyCode: number, event: globalAndroid.view.KeyEvent): boolean;
 				public createDragToOpenListener(src: globalAndroid.view.View): globalAndroid.view.View.OnTouchListener;
 				public setOverlapAnchor(overlapAnchor: boolean): void;
-				public getListView(): globalAndroid.widget.ListView;
 			}
 			export namespace ListPopupWindow {
 				export class ListSelectorHider {
@@ -8719,8 +8269,6 @@ declare namespace androidx {
 				public setTouchModal(touchModal: boolean): void;
 				public onItemHoverEnter(menu: androidx.appcompat.view.menu.MenuBuilder, item: globalAndroid.view.MenuItem): void;
 				public onItemHoverExit(menu: androidx.appcompat.view.menu.MenuBuilder, item: globalAndroid.view.MenuItem): void;
-				public onItemHoverExit(param0: androidx.appcompat.view.menu.MenuBuilder, param1: globalAndroid.view.MenuItem): void;
-				public onItemHoverEnter(param0: androidx.appcompat.view.menu.MenuBuilder, param1: globalAndroid.view.MenuItem): void;
 				public show(): void;
 				public dismiss(): void;
 				public isShowing(): boolean;
@@ -9022,7 +8570,6 @@ declare namespace androidx {
 					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 					public constructor(context: globalAndroid.content.Context);
-					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyle: number);
 					public onFinishInflate(): void;
 					public setThreshold(threshold: number): void;
 					public replaceText(text: string): void;
@@ -9078,7 +8625,6 @@ declare namespace androidx {
 				export class ShareActivityChooserModelPolicy extends androidx.appcompat.widget.ActivityChooserModel.OnChooseActivityListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.ShareActionProvider.ShareActivityChooserModelPolicy>;
 					public onChooseActivity(host: androidx.appcompat.widget.ActivityChooserModel, intent: globalAndroid.content.Intent): boolean;
-					public onChooseActivity(param0: androidx.appcompat.widget.ActivityChooserModel, param1: globalAndroid.content.Intent): boolean;
 				}
 				export class ShareMenuItemOnMenuItemClickListener {
 					public static class: java.lang.Class<androidx.appcompat.widget.ShareActionProvider.ShareMenuItemOnMenuItemClickListener>;
@@ -9119,10 +8665,7 @@ declare namespace androidx {
 				public getView(position: number, convertView: globalAndroid.view.View, parent: globalAndroid.view.ViewGroup): globalAndroid.view.View;
 				public getDropDownView(position: number, convertView: globalAndroid.view.View, parent: globalAndroid.view.ViewGroup): globalAndroid.view.View;
 				public static getColumnString(cursor: globalAndroid.database.Cursor, columnName: string): string;
-				public convertToString(param0: globalAndroid.database.Cursor): string;
-				public runQueryOnBackgroundThread(param0: string): globalAndroid.database.Cursor;
 				public getCursor(): globalAndroid.database.Cursor;
-				public changeCursor(param0: globalAndroid.database.Cursor): void;
 			}
 			export namespace SuggestionsAdapter {
 				export class ChildViewCache {
@@ -9439,15 +8982,6 @@ declare namespace androidx {
 					public getId(): number;
 					public onSaveInstanceState(): globalAndroid.os.Parcelable;
 					public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
-					public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
-					public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
-					public updateMenuView(param0: boolean): void;
-					public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-					public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
-					public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-					public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-					public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-					public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 				}
 				export class LayoutParams extends androidx.appcompat.app.ActionBar.LayoutParams {
 					public static class: java.lang.Class<androidx.appcompat.widget.Toolbar.LayoutParams>;
@@ -9477,7 +9011,6 @@ declare namespace androidx {
 					public constructor(superState: globalAndroid.os.Parcelable);
 					public constructor(source: globalAndroid.os.Parcel, loader: java.lang.ClassLoader | null);
 					public constructor(source: globalAndroid.os.Parcel);
-					public constructor(source: globalAndroid.os.Parcel, loader: java.lang.ClassLoader);
 					public writeToParcel(out: globalAndroid.os.Parcel, flags: number): void;
 				}
 			}
@@ -9549,36 +9082,6 @@ declare namespace androidx {
 				public getVisibility(): number;
 				public setMenuCallbacks(actionMenuPresenterCallback: androidx.appcompat.view.menu.MenuPresenter.Callback, menuBuilderCallback: androidx.appcompat.view.menu.MenuBuilder.Callback): void;
 				public getMenu(): globalAndroid.view.Menu;
-				public setWindowCallback(param0: globalAndroid.view.Window.Callback): void;
-				public setWindowTitle(param0: string): void;
-				public setTitle(param0: string): void;
-				public setSubtitle(param0: string): void;
-				public setIcon(param0: number): void;
-				public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setLogo(param0: number): void;
-				public setLogo(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setMenu(param0: globalAndroid.view.Menu, param1: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-				public setDisplayOptions(param0: number): void;
-				public setEmbeddedTabView(param0: androidx.appcompat.widget.ScrollingTabContainerView): void;
-				public setCollapsible(param0: boolean): void;
-				public setHomeButtonEnabled(param0: boolean): void;
-				public setNavigationMode(param0: number): void;
-				public setDropdownParams(param0: globalAndroid.widget.SpinnerAdapter, param1: globalAndroid.widget.AdapterView.OnItemSelectedListener): void;
-				public setDropdownSelectedPosition(param0: number): void;
-				public setCustomView(param0: globalAndroid.view.View): void;
-				public animateToVisibility(param0: number): void;
-				public setupAnimatorToVisibility(param0: number, param1: number): androidx.core.view.ViewPropertyAnimatorCompat;
-				public setNavigationIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setNavigationIcon(param0: number): void;
-				public setNavigationContentDescription(param0: string): void;
-				public setNavigationContentDescription(param0: number): void;
-				public setDefaultNavigationContentDescription(param0: number): void;
-				public setDefaultNavigationIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public saveHierarchyState(param0: globalAndroid.util.SparseArray<globalAndroid.os.Parcelable>): void;
-				public restoreHierarchyState(param0: globalAndroid.util.SparseArray<globalAndroid.os.Parcelable>): void;
-				public setBackgroundDrawable(param0: globalAndroid.graphics.drawable.Drawable): void;
-				public setVisibility(param0: number): void;
-				public setMenuCallbacks(param0: androidx.appcompat.view.menu.MenuPresenter.Callback, param1: androidx.appcompat.view.menu.MenuBuilder.Callback): void;
 			}
 		}
 	}
@@ -9818,14 +9321,12 @@ declare namespace androidx {
 						public supportRemove(entry: androidx.arch.core.internal.SafeIterableMap.Entry<any,any>): void;
 						public hasNext(): boolean;
 						public next(): java.util.Map.Entry<any,any>;
-						public supportRemove(param0: androidx.arch.core.internal.SafeIterableMap.Entry<any,any>): void;
 					}
 					export abstract class ListIterator<K, V>  extends java.lang.Object {
 						public static class: java.lang.Class<androidx.arch.core.internal.SafeIterableMap.ListIterator<any,any>>;
 						public hasNext(): boolean;
 						public supportRemove(entry: androidx.arch.core.internal.SafeIterableMap.Entry<K,V>): void;
 						public next(): java.util.Map.Entry<K,V>;
-						public supportRemove(param0: androidx.arch.core.internal.SafeIterableMap.Entry<K,V>): void;
 					}
 					export class SupportRemove<K, V>  extends java.lang.Object {
 						public static class: java.lang.Class<androidx.arch.core.internal.SafeIterableMap.SupportRemove<any,any>>;
@@ -9987,20 +9488,6 @@ declare namespace androidx {
 				public onPreventCornerOverlapChanged(cardView: androidx.cardview.widget.CardViewDelegate): void;
 				public setBackgroundColor(cardView: androidx.cardview.widget.CardViewDelegate, color: globalAndroid.content.res.ColorStateList | null): void;
 				public getBackgroundColor(cardView: androidx.cardview.widget.CardViewDelegate): globalAndroid.content.res.ColorStateList;
-				public initialize(param0: androidx.cardview.widget.CardViewDelegate, param1: globalAndroid.content.Context, param2: globalAndroid.content.res.ColorStateList, param3: number, param4: number, param5: number): void;
-				public setRadius(param0: androidx.cardview.widget.CardViewDelegate, param1: number): void;
-				public getRadius(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public setElevation(param0: androidx.cardview.widget.CardViewDelegate, param1: number): void;
-				public getElevation(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public setMaxElevation(param0: androidx.cardview.widget.CardViewDelegate, param1: number): void;
-				public getMaxElevation(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public getMinWidth(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public getMinHeight(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public updatePadding(param0: androidx.cardview.widget.CardViewDelegate): void;
-				public onCompatPaddingChanged(param0: androidx.cardview.widget.CardViewDelegate): void;
-				public onPreventCornerOverlapChanged(param0: androidx.cardview.widget.CardViewDelegate): void;
-				public setBackgroundColor(param0: androidx.cardview.widget.CardViewDelegate, param1: globalAndroid.content.res.ColorStateList | null): void;
-				public getBackgroundColor(param0: androidx.cardview.widget.CardViewDelegate): globalAndroid.content.res.ColorStateList;
 			}
 		}
 	}
@@ -10026,20 +9513,6 @@ declare namespace androidx {
 				public getMaxElevation(cardView: androidx.cardview.widget.CardViewDelegate): number;
 				public getMinWidth(cardView: androidx.cardview.widget.CardViewDelegate): number;
 				public getMinHeight(cardView: androidx.cardview.widget.CardViewDelegate): number;
-				public initialize(param0: androidx.cardview.widget.CardViewDelegate, param1: globalAndroid.content.Context, param2: globalAndroid.content.res.ColorStateList, param3: number, param4: number, param5: number): void;
-				public setRadius(param0: androidx.cardview.widget.CardViewDelegate, param1: number): void;
-				public getRadius(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public setElevation(param0: androidx.cardview.widget.CardViewDelegate, param1: number): void;
-				public getElevation(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public setMaxElevation(param0: androidx.cardview.widget.CardViewDelegate, param1: number): void;
-				public getMaxElevation(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public getMinWidth(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public getMinHeight(param0: androidx.cardview.widget.CardViewDelegate): number;
-				public updatePadding(param0: androidx.cardview.widget.CardViewDelegate): void;
-				public onCompatPaddingChanged(param0: androidx.cardview.widget.CardViewDelegate): void;
-				public onPreventCornerOverlapChanged(param0: androidx.cardview.widget.CardViewDelegate): void;
-				public setBackgroundColor(param0: androidx.cardview.widget.CardViewDelegate, param1: globalAndroid.content.res.ColorStateList | null): void;
-				public getBackgroundColor(param0: androidx.cardview.widget.CardViewDelegate): globalAndroid.content.res.ColorStateList;
 			}
 		}
 	}
@@ -10182,7 +9655,6 @@ declare namespace androidx {
 			public constructor(capacity: number);
 			public constructor(map: androidx.collection.SimpleArrayMap<any,any>);
 			public constructor();
-			public constructor(map: androidx.collection.SimpleArrayMap<any,any>);
 			public containsAll(collection: java.util.Collection<any>): boolean;
 			public putAll(array: androidx.collection.SimpleArrayMap<any,any>): void;
 			public putAll(map: java.util.Map<any,any>): void;
@@ -10570,18 +10042,6 @@ declare namespace androidx {
 				public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 				public onSaveInstanceState(): globalAndroid.os.Parcelable;
 				public requestChildRectangleOnScreen(child: globalAndroid.view.View, rectangle: globalAndroid.graphics.Rect, immediate: boolean): boolean;
-				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): boolean;
-				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
-				public onStopNestedScroll(param0: globalAndroid.view.View, param1: number): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
-				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): boolean;
-				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
-				public onStopNestedScroll(param0: globalAndroid.view.View): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
-				public onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
-				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
 			}
 			export namespace CoordinatorLayout {
 				export class AttachedBehavior {
@@ -10974,7 +10434,6 @@ declare namespace androidx {
 				public superDispatchKeyEvent(event: globalAndroid.view.KeyEvent): boolean;
 				public dispatchKeyShortcutEvent(event: globalAndroid.view.KeyEvent): boolean;
 				public dispatchKeyEvent(event: globalAndroid.view.KeyEvent): boolean;
-				public superDispatchKeyEvent(param0: globalAndroid.view.KeyEvent): boolean;
 			}
 			export namespace ComponentActivity {
 				export class ExtraData {
@@ -11399,7 +10858,6 @@ declare namespace androidx {
 						public getHintLaunchesActivity(): boolean;
 						public setHintDisplayActionInline(hintDisplayInline: boolean): androidx.core.app.NotificationCompat.Action.WearableExtender;
 						public getHintDisplayActionInline(): boolean;
-						public extend(param0: androidx.core.app.NotificationCompat.Action.Builder): androidx.core.app.NotificationCompat.Action.Builder;
 					}
 				}
 				export class BadgeIconType {
@@ -11515,7 +10973,6 @@ declare namespace androidx {
 					public getLargeIcon(): globalAndroid.graphics.Bitmap;
 					public setUnreadConversation(unreadConversation: androidx.core.app.NotificationCompat.CarExtender.UnreadConversation): androidx.core.app.NotificationCompat.CarExtender;
 					public getUnreadConversation(): androidx.core.app.NotificationCompat.CarExtender.UnreadConversation;
-					public extend(param0: androidx.core.app.NotificationCompat.Builder): androidx.core.app.NotificationCompat.Builder;
 				}
 				export namespace CarExtender {
 					export class UnreadConversation {
@@ -11739,7 +11196,6 @@ declare namespace androidx {
 					public getDismissalId(): string;
 					public setBridgeTag(bridgeTag: string): androidx.core.app.NotificationCompat.WearableExtender;
 					public getBridgeTag(): string;
-					public extend(param0: androidx.core.app.NotificationCompat.Builder): androidx.core.app.NotificationCompat.Builder;
 				}
 			}
 		}
@@ -11809,9 +11265,6 @@ declare namespace androidx {
 					public notify(packageName: string, id: number, tag: string, notification: globalAndroid.app.Notification): void;
 					public cancel(packageName: string, id: number, tag: string): void;
 					public cancelAll(packageName: string): void;
-					public notify(param0: string, param1: number, param2: string, param3: globalAndroid.app.Notification): void;
-					public cancel(param0: string, param1: number, param2: string): void;
-					public cancelAll(param0: string): void;
 				}
 			}
 		}
@@ -11847,13 +11300,11 @@ declare namespace androidx {
 					public static class: java.lang.Class<androidx.core.app.NotificationManagerCompat.CancelTask>;
 					public send(service: globalAndroid.support.v4.app.INotificationSideChannel): void;
 					public toString(): string;
-					public send(param0: globalAndroid.support.v4.app.INotificationSideChannel): void;
 				}
 				export class NotifyTask extends androidx.core.app.NotificationManagerCompat.Task {
 					public static class: java.lang.Class<androidx.core.app.NotificationManagerCompat.NotifyTask>;
 					public send(service: globalAndroid.support.v4.app.INotificationSideChannel): void;
 					public toString(): string;
-					public send(param0: globalAndroid.support.v4.app.INotificationSideChannel): void;
 				}
 				export class ServiceConnectedEvent {
 					public static class: java.lang.Class<androidx.core.app.NotificationManagerCompat.ServiceConnectedEvent>;
@@ -12241,8 +11692,6 @@ declare namespace androidx {
 					public static class: java.lang.Class<androidx.core.content.FileProvider.SimplePathStrategy>;
 					public getUriForFile(file: java.io.File): globalAndroid.net.Uri;
 					public getFileForUri(uri: globalAndroid.net.Uri): java.io.File;
-					public getUriForFile(param0: java.io.File): globalAndroid.net.Uri;
-					public getFileForUri(param0: globalAndroid.net.Uri): java.io.File;
 				}
 			}
 		}
@@ -13193,10 +12642,6 @@ declare namespace androidx {
 					public getWrappedDrawable(): globalAndroid.graphics.drawable.Drawable;
 					public setWrappedDrawable(dr: globalAndroid.graphics.drawable.Drawable): void;
 					public isCompatTintEnabled(): boolean;
-					public setWrappedDrawable(param0: globalAndroid.graphics.drawable.Drawable): void;
-					public setTint(param0: number): void;
-					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 				}
 			}
 		}
@@ -13219,9 +12664,6 @@ declare namespace androidx {
 					public setState(stateSet: androidNative.Array<number>): boolean;
 					public isCompatTintEnabled(): boolean;
 					public isProjected(): boolean;
-					public setTint(param0: number): void;
-					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 					public getWrappedDrawable(): globalAndroid.graphics.drawable.Drawable;
 					public setWrappedDrawable(param0: globalAndroid.graphics.drawable.Drawable): void;
 				}
@@ -13646,10 +13088,7 @@ declare namespace androidx {
 				public hashCode(): number;
 				public toString(): string;
 				public toLanguageTags(): string;
-				public getFirstMatch(supportedLocales: androidNative.Array<string>): java.util.Locale;
-				public get(param0: number): java.util.Locale;
-				public indexOf(param0: java.util.Locale): number;
-				public getFirstMatch(param0: androidNative.Array<string>): java.util.Locale | null;
+				public getFirstMatch(supportedLocales: androidNative.Array<string>): java.util.Locale | null;
 			}
 		}
 	}
@@ -13700,9 +13139,6 @@ declare namespace androidx {
 				public toString(): string;
 				public toLanguageTags(): string;
 				public getFirstMatch(supportedLocales: androidNative.Array<string>): java.util.Locale | null;
-				public get(param0: number): java.util.Locale;
-				public indexOf(param0: java.util.Locale): number;
-				public getFirstMatch(param0: androidNative.Array<string>): java.util.Locale | null;
 			}
 		}
 	}
@@ -14112,12 +13548,10 @@ declare namespace androidx {
 				export class AnyStrong extends androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionAlgorithm {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.AnyStrong>;
 					public checkRtl(cs: string, start: number, count: number): number;
-					public checkRtl(param0: string, param1: number, param2: number): number;
 				}
 				export class FirstStrong extends androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionAlgorithm {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.FirstStrong>;
 					public checkRtl(cs: string, start: number, count: number): number;
-					public checkRtl(param0: string, param1: number, param2: number): number;
 				}
 				export class TextDirectionAlgorithm {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionAlgorithm>;
@@ -14135,22 +13569,18 @@ declare namespace androidx {
 					public defaultIsRtl(): boolean;
 					public isRtl(array: androidNative.Array<string>, start: number, count: number): boolean;
 					public isRtl(cs: string, start: number, count: number): boolean;
-					public isRtl(param0: androidNative.Array<string>, param1: number, param2: number): boolean;
-					public isRtl(param0: string, param1: number, param2: number): boolean;
 				}
 				export class TextDirectionHeuristicInternal extends androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicImpl {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicInternal>;
 					public defaultIsRtl(): boolean;
 					public isRtl(cs: string, start: number, count: number): boolean;
 					public isRtl(param0: androidNative.Array<string>, param1: number, param2: number): boolean;
-					public isRtl(param0: string, param1: number, param2: number): boolean;
 				}
 				export class TextDirectionHeuristicLocale extends androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicImpl {
 					public static class: java.lang.Class<androidx.core.text.TextDirectionHeuristicsCompat.TextDirectionHeuristicLocale>;
 					public defaultIsRtl(): boolean;
 					public isRtl(cs: string, start: number, count: number): boolean;
 					public isRtl(param0: androidNative.Array<string>, param1: number, param2: number): boolean;
-					public isRtl(param0: string, param1: number, param2: number): boolean;
 				}
 			}
 		}
@@ -14357,14 +13787,12 @@ declare namespace androidx {
 					public constructor(maxPoolSize: number);
 					public acquire(): any;
 					public release(instance: any): boolean;
-					public release(param0: any): boolean;
 				}
 				export class SynchronizedPool<T>  extends androidx.core.util.Pools.SimplePool<any> {
 					public static class: java.lang.Class<androidx.core.util.Pools.SynchronizedPool<any>>;
 					public constructor(maxPoolSize: number);
 					public acquire(): any;
 					public release(element: any): boolean;
-					public release(param0: any): boolean;
 				}
 			}
 		}
@@ -14602,9 +14030,6 @@ declare namespace androidx {
 					public setIsLongpressEnabled(isLongpressEnabled: boolean): void;
 					public isLongpressEnabled(): boolean;
 					public onTouchEvent(ev: globalAndroid.view.MotionEvent): boolean;
-					public onTouchEvent(param0: globalAndroid.view.MotionEvent): boolean;
-					public setIsLongpressEnabled(param0: boolean): void;
-					public setOnDoubleTapListener(param0: globalAndroid.view.GestureDetector.OnDoubleTapListener): void;
 				}
 				export namespace GestureDetectorCompatImplBase {
 					export class GestureHandler {
@@ -14618,9 +14043,6 @@ declare namespace androidx {
 					public onTouchEvent(ev: globalAndroid.view.MotionEvent): boolean;
 					public setIsLongpressEnabled(enabled: boolean): void;
 					public setOnDoubleTapListener(listener: globalAndroid.view.GestureDetector.OnDoubleTapListener): void;
-					public onTouchEvent(param0: globalAndroid.view.MotionEvent): boolean;
-					public setIsLongpressEnabled(param0: boolean): void;
-					public setOnDoubleTapListener(param0: globalAndroid.view.GestureDetector.OnDoubleTapListener): void;
 				}
 			}
 		}
@@ -15798,9 +15220,6 @@ declare namespace androidx {
 					public onAnimationStart(view: globalAndroid.view.View): void;
 					public onAnimationEnd(view: globalAndroid.view.View): void;
 					public onAnimationCancel(view: globalAndroid.view.View): void;
-					public onAnimationStart(param0: globalAndroid.view.View): void;
-					public onAnimationEnd(param0: globalAndroid.view.View): void;
-					public onAnimationCancel(param0: globalAndroid.view.View): void;
 				}
 			}
 		}
@@ -15838,9 +15257,6 @@ declare namespace androidx {
 				public onAnimationStart(view: globalAndroid.view.View): void;
 				public onAnimationEnd(view: globalAndroid.view.View): void;
 				public onAnimationCancel(view: globalAndroid.view.View): void;
-				public onAnimationStart(param0: globalAndroid.view.View): void;
-				public onAnimationEnd(param0: globalAndroid.view.View): void;
-				public onAnimationCancel(param0: globalAndroid.view.View): void;
 			}
 		}
 	}
@@ -16854,15 +16270,15 @@ declare namespace androidx {
 				public startNestedScroll(axes: number, type: number): boolean;
 				public stopNestedScroll(type: number): void;
 				public hasNestedScrollingParent(type: number): boolean;
-				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number>, type: number): boolean;
-				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number>, offsetInWindow: androidNative.Array<number>, type: number): boolean;
+				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number> | null, type: number): boolean;
+				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number> | null, offsetInWindow: androidNative.Array<number> | null, type: number): boolean;
 				public setNestedScrollingEnabled(enabled: boolean): void;
 				public isNestedScrollingEnabled(): boolean;
 				public startNestedScroll(axes: number): boolean;
 				public stopNestedScroll(): void;
 				public hasNestedScrollingParent(): boolean;
-				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number>): boolean;
-				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number>, offsetInWindow: androidNative.Array<number>): boolean;
+				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number> | null): boolean;
+				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number> | null, offsetInWindow: androidNative.Array<number> | null): boolean;
 				public dispatchNestedFling(velocityX: number, velocityY: number, consumed: boolean): boolean;
 				public dispatchNestedPreFling(velocityX: number, velocityY: number): boolean;
 				public onNestedScroll(target: globalAndroid.view.View, dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, type: number, consumed: androidNative.Array<number>): void;
@@ -16928,31 +16344,6 @@ declare namespace androidx {
 				public draw(canvas: globalAndroid.graphics.Canvas): void;
 				public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 				public onSaveInstanceState(): globalAndroid.os.Parcelable;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number, param6: androidNative.Array<number>): void;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number> | null, param5: number, param6: androidNative.Array<number>): void;
-				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): boolean;
-				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
-				public onStopNestedScroll(param0: globalAndroid.view.View, param1: number): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number, param5: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>, param4: number): void;
-				public startNestedScroll(param0: number, param1: number): boolean;
-				public stopNestedScroll(param0: number): void;
-				public hasNestedScrollingParent(param0: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number> | null, param5: number): boolean;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number> | null, param3: androidNative.Array<number> | null, param4: number): boolean;
-				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): boolean;
-				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
-				public onStopNestedScroll(param0: globalAndroid.view.View): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
-				public onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
-				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
-				public setNestedScrollingEnabled(param0: boolean): void;
-				public startNestedScroll(param0: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number> | null): boolean;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number> | null, param3: androidNative.Array<number> | null): boolean;
-				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
-				public dispatchNestedPreFling(param0: number, param1: number): boolean;
 			}
 			export namespace NestedScrollView {
 				export class androidxcorewidgetNestedScrollViewAccessibilityDelegate extends androidx.core.view.AccessibilityDelegateCompat {
@@ -17200,9 +16591,6 @@ declare namespace androidx {
 				public getFilterQueryProvider(): globalAndroid.widget.FilterQueryProvider;
 				public setFilterQueryProvider(filterQueryProvider: globalAndroid.widget.FilterQueryProvider): void;
 				public onContentChanged(): void;
-				public convertToString(param0: globalAndroid.database.Cursor): string;
-				public runQueryOnBackgroundThread(param0: string): globalAndroid.database.Cursor;
-				public changeCursor(param0: globalAndroid.database.Cursor): void;
 			}
 			export namespace CursorAdapter {
 				export class ChangeObserver {
@@ -17310,7 +16698,6 @@ declare namespace androidx {
 				public convertToString(cursor: globalAndroid.database.Cursor): string;
 				public swapCursor(c: globalAndroid.database.Cursor): globalAndroid.database.Cursor;
 				public changeCursorAndColumns(c: globalAndroid.database.Cursor, from: androidNative.Array<string>, to: androidNative.Array<number>): void;
-				public convertToString(param0: globalAndroid.database.Cursor): string;
 				public runQueryOnBackgroundThread(param0: string): globalAndroid.database.Cursor;
 				public getCursor(): globalAndroid.database.Cursor;
 				public changeCursor(param0: globalAndroid.database.Cursor): void;
@@ -17778,10 +17165,6 @@ declare namespace androidx {
 					public onDrawerOpened(drawerView: globalAndroid.view.View): void;
 					public onDrawerClosed(drawerView: globalAndroid.view.View): void;
 					public onDrawerStateChanged(newState: number): void;
-					public onDrawerSlide(param0: globalAndroid.view.View, param1: number): void;
-					public onDrawerOpened(param0: globalAndroid.view.View): void;
-					public onDrawerClosed(param0: globalAndroid.view.View): void;
-					public onDrawerStateChanged(param0: number): void;
 				}
 				export class ViewDragCallback extends androidx.customview.widget.ViewDragHelper.Callback {
 					public static class: java.lang.Class<androidx.drawerlayout.widget.DrawerLayout.ViewDragCallback>;
@@ -17819,35 +17202,29 @@ declare namespace androidx {
 				public getBreadCrumbShortTitleRes(): number;
 				public getBreadCrumbTitle(): string | null;
 				public getBreadCrumbShortTitle(): string | null;
-				public add(param0: number, param1: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
-				public add(param0: number, param1: androidx.fragment.app.Fragment, param2: string | null): androidx.fragment.app.FragmentTransaction;
-				public add(fragment: androidx.fragment.app.Fragment, tag: string | null): androidx.fragment.app.FragmentTransaction;
 				public add(containerViewId: number, fragment: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
 				public add(containerViewId: number, fragment: androidx.fragment.app.Fragment, tag: string | null): androidx.fragment.app.FragmentTransaction;
-				public replace(param0: number, param1: androidx.fragment.app.Fragment, param2: string | null): androidx.fragment.app.FragmentTransaction;
-				public replace(containerViewId: number, fragment: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
+				public add(fragment: androidx.fragment.app.Fragment, tag: string | null): androidx.fragment.app.FragmentTransaction;
 				public replace(containerViewId: number, fragment: androidx.fragment.app.Fragment, tag: string | null): androidx.fragment.app.FragmentTransaction;
+				public replace(containerViewId: number, fragment: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
 				public remove(fragment: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
 				public hide(fragment: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
 				public show(fragment: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
 				public detach(fragment: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
 				public attach(fragment: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
 				public setPrimaryNavigationFragment(fragment: androidx.fragment.app.Fragment | null): androidx.fragment.app.FragmentTransaction;
-				public setCustomAnimations(param0: number, param1: number, param2: number, param3: number): androidx.fragment.app.FragmentTransaction;
-				public setCustomAnimations(enter: number, exit: number): androidx.fragment.app.FragmentTransaction;
 				public setCustomAnimations(enter: number, exit: number, popEnter: number, popExit: number): androidx.fragment.app.FragmentTransaction;
+				public setCustomAnimations(enter: number, exit: number): androidx.fragment.app.FragmentTransaction;
 				public setTransition(transition: number): androidx.fragment.app.FragmentTransaction;
 				public addSharedElement(sharedElement: globalAndroid.view.View, name: string): androidx.fragment.app.FragmentTransaction;
 				public setTransitionStyle(styleRes: number): androidx.fragment.app.FragmentTransaction;
 				public addToBackStack(name: string | null): androidx.fragment.app.FragmentTransaction;
 				public isAddToBackStackAllowed(): boolean;
 				public disallowAddToBackStack(): androidx.fragment.app.FragmentTransaction;
-				public setBreadCrumbTitle(param0: string | null): androidx.fragment.app.FragmentTransaction;
-				public setBreadCrumbTitle(res: number): androidx.fragment.app.FragmentTransaction;
 				public setBreadCrumbTitle(text: string | null): androidx.fragment.app.FragmentTransaction;
-				public setBreadCrumbShortTitle(param0: string | null): androidx.fragment.app.FragmentTransaction;
-				public setBreadCrumbShortTitle(res: number): androidx.fragment.app.FragmentTransaction;
+				public setBreadCrumbTitle(res: number): androidx.fragment.app.FragmentTransaction;
 				public setBreadCrumbShortTitle(text: string | null): androidx.fragment.app.FragmentTransaction;
+				public setBreadCrumbShortTitle(res: number): androidx.fragment.app.FragmentTransaction;
 				public runOnCommit(runnable: java.lang.Runnable): androidx.fragment.app.FragmentTransaction;
 				public runOnCommitRunnables(): void;
 				public commit(): number;
@@ -17859,7 +17236,6 @@ declare namespace androidx {
 				public generateOps(records: java.util.ArrayList<androidx.fragment.app.BackStackRecord>, isRecordPop: java.util.ArrayList<java.lang.Boolean>): boolean;
 				public getName(): string | null;
 				public isEmpty(): boolean;
-				public generateOps(param0: java.util.ArrayList<androidx.fragment.app.BackStackRecord>, param1: java.util.ArrayList<java.lang.Boolean>): boolean;
 			}
 			export namespace BackStackRecord {
 				export class Op {
@@ -18144,8 +17520,6 @@ declare namespace androidx {
 				public startActivityFromFragment(fragment: androidx.fragment.app.Fragment, intent: globalAndroid.content.Intent, requestCode: number): void;
 				public startActivityFromFragment(fragment: androidx.fragment.app.Fragment, intent: globalAndroid.content.Intent, requestCode: number, options: globalAndroid.os.Bundle | null): void;
 				public startIntentSenderFromFragment(fragment: androidx.fragment.app.Fragment, intent: globalAndroid.content.IntentSender, requestCode: number, fillInIntent: globalAndroid.content.Intent | null, flagsMask: number, flagsValues: number, extraFlags: number, options: globalAndroid.os.Bundle | null): void;
-				public onRequestPermissionsResult(param0: number, param1: androidNative.Array<string>, param2: androidNative.Array<number>): void;
-				public validateRequestPermissionsRequestCode(param0: number): void;
 				public superDispatchKeyEvent(param0: globalAndroid.view.KeyEvent): boolean;
 				public getLifecycle(): androidx.lifecycle.Lifecycle;
 				public getViewModelStore(): androidx.lifecycle.ViewModelStore;
@@ -18405,16 +17779,12 @@ declare namespace androidx {
 				public static readonly ANIM_STYLE_FADE_EXIT = 6;
 				public beginTransaction(): androidx.fragment.app.FragmentTransaction;
 				public executePendingTransactions(): boolean;
-				public popBackStack(param0: string | null, param1: number): void;
-				public popBackStack(param0: number, param1: number): void;
-				public popBackStack(): void;
-				public popBackStackImmediate(param0: string | null, param1: number): boolean;
-				public popBackStackImmediate(param0: number, param1: number): boolean;
-				public popBackStackImmediate(): boolean;
 				public popBackStack(name: string | null, flags: number): void;
-				public popBackStackImmediate(name: string | null, flags: number): boolean;
 				public popBackStack(id: number, flags: number): void;
+				public popBackStack(): void;
+				public popBackStackImmediate(name: string | null, flags: number): boolean;
 				public popBackStackImmediate(id: number, flags: number): boolean;
+				public popBackStackImmediate(): boolean;
 				public getBackStackEntryCount(): number;
 				public getBackStackEntryAt(index: number): androidx.fragment.app.FragmentManager.BackStackEntry;
 				public addOnBackStackChangedListener(listener: androidx.fragment.app.FragmentManager.OnBackStackChangedListener): void;
@@ -18524,7 +17894,6 @@ declare namespace androidx {
 				export class PopBackStackState extends androidx.fragment.app.FragmentManagerImpl.OpGenerator {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentManagerImpl.PopBackStackState>;
 					public generateOps(records: java.util.ArrayList<androidx.fragment.app.BackStackRecord>, isRecordPop: java.util.ArrayList<java.lang.Boolean>): boolean;
-					public generateOps(param0: java.util.ArrayList<androidx.fragment.app.BackStackRecord>, param1: java.util.ArrayList<java.lang.Boolean>): boolean;
 				}
 				export class StartEnterTransitionListener extends androidx.fragment.app.Fragment.OnStartEnterTransitionListener {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentManagerImpl.StartEnterTransitionListener>;
@@ -18776,7 +18145,7 @@ declare namespace androidx {
 				public cloneTransition(transition: any): any;
 				public wrapTransitionInSet(transition: any): any;
 				public setSharedElementTargets(transitionObj: any, nonExistentView: globalAndroid.view.View, sharedViews: java.util.ArrayList<globalAndroid.view.View>): void;
-				public setEpicenter(param0: any, param1: globalAndroid.graphics.Rect): void;
+				public setEpicenter(transitionObj: any, epicenter: globalAndroid.graphics.Rect): void;
 				public setEpicenter(transitionObj: any, view: globalAndroid.view.View): void;
 				public addTargets(transitionObj: any, views: java.util.ArrayList<globalAndroid.view.View>): void;
 				public mergeTransitionsTogether(transition1: any, transition2: any, transition3: any): any;
@@ -18788,7 +18157,6 @@ declare namespace androidx {
 				public replaceTargets(transitionObj: any, oldTargets: java.util.ArrayList<globalAndroid.view.View>, newTargets: java.util.ArrayList<globalAndroid.view.View>): void;
 				public addTarget(transitionObj: any, view: globalAndroid.view.View): void;
 				public removeTarget(transitionObj: any, view: globalAndroid.view.View): void;
-				public setEpicenter(transitionObj: any, epicenter: globalAndroid.graphics.Rect): void;
 			}
 		}
 	}
@@ -18936,10 +18304,6 @@ declare namespace androidx {
 				public onDrawerOpened(drawerView: globalAndroid.view.View): void;
 				public onDrawerClosed(drawerView: globalAndroid.view.View): void;
 				public onDrawerStateChanged(newState: number): void;
-				public onDrawerSlide(param0: globalAndroid.view.View, param1: number): void;
-				public onDrawerOpened(param0: globalAndroid.view.View): void;
-				public onDrawerClosed(param0: globalAndroid.view.View): void;
-				public onDrawerStateChanged(param0: number): void;
 			}
 			export namespace ActionBarDrawerToggle {
 				export class Delegate {
@@ -19050,7 +18414,6 @@ declare namespace androidx {
 		export class CompositeGeneratedAdaptersObserver extends androidx.lifecycle.GenericLifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.CompositeGeneratedAdaptersObserver>;
 			public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
-			public onStateChanged(param0: androidx.lifecycle.LifecycleOwner, param1: androidx.lifecycle.Lifecycle.Event): void;
 		}
 	}
 }
@@ -19099,7 +18462,6 @@ declare namespace androidx {
 		export class FullLifecycleObserverAdapter extends androidx.lifecycle.GenericLifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.FullLifecycleObserverAdapter>;
 			public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
-			public onStateChanged(param0: androidx.lifecycle.LifecycleOwner, param1: androidx.lifecycle.Lifecycle.Event): void;
 		}
 	}
 }
@@ -19275,7 +18637,6 @@ declare namespace androidx {
 			export class LifecycleBoundObserver extends androidx.lifecycle.LiveData.ObserverWrapper implements androidx.lifecycle.GenericLifecycleObserver {
 				public static class: java.lang.Class<androidx.lifecycle.LiveData.LifecycleBoundObserver>;
 				public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
-				public onStateChanged(param0: androidx.lifecycle.LifecycleOwner, param1: androidx.lifecycle.Lifecycle.Event): void;
 			}
 			export abstract class ObserverWrapper {
 				public static class: java.lang.Class<androidx.lifecycle.LiveData.ObserverWrapper>;
@@ -19298,7 +18659,6 @@ declare namespace androidx {
 			export class Source<V>  extends androidx.lifecycle.Observer<any> {
 				public static class: java.lang.Class<androidx.lifecycle.MediatorLiveData.Source<any>>;
 				public onChanged(v: any): void;
-				public onChanged(param0: any): void;
 			}
 		}
 	}
@@ -19362,7 +18722,6 @@ declare namespace androidx {
 		export class ReflectiveGenericLifecycleObserver extends androidx.lifecycle.GenericLifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.ReflectiveGenericLifecycleObserver>;
 			public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
-			public onStateChanged(param0: androidx.lifecycle.LifecycleOwner, param1: androidx.lifecycle.Lifecycle.Event): void;
 		}
 	}
 }
@@ -19405,7 +18764,6 @@ declare namespace androidx {
 		export class SingleGeneratedAdapterObserver extends androidx.lifecycle.GenericLifecycleObserver {
 			public static class: java.lang.Class<androidx.lifecycle.SingleGeneratedAdapterObserver>;
 			public onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: androidx.lifecycle.Lifecycle.Event): void;
-			public onStateChanged(param0: androidx.lifecycle.LifecycleOwner, param1: androidx.lifecycle.Lifecycle.Event): void;
 		}
 	}
 }
@@ -19446,7 +18804,6 @@ declare namespace androidx {
 				public constructor();
 				public constructor(application: globalAndroid.app.Application);
 				public create(modelClass: java.lang.Class<any>): androidx.lifecycle.ViewModel;
-				public create(param0: java.lang.Class<any>): androidx.lifecycle.ViewModel;
 			}
 			export class Factory {
 				public static class: java.lang.Class<androidx.lifecycle.ViewModelProvider.Factory>;
@@ -19463,7 +18820,6 @@ declare namespace androidx {
 				public static class: java.lang.Class<androidx.lifecycle.ViewModelProvider.NewInstanceFactory>;
 				public constructor();
 				public create(modelClass: java.lang.Class<any>): androidx.lifecycle.ViewModel;
-				public create(param0: java.lang.Class<any>): androidx.lifecycle.ViewModel;
 			}
 		}
 	}
@@ -19558,14 +18914,12 @@ declare namespace androidx {
 					public setValue(value: any): void;
 					public toString(): string;
 					public dump(prefix: string, fd: java.io.FileDescriptor, writer: java.io.PrintWriter, args: androidNative.Array<string>): void;
-					public onLoadComplete(param0: androidx.loader.content.Loader<any>, param1: any): void;
 				}
 				export class LoaderObserver<D>  extends androidx.lifecycle.Observer<any> {
 					public static class: java.lang.Class<androidx.loader.app.LoaderManagerImpl.LoaderObserver<any>>;
 					public onChanged(data: any): void;
 					public toString(): string;
 					public dump(prefix: string, writer: java.io.PrintWriter): void;
-					public onChanged(param0: any): void;
 				}
 				export class LoaderViewModel extends androidx.lifecycle.ViewModel {
 					public static class: java.lang.Class<androidx.loader.app.LoaderManagerImpl.LoaderViewModel>;
@@ -20114,25 +19468,17 @@ declare namespace androidx {
 				public onLoadChildren(parentId: string, resultWrapper: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<java.util.List<globalAndroid.os.Parcel>>): void;
 				public getBrowserRootHints(): globalAndroid.os.Bundle;
 				public getCurrentBrowserInfo(): androidx.media.MediaSessionManager.RemoteUserInfo;
-				public onBind(param0: globalAndroid.content.Intent): globalAndroid.os.IBinder;
-				public setSessionToken(param0: globalAndroid.support.v4.media.session.MediaSessionCompat.Token): void;
-				public notifyChildrenChanged(param0: string, param1: globalAndroid.os.Bundle): void;
-				public notifyChildrenChanged(param0: androidx.media.MediaSessionManager.RemoteUserInfo, param1: string, param2: globalAndroid.os.Bundle): void;
-				public onGetRoot(param0: string, param1: number, param2: globalAndroid.os.Bundle): androidx.media.MediaBrowserServiceCompatApi21.BrowserRoot;
-				public onLoadChildren(param0: string, param1: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<java.util.List<globalAndroid.os.Parcel>>): void;
 			}
 			export class MediaBrowserServiceImplApi23 extends androidx.media.MediaBrowserServiceCompat.MediaBrowserServiceImplApi21 implements androidx.media.MediaBrowserServiceCompatApi23.ServiceCompatProxy {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat.MediaBrowserServiceImplApi23>;
 				public onCreate(): void;
 				public onLoadItem(itemId: string, resultWrapper: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<globalAndroid.os.Parcel>): void;
-				public onLoadItem(param0: string, param1: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<globalAndroid.os.Parcel>): void;
 				public onGetRoot(param0: string, param1: number, param2: globalAndroid.os.Bundle): androidx.media.MediaBrowserServiceCompatApi21.BrowserRoot;
 				public onLoadChildren(param0: string, param1: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<java.util.List<globalAndroid.os.Parcel>>): void;
 				public onBind(param0: globalAndroid.content.Intent): globalAndroid.os.IBinder;
 				public setSessionToken(param0: globalAndroid.support.v4.media.session.MediaSessionCompat.Token): void;
 				public notifyChildrenChanged(remoteUserInfo: androidx.media.MediaSessionManager.RemoteUserInfo, parentId: string, options: globalAndroid.os.Bundle): void;
 				public notifyChildrenChanged(param0: string, param1: globalAndroid.os.Bundle): void;
-				public notifyChildrenChanged(param0: androidx.media.MediaSessionManager.RemoteUserInfo, param1: string, param2: globalAndroid.os.Bundle): void;
 				public getBrowserRootHints(): globalAndroid.os.Bundle;
 				public getCurrentBrowserInfo(): androidx.media.MediaSessionManager.RemoteUserInfo;
 			}
@@ -20142,15 +19488,12 @@ declare namespace androidx {
 				public onLoadChildren(parentId: string, resultWrapper: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<java.util.List<globalAndroid.os.Parcel>>): void;
 				public onLoadChildren(parentId: string, resultWrapper: androidx.media.MediaBrowserServiceCompatApi26.ResultWrapper, options: globalAndroid.os.Bundle): void;
 				public getBrowserRootHints(): globalAndroid.os.Bundle;
-				public onLoadChildren(param0: string, param1: androidx.media.MediaBrowserServiceCompatApi26.ResultWrapper, param2: globalAndroid.os.Bundle): void;
 				public onLoadItem(param0: string, param1: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<globalAndroid.os.Parcel>): void;
 				public onGetRoot(param0: string, param1: number, param2: globalAndroid.os.Bundle): androidx.media.MediaBrowserServiceCompatApi21.BrowserRoot;
-				public onLoadChildren(param0: string, param1: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<java.util.List<globalAndroid.os.Parcel>>): void;
 				public onBind(param0: globalAndroid.content.Intent): globalAndroid.os.IBinder;
 				public setSessionToken(param0: globalAndroid.support.v4.media.session.MediaSessionCompat.Token): void;
 				public notifyChildrenChanged(remoteUserInfo: androidx.media.MediaSessionManager.RemoteUserInfo, parentId: string, options: globalAndroid.os.Bundle): void;
 				public notifyChildrenChanged(param0: string, param1: globalAndroid.os.Bundle): void;
-				public notifyChildrenChanged(param0: androidx.media.MediaSessionManager.RemoteUserInfo, param1: string, param2: globalAndroid.os.Bundle): void;
 				public getCurrentBrowserInfo(): androidx.media.MediaSessionManager.RemoteUserInfo;
 			}
 			export class MediaBrowserServiceImplApi28 extends androidx.media.MediaBrowserServiceCompat.MediaBrowserServiceImplApi26 {
@@ -20160,13 +19503,11 @@ declare namespace androidx {
 				public onLoadChildren(parentId: string, resultWrapper: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<java.util.List<globalAndroid.os.Parcel>>): void;
 				public onLoadChildren(param0: string, param1: androidx.media.MediaBrowserServiceCompatApi26.ResultWrapper, param2: globalAndroid.os.Bundle): void;
 				public onGetRoot(param0: string, param1: number, param2: globalAndroid.os.Bundle): androidx.media.MediaBrowserServiceCompatApi21.BrowserRoot;
-				public onLoadChildren(param0: string, param1: androidx.media.MediaBrowserServiceCompatApi21.ResultWrapper<java.util.List<globalAndroid.os.Parcel>>): void;
 				public onCreate(): void;
 				public onBind(param0: globalAndroid.content.Intent): globalAndroid.os.IBinder;
 				public setSessionToken(param0: globalAndroid.support.v4.media.session.MediaSessionCompat.Token): void;
 				public notifyChildrenChanged(remoteUserInfo: androidx.media.MediaSessionManager.RemoteUserInfo, parentId: string, options: globalAndroid.os.Bundle): void;
 				public notifyChildrenChanged(param0: string, param1: globalAndroid.os.Bundle): void;
-				public notifyChildrenChanged(param0: androidx.media.MediaSessionManager.RemoteUserInfo, param1: string, param2: globalAndroid.os.Bundle): void;
 				public getBrowserRootHints(): globalAndroid.os.Bundle;
 			}
 			export class MediaBrowserServiceImplBase extends androidx.media.MediaBrowserServiceCompat.MediaBrowserServiceImpl {
@@ -20178,10 +19519,6 @@ declare namespace androidx {
 				public notifyChildrenChanged(remoteUserInfo: androidx.media.MediaSessionManager.RemoteUserInfo, parentId: string, options: globalAndroid.os.Bundle): void;
 				public getBrowserRootHints(): globalAndroid.os.Bundle;
 				public getCurrentBrowserInfo(): androidx.media.MediaSessionManager.RemoteUserInfo;
-				public onBind(param0: globalAndroid.content.Intent): globalAndroid.os.IBinder;
-				public setSessionToken(param0: globalAndroid.support.v4.media.session.MediaSessionCompat.Token): void;
-				public notifyChildrenChanged(param0: string, param1: globalAndroid.os.Bundle): void;
-				public notifyChildrenChanged(param0: androidx.media.MediaSessionManager.RemoteUserInfo, param1: string, param2: globalAndroid.os.Bundle): void;
 			}
 			export class Result<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat.Result<any>>;
@@ -20225,8 +19562,6 @@ declare namespace androidx {
 				public onConnect(root: string, session: globalAndroid.support.v4.media.session.MediaSessionCompat.Token, extras: globalAndroid.os.Bundle): void;
 				public onConnectFailed(): void;
 				public onLoadChildren(mediaId: string, list: java.util.List<globalAndroid.support.v4.media.MediaBrowserCompat.MediaItem>, options: globalAndroid.os.Bundle, notifyChildrenChangedOptions: globalAndroid.os.Bundle): void;
-				public onConnect(param0: string, param1: globalAndroid.support.v4.media.session.MediaSessionCompat.Token, param2: globalAndroid.os.Bundle): void;
-				public onLoadChildren(param0: string, param1: java.util.List<globalAndroid.support.v4.media.MediaBrowserCompat.MediaItem>, param2: globalAndroid.os.Bundle, param3: globalAndroid.os.Bundle): void;
 			}
 			export class ServiceHandler {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat.ServiceHandler>;
@@ -20406,7 +19741,6 @@ declare namespace androidx {
 			public static class: java.lang.Class<androidx.media.MediaSessionManagerImplApi21>;
 			public isTrustedForMediaControl(userInfo: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 			public getContext(): globalAndroid.content.Context;
-			public isTrustedForMediaControl(param0: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 		}
 	}
 }
@@ -20417,7 +19751,6 @@ declare namespace androidx {
 			public static class: java.lang.Class<androidx.media.MediaSessionManagerImplApi28>;
 			public isTrustedForMediaControl(userInfo: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 			public getContext(): globalAndroid.content.Context;
-			public isTrustedForMediaControl(param0: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 		}
 		export namespace MediaSessionManagerImplApi28 {
 			export class RemoteUserInfoImplApi28 extends androidx.media.MediaSessionManager.RemoteUserInfoImpl {
@@ -20438,7 +19771,6 @@ declare namespace androidx {
 			public static class: java.lang.Class<androidx.media.MediaSessionManagerImplBase>;
 			public getContext(): globalAndroid.content.Context;
 			public isTrustedForMediaControl(userInfo: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
-			public isTrustedForMediaControl(param0: androidx.media.MediaSessionManager.RemoteUserInfoImpl): boolean;
 		}
 		export namespace MediaSessionManagerImplBase {
 			export class RemoteUserInfoImplBase extends androidx.media.MediaSessionManager.RemoteUserInfoImpl {
@@ -20631,8 +19963,6 @@ declare namespace androidx {
 				public applyPendingUpdatesToPosition(position: number): number;
 				public obtainUpdateOp(cmd: number, positionStart: number, itemCount: number, payload: any): androidx.recyclerview.widget.AdapterHelper.UpdateOp;
 				public recycleUpdateOp(op: androidx.recyclerview.widget.AdapterHelper.UpdateOp): void;
-				public obtainUpdateOp(param0: number, param1: number, param2: number, param3: any): androidx.recyclerview.widget.AdapterHelper.UpdateOp;
-				public recycleUpdateOp(param0: androidx.recyclerview.widget.AdapterHelper.UpdateOp): void;
 			}
 			export namespace AdapterHelper {
 				export class Callback {
@@ -20681,10 +20011,6 @@ declare namespace androidx {
 				public onRemoved(position: number, count: number): void;
 				public onMoved(fromPosition: number, toPosition: number): void;
 				public onChanged(position: number, count: number, payload: any): void;
-				public onInserted(param0: number, param1: number): void;
-				public onRemoved(param0: number, param1: number): void;
-				public onMoved(param0: number, param1: number): void;
-				public onChanged(param0: number, param1: number, param2: any): void;
 			}
 		}
 	}
@@ -20779,10 +20105,6 @@ declare namespace androidx {
 				public onRemoved(position: number, count: number): void;
 				public onMoved(fromPosition: number, toPosition: number): void;
 				public onChanged(position: number, count: number, payload: any): void;
-				public onInserted(param0: number, param1: number): void;
-				public onRemoved(param0: number, param1: number): void;
-				public onMoved(param0: number, param1: number): void;
-				public onChanged(param0: number, param1: number, param2: any): void;
 			}
 		}
 	}
@@ -20966,9 +20288,6 @@ declare namespace androidx {
 				public onInterceptTouchEvent(recyclerView: androidx.recyclerview.widget.RecyclerView, ev: globalAndroid.view.MotionEvent): boolean;
 				public onTouchEvent(recyclerView: androidx.recyclerview.widget.RecyclerView, me: globalAndroid.view.MotionEvent): void;
 				public onRequestDisallowInterceptTouchEvent(disallowIntercept: boolean): void;
-				public onInterceptTouchEvent(param0: androidx.recyclerview.widget.RecyclerView, param1: globalAndroid.view.MotionEvent): boolean;
-				public onTouchEvent(param0: androidx.recyclerview.widget.RecyclerView, param1: globalAndroid.view.MotionEvent): void;
-				public onRequestDisallowInterceptTouchEvent(param0: boolean): void;
 			}
 			export namespace FastScroller {
 				export class AnimatorListener {
@@ -20998,7 +20317,6 @@ declare namespace androidx {
 				export class LayoutPrefetchRegistryImpl extends androidx.recyclerview.widget.RecyclerView.LayoutManager.LayoutPrefetchRegistry {
 					public static class: java.lang.Class<androidx.recyclerview.widget.GapWorker.LayoutPrefetchRegistryImpl>;
 					public addPosition(layoutPosition: number, pixelDistance: number): void;
-					public addPosition(param0: number, param1: number): void;
 				}
 				export class Task {
 					public static class: java.lang.Class<androidx.recyclerview.widget.GapWorker.Task>;
@@ -21121,8 +20439,6 @@ declare namespace androidx {
 				public getItemOffsets(outRect: globalAndroid.graphics.Rect, view: globalAndroid.view.View, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State): void;
 				public startDrag(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): void;
 				public startSwipe(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): void;
-				public onChildViewAttachedToWindow(param0: globalAndroid.view.View): void;
-				public onChildViewDetachedFromWindow(param0: globalAndroid.view.View): void;
 			}
 			export namespace ItemTouchHelper {
 				export abstract class Callback {
@@ -21231,10 +20547,6 @@ declare namespace androidx {
 				public onDrawOver(c: globalAndroid.graphics.Canvas, recyclerView: androidx.recyclerview.widget.RecyclerView, view: globalAndroid.view.View, dX: number, dY: number, actionState: number, isCurrentlyActive: boolean): void;
 				public clearView(view: globalAndroid.view.View): void;
 				public onSelected(view: globalAndroid.view.View): void;
-				public onDraw(param0: globalAndroid.graphics.Canvas, param1: androidx.recyclerview.widget.RecyclerView, param2: globalAndroid.view.View, param3: number, param4: number, param5: number, param6: boolean): void;
-				public onDrawOver(param0: globalAndroid.graphics.Canvas, param1: androidx.recyclerview.widget.RecyclerView, param2: globalAndroid.view.View, param3: number, param4: number, param5: number, param6: boolean): void;
-				public clearView(param0: globalAndroid.view.View): void;
-				public onSelected(param0: globalAndroid.view.View): void;
 			}
 		}
 	}
@@ -21285,7 +20597,7 @@ declare namespace androidx {
 				public findViewByPosition(position: number): globalAndroid.view.View;
 				public getExtraLayoutSpace(state: androidx.recyclerview.widget.RecyclerView.State): number;
 				public smoothScrollToPosition(recyclerView: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State, position: number): void;
-				public computeScrollVectorForPosition(targetPosition: number): globalAndroid.graphics.PointF;
+				public computeScrollVectorForPosition(targetPosition: number): globalAndroid.graphics.PointF | null;
 				public onLayoutChildren(recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State): void;
 				public onLayoutCompleted(state: androidx.recyclerview.widget.RecyclerView.State): void;
 				public isLayoutRTL(): boolean;
@@ -21313,8 +20625,6 @@ declare namespace androidx {
 				public onFocusSearchFailed(focused: globalAndroid.view.View, focusDirection: number, recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State): globalAndroid.view.View;
 				public supportsPredictiveItemAnimations(): boolean;
 				public prepareForDrop(view: globalAndroid.view.View, target: globalAndroid.view.View, x: number, y: number): void;
-				public prepareForDrop(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): void;
-				public computeScrollVectorForPosition(param0: number): globalAndroid.graphics.PointF | null;
 			}
 			export namespace LinearLayoutManager {
 				export class AnchorInfo {
@@ -21444,8 +20754,6 @@ declare namespace androidx {
 				public static class: java.lang.Class<androidx.recyclerview.widget.MessageThreadUtil<any>>;
 				public getMainThreadProxy(callback: androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<any>): androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<any>;
 				public getBackgroundProxy(callback: androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<any>): androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<any>;
-				public getMainThreadProxy(param0: androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<any>): androidx.recyclerview.widget.ThreadUtil.MainThreadCallback<any>;
-				public getBackgroundProxy(param0: androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<any>): androidx.recyclerview.widget.ThreadUtil.BackgroundCallback<any>;
 			}
 			export namespace MessageThreadUtil {
 				export class MessageQueue {
@@ -21682,24 +20990,13 @@ declare namespace androidx {
 				public stopNestedScroll(type: number): void;
 				public hasNestedScrollingParent(): boolean;
 				public hasNestedScrollingParent(type: number): boolean;
-				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number>): boolean;
-				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number>, type: number): boolean;
-				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number>, offsetInWindow: androidNative.Array<number>): boolean;
-				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number>, offsetInWindow: androidNative.Array<number>, type: number): boolean;
+				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number> | null): boolean;
+				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number> | null, type: number): boolean;
+				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number> | null, offsetInWindow: androidNative.Array<number> | null): boolean;
+				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number> | null, offsetInWindow: androidNative.Array<number> | null, type: number): boolean;
 				public dispatchNestedFling(velocityX: number, velocityY: number, consumed: boolean): boolean;
 				public dispatchNestedPreFling(velocityX: number, velocityY: number): boolean;
 				public getChildDrawingOrder(childCount: number, i: number): number;
-				public startNestedScroll(param0: number, param1: number): boolean;
-				public stopNestedScroll(param0: number): void;
-				public hasNestedScrollingParent(param0: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number> | null, param5: number): boolean;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number> | null, param3: androidNative.Array<number> | null, param4: number): boolean;
-				public setNestedScrollingEnabled(param0: boolean): void;
-				public startNestedScroll(param0: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number> | null): boolean;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number> | null, param3: androidNative.Array<number> | null): boolean;
-				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
-				public dispatchNestedPreFling(param0: number, param1: number): boolean;
 			}
 			export namespace RecyclerView {
 				export abstract class Adapter<VH>  extends java.lang.Object {
@@ -21869,7 +21166,6 @@ declare namespace androidx {
 				export class ItemAnimatorRestoreListener extends androidx.recyclerview.widget.RecyclerView.ItemAnimator.ItemAnimatorListener {
 					public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.ItemAnimatorRestoreListener>;
 					public onAnimationFinished(item: androidx.recyclerview.widget.RecyclerView.ViewHolder): void;
-					public onAnimationFinished(param0: androidx.recyclerview.widget.RecyclerView.ViewHolder): void;
 				}
 				export abstract class ItemDecoration {
 					public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.ItemDecoration>;
@@ -22174,9 +21470,6 @@ declare namespace androidx {
 					public onInterceptTouchEvent(rv: androidx.recyclerview.widget.RecyclerView, e: globalAndroid.view.MotionEvent): boolean;
 					public onTouchEvent(rv: androidx.recyclerview.widget.RecyclerView, e: globalAndroid.view.MotionEvent): void;
 					public onRequestDisallowInterceptTouchEvent(disallowIntercept: boolean): void;
-					public onInterceptTouchEvent(param0: androidx.recyclerview.widget.RecyclerView, param1: globalAndroid.view.MotionEvent): boolean;
-					public onTouchEvent(param0: androidx.recyclerview.widget.RecyclerView, param1: globalAndroid.view.MotionEvent): void;
-					public onRequestDisallowInterceptTouchEvent(param0: boolean): void;
 				}
 				export abstract class SmoothScroller {
 					public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.SmoothScroller>;
@@ -22421,10 +21714,6 @@ declare namespace androidx {
 					public areItemsTheSame(item1: any, item2: any): boolean;
 					public getChangePayload(item1: any, item2: any): any;
 					public dispatchLastEvent(): void;
-					public onInserted(param0: number, param1: number): void;
-					public onRemoved(param0: number, param1: number): void;
-					public onMoved(param0: number, param1: number): void;
-					public onChanged(param0: number, param1: number, param2: any): void;
 				}
 				export abstract class Callback<T2>  extends java.lang.Object {
 					public static class: java.lang.Class<androidx.recyclerview.widget.SortedList.Callback<any>>;
@@ -22438,7 +21727,6 @@ declare namespace androidx {
 					public onInserted(param0: number, param1: number): void;
 					public onRemoved(param0: number, param1: number): void;
 					public onMoved(param0: number, param1: number): void;
-					public onChanged(param0: number, param1: number, param2: any): void;
 				}
 			}
 		}
@@ -22457,10 +21745,6 @@ declare namespace androidx {
 				public onMoved(fromPosition: number, toPosition: number): void;
 				public onChanged(position: number, count: number, payload: any): void;
 				public onChanged(position: number, count: number): void;
-				public onInserted(param0: number, param1: number): void;
-				public onRemoved(param0: number, param1: number): void;
-				public onMoved(param0: number, param1: number): void;
-				public onChanged(param0: number, param1: number, param2: any): void;
 			}
 		}
 	}
@@ -22527,7 +21811,7 @@ declare namespace androidx {
 				public canScrollHorizontally(): boolean;
 				public scrollHorizontallyBy(dx: number, recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State): number;
 				public scrollVerticallyBy(dy: number, recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State): number;
-				public computeScrollVectorForPosition(targetPosition: number): globalAndroid.graphics.PointF;
+				public computeScrollVectorForPosition(targetPosition: number): globalAndroid.graphics.PointF | null;
 				public smoothScrollToPosition(recyclerView: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State, position: number): void;
 				public scrollToPosition(position: number): void;
 				public scrollToPositionWithOffset(position: number, offset: number): void;
@@ -22538,7 +21822,6 @@ declare namespace androidx {
 				public checkLayoutParams(lp: androidx.recyclerview.widget.RecyclerView.LayoutParams): boolean;
 				public getOrientation(): number;
 				public onFocusSearchFailed(focused: globalAndroid.view.View, direction: number, recycler: androidx.recyclerview.widget.RecyclerView.Recycler, state: androidx.recyclerview.widget.RecyclerView.State): globalAndroid.view.View | null;
-				public computeScrollVectorForPosition(param0: number): globalAndroid.graphics.PointF | null;
 			}
 			export namespace StaggeredGridLayoutManager {
 				export class AnchorInfo {
@@ -22868,9 +22151,6 @@ declare namespace androidx {
 					public onPanelSlide(panel: globalAndroid.view.View, slideOffset: number): void;
 					public onPanelOpened(panel: globalAndroid.view.View): void;
 					public onPanelClosed(panel: globalAndroid.view.View): void;
-					public onPanelSlide(param0: globalAndroid.view.View, param1: number): void;
-					public onPanelOpened(param0: globalAndroid.view.View): void;
-					public onPanelClosed(param0: globalAndroid.view.View): void;
 				}
 			}
 		}
@@ -23009,26 +22289,13 @@ declare namespace androidx {
 				public startNestedScroll(axes: number): boolean;
 				public stopNestedScroll(): void;
 				public hasNestedScrollingParent(): boolean;
-				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number>): boolean;
-				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number>, offsetInWindow: androidNative.Array<number>): boolean;
+				public dispatchNestedScroll(dxConsumed: number, dyConsumed: number, dxUnconsumed: number, dyUnconsumed: number, offsetInWindow: androidNative.Array<number> | null): boolean;
+				public dispatchNestedPreScroll(dx: number, dy: number, consumed: androidNative.Array<number> | null, offsetInWindow: androidNative.Array<number> | null): boolean;
 				public onNestedPreFling(target: globalAndroid.view.View, velocityX: number, velocityY: number): boolean;
 				public onNestedFling(target: globalAndroid.view.View, velocityX: number, velocityY: number, consumed: boolean): boolean;
 				public dispatchNestedFling(velocityX: number, velocityY: number, consumed: boolean): boolean;
 				public dispatchNestedPreFling(velocityX: number, velocityY: number): boolean;
 				public onTouchEvent(ev: globalAndroid.view.MotionEvent): boolean;
-				public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): boolean;
-				public onNestedScrollAccepted(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number): void;
-				public onStopNestedScroll(param0: globalAndroid.view.View): void;
-				public onNestedScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: number, param4: number): void;
-				public onNestedPreScroll(param0: globalAndroid.view.View, param1: number, param2: number, param3: androidNative.Array<number>): void;
-				public onNestedFling(param0: globalAndroid.view.View, param1: number, param2: number, param3: boolean): boolean;
-				public onNestedPreFling(param0: globalAndroid.view.View, param1: number, param2: number): boolean;
-				public setNestedScrollingEnabled(param0: boolean): void;
-				public startNestedScroll(param0: number): boolean;
-				public dispatchNestedScroll(param0: number, param1: number, param2: number, param3: number, param4: androidNative.Array<number> | null): boolean;
-				public dispatchNestedPreScroll(param0: number, param1: number, param2: androidNative.Array<number> | null, param3: androidNative.Array<number> | null): boolean;
-				public dispatchNestedFling(param0: number, param1: number, param2: boolean): boolean;
-				public dispatchNestedPreFling(param0: number, param1: number): boolean;
 			}
 			export namespace SwipeRefreshLayout {
 				export class OnChildScrollUpCallback {
@@ -23193,10 +22460,7 @@ declare namespace androidx {
 				public onTransitionPause(transition: androidx.transition.Transition): void;
 				public onTransitionResume(transition: androidx.transition.Transition): void;
 				public onTransitionStart(param0: androidx.transition.Transition): void;
-				public onTransitionEnd(param0: androidx.transition.Transition): void;
 				public onTransitionCancel(param0: androidx.transition.Transition): void;
-				public onTransitionPause(param0: androidx.transition.Transition): void;
-				public onTransitionResume(param0: androidx.transition.Transition): void;
 			}
 			export class PathAnimatorMatrix {
 				public static class: java.lang.Class<androidx.transition.ChangeTransform.PathAnimatorMatrix>;
@@ -23281,7 +22545,7 @@ declare namespace androidx {
 			public cloneTransition(transition: any): any;
 			public wrapTransitionInSet(transition: any): any;
 			public setSharedElementTargets(transitionObj: any, nonExistentView: globalAndroid.view.View, sharedViews: java.util.ArrayList<globalAndroid.view.View>): void;
-			public setEpicenter(param0: any, param1: globalAndroid.graphics.Rect): void;
+			public setEpicenter(transitionObj: any, epicenter: globalAndroid.graphics.Rect): void;
 			public setEpicenter(transitionObj: any, view: globalAndroid.view.View): void;
 			public addTargets(transitionObj: any, views: java.util.ArrayList<globalAndroid.view.View>): void;
 			public mergeTransitionsTogether(transition1: any, transition2: any, transition3: any): any;
@@ -23293,7 +22557,6 @@ declare namespace androidx {
 			public replaceTargets(transitionObj: any, oldTargets: java.util.ArrayList<globalAndroid.view.View>, newTargets: java.util.ArrayList<globalAndroid.view.View>): void;
 			public addTarget(transitionObj: any, view: globalAndroid.view.View): void;
 			public removeTarget(transitionObj: any, view: globalAndroid.view.View): void;
-			public setEpicenter(transitionObj: any, epicenter: globalAndroid.graphics.Rect): void;
 		}
 	}
 }
@@ -23307,8 +22570,6 @@ declare namespace androidx {
 			public onDraw(canvas: globalAndroid.graphics.Canvas): void;
 			public setVisibility(visibility: number): void;
 			public reserveEndViewTransition(viewGroup: globalAndroid.view.ViewGroup, view: globalAndroid.view.View): void;
-			public setVisibility(param0: number): void;
-			public reserveEndViewTransition(param0: globalAndroid.view.ViewGroup, param1: globalAndroid.view.View): void;
 		}
 	}
 }
@@ -23319,8 +22580,6 @@ declare namespace androidx {
 			public static class: java.lang.Class<androidx.transition.GhostViewApi21>;
 			public setVisibility(visibility: number): void;
 			public reserveEndViewTransition(viewGroup: globalAndroid.view.ViewGroup, view: globalAndroid.view.View): void;
-			public setVisibility(param0: number): void;
-			public reserveEndViewTransition(param0: globalAndroid.view.ViewGroup, param1: globalAndroid.view.View): void;
 		}
 	}
 }
@@ -23489,12 +22748,10 @@ declare namespace androidx {
 				public static class: java.lang.Class<androidx.transition.Slide.CalculateSlideHorizontal>;
 				public getGoneY(sceneRoot: globalAndroid.view.ViewGroup, view: globalAndroid.view.View): number;
 				public getGoneX(param0: globalAndroid.view.ViewGroup, param1: globalAndroid.view.View): number;
-				public getGoneY(param0: globalAndroid.view.ViewGroup, param1: globalAndroid.view.View): number;
 			}
 			export abstract class CalculateSlideVertical extends androidx.transition.Slide.CalculateSlide {
 				public static class: java.lang.Class<androidx.transition.Slide.CalculateSlideVertical>;
 				public getGoneX(sceneRoot: globalAndroid.view.ViewGroup, view: globalAndroid.view.View): number;
-				public getGoneX(param0: globalAndroid.view.ViewGroup, param1: globalAndroid.view.View): number;
 				public getGoneY(param0: globalAndroid.view.ViewGroup, param1: globalAndroid.view.View): number;
 			}
 			export class GravityFlag {
@@ -23771,11 +23028,6 @@ declare namespace androidx {
 			public onTransitionCancel(transition: androidx.transition.Transition): void;
 			public onTransitionPause(transition: androidx.transition.Transition): void;
 			public onTransitionResume(transition: androidx.transition.Transition): void;
-			public onTransitionStart(param0: androidx.transition.Transition): void;
-			public onTransitionEnd(param0: androidx.transition.Transition): void;
-			public onTransitionCancel(param0: androidx.transition.Transition): void;
-			public onTransitionPause(param0: androidx.transition.Transition): void;
-			public onTransitionResume(param0: androidx.transition.Transition): void;
 		}
 	}
 }
@@ -23878,8 +23130,6 @@ declare namespace androidx {
 				public static class: java.lang.Class<androidx.transition.TransitionSet.TransitionSetListener>;
 				public onTransitionStart(transition: androidx.transition.Transition): void;
 				public onTransitionEnd(transition: androidx.transition.Transition): void;
-				public onTransitionStart(param0: androidx.transition.Transition): void;
-				public onTransitionEnd(param0: androidx.transition.Transition): void;
 				public onTransitionCancel(param0: androidx.transition.Transition): void;
 				public onTransitionPause(param0: androidx.transition.Transition): void;
 				public onTransitionResume(param0: androidx.transition.Transition): void;
@@ -23949,11 +23199,7 @@ declare namespace androidx {
 			public add(view: globalAndroid.view.View): void;
 			public remove(drawable: globalAndroid.graphics.drawable.Drawable): void;
 			public remove(view: globalAndroid.view.View): void;
-			public add(param0: globalAndroid.view.View): void;
-			public remove(param0: globalAndroid.view.View): void;
-			public add(param0: globalAndroid.graphics.drawable.Drawable): void;
 			public clear(): void;
-			public remove(param0: globalAndroid.graphics.drawable.Drawable): void;
 		}
 	}
 }
@@ -23967,10 +23213,6 @@ declare namespace androidx {
 			public remove(drawable: globalAndroid.graphics.drawable.Drawable): void;
 			public add(view: globalAndroid.view.View): void;
 			public remove(view: globalAndroid.view.View): void;
-			public add(param0: globalAndroid.view.View): void;
-			public remove(param0: globalAndroid.view.View): void;
-			public add(param0: globalAndroid.graphics.drawable.Drawable): void;
-			public remove(param0: globalAndroid.graphics.drawable.Drawable): void;
 		}
 	}
 }
@@ -24031,8 +23273,6 @@ declare namespace androidx {
 			public add(drawable: globalAndroid.graphics.drawable.Drawable): void;
 			public clear(): void;
 			public remove(drawable: globalAndroid.graphics.drawable.Drawable): void;
-			public add(param0: globalAndroid.graphics.drawable.Drawable): void;
-			public remove(param0: globalAndroid.graphics.drawable.Drawable): void;
 		}
 		export namespace ViewOverlayApi14 {
 			export class OverlayViewGroup {
@@ -24067,8 +23307,6 @@ declare namespace androidx {
 			public add(drawable: globalAndroid.graphics.drawable.Drawable): void;
 			public clear(): void;
 			public remove(drawable: globalAndroid.graphics.drawable.Drawable): void;
-			public add(param0: globalAndroid.graphics.drawable.Drawable): void;
-			public remove(param0: globalAndroid.graphics.drawable.Drawable): void;
 		}
 	}
 }
@@ -24184,13 +23422,6 @@ declare namespace androidx {
 				public onTransitionCancel(transition: androidx.transition.Transition): void;
 				public onTransitionPause(transition: androidx.transition.Transition): void;
 				public onTransitionResume(transition: androidx.transition.Transition): void;
-				public onTransitionStart(param0: androidx.transition.Transition): void;
-				public onTransitionEnd(param0: androidx.transition.Transition): void;
-				public onTransitionCancel(param0: androidx.transition.Transition): void;
-				public onTransitionPause(param0: androidx.transition.Transition): void;
-				public onTransitionResume(param0: androidx.transition.Transition): void;
-				public onAnimationPause(param0: globalAndroid.animation.Animator): void;
-				public onAnimationResume(param0: globalAndroid.animation.Animator): void;
 			}
 			export class Mode {
 				public static class: java.lang.Class<androidx.transition.Visibility.Mode>;
@@ -24377,11 +23608,6 @@ declare namespace androidx {
 					public static registerAnimationCallback(dr: globalAndroid.graphics.drawable.Drawable, callback: androidx.vectordrawable.graphics.drawable.Animatable2Compat.AnimationCallback): void;
 					public static unregisterAnimationCallback(dr: globalAndroid.graphics.drawable.Drawable, callback: androidx.vectordrawable.graphics.drawable.Animatable2Compat.AnimationCallback): boolean;
 					public static clearAnimationCallbacks(dr: globalAndroid.graphics.drawable.Drawable): void;
-					public registerAnimationCallback(param0: androidx.vectordrawable.graphics.drawable.Animatable2Compat.AnimationCallback): void;
-					public unregisterAnimationCallback(param0: androidx.vectordrawable.graphics.drawable.Animatable2Compat.AnimationCallback): boolean;
-					public setTint(param0: number): void;
-					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 				}
 				export namespace AnimatedVectorDrawableCompat {
 					export class AnimatedVectorDrawableCompatState {
@@ -24541,9 +23767,6 @@ declare namespace androidx {
 					public scheduleSelf(what: java.lang.Runnable, when: number): void;
 					public setVisible(visible: boolean, restart: boolean): boolean;
 					public unscheduleSelf(what: java.lang.Runnable): void;
-					public setTint(param0: number): void;
-					public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-					public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 				}
 				export namespace VectorDrawableCompat {
 					export class VClipPath extends androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.VPath {
@@ -24857,11 +24080,10 @@ declare namespace androidx {
 			public setOutputField(fieldId: number): void;
 			public closeField(): void;
 			public createSubParcel(): androidx.versionedparcelable.VersionedParcel;
-			public writeByteArray(param0: androidNative.Array<number>, param1: number, param2: number): void;
+			public writeByteArray(b: androidNative.Array<number>, offset: number, len: number): void;
 			public writeByteArray(b: androidNative.Array<number>, fieldId: number): void;
 			public writeByteArray(b: androidNative.Array<number>, offset: number, len: number, fieldId: number): void;
 			public writeByteArray(b: androidNative.Array<number>): void;
-			public writeByteArray(b: androidNative.Array<number>, offset: number, len: number): void;
 			public writeInt(val: number, fieldId: number): void;
 			public writeInt(val: number): void;
 			public writeLong(val: number, fieldId: number): void;
@@ -24922,11 +24144,10 @@ declare namespace androidx {
 			public createSubParcel(): androidx.versionedparcelable.VersionedParcel;
 			public readField(fieldId: number): boolean;
 			public setOutputField(fieldId: number): void;
-			public writeByteArray(param0: androidNative.Array<number>, param1: number, param2: number): void;
+			public writeByteArray(b: androidNative.Array<number>, offset: number, len: number): void;
 			public writeByteArray(b: androidNative.Array<number>, fieldId: number): void;
 			public writeByteArray(b: androidNative.Array<number>, offset: number, len: number, fieldId: number): void;
 			public writeByteArray(b: androidNative.Array<number>): void;
-			public writeByteArray(b: androidNative.Array<number>, offset: number, len: number): void;
 			public writeCharSequence(val: string, fieldId: number): void;
 			public writeCharSequence(charSequence: string): void;
 			public writeInt(val: number, fieldId: number): void;
@@ -25107,12 +24328,8 @@ declare namespace androidx {
 					public onPageScrolled(position: number, positionOffset: number, positionOffsetPixels: number): void;
 					public onPageSelected(position: number): void;
 					public onPageScrollStateChanged(state: number): void;
-					public onAdapterChanged(viewPager: androidx.viewpager.widget.ViewPager, oldAdapter: androidx.viewpager.widget.PagerAdapter, newAdapter: androidx.viewpager.widget.PagerAdapter): void;
+					public onAdapterChanged(viewPager: androidx.viewpager.widget.ViewPager, oldAdapter: androidx.viewpager.widget.PagerAdapter | null, newAdapter: androidx.viewpager.widget.PagerAdapter | null): void;
 					public onChanged(): void;
-					public onPageScrolled(param0: number, param1: number, param2: number): void;
-					public onPageSelected(param0: number): void;
-					public onPageScrollStateChanged(param0: number): void;
-					public onAdapterChanged(param0: androidx.viewpager.widget.ViewPager, param1: androidx.viewpager.widget.PagerAdapter | null, param2: androidx.viewpager.widget.PagerAdapter | null): void;
 				}
 				export class SingleLineAllCapsTransform {
 					public static class: java.lang.Class<androidx.viewpager.widget.PagerTitleStrip.SingleLineAllCapsTransform>;
@@ -25272,9 +24489,6 @@ declare namespace androidx {
 					public onPageScrolled(position: number, positionOffset: number, positionOffsetPixels: number): void;
 					public onPageSelected(position: number): void;
 					public onPageScrollStateChanged(state: number): void;
-					public onPageScrolled(param0: number, param1: number, param2: number): void;
-					public onPageSelected(param0: number): void;
-					public onPageScrollStateChanged(param0: number): void;
 				}
 				export class ViewPositionComparator extends java.util.Comparator<globalAndroid.view.View> {
 					public static class: java.lang.Class<androidx.viewpager.widget.ViewPager.ViewPositionComparator>;
@@ -25642,7 +24856,6 @@ declare namespace com {
 							});
 							public constructor();
 							public onOffsetChanged(param0: com.google.android.material.appbar.AppBarLayout, param1: number): void;
-							public onOffsetChanged(param0: any, param1: number): void;
 						}
 						export class ScrollingViewBehavior extends com.google.android.material.appbar.HeaderScrollingViewBehavior {
 							public static class: java.lang.Class<com.google.android.material.appbar.AppBarLayout.ScrollingViewBehavior>;
@@ -25745,8 +24958,6 @@ declare namespace com {
 						export class OffsetUpdateListener extends com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener {
 							public static class: java.lang.Class<com.google.android.material.appbar.CollapsingToolbarLayout.OffsetUpdateListener>;
 							public onOffsetChanged(layout: com.google.android.material.appbar.AppBarLayout, verticalOffset: number): void;
-							public onOffsetChanged(param0: com.google.android.material.appbar.AppBarLayout, param1: number): void;
-							public onOffsetChanged(param0: any, param1: number): void;
 						}
 					}
 				}
@@ -25981,7 +25192,6 @@ declare namespace com {
 						public getBehavior(): androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<com.google.android.material.bottomappbar.BottomAppBar>;
 						public onSaveInstanceState(): globalAndroid.os.Parcelable;
 						public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
-						public getBehavior(): androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any>;
 					}
 					export namespace BottomAppBar {
 						export class Behavior extends com.google.android.material.behavior.HideBottomViewOnScrollBehavior<com.google.android.material.bottomappbar.BottomAppBar> {
@@ -26022,7 +25232,6 @@ declare namespace com {
 							public constructor(source: globalAndroid.os.Parcel);
 							public constructor(source: globalAndroid.os.Parcel, loader: java.lang.ClassLoader | null);
 							public constructor(superState: globalAndroid.os.Parcelable);
-							public constructor(in_: globalAndroid.os.Parcel, loader: java.lang.ClassLoader);
 							public writeToParcel(out: globalAndroid.os.Parcel, flags: number): void;
 						}
 					}
@@ -26082,13 +25291,6 @@ declare namespace com {
 						public setTextColor(color: globalAndroid.content.res.ColorStateList | null): void;
 						public setItemBackground(background: number): void;
 						public setItemBackground(background: globalAndroid.graphics.drawable.Drawable | null): void;
-						public initialize(param0: androidx.appcompat.view.menu.MenuItemImpl, param1: number): void;
-						public setTitle(param0: string): void;
-						public setEnabled(param0: boolean): void;
-						public setCheckable(param0: boolean): void;
-						public setChecked(param0: boolean): void;
-						public setShortcut(param0: boolean, param1: string): void;
-						public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
 					}
 				}
 			}
@@ -26155,7 +25357,6 @@ declare namespace com {
 						public buildMenuView(): void;
 						public updateMenuView(): void;
 						public getSelectedItemId(): number;
-						public initialize(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 					}
 				}
 			}
@@ -26186,15 +25387,6 @@ declare namespace com {
 						public onSaveInstanceState(): globalAndroid.os.Parcelable;
 						public onRestoreInstanceState(state: globalAndroid.os.Parcelable): void;
 						public setUpdateSuspended(updateSuspended: boolean): void;
-						public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
-						public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
-						public updateMenuView(param0: boolean): void;
-						public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-						public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
-						public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-						public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-						public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-						public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 					}
 					export namespace BottomNavigationPresenter {
 						export class SavedState {
@@ -26279,7 +25471,6 @@ declare namespace com {
 							public constructor(source: globalAndroid.os.Parcel);
 							public constructor(source: globalAndroid.os.Parcel, loader: java.lang.ClassLoader | null);
 							public constructor(superState: globalAndroid.os.Parcelable);
-							public constructor(source: globalAndroid.os.Parcel, loader: java.lang.ClassLoader);
 							public writeToParcel(out: globalAndroid.os.Parcel, flags: number): void;
 						}
 					}
@@ -26371,7 +25562,6 @@ declare namespace com {
 							public constructor(superState: globalAndroid.os.Parcelable);
 							public constructor(source: globalAndroid.os.Parcel, loader: java.lang.ClassLoader | null);
 							public constructor(source: globalAndroid.os.Parcel);
-							public constructor(source: globalAndroid.os.Parcel, loader: java.lang.ClassLoader);
 							public constructor(superState: globalAndroid.os.Parcelable, state: number);
 							public writeToParcel(out: globalAndroid.os.Parcel, flags: number): void;
 						}
@@ -26493,8 +25683,6 @@ declare namespace com {
 						public getCornerRadius(): number;
 						public getIconGravity(): number;
 						public setIconGravity(iconGravity: number): void;
-						public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-						public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
 						public setAutoSizeTextTypeWithDefaults(param0: number): void;
 						public setAutoSizeTextTypeUniformWithConfiguration(param0: number, param1: number, param2: number, param3: number): void;
 						public setAutoSizeTextTypeUniformWithPresetSizes(param0: androidNative.Array<number>, param1: number): void;
@@ -26578,8 +25766,6 @@ declare namespace com {
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
 						public constructor(context: globalAndroid.content.Context);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 						public setStrokeColor(strokeColor: number): void;
 						public getStrokeColor(): number;
 						public setStrokeWidth(strokeWidth: number): void;
@@ -26624,11 +25810,9 @@ declare namespace com {
 				export namespace checkbox {
 					export class MaterialCheckBox extends androidx.appcompat.widget.AppCompatCheckBox {
 						public static class: java.lang.Class<com.google.android.material.checkbox.MaterialCheckBox>;
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
-						public constructor(context: globalAndroid.content.Context);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
+						public constructor(context: globalAndroid.content.Context);
 						public setSupportButtonTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
 						public getSupportButtonTintList(): globalAndroid.content.res.ColorStateList | null;
 						public setSupportButtonTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
@@ -26971,8 +26155,6 @@ declare namespace com {
 						public getMaxWidth(): number;
 						public setMaxWidth(maxWidth: number): void;
 						public setTint(param0: number): void;
-						public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-						public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 					}
 					export namespace ChipDrawable {
 						export class Delegate {
@@ -27112,11 +26294,6 @@ declare namespace com {
 						public actualDraw(canvas: globalAndroid.graphics.Canvas): void;
 						public isOpaque(): boolean;
 						public actualIsOpaque(): boolean;
-						public draw(param0: globalAndroid.graphics.Canvas): void;
-						public setRevealInfo(param0: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo | null): void;
-						public setCircularRevealScrimColor(param0: number): void;
-						public setCircularRevealOverlayDrawable(param0: globalAndroid.graphics.drawable.Drawable | null): void;
-						public actualDraw(param0: globalAndroid.graphics.Canvas): void;
 					}
 				}
 			}
@@ -27145,11 +26322,6 @@ declare namespace com {
 						public actualDraw(canvas: globalAndroid.graphics.Canvas): void;
 						public isOpaque(): boolean;
 						public actualIsOpaque(): boolean;
-						public draw(param0: globalAndroid.graphics.Canvas): void;
-						public setRevealInfo(param0: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo | null): void;
-						public setCircularRevealScrimColor(param0: number): void;
-						public setCircularRevealOverlayDrawable(param0: globalAndroid.graphics.drawable.Drawable | null): void;
-						public actualDraw(param0: globalAndroid.graphics.Canvas): void;
 					}
 				}
 			}
@@ -27231,11 +26403,6 @@ declare namespace com {
 						public actualDraw(canvas: globalAndroid.graphics.Canvas): void;
 						public isOpaque(): boolean;
 						public actualIsOpaque(): boolean;
-						public draw(param0: globalAndroid.graphics.Canvas): void;
-						public setRevealInfo(param0: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo | null): void;
-						public setCircularRevealScrimColor(param0: number): void;
-						public setCircularRevealOverlayDrawable(param0: globalAndroid.graphics.drawable.Drawable | null): void;
-						public actualDraw(param0: globalAndroid.graphics.Canvas): void;
 					}
 				}
 			}
@@ -27264,11 +26431,6 @@ declare namespace com {
 						public actualDraw(canvas: globalAndroid.graphics.Canvas): void;
 						public isOpaque(): boolean;
 						public actualIsOpaque(): boolean;
-						public draw(param0: globalAndroid.graphics.Canvas): void;
-						public setRevealInfo(param0: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo | null): void;
-						public setCircularRevealScrimColor(param0: number): void;
-						public setCircularRevealOverlayDrawable(param0: globalAndroid.graphics.drawable.Drawable | null): void;
-						public actualDraw(param0: globalAndroid.graphics.Canvas): void;
 					}
 				}
 			}
@@ -27363,7 +26525,6 @@ declare namespace com {
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
 							public constructor(context: globalAndroid.content.Context);
-							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 							public buildCircularRevealCache(): void;
 							public destroyCircularRevealCache(): void;
 							public setRevealInfo(revealInfo: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo | null): void;
@@ -27376,11 +26537,6 @@ declare namespace com {
 							public actualDraw(canvas: globalAndroid.graphics.Canvas): void;
 							public isOpaque(): boolean;
 							public actualIsOpaque(): boolean;
-							public draw(param0: globalAndroid.graphics.Canvas): void;
-							public setRevealInfo(param0: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo | null): void;
-							public setCircularRevealScrimColor(param0: number): void;
-							public setCircularRevealOverlayDrawable(param0: globalAndroid.graphics.drawable.Drawable | null): void;
-							public actualDraw(param0: globalAndroid.graphics.Canvas): void;
 						}
 					}
 				}
@@ -27400,7 +26556,6 @@ declare namespace com {
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
 							public constructor(context: globalAndroid.content.Context);
-							public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 							public buildCircularRevealCache(): void;
 							public destroyCircularRevealCache(): void;
 							public setRevealInfo(revealInfo: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo | null): void;
@@ -27413,11 +26568,6 @@ declare namespace com {
 							public actualDraw(canvas: globalAndroid.graphics.Canvas): void;
 							public isOpaque(): boolean;
 							public actualIsOpaque(): boolean;
-							public draw(param0: globalAndroid.graphics.Canvas): void;
-							public setRevealInfo(param0: com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo | null): void;
-							public setCircularRevealScrimColor(param0: number): void;
-							public setCircularRevealOverlayDrawable(param0: globalAndroid.graphics.drawable.Drawable | null): void;
-							public actualDraw(param0: globalAndroid.graphics.Canvas): void;
 							public onStartNestedScroll(child: globalAndroid.view.View, target: globalAndroid.view.View, nestedScrollAxes: number): boolean;
 							public onStartNestedScroll(param0: globalAndroid.view.View, param1: globalAndroid.view.View, param2: number, param3: number): boolean;
 							public onNestedScrollAccepted(child: globalAndroid.view.View, target: globalAndroid.view.View, nestedScrollAxes: number): void;
@@ -27641,12 +26791,6 @@ declare namespace com {
 						public setTranslationZ(translationZ: number): void;
 						public setScaleX(scaleX: number): void;
 						public setScaleY(scaleY: number): void;
-						public setSupportBackgroundTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-						public setSupportBackgroundTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
-						public setSupportImageTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
-						public setSupportImageTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
-						public setExpandedComponentIdHint(param0: number): void;
-						public setExpanded(param0: boolean): boolean;
 					}
 					export namespace FloatingActionButton {
 						export class BaseBehavior<T>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
@@ -27681,8 +26825,6 @@ declare namespace com {
 							public setShadowPadding(left: number, top: number, right: number, bottom: number): void;
 							public setBackgroundDrawable(background: globalAndroid.graphics.drawable.Drawable): void;
 							public isCompatPaddingEnabled(): boolean;
-							public setShadowPadding(param0: number, param1: number, param2: number, param3: number): void;
-							public setBackgroundDrawable(param0: globalAndroid.graphics.drawable.Drawable): void;
 						}
 						export class Size {
 							public static class: java.lang.Class<com.google.android.material.floatingactionbutton.FloatingActionButton.Size>;
@@ -28053,7 +27195,6 @@ declare namespace com {
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 						public constructor(context: globalAndroid.content.Context);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyle: number);
 						public getForegroundGravity(): number;
 						public setForegroundGravity(foregroundGravity: number): void;
 						public verifyDrawable(who: globalAndroid.graphics.drawable.Drawable): boolean;
@@ -28102,7 +27243,6 @@ declare namespace com {
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyle: number);
 						public constructor(context: globalAndroid.content.Context);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 						public initialize(itemData: androidx.appcompat.view.menu.MenuItemImpl, menuType: number): void;
 						public recycle(): void;
 						public getItemData(): androidx.appcompat.view.menu.MenuItemImpl;
@@ -28120,13 +27260,7 @@ declare namespace com {
 						public setNeedsEmptyIcon(needsEmptyIcon: boolean): void;
 						public setHorizontalPadding(padding: number): void;
 						public setIconPadding(padding: number): void;
-						public initialize(param0: androidx.appcompat.view.menu.MenuItemImpl, param1: number): void;
-						public setTitle(param0: string): void;
 						public setEnabled(param0: boolean): void;
-						public setCheckable(param0: boolean): void;
-						public setChecked(param0: boolean): void;
-						public setShortcut(param0: boolean, param1: string): void;
-						public setIcon(param0: globalAndroid.graphics.drawable.Drawable): void;
 					}
 				}
 			}
@@ -28176,15 +27310,6 @@ declare namespace com {
 						public setItemIconSize(itemIconSize: number): void;
 						public setUpdateSuspended(updateSuspended: boolean): void;
 						public dispatchApplyWindowInsets(insets: androidx.core.view.WindowInsetsCompat): void;
-						public initForMenu(param0: globalAndroid.content.Context, param1: androidx.appcompat.view.menu.MenuBuilder): void;
-						public getMenuView(param0: globalAndroid.view.ViewGroup): androidx.appcompat.view.menu.MenuView;
-						public updateMenuView(param0: boolean): void;
-						public setCallback(param0: androidx.appcompat.view.menu.MenuPresenter.Callback): void;
-						public onSubMenuSelected(param0: androidx.appcompat.view.menu.SubMenuBuilder): boolean;
-						public onCloseMenu(param0: androidx.appcompat.view.menu.MenuBuilder, param1: boolean): void;
-						public expandItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-						public collapseItemActionView(param0: androidx.appcompat.view.menu.MenuBuilder, param1: androidx.appcompat.view.menu.MenuItemImpl): boolean;
-						public onRestoreInstanceState(param0: globalAndroid.os.Parcelable): void;
 					}
 					export namespace NavigationMenuPresenter {
 						export class HeaderViewHolder extends com.google.android.material.internal.NavigationMenuPresenter.ViewHolder {
@@ -28268,11 +27393,8 @@ declare namespace com {
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyle: number);
 						public constructor(context: globalAndroid.content.Context);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 						public initialize(menu: androidx.appcompat.view.menu.MenuBuilder): void;
 						public getWindowAnimations(): number;
-						public initialize(param0: androidx.appcompat.view.menu.MenuBuilder): void;
 						public computeHorizontalScrollRange(): number;
 						public computeHorizontalScrollOffset(): number;
 						public computeHorizontalScrollExtent(): number;
@@ -28589,11 +27711,9 @@ declare namespace com {
 				export namespace radiobutton {
 					export class MaterialRadioButton extends androidx.appcompat.widget.AppCompatRadioButton {
 						public static class: java.lang.Class<com.google.android.material.radiobutton.MaterialRadioButton>;
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
-						public constructor(context: globalAndroid.content.Context);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
+						public constructor(context: globalAndroid.content.Context);
 						public setSupportButtonTintList(param0: globalAndroid.content.res.ColorStateList | null): void;
 						public getSupportButtonTintList(): globalAndroid.content.res.ColorStateList | null;
 						public setSupportButtonTintMode(param0: globalAndroid.graphics.PorterDuff.Mode | null): void;
@@ -29012,9 +28132,6 @@ declare namespace com {
 						public getOutline(outline: any): void;
 						public isStateful(): boolean;
 						public onStateChange(state: androidNative.Array<number>): boolean;
-						public setTint(param0: number): void;
-						public setTintList(param0: globalAndroid.content.res.ColorStateList): void;
-						public setTintMode(param0: globalAndroid.graphics.PorterDuff.Mode): void;
 					}
 					export namespace MaterialShapeDrawable {
 						export class CompatibilityShadowMode {
@@ -29467,8 +28584,6 @@ declare namespace com {
 						public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
 						public animateContentIn(delay: number, duration: number): void;
 						public animateContentOut(delay: number, duration: number): void;
-						public animateContentIn(param0: number, param1: number): void;
-						public animateContentOut(param0: number, param1: number): void;
 					}
 				}
 			}
@@ -29544,11 +28659,9 @@ declare namespace com {
 				export namespace switchmaterial {
 					export class SwitchMaterial extends androidx.appcompat.widget.SwitchCompat {
 						public static class: java.lang.Class<com.google.android.material.switchmaterial.SwitchMaterial>;
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
-						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
-						public constructor(context: globalAndroid.content.Context);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
+						public constructor(context: globalAndroid.content.Context);
 					}
 				}
 			}
@@ -29662,7 +28775,6 @@ declare namespace com {
 						export class AdapterChangeListener extends androidx.viewpager.widget.ViewPager.OnAdapterChangeListener {
 							public static class: java.lang.Class<com.google.android.material.tabs.TabLayout.AdapterChangeListener>;
 							public onAdapterChanged(viewPager: androidx.viewpager.widget.ViewPager, oldAdapter: androidx.viewpager.widget.PagerAdapter | null, newAdapter: androidx.viewpager.widget.PagerAdapter | null): void;
-							public onAdapterChanged(param0: androidx.viewpager.widget.ViewPager, param1: androidx.viewpager.widget.PagerAdapter | null, param2: androidx.viewpager.widget.PagerAdapter | null): void;
 						}
 						export class BaseOnTabSelectedListener<T>  extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.material.tabs.TabLayout.BaseOnTabSelectedListener<any>>;
@@ -29773,9 +28885,6 @@ declare namespace com {
 							public onPageScrollStateChanged(state: number): void;
 							public onPageScrolled(position: number, positionOffset: number, positionOffsetPixels: number): void;
 							public onPageSelected(position: number): void;
-							public onPageScrolled(param0: number, param1: number, param2: number): void;
-							public onPageSelected(param0: number): void;
-							public onPageScrollStateChanged(param0: number): void;
 						}
 						export class TabView {
 							public static class: java.lang.Class<com.google.android.material.tabs.TabLayout.TabView>;
@@ -29794,9 +28903,6 @@ declare namespace com {
 							public onTabSelected(tab: com.google.android.material.tabs.TabLayout.Tab): void;
 							public onTabUnselected(tab: com.google.android.material.tabs.TabLayout.Tab): void;
 							public onTabReselected(tab: com.google.android.material.tabs.TabLayout.Tab): void;
-							public onTabSelected(param0: any): void;
-							public onTabUnselected(param0: any): void;
-							public onTabReselected(param0: any): void;
 						}
 					}
 				}

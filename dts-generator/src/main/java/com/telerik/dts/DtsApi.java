@@ -42,6 +42,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -139,9 +140,7 @@ public class DtsApi {
 
             // process class scope
             for (int i = 0; i < javaClasses.size(); i++) {
-                // Keyed on the declaration alone: two members can render the same TypeScript and
-                // only one can be written, so which survives must not depend on the comment.
-                Map<String, ApiLevels.Tags> methods = new LinkedHashMap<>();
+                Map<String, MethodDeclaration> methods = new LinkedHashMap<>();
 
                 JavaClass currClass = javaClasses.get(i);
                 currentFileClassname = currClass.getClassName();
@@ -677,7 +676,7 @@ public class DtsApi {
     }
 
     //method related
-    private void processMethod(Method method, JavaClass clazz, TypeDefinition typeDefinition, Map<String, ApiLevels.Tags> methods) {
+    private void processMethod(Method method, JavaClass clazz, TypeDefinition typeDefinition, Map<String, MethodDeclaration> methods) {
         String name = method.getName();
 
         if (shouldIgnoreMember(name)) return;
@@ -706,7 +705,7 @@ public class DtsApi {
                     String sig = getMethodFullSignature(baseMethod);
                     if (!mapNameMethod.containsKey(sig)) {
                         mapNameMethod.put(sig, baseMethod);
-                        addMethod(methods, clazz, typeDefinition, tabs, baseMethod);
+                        addBaseMethod(methods, clazz, typeDefinition, tabs, baseMethod);
                     }
                 }
             }
@@ -715,16 +714,89 @@ public class DtsApi {
         addMethod(methods, clazz, typeDefinition, tabs, method);
     }
 
-    private void addMethod(Map<String, ApiLevels.Tags> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
+    private void addMethod(Map<String, MethodDeclaration> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
+        addMethod(methods, clazz, typeDefinition, tabs, method, returnNullable(method));
+    }
+
+    // A superclass's method, declared again because the class declares another of that name and a
+    // TypeScript declaration would hide the inherited overloads. It returns null exactly where the
+    // superclass's own typings say it does, which can differ from its raw annotation.
+    private void addBaseMethod(Map<String, MethodDeclaration> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
+        JavaClass superClass = getSuperClass(clazz);
+        Boolean inherited = superClass == null || method.isStatic() ? null
+                : returnNullabilityAlongChain(superClass, method.getName() + method.getSignature());
+        addMethod(methods, clazz, typeDefinition, tabs, method, inherited != null ? inherited : returnNullable(method));
+    }
+
+    private void addMethod(Map<String, MethodDeclaration> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method,
+                           boolean returnNullable) {
         ApiLevels.Tags tags = memberTags(clazz, method.getName() + method.getSignature(), isDeprecated(method));
-        methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method, method.isStatic()), tags, ApiLevels.Tags::mergedWith);
+        addDeclaration(methods, new MethodDeclaration(clazz, typeDefinition, tabs, method, method.isStatic(), tags,
+                returnNullable, parameterNullability(method)));
 
         // The runtime resolves Outer.Companion to the static field holding the companion instance,
         // not to the nested class, so its methods are also called on the class value itself.
         // TypeScript cannot give one name both a class and a field, so they are declared static too.
         if (this.currentClassKotlin.isCompanionObject() && !method.isStatic() && !isConstructor(method)
                 && !functionOwnStatics.contains(method.getName())) {
-            methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method, true), tags, ApiLevels.Tags::mergedWith);
+            addDeclaration(methods, new MethodDeclaration(clazz, typeDefinition, tabs, method, true, tags,
+                    returnNullable, parameterNullability(method)));
+        }
+    }
+
+    /**
+     * One method of a class as it will be declared. A class lists the same JVM method more than
+     * once - its own declaration, the base class's, and that of every interface it implements - and
+     * they can disagree on nullability: Dialog.onCreatePanelView carries no annotation while
+     * Window.Callback's is @Nullable.
+     */
+    private static final class MethodDeclaration {
+        final JavaClass clazz;
+        final TypeDefinition typeDefinition;
+        final String tabs;
+        final boolean asStatic;
+        // The types come from the first declaration, the class's own when it has one, whose type
+        // variables are the ones the class declares. The parameter names come from the first
+        // declaration with a LocalVariableTable, which abstract methods lack.
+        final Method method;
+        Method namesFrom;
+        ApiLevels.Tags tags;
+        boolean returnNullable;
+        final boolean[] parameterNullable;
+
+        MethodDeclaration(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method, boolean asStatic,
+                          ApiLevels.Tags tags, boolean returnNullable, boolean[] parameterNullable) {
+            this.clazz = clazz;
+            this.typeDefinition = typeDefinition;
+            this.tabs = tabs;
+            this.method = method;
+            this.namesFrom = method;
+            this.asStatic = asStatic;
+            this.tags = tags;
+            this.returnNullable = returnNullable;
+            this.parameterNullable = parameterNullable;
+        }
+
+        String key() {
+            return (asStatic ? "static " : "") + method.getName() + method.getSignature();
+        }
+    }
+
+    // Null is admitted wherever any of the declarations admits it: an implementation may return
+    // whatever the contract it fulfils allows, and accepts whatever any caller may pass it.
+    private void addDeclaration(Map<String, MethodDeclaration> methods, MethodDeclaration declaration) {
+        MethodDeclaration existing = methods.putIfAbsent(declaration.key(), declaration);
+        if (existing == null) {
+            return;
+        }
+
+        existing.tags = existing.tags.mergedWith(declaration.tags);
+        existing.returnNullable |= declaration.returnNullable;
+        for (int i = 0; i < existing.parameterNullable.length && i < declaration.parameterNullable.length; i++) {
+            existing.parameterNullable[i] |= declaration.parameterNullable[i];
+        }
+        if (existing.namesFrom.getLocalVariableTable() == null && declaration.method.getLocalVariableTable() != null) {
+            existing.namesFrom = declaration.method;
         }
     }
 
@@ -760,9 +832,143 @@ public class DtsApi {
     }
 
     private String returnTypeOf(Method method, TypeDefinition typeDefinition) {
-        String tsType = getTypeScriptTypeFromJavaType(this.getReturnType(method), typeDefinition);
+        return returnTypeOf(method, typeDefinition, returnNullable(method));
+    }
+
+    // TypeScript lets an override narrow its return type but never widen it, so an override that
+    // Java annotates @Nullable cannot say so where a supertype declares the same method non-null
+    // (which includes an unannotated one): AppCompatEditText.getText() against EditText.getText().
+    // Supertypes are resolved through the input and --super jars; dropping a `| null` is always
+    // valid TypeScript, so every supertype is consulted, not only the ones the class names.
+    private boolean supertypesAllowNullReturn(JavaClass clazz, String key) {
+        for (JavaClass supertype : supertypes(clazz)) {
+            if (Boolean.FALSE.equals(returnNullabilityAlongChain(supertype, key))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // What `type` declares for the method, or failing that what the nearest class it extends does;
+    // null when none of them declares it.
+    private Boolean returnNullabilityAlongChain(JavaClass type, String key) {
+        for (JavaClass t = type; t != null; t = t.isInterface() ? null : getSuperClass(t)) {
+            Boolean declared = declaredReturnNullability(t, key);
+            if (declared != null) {
+                return declared;
+            }
+        }
+        return null;
+    }
+
+    private final Map<String, Optional<Boolean>> declaredReturnNullability = new HashMap<>();
+
+    // The nullability `type`'s own typings give the method's return, by the rules this class
+    // applies when it generates them: nullable if any declaration `type` lists says so, and only
+    // where its supertypes allow it. Null when `type` lists no declaration of it.
+    private Boolean declaredReturnNullability(JavaClass type, String key) {
+        String cacheKey = type.getClassName() + "#" + key;
+        Optional<Boolean> cached = declaredReturnNullability.get(cacheKey);
+        if (cached != null) {
+            return cached.orElse(null);
+        }
+        // A cycle can only come from broken input; treat it as declaring nothing.
+        declaredReturnNullability.put(cacheKey, Optional.empty());
+
+        KotlinTypeInfo kotlin = kotlinInfo(type);
+        String name = key.substring(0, key.indexOf('('));
+        Boolean result = null;
+        boolean listsName = false;
+        for (Method m : listedMethods(type)) {
+            listsName |= m.getName().equals(name) && isListedMember(m, kotlin);
+            if (!(m.getName() + m.getSignature()).equals(key) || m.isStatic() || !isListedMember(m, kotlin)) {
+                continue;
+            }
+            Boolean kotlinNullable = kotlin.isReturnNullable(m.getName(), m.getSignature());
+            boolean nullable = isNullable(m.getReturnType(), m.getAnnotationEntries(), kotlinNullable);
+            result = (result != null && result) || nullable;
+        }
+        // processMethod declares a superclass's method again in a class that lists another of that
+        // name, unless the class declares that very method itself.
+        JavaClass superClass = type.isInterface() ? null : getSuperClass(type);
+        if (listsName && superClass != null && ownMethods(type).stream().noneMatch(m -> (m.getName() + m.getSignature()).equals(key))) {
+            Boolean inherited = returnNullabilityAlongChain(superClass, key);
+            if (inherited != null) {
+                result = (result != null && result) || inherited;
+            }
+        }
+        if (result != null && result && !supertypesAllowNullReturn(type, key)) {
+            result = false;
+        }
+
+        declaredReturnNullability.put(cacheKey, Optional.ofNullable(result));
+        return result;
+    }
+
+    // The methods generateDtsContent collects for a class: its own, those of every interface it
+    // implements, and those of the interfaces each class it extends implements directly.
+    // processMethod adds superclass methods on top; declaredReturnNullability accounts for those.
+    private List<Method> listedMethods(JavaClass type) {
+        List<Method> methods = ownMethods(type);
+        Set<JavaClass> interfaces = new HashSet<>(getAllInterfaces(type));
+        if (!type.isInterface()) {
+            for (JavaClass superClass : getAllSuperClasses(type)) {
+                interfaces.addAll(getInterfaces(superClass));
+            }
+        }
+        methods.addAll(getAllInterfacesMethods(interfaces));
+        return methods;
+    }
+
+    // With --merge-class-versions a class also lists the members only other versions of it declare.
+    private List<Method> ownMethods(JavaClass type) {
+        List<Method> methods = new ArrayList<>(Arrays.asList(type.getMethods()));
+        if (this.mergeClassVersions && !type.isInterface()) {
+            for (JavaClass version : ClassRepo.findAllVersions(type.getClassName())) {
+                methods.addAll(Arrays.asList(version.getMethods()));
+            }
+        }
+        return methods;
+    }
+
+    private boolean isListedMember(Method m, KotlinTypeInfo kotlin) {
+        return !shouldIgnoreMember(m.getName()) && !m.isSynthetic() && (m.isPublic() || m.isProtected())
+                && !isConstructor(m) && !m.getName().equals("<clinit>")
+                && !kotlin.isInternalMember(m.getName(), m.getSignature());
+    }
+
+    private List<JavaClass> supertypes(JavaClass type) {
+        List<JavaClass> supertypes = new ArrayList<>(getInterfaces(type));
+        JavaClass superClass = type.isInterface() ? null : getSuperClass(type);
+        if (superClass != null) {
+            supertypes.add(0, superClass);
+        }
+        return supertypes;
+    }
+
+    private final Map<String, KotlinTypeInfo> kotlinInfo = new HashMap<>();
+
+    private KotlinTypeInfo kotlinInfo(JavaClass type) {
+        return kotlinInfo.computeIfAbsent(type.getClassName(), name -> KotlinTypeInfo.of(type));
+    }
+
+    private String returnTypeOf(Method method, TypeDefinition typeDefinition, boolean nullable) {
+        return withNull(getTypeScriptTypeFromJavaType(this.getReturnType(method), typeDefinition), nullable);
+    }
+
+    private boolean returnNullable(Method method) {
         Boolean kotlinNullable = this.currentClassKotlin.isReturnNullable(method.getName(), method.getSignature());
-        return withNull(tsType, isNullable(method.getReturnType(), method.getAnnotationEntries(), kotlinNullable));
+        return isNullable(method.getReturnType(), method.getAnnotationEntries(), kotlinNullable);
+    }
+
+    private boolean[] parameterNullability(Method m) {
+        Type[] types = parameterTypes(m);
+        boolean[] nullable = new boolean[types.length];
+        for (int i = 0; i < types.length; i++) {
+            Boolean kotlinNullable = this.currentClassKotlin.isParameterNullable(m.getName(), m.getSignature(), i);
+            nullable[i] = isNullable(types[i], Nullability.parameterAnnotations(m, i), kotlinNullable);
+        }
+        return nullable;
     }
 
     private boolean isDeprecated(FieldOrMethod member) {
@@ -798,7 +1004,8 @@ public class DtsApi {
         return comment.append(" */").toString();
     }
 
-    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method, boolean asStatic) {
+    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method, Method namesFrom,
+                                         boolean asStatic, boolean returnNullable, boolean[] parameterNullable) {
         StringBuilder2 sbTemp = new StringBuilder2();
 
         sbTemp.append(tabs + "public ");
@@ -807,10 +1014,10 @@ public class DtsApi {
             sbTemp.append("static ");
         }
 
-        sbTemp.append(getMethodName(method) + getMethodParamSignature(clazz, typeDefinition, method));
+        sbTemp.append(getMethodName(method) + getMethodParamSignature(clazz, typeDefinition, method, namesFrom, parameterNullable));
         String bmSig = "";
         if (!isConstructor(method)) {
-            bmSig += ": " + returnTypeOf(method, typeDefinition);
+            bmSig += ": " + returnTypeOf(method, typeDefinition, returnNullable);
         }
 
         sbTemp.append(bmSig + ";");
@@ -909,7 +1116,19 @@ public class DtsApi {
         return m.getReturnType();
     }
 
-    private void writeMethods(Map<String, ApiLevels.Tags> methods) {
+    private void writeMethods(Map<String, MethodDeclaration> declarations) {
+        // Keyed on the declaration alone: two methods can render the same TypeScript (foo(int) and
+        // foo(long) are both foo(number)) and only one can be written, so which survives must not
+        // depend on the comment.
+        Map<String, ApiLevels.Tags> methods = new LinkedHashMap<>();
+        for (MethodDeclaration d : declarations.values()) {
+            boolean returnNullable = d.returnNullable
+                    && (d.asStatic || isConstructor(d.method) || supertypesAllowNullReturn(d.clazz, d.method.getName() + d.method.getSignature()));
+            String content = generateMethodContent(d.clazz, d.typeDefinition, d.tabs, d.method, d.namesFrom, d.asStatic,
+                    returnNullable, d.parameterNullable);
+            methods.merge(content, d.tags, ApiLevels.Tags::mergedWith);
+        }
+
         String tabs = getTabs(this.indent + 1);
         for (Map.Entry<String, ApiLevels.Tags> method : methods.entrySet()) {
             String comment = apiLevelComment(tabs, method.getValue().render());
@@ -1004,7 +1223,7 @@ public class DtsApi {
         return name;
     }
 
-    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
+    private Type[] parameterTypes(Method m) {
         Type[] signatureTypes = this.getArgumentTypes(m);
         Type[] descriptorTypes = m.getArgumentTypes();
         // The generic signature leaves out the synthetic leading parameters javac and kotlinc add,
@@ -1014,7 +1233,16 @@ public class DtsApi {
         Type[] types = new Type[leading + signatureTypes.length];
         System.arraycopy(descriptorTypes, 0, types, 0, leading);
         System.arraycopy(signatureTypes, 0, types, leading, signatureTypes.length);
-        String[] names = getParameterNames(m, types.length);
+        return types;
+    }
+
+    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
+        return getMethodParamSignature(clazz, typeDefinition, m, m, parameterNullability(m));
+    }
+
+    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m, Method namesFrom, boolean[] nullable) {
+        Type[] types = parameterTypes(m);
+        String[] names = getParameterNames(namesFrom, types.length);
 
         StringBuilder sb = new StringBuilder();
         sb.append("(");
@@ -1032,8 +1260,7 @@ public class DtsApi {
             String paramTypeName = getTypeScriptTypeFromJavaType(type, typeDefinition);
 
             addReference(type);
-            Boolean kotlinNullable = this.currentClassKotlin.isParameterNullable(m.getName(), m.getSignature(), paramIndex);
-            sb.append(withNull(paramTypeName, isNullable(type, Nullability.parameterAnnotations(m, paramIndex), kotlinNullable)));
+            sb.append(withNull(paramTypeName, paramIndex < nullable.length && nullable[paramIndex]));
         }
         sb.append(")");
         String sig = sb.toString();

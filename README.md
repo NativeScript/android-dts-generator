@@ -57,7 +57,7 @@ make test
 
 Then check whether the make command returns an error when comparing the files. `make test-compare-output` and `make test-kotlin-fixture` run them one at a time.
 
-`make test-typecheck` (Node.js required) type-checks the expected output against the published `@nativescript/types-android` platform typings: the Kotlin fixture must have no errors, and the AndroidX output no syntax errors.
+`make test-typecheck` (Node.js required) type-checks the expected output against the published `@nativescript/types-android` platform typings: neither output may have any error beyond the few listed in `test/typecheck/check.mjs`.
 
 > Note: If the contents of the libs folder or the fixture sources are changed, the expected output should also be changed
 
