@@ -4,6 +4,13 @@ import com.telerik.InputParameters;
 
 import org.apache.bcel.classfile.AnnotationEntry;
 import org.apache.bcel.classfile.Attribute;
+import org.apache.bcel.classfile.Constant;
+import org.apache.bcel.classfile.ConstantDouble;
+import org.apache.bcel.classfile.ConstantFloat;
+import org.apache.bcel.classfile.ConstantInteger;
+import org.apache.bcel.classfile.ConstantLong;
+import org.apache.bcel.classfile.ConstantString;
+import org.apache.bcel.classfile.ConstantValue;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.FieldOrMethod;
 import org.apache.bcel.classfile.JavaClass;
@@ -63,7 +70,6 @@ public class DtsApi {
 
     private StringBuilder2 sbContent;
     private Set<String> references;
-    private JavaClass prevClass;
     private String currentFileClassname;
     private Set<String> baseMethodNames;
     private List<Method> baseMethods;
@@ -73,6 +79,7 @@ public class DtsApi {
     private boolean nullableUnknownTypes;
     private Map<String, String> aliasedTypes;
     private String[] namespaceParts;
+    private final List<String> openNamespaces = new ArrayList<>();
     private int indent = 0;
     private boolean allGenericImplements;
     private Pattern methodSignature = Pattern.compile("\\((?<ArgumentsSignature>.*)\\)(?<ReturnSignature>.*)");
@@ -126,8 +133,6 @@ public class DtsApi {
     }
 
     public String generateDtsContent(List<JavaClass> javaClasses) {
-        this.prevClass = null;
-
         if ((javaClasses != null) && (javaClasses.size() > 0)) {
             references = new HashSet<>();
             sbContent = new StringBuilder2();
@@ -163,7 +168,8 @@ public class DtsApi {
                         currentFileClassname.contains(".debugger.") ||
                         currentFileClassname.endsWith("package-info") ||
                         currentFileClassname.endsWith("module-info") ||
-                        currentFileClassname.endsWith("Kt")) {
+                        currentFileClassname.endsWith("Kt") ||
+                        hasUnspellableNameSegment(currentFileClassname)) {
                     continue;
                 }
 
@@ -179,8 +185,8 @@ public class DtsApi {
                 boolean isInterface = currClass.isInterface();
                 boolean isAbstract = currClass.isAbstract();
 
-                this.indent = closePackage(this.prevClass, currClass);
-                this.indent = openPackage(this.prevClass, currClass);
+                this.indent = closePackage(currClass);
+                this.indent = openPackage(currClass);
 
                 String tabs = getTabs(this.indent);
 
@@ -262,34 +268,15 @@ public class DtsApi {
                     String innerClassAlias = "export type " + getSimpleClassname(currClass) + " = " + getFullClassNameConcatenated(currClass);
                     sbContent.appendln(tabs + innerClassAlias);
                 }
-                this.prevClass = currClass;
             }
-            closePackage(prevClass, null);
+            closePackage(null);
             // process class scope end
 
             String[] refs = references.toArray(new String[references.size()]);
             Arrays.sort(refs);
         }
 
-        String content = replaceIgnoredNamespaces(sbContent.toString());
-
-        return content;
-    }
-
-    private String replaceIgnoredNamespaces(String content) {
-        String regexFormat = "(?<Replace>%s(?:(?:\\.[a-zA-Z\\d]*)|<[a-zA-Z\\d\\.<>]*>)*)(?<Suffix>[^a-zA-Z\\d]+)";
-        // these namespaces are not known in some android api levels, so we cannot use them in android-support for instance, so we are replacing them with any
-        for (String ignoredNamespace : this.getIgnoredNamespaces()) {
-            String regexString = String.format(regexFormat, ignoredNamespace.replace(".", "\\."));
-            content = content.replaceAll(regexString, "any$2");
-            regexString = String.format(regexFormat, getGlobalAliasedClassName(ignoredNamespace).replace(".", "\\."));
-            content = content.replaceAll(regexString, "any$2");
-        }
-
-        // replace "extends any" with "extends java.lang.Object"
-        content = content.replace(" extends any ", String.format(" extends %s ", DtsApi.JavaLangObject));
-
-        return content;
+        return sbContent.toString();
     }
 
     public static String serializeGenerics() {
@@ -384,19 +371,21 @@ public class DtsApi {
 
             List<ReferenceType> interfaces = typeDefinition.getInterfaces();
             if (parent != null) {
+                String parentType = getTypeScriptTypeFromJavaType(parent, typeDefinition);
                 result.append(" extends ");
-                result.append(getTypeScriptTypeFromJavaType(parent, typeDefinition));
+                result.append(isAnyType(parentType) ? DtsApi.JavaLangObject : parentType);
             }
             if (interfaces.size() == 1 || (this.allGenericImplements && interfaces.size() > 0)) {
-                result.append(" implements ");
-
+                List<String> implemented = new ArrayList<>();
                 for (ReferenceType referenceType : interfaces) {
                     String tsType = getTypeScriptTypeFromJavaType(referenceType, typeDefinition);
-                    if (!this.isPrimitiveTSType(tsType)) {
-                        result.append(tsType + ", ");
+                    if (!this.isPrimitiveTSType(tsType) && !isAnyType(tsType)) {
+                        implemented.add(tsType);
                     }
                 }
-                result.deleteCharAt(result.lastIndexOf(","));
+                if (!implemented.isEmpty()) {
+                    result.append(" implements ").append(String.join(", ", implemented));
+                }
             }
             return result.toString();
         } else {
@@ -417,6 +406,9 @@ public class DtsApi {
             implementsSegmentSb.append(" implements ");
 
             for (JavaClass clazz : interfaces) {
+                if (isUnusableSupertype(clazz)) {
+                    continue;
+                }
                 String implementedInterface = clazz.getClassName().replaceAll("\\$", "\\.");
                 if (!typeBelongsInCurrentTopLevelNamespace(implementedInterface)) {
                     implementedInterface = getAliasedClassName(implementedInterface);
@@ -425,12 +417,15 @@ public class DtsApi {
                 implementsSegmentSb.append(implementedInterface + ", ");
             }
 
-            implementsSegment = implementsSegmentSb.substring(0, implementsSegmentSb.lastIndexOf(","));
+            int lastComma = implementsSegmentSb.lastIndexOf(",");
+            implementsSegment = lastComma < 0 ? "" : implementsSegmentSb.substring(0, lastComma);
 
         }
 
         if (superClass != null) {
-            String extendedClass = superClass.getClassName().replaceAll("\\$", "\\.");
+            String extendedClass = isUnusableSupertype(superClass)
+                    ? DtsApi.JavaLangObject
+                    : superClass.getClassName().replaceAll("\\$", "\\.");
 
             if (!extendedClass.equals(DtsApi.JavaLangObject)) {
                 // check for type override
@@ -441,7 +436,9 @@ public class DtsApi {
                 }
             }
 
-            if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
+            if (isAnyType(extendedClass)) {
+                extendedClass = DtsApi.JavaLangObject;
+            } else if (!typeBelongsInCurrentTopLevelNamespace(extendedClass)) {
                 extendedClass = getAliasedClassName(extendedClass);
             }
 
@@ -449,6 +446,16 @@ public class DtsApi {
         } else {
             return implementsSegment;
         }
+    }
+
+    // java.lang.Object, ignored types, overrides and private Google classes all come out as any,
+    // possibly followed by a comment naming the type, and a class can neither extend nor implement any.
+    private static boolean isAnyType(String tsType) {
+        return tsType.equals("any") || tsType.startsWith("any /*");
+    }
+
+    private boolean isUnusableSupertype(JavaClass clazz) {
+        return hasUnspellableNameSegment(clazz.getClassName()) || isIgnoredType(clazz.getClassName().replace('$', '.'));
     }
 
     private String getAliasedClassName(String className) {
@@ -502,101 +509,39 @@ public class DtsApi {
         return className;
     }
 
-    private int closePackage(JavaClass prevClass, JavaClass currClass) {
-        int indent = 0;
-
-        if (prevClass == null) {
-            return indent;
+    // Any class in a nesting chain can be skipped (internal, obfuscated, synthetic), so the previous
+    // class says nothing reliable about which namespaces are open.
+    private int closePackage(JavaClass currClass) {
+        List<String> wanted = currClass == null ? Collections.emptyList() : enclosingNamespaces(currClass);
+        int common = commonPrefixLength(wanted);
+        while (openNamespaces.size() > common) {
+            openNamespaces.remove(openNamespaces.size() - 1);
+            sbContent.appendln(getTabs(openNamespaces.size()) + "}");
         }
-
-        String prevClassName = prevClass.getClassName();
-        int prevDotCount = prevClassName.length() - prevClassName.replace(".", "").length();
-        int prevDollarCount = prevClassName.length() - prevClassName.replace("$", "").length();
-        int prevCount = prevDotCount + prevDollarCount;
-
-        if (currClass == null) {
-            indent = prevCount;
-            while (indent > 0) {
-                String tabs = getTabs(--indent);
-                sbContent.appendln(tabs + "}");
-            }
-            return indent;
-        }
-
-        String currClassName = currClass.getClassName();
-        int currDotCount = currClassName.length() - currClassName.replace(".", "").length();
-        int currDollarCount = currClassName.length() - currClassName.replace("$", "").length();
-        int currCount = currDotCount + currDollarCount;
-
-        while (prevCount > currCount) {
-            String tabs = getTabs(--prevCount);
-            sbContent.appendln(tabs + "}");
-        }
-
-        boolean isNested = isNested(currClass);
-
-        if (!isNested) {
-            throw new UnsupportedOperationException("TODO: implement");
-            // String prevClassName = prevClass.getClassName();
-            // int dotCount = prevClassName.length() -
-            // prevClassName.replace(".", "").length();
-            // int dollarCount = prevClassName.length() -
-            // prevClassName.replace("$", "").length();
-            // indent = dotCount + dollarCount;
-            //
-            // String[] prevParts = prevClassName.replace('$',
-            // '.').split("\\.");
-            // String[] currParts = currClass.getClassName().replace('$',
-            // '.').split("\\.");
-            //
-            // int diffIdx = 0;
-            // while ((diffIdx < prevParts.length) && (diffIdx <
-            // currParts.length) &&
-            // prevParts[diffIdx].equals(currParts[diffIdx])) {
-            // ++diffIdx;
-            // }
-            //
-            // int count = prevParts.length - diffIdx - 1;
-            // while (count-- > 0) {
-            // String tabs = getTabs(--indent);
-            // ps.println(tabs + "}");
-            // }
-        }
-
-        return indent;
+        return openNamespaces.size();
     }
 
-    private int openPackage(JavaClass prevClass, JavaClass currClass) {
-        int indent = 0;
-
-        String prevClassName = (prevClass != null) ? prevClass.getClassName() : "";
-        String[] prevParts = prevClassName.replace('$', '.').split("\\.");
-        String[] currParts = currClass.getClassName().replace('$', '.').split("\\.");
-
-        int diffIdx = 0;
-        while ((diffIdx < prevParts.length) && (diffIdx < currParts.length)
-                && prevParts[diffIdx].equals(currParts[diffIdx])) {
-            ++diffIdx;
+    private int openPackage(JavaClass currClass) {
+        List<String> wanted = enclosingNamespaces(currClass);
+        for (int idx = commonPrefixLength(wanted); idx < wanted.size(); idx++) {
+            sbContent.appendln(getTabs(idx) + (idx == 0 ? "declare " : "export ") + "namespace " + wanted.get(idx) + " {");
+            openNamespaces.add(wanted.get(idx));
         }
+        return openNamespaces.size();
+    }
 
-        indent = diffIdx;
-        for (int idx = diffIdx; idx < currParts.length - 1; idx++) {
-            ++indent;
-            String tabs = getTabs(idx);
-            if (idx == 0) {
-                sbContent.append(tabs + "declare ");
-            } else {
-                sbContent.append(tabs + "export ");
-            }
-            sbContent.appendln("module " + currParts[idx] + " {");
+    private List<String> enclosingNamespaces(JavaClass javaClass) {
+        String[] parts = javaClass.getClassName().split("[.$]");
+        return Arrays.asList(parts).subList(0, parts.length - 1);
+    }
+
+    private int commonPrefixLength(List<String> wanted) {
+        int common = 0;
+        while (common < openNamespaces.size() && common < wanted.size()
+                && openNamespaces.get(common).equals(wanted.get(common))) {
+            common++;
         }
-
-        if (isNested(currClass) && (prevParts.length < currParts.length)) {
-            String tabs = getTabs(prevParts.length - 1);
-            sbContent.appendln(tabs + "export module " + prevParts[prevParts.length - 1] + " {");
-        }
-
-        return indent;
+        return common;
     }
 
     private void processInterfaceConstructor(JavaClass classInterface, TypeDefinition typeDefinition, List<Method> allInterfacesMethods) {
@@ -611,6 +556,11 @@ public class DtsApi {
         sbContent.appendln(tabs + "public constructor(implementation: {");
 
         for (Method m : methods) {
+            // An interface with a companion object or constant fields carries a static initializer,
+            // which is not something an implementation provides.
+            if (m.isSynthetic() || m.getName().equals("<clinit>")) {
+                continue;
+            }
             sbContent.append(getTabs(this.indent + 2) + getMethodName(m) + getMethodParamSignature(classInterface, typeDefinition, m));
             String bmSig = "";
             if (!isConstructor(m)) {
@@ -767,8 +717,19 @@ public class DtsApi {
 
     private void addMethod(Map<String, ApiLevels.Tags> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
         ApiLevels.Tags tags = memberTags(clazz, method.getName() + method.getSignature(), isDeprecated(method));
-        methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method), tags, ApiLevels.Tags::mergedWith);
+        methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method, method.isStatic()), tags, ApiLevels.Tags::mergedWith);
+
+        // The runtime resolves Outer.Companion to the static field holding the companion instance,
+        // not to the nested class, so its methods are also called on the class value itself.
+        // TypeScript cannot give one name both a class and a field, so they are declared static too.
+        if (this.currentClassKotlin.isCompanionObject() && !method.isStatic() && !isConstructor(method)
+                && !functionOwnStatics.contains(method.getName())) {
+            methods.merge(generateMethodContent(clazz, typeDefinition, tabs, method, true), tags, ApiLevels.Tags::mergedWith);
+        }
     }
+
+    // Static members by these names clash with the built-in properties of a class's constructor (TS2699).
+    private static final Set<String> functionOwnStatics = Set.of("name", "length", "caller", "arguments", "prototype");
 
     // Kotlin metadata states nullability outright, so it decides wherever it is available. Java
     // bytecode carries it only where someone annotated the declaration: @Nullable and @NonNull are
@@ -837,12 +798,12 @@ public class DtsApi {
         return comment.append(" */").toString();
     }
 
-    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
+    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method, boolean asStatic) {
         StringBuilder2 sbTemp = new StringBuilder2();
 
         sbTemp.append(tabs + "public ");
 
-        if (method.isStatic()) {
+        if (asStatic) {
             sbTemp.append("static ");
         }
 
@@ -1044,53 +1005,95 @@ public class DtsApi {
     }
 
     private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
-        LocalVariableTable table = m.getLocalVariableTable();
-        LocalVariable[] variables = table != null ? table.getLocalVariableTable() : null;
+        Type[] signatureTypes = this.getArgumentTypes(m);
+        Type[] descriptorTypes = m.getArgumentTypes();
+        // The generic signature leaves out the synthetic leading parameters javac and kotlinc add,
+        // the outer instance of an inner class's constructor. The runtime matches a call against
+        // the descriptor, so those are declared from it, ahead of the signature's parameters.
+        int leading = Math.max(0, descriptorTypes.length - signatureTypes.length);
+        Type[] types = new Type[leading + signatureTypes.length];
+        System.arraycopy(descriptorTypes, 0, types, 0, leading);
+        System.arraycopy(signatureTypes, 0, types, leading, signatureTypes.length);
+        String[] names = getParameterNames(m, types.length);
 
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         int idx = 0;
-        for (Type type : this.getArgumentTypes(m)) {
+        for (Type type : types) {
             if (idx > 0) {
                 sb.append(", ");
             }
 
-            int localVarIndex = m.isStatic() ? idx : idx + 1; // skip "this" variable name
-            LocalVariable localVariable = variables != null && variables.length > localVarIndex
-                    ? variables[localVarIndex]
-                    : null;
-
-            if (localVariable != null) {
-                String name = localVariable.getName();
-                if (reservedJsKeywords.contains(name)) {
-                    System.out.println(String.format("Appending _ to reserved JS keyword %s", name));
-                    sb.append(name + "_");
-                } else {
-                    sb.append(name);
-                }
-            } else {
-                // interface declarations will fallback to paramN since they don't have names in the bytecode
-                sb.append("param");
-                sb.append(idx);
-            }
+            sb.append(names[idx]);
             int paramIndex = idx;
             idx++;
             sb.append(": ");
 
             String paramTypeName = getTypeScriptTypeFromJavaType(type, typeDefinition);
 
-            // TODO: Pete:
-            if (paramTypeName.startsWith("java.util.function")) {
-                sb.append("any /* " + paramTypeName + "*/");
-            } else {
-                addReference(type);
-                Boolean kotlinNullable = this.currentClassKotlin.isParameterNullable(m.getName(), m.getSignature(), paramIndex);
-                sb.append(withNull(paramTypeName, isNullable(type, Nullability.parameterAnnotations(m, paramIndex), kotlinNullable)));
-            }
+            addReference(type);
+            Boolean kotlinNullable = this.currentClassKotlin.isParameterNullable(m.getName(), m.getSignature(), paramIndex);
+            sb.append(withNull(paramTypeName, isNullable(type, Nullability.parameterAnnotations(m, paramIndex), kotlinNullable)));
         }
         sb.append(")");
         String sig = sb.toString();
         return sig;
+    }
+
+
+    // Parameter names come from the LocalVariableTable entry that occupies the parameter's slot at
+    // pc 0. The table's array order is not parameter order: Kotlin inlining puts locals such as
+    // $i$a$-apply-... ahead of the parameters.
+    private String[] getParameterNames(Method m, int count) {
+        LocalVariableTable table = m.getLocalVariableTable();
+        Type[] descriptorTypes = m.getArgumentTypes();
+        int slot = m.isStatic() ? 0 : 1;
+
+        String[] names = new String[count];
+        Set<String> used = new HashSet<>();
+        for (int idx = 0; idx < count; idx++) {
+            LocalVariable variable = table != null ? table.getLocalVariable(slot, 0) : null;
+            String name = parameterName(m, variable != null ? variable.getName() : null, idx);
+            String unique = name;
+            for (int n = 1; !used.add(unique); n++) {
+                unique = name + n;
+            }
+            names[idx] = unique;
+
+            slot += idx < descriptorTypes.length ? descriptorTypes[idx].getSize() : 1;
+        }
+        return names;
+    }
+
+    private static final Pattern outerInstanceName = Pattern.compile("^this\\$\\d+$");
+
+    private String parameterName(Method m, String name, int idx) {
+        if (name == null) {
+            // interface declarations will fallback to paramN since they don't have names in the bytecode
+            return "param" + idx;
+        }
+        if (name.equals("<set-?>")) {
+            // Kotlin's name for a property setter's value parameter.
+            String method = m.getName();
+            return method.startsWith("set") && method.length() > 3
+                    ? Character.toLowerCase(method.charAt(3)) + method.substring(4)
+                    : "value";
+        }
+        if (name.startsWith("$this$")) {
+            // Kotlin's name for an extension function's receiver.
+            return "receiver";
+        }
+        if (outerInstanceName.matcher(name).matches()) {
+            // javac and kotlinc's name for the outer instance an inner class's constructor takes.
+            return "outer";
+        }
+        if (!jsFieldPattern.matcher(name).matches()) {
+            return "param" + idx;
+        }
+        if (reservedJsKeywords.contains(name)) {
+            return name + "_";
+        }
+        return name;
     }
 
     //field related
@@ -1125,13 +1128,20 @@ public class DtsApi {
         }
 
         String tabs = getTabs(this.indent + 1);
+        Object constant = constantValue(f);
+        String literal = constant != null && f.isStatic() && f.isFinal() ? typeScriptLiteral(f.getType(), constant) : null;
+        List<String> commentLines = new ArrayList<>();
+        if (constant != null && literal == null) {
+            commentLines.add("Constant value: " + String.valueOf(constant).replace("*/", "*\\/"));
+        }
         // Only annotated with a versions file in hand: a field has never carried a bare
         // @deprecated, so deriving one from the bytecode alone would rewrite existing definitions.
         if (this.apiLevels != null) {
-            String fieldComment = apiLevelComment(tabs, memberTags(clazz, f.getName(), isDeprecated(f)).render());
-            if (!fieldComment.isEmpty()) {
-                sbContent.appendln(fieldComment);
-            }
+            commentLines.addAll(memberTags(clazz, f.getName(), isDeprecated(f)).render());
+        }
+        String fieldComment = apiLevelComment(tabs, commentLines);
+        if (!fieldComment.isEmpty()) {
+            sbContent.appendln(fieldComment);
         }
         sbContent.append(tabs + "public ");
         if (f.isStatic()) {
@@ -1142,13 +1152,80 @@ public class DtsApi {
             name = "\"" + name + "\"";
         }
 
-        sbContent.append(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition));
-        if (f.getConstantValue() != null) {
-            sbContent.appendln(" = " + f.getConstantValue() + ";");
+        // `readonly NAME = 1` rather than `NAME: 1`: the initializer gives a widening literal type,
+        // so `let v = View.VISIBLE` is still a number that View.GONE can be assigned to.
+        if (literal != null) {
+            sbContent.appendln("readonly " + name + " = " + literal + ";");
         } else {
-            sbContent.appendln(";");
-
+            sbContent.appendln(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition) + ";");
         }
+    }
+
+    private static Object constantValue(Field f) {
+        ConstantValue attribute = f.getConstantValue();
+        if (attribute == null) {
+            return null;
+        }
+        Constant constant = f.getConstantPool().getConstant(attribute.getConstantValueIndex());
+        if (constant instanceof ConstantInteger) {
+            return ((ConstantInteger) constant).getBytes();
+        } else if (constant instanceof ConstantLong) {
+            return ((ConstantLong) constant).getBytes();
+        } else if (constant instanceof ConstantFloat) {
+            return ((ConstantFloat) constant).getBytes();
+        } else if (constant instanceof ConstantDouble) {
+            return ((ConstantDouble) constant).getBytes();
+        } else if (constant instanceof ConstantString) {
+            return ((ConstantString) constant).getBytes(f.getConstantPool());
+        }
+        return null;
+    }
+
+    private static final long MAX_SAFE_INTEGER = (1L << 53) - 1;
+
+    // The literal JavaScript sees when it reads the field, or null when it has none: NaN and the
+    // infinities have no literal type, and the runtime does not hand out longs beyond 2^53 as numbers.
+    private static String typeScriptLiteral(Type type, Object value) {
+        if (type.equals(Type.BOOLEAN)) {
+            return ((Integer) value) != 0 ? "true" : "false";
+        }
+        if (type.equals(Type.CHAR)) {
+            return javaScriptString(String.valueOf((char) ((Integer) value).intValue()));
+        }
+        if (value instanceof String) {
+            return javaScriptString((String) value);
+        }
+        if (value instanceof Long) {
+            long l = (Long) value;
+            return l >= -MAX_SAFE_INTEGER && l <= MAX_SAFE_INTEGER ? Long.toString(l) : null;
+        }
+        if (value instanceof Float || value instanceof Double) {
+            // A float reaches JavaScript widened to a double, so 0.1f reads as 0.10000000149011612.
+            double d = ((Number) value).doubleValue();
+            return Double.isFinite(d) ? Double.toString(d) : null;
+        }
+        return value.toString();
+    }
+
+    private static String javaScriptString(String value) {
+        StringBuilder sb = new StringBuilder("\"");
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            switch (c) {
+                case '"': sb.append("\\\""); break;
+                case '\\': sb.append("\\\\"); break;
+                case '\n': sb.append("\\n"); break;
+                case '\r': sb.append("\\r"); break;
+                case '\t': sb.append("\\t"); break;
+                default:
+                    if (c < 0x20 || c == 0x7f || c == '\u2028' || c == '\u2029' || Character.isSurrogate(c)) {
+                        sb.append(String.format("\\u%04x", (int) c));
+                    } else {
+                        sb.append(c);
+                    }
+            }
+        }
+        return sb.append('"').toString();
     }
 
     private void addClassField(JavaClass clazz) {
@@ -1199,7 +1276,7 @@ public class DtsApi {
                 convertToTypeScriptType(type, typeDefinition, sb);
                 tsType = sb.toString();
 
-                if (tsType.startsWith("java.util.function") || isPrivateGoogleApiClass(tsType)) {
+                if (isPrivateGoogleApiClass(tsType)) {
                     tsType = "any /* " + tsType + "*/";
                 }
         }
@@ -1249,8 +1326,18 @@ public class DtsApi {
             }
             ObjectType objType = (ObjectType) type;
             String typeName = objType.getClassName();
+            if (hasUnspellableNameSegment(typeName)) {
+                tsType.append("any");
+                return;
+            }
             if (typeName.contains("$")) {
                 typeName = typeName.replaceAll("\\$", "\\.");
+            }
+
+            // Replaced as a whole, generic arguments included.
+            if (isIgnoredType(typeName)) {
+                tsType.append("any");
+                return;
             }
 
             if (this.typeOverrides.containsKey(typeName)) {
@@ -1374,9 +1461,16 @@ public class DtsApi {
     }
 
     // HELPER METHODS
-    private boolean isNested(JavaClass javaClass) {
-        boolean isNested = javaClass.getClassName().contains("$");
-        return isNested;
+    // Names a namespace path cannot spell: Foo$$serializer (kotlinx.serialization) has an empty
+    // segment, and Kotlin names some file facades -Base64 precisely to hide them from Java.
+    private static boolean hasUnspellableNameSegment(String binaryName) {
+        for (String part : binaryName.split("[.$]", -1)) {
+            if (part.isEmpty() || !Character.isJavaIdentifierStart(part.codePointAt(0))
+                    || !part.codePoints().allMatch(Character::isJavaIdentifierPart)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String getSimpleClassname(JavaClass javaClass) {
@@ -1405,11 +1499,6 @@ public class DtsApi {
 
             generics.add(new Tuple<>(fullClassName.replace("$", "."), genericDefinitions.size()));
             for (TypeDefinition.GenericDefinition definition : genericDefinitions) {
-                ObjectType genericObjectType = (ObjectType) definition.getType();
-                String baseClassName = getAliasedClassName(genericObjectType.getClassName());
-                String resultType = definition.getType().toString();
-                String typeToExtend = resultType.replace(genericObjectType.getClassName(), baseClassName);
-                //parts.add(String.format("%s extends %s", definition.getLabel(), typeToExtend));
                 parts.add(definition.getLabel());
             }
             return "<" + String.join(", ", parts) + "> ";
@@ -1550,6 +1639,15 @@ public class DtsApi {
         result.add("com.tom_roush.pdfbox.pdmodel.common.function"); // com.tom_roush:pdfbox-android:1.8.10.0
 
         return result;
+    }
+
+    private boolean isIgnoredType(String dottedClassName) {
+        for (String ignored : getIgnoredNamespaces()) {
+            if (dottedClassName.equals(ignored) || dottedClassName.startsWith(ignored + ".")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isIgnoredNamespace() {

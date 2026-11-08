@@ -2,12 +2,14 @@ package com.telerik.dts;
 
 import kotlin.Metadata;
 import kotlin.metadata.Attributes;
+import kotlin.metadata.ClassKind;
 import kotlin.metadata.KmClass;
 import kotlin.metadata.KmConstructor;
 import kotlin.metadata.KmDeclarationContainer;
 import kotlin.metadata.KmFunction;
 import kotlin.metadata.KmProperty;
 import kotlin.metadata.KmPropertyAccessorAttributes;
+import kotlin.metadata.KmType;
 import kotlin.metadata.KmValueParameter;
 import kotlin.metadata.Visibility;
 
@@ -24,6 +26,7 @@ import org.apache.bcel.classfile.ElementValue;
 import org.apache.bcel.classfile.ElementValuePair;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.SimpleElementValue;
+import org.apache.bcel.generic.Type;
 
 /**
  * What a class's @kotlin.Metadata annotation says about its declarations, for the things the
@@ -86,6 +89,10 @@ public class KotlinTypeInfo {
         return internalClass;
     }
 
+    public boolean isCompanionObject() {
+        return kmClass != null && Attributes.getKind(kmClass) == ClassKind.COMPANION_OBJECT;
+    }
+
     public boolean isInternalMember(String name, String descriptor) {
         if (container == null) {
             return false;
@@ -131,7 +138,11 @@ public class KotlinTypeInfo {
         return null;
     }
 
-    /** Whether a parameter accepts null, or null when this is not a Kotlin declaration. */
+    /**
+     * Whether the parameter at a descriptor index accepts null, or null when this is not a Kotlin
+     * declaration. Kotlin's value parameters leave out what the JVM passes ahead of them: an inner
+     * class constructor's outer instance, which is never null, and an extension's receiver.
+     */
     public Boolean isParameterNullable(String name, String descriptor, int index) {
         if (CONSTRUCTOR_NAME.equals(name)) {
             KmConstructor constructor = findConstructor(name, descriptor);
@@ -139,14 +150,23 @@ public class KotlinTypeInfo {
                 return null;
             }
             List<KmValueParameter> parameters = constructor.getValueParameters();
-            return index < parameters.size() ? Attributes.isNullable(parameters.get(index).getType()) : null;
+            int outer = Math.max(0, Type.getArgumentTypes(descriptor).length - parameters.size());
+            if (index < outer) {
+                return false;
+            }
+            return index - outer < parameters.size() ? Attributes.isNullable(parameters.get(index - outer).getType()) : null;
         }
 
         KmFunction function = findFunction(name, descriptor);
         if (function != null) {
+            KmType receiver = function.getReceiverParameterType();
+            if (receiver != null && index == 0) {
+                return Attributes.isNullable(receiver);
+            }
+            int valueIndex = receiver != null ? index - 1 : index;
             List<KmValueParameter> parameters = function.getValueParameters();
-            if (index < parameters.size()) {
-                return Attributes.isNullable(parameters.get(index).getType());
+            if (valueIndex < parameters.size()) {
+                return Attributes.isNullable(parameters.get(valueIndex).getType());
             }
             return null;
         }

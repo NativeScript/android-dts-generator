@@ -1,0 +1,12 @@
+{
+  "name": "dts-generator-typecheck",
+  "private": true,
+  "description": "Type-checks the expected output against the published Android platform typings.",
+  "devDependencies": {
+    "@nativescript/types-android": "9.1.1",
+    "typescript": "6.0.3"
+  },
+  "scripts": {
+    "check": "node check.mjs"
+  }
+}

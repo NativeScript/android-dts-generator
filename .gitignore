@@ -21,3 +21,5 @@
 testparams.txt
 /jars
 bin/
+/test/kotlin-fixture/build
+/test/typecheck/node_modules

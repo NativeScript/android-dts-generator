@@ -64,7 +64,17 @@ public class Main {
 		}
 
 		try {
-			InputParameters inputParameters = parseCommand(args);
+			InputParameters inputParameters;
+			try {
+				inputParameters = parseCommand(args);
+			} catch (IllegalArgumentException ex) {
+				// A malformed command line is the user's mistake, not a crash: say what is wrong and
+				// how to look up the right spelling, without burying it under a stack trace.
+				System.err.println("dts-generator: " + ex.getMessage());
+				System.err.println("Run with " + HELP + " to see the available options.");
+				System.exit(2);
+				return;
+			}
 
 			long startTime = System.currentTimeMillis();
 
@@ -75,12 +85,6 @@ public class Main {
 
 			long elapsedTime = System.currentTimeMillis() - startTime;
 			System.out.println("Generation of definitions took " + elapsedTime + "ms.");
-		} catch (IllegalArgumentException ex) {
-			// A malformed command line is the user's mistake, not a crash: say what is wrong and
-			// how to look up the right spelling, without burying it under a stack trace.
-			System.err.println("dts-generator: " + ex.getMessage());
-			System.err.println("Run with " + HELP + " to see the available options.");
-			System.exit(2);
 		} catch (Throwable ex) {
 			System.err.println(String.format("Error executing Typescript Definitions Generator: %s", ex.getMessage()));
 			ex.printStackTrace(System.out);

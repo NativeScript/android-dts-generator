@@ -133,9 +133,23 @@ androidx-35:
 	mv out/android.d.ts out/androidx-35.d.ts
 
 test-compare-output:
+	rm -f out/android.d.ts out/android-declarations.d.ts
 	java -jar dts-generator/build/libs/dts-generator.jar \
 	--input libs
 	cmp out/android.d.ts test/expected-output/android.d.ts
 	cmp out/android-declarations.d.ts test/expected-output/android-declarations.d.ts
+
+test-kotlin-fixture:
+	dts-generator/gradlew -q -p test/kotlin-fixture jar
+	rm -rf out/kotlin-fixture
+	java -jar dts-generator/build/libs/dts-generator.jar \
+	--input test/kotlin-fixture/build/libs/kotlin-fixture.jar --output out/kotlin-fixture
+	cmp out/kotlin-fixture/android.d.ts test/expected-output/kotlin-fixture/android.d.ts
+	cmp out/kotlin-fixture/android-declarations.d.ts test/expected-output/kotlin-fixture/android-declarations.d.ts
+
+test: test-compare-output test-kotlin-fixture
+
+test-typecheck:
+	cd test/typecheck && npm ci --no-audit --no-fund && node check.mjs
 
 androidx-all: androidx-17 androidx-23 androidx-26 androidx-28 androidx-29 androidx-30 androidx-31 androidx-32 androidx-33 androidx-34 androidx-35

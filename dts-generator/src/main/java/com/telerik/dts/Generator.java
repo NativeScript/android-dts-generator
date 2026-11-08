@@ -60,8 +60,10 @@ public class Generator {
             DtsApi.loadGenerics(inputGenericsFile);
         }
 
+        // Generated overloads and namespace merges trip lint rules no one can act on in this file.
+        this.fileHelper.writeToFile("/* eslint-disable */\n", this.outFileName, false);
         if(!this.skipDeclarations) {
-            this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, false);
+            this.fileHelper.writeToFile(String.format("/// <reference path=\"%s\"/>\n", this.declarationsFileName), this.outFileName, true);
         }
 
         while (ClassRepo.hasNext()) {
@@ -92,7 +94,7 @@ public class Generator {
 
     private void writeDeclarations() {
         List<String> imports = DtsApi.imports;
-        imports.add(0, "declare module androidNative {\texport class Array<T> {\tconstructor(); length: number; [index: number]: T; } }\n");
+        imports.add(0, "declare namespace androidNative {\texport class Array<T> {\tconstructor(); length: number; [index: number]: T; } }\n");
 
         String existingContent = this.fileHelper.readFileContent(this.declarationsFileName);
         existingContent = existingContent != null ? existingContent : "";
