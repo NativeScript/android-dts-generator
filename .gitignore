@@ -21,3 +21,4 @@
 testparams.txt
 /jars
 bin/
+/test/kotlin-fixture/build

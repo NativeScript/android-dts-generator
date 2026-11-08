@@ -48,16 +48,16 @@ java -jar build/libs/dts-generator.jar --input <jarFolder>
 
 ## Test
 
-In order to test the tool there are some predefined AndroidX packages. We are running the tool and comparing the output with the expected output committed in the repo.
-To run the test:
+The tests run the tool and compare its output with the expected output committed in the repo. There are two inputs: the predefined AndroidX packages in `libs`, and a small Kotlin and Java library in `test/kotlin-fixture`, built from source, where each declaration exercises one case the generator has to handle.
+To run the tests:
 
 ```shell
-make test-compare-output
+make test
 ```
 
-Then check whether the make command returns an error when comparing the files.
+Then check whether the make command returns an error when comparing the files. `make test-compare-output` and `make test-kotlin-fixture` run them one at a time.
 
-> Note: If the contents of the libs folder are changed, the expected output should also be changed
+> Note: If the contents of the libs folder or the fixture sources are changed, the expected output should also be changed
 
 ## Generate definitions for .aar
 Pass the aar as input as you would normally do

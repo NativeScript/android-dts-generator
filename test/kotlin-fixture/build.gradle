@@ -1,0 +1,20 @@
+// Bytecode that the generator's Kotlin handling is tested against. The Kotlin version is pinned:
+// a newer compiler can lay out bytecode and metadata differently and change the expected output.
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.2.20'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
