@@ -174,6 +174,7 @@ declare namespace fixture {
 		public static class: java.lang.Class<fixture.Text>;
 		public static INSTANCE: fixture.Text;
 		public shout(receiver: string, times: number): string;
+		public tagged(receiver: string, label: string | null): string;
 	}
 }
 

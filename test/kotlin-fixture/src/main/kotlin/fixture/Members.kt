@@ -9,6 +9,9 @@ class Settings {
 // Kotlin names an extension receiver $this$shout.
 object Text {
     fun String.shout(times: Int): String = uppercase().repeat(times)
+
+    // The receiver is not null, the parameter after it can be.
+    fun String.tagged(label: String?): String = this + label
 }
 
 // Inlined lambdas put locals ahead of the parameters in the LocalVariableTable.

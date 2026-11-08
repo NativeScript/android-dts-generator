@@ -9,6 +9,7 @@ import kotlin.metadata.KmDeclarationContainer;
 import kotlin.metadata.KmFunction;
 import kotlin.metadata.KmProperty;
 import kotlin.metadata.KmPropertyAccessorAttributes;
+import kotlin.metadata.KmType;
 import kotlin.metadata.KmValueParameter;
 import kotlin.metadata.Visibility;
 
@@ -139,8 +140,8 @@ public class KotlinTypeInfo {
 
     /**
      * Whether the parameter at a descriptor index accepts null, or null when this is not a Kotlin
-     * declaration. Kotlin's value parameters leave out the outer instance the JVM passes ahead of
-     * them to an inner class constructor, which is never null.
+     * declaration. Kotlin's value parameters leave out what the JVM passes ahead of them: an inner
+     * class constructor's outer instance, which is never null, and an extension's receiver.
      */
     public Boolean isParameterNullable(String name, String descriptor, int index) {
         if (CONSTRUCTOR_NAME.equals(name)) {
@@ -158,9 +159,14 @@ public class KotlinTypeInfo {
 
         KmFunction function = findFunction(name, descriptor);
         if (function != null) {
+            KmType receiver = function.getReceiverParameterType();
+            if (receiver != null && index == 0) {
+                return Attributes.isNullable(receiver);
+            }
+            int valueIndex = receiver != null ? index - 1 : index;
             List<KmValueParameter> parameters = function.getValueParameters();
-            if (index < parameters.size()) {
-                return Attributes.isNullable(parameters.get(index).getType());
+            if (valueIndex < parameters.size()) {
+                return Attributes.isNullable(parameters.get(valueIndex).getType());
             }
             return null;
         }
