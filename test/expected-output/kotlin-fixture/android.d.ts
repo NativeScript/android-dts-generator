@@ -168,15 +168,54 @@ declare namespace fixture {
 			public constructor();
 			public title(): string | null;
 		}
+		export class Card extends fixture.Overrides.Labeled {
+			public static class: java.lang.Class<fixture.Overrides.Card>;
+			public constructor();
+			public entry(index: number): string | null;
+		}
 		export class Circle extends fixture.Overrides.Shape {
 			public static class: java.lang.Class<fixture.Overrides.Circle>;
 			public constructor();
 			public label(): string;
 		}
+		export class Deck extends fixture.Overrides.Card {
+			public static class: java.lang.Class<fixture.Overrides.Deck>;
+			public constructor();
+			public entry(index: number): string | null;
+			public entry(key: string): string;
+		}
 		export class DerivedPanel extends fixture.Overrides.BasePanel {
 			public static class: java.lang.Class<fixture.Overrides.DerivedPanel>;
 			public constructor();
 			public title(): string | null;
+		}
+		export class Hand extends fixture.Overrides.Deck {
+			public static class: java.lang.Class<fixture.Overrides.Hand>;
+			public constructor();
+			public entry(key: string): string;
+			public entry(index: number): string | null;
+		}
+		export class Labeled extends fixture.Overrides.Named {
+			public static class: java.lang.Class<fixture.Overrides.Labeled>;
+			/**
+			 * Constructs a new instance of the fixture.Overrides$Labeled interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
+			 */
+			public constructor(implementation: {
+				entry(param0: number): string | null;
+			});
+			public constructor();
+			public entry(param0: number): string | null;
+		}
+		export class Named {
+			public static class: java.lang.Class<fixture.Overrides.Named>;
+			/**
+			 * Constructs a new instance of the fixture.Overrides$Named interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
+			 */
+			public constructor(implementation: {
+				entry(param0: number): string | null;
+			});
+			public constructor();
+			public entry(param0: number): string | null;
 		}
 		export class Panel {
 			public static class: java.lang.Class<fixture.Overrides.Panel>;
@@ -189,10 +228,26 @@ declare namespace fixture {
 			public constructor();
 			public title(): string | null;
 		}
+		export abstract class Pipe<E>  extends java.lang.Object {
+			public static class: java.lang.Class<fixture.Overrides.Pipe<any>>;
+			public constructor();
+			public make(fallback: E, tag: string): E;
+		}
 		export class Shape {
 			public static class: java.lang.Class<fixture.Overrides.Shape>;
 			public constructor();
 			public label(): string;
+		}
+		export class Source<T>  extends java.lang.Object {
+			public static class: java.lang.Class<fixture.Overrides.Source<any>>;
+			/**
+			 * Constructs a new instance of the fixture.Overrides$Source interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
+			 */
+			public constructor(implementation: {
+				make(fallback: T, tag: string): T;
+			});
+			public constructor();
+			public make(fallback: T, tag: string): T;
 		}
 	}
 }
@@ -229,4 +284,6 @@ declare namespace fixture {
 //Generics information:
 //fixture.Bounded:1
 //fixture.Copyable:1
+//fixture.Overrides.Pipe:1
+//fixture.Overrides.Source:1
 

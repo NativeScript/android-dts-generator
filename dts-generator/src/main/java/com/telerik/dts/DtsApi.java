@@ -705,7 +705,7 @@ public class DtsApi {
                     String sig = getMethodFullSignature(baseMethod);
                     if (!mapNameMethod.containsKey(sig)) {
                         mapNameMethod.put(sig, baseMethod);
-                        addMethod(methods, clazz, typeDefinition, tabs, baseMethod);
+                        addBaseMethod(methods, clazz, typeDefinition, tabs, baseMethod);
                     }
                 }
             }
@@ -715,9 +715,24 @@ public class DtsApi {
     }
 
     private void addMethod(Map<String, MethodDeclaration> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
+        addMethod(methods, clazz, typeDefinition, tabs, method, returnNullable(method));
+    }
+
+    // A superclass's method, declared again because the class declares another of that name and a
+    // TypeScript declaration would hide the inherited overloads. It returns null exactly where the
+    // superclass's own typings say it does, which can differ from its raw annotation.
+    private void addBaseMethod(Map<String, MethodDeclaration> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method) {
+        JavaClass superClass = getSuperClass(clazz);
+        Boolean inherited = superClass == null || method.isStatic() ? null
+                : returnNullabilityAlongChain(superClass, method.getName() + method.getSignature());
+        addMethod(methods, clazz, typeDefinition, tabs, method, inherited != null ? inherited : returnNullable(method));
+    }
+
+    private void addMethod(Map<String, MethodDeclaration> methods, JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method,
+                           boolean returnNullable) {
         ApiLevels.Tags tags = memberTags(clazz, method.getName() + method.getSignature(), isDeprecated(method));
         addDeclaration(methods, new MethodDeclaration(clazz, typeDefinition, tabs, method, method.isStatic(), tags,
-                returnNullable(method), parameterNullability(method)));
+                returnNullable, parameterNullability(method)));
 
         // The runtime resolves Outer.Companion to the static field holding the companion instance,
         // not to the nested class, so its methods are also called on the class value itself.
@@ -725,7 +740,7 @@ public class DtsApi {
         if (this.currentClassKotlin.isCompanionObject() && !method.isStatic() && !isConstructor(method)
                 && !functionOwnStatics.contains(method.getName())) {
             addDeclaration(methods, new MethodDeclaration(clazz, typeDefinition, tabs, method, true, tags,
-                    returnNullable(method), parameterNullability(method)));
+                    returnNullable, parameterNullability(method)));
         }
     }
 
@@ -733,15 +748,18 @@ public class DtsApi {
      * One method of a class as it will be declared. A class lists the same JVM method more than
      * once - its own declaration, the base class's, and that of every interface it implements - and
      * they can disagree on nullability: Dialog.onCreatePanelView carries no annotation while
-     * Window.Callback's is @Nullable. Declared separately they make overloads that differ only in
-     * `| null`, and a subclass that redeclares just one of them is no longer assignable to its base.
+     * Window.Callback's is @Nullable.
      */
     private static final class MethodDeclaration {
         final JavaClass clazz;
         final TypeDefinition typeDefinition;
         final String tabs;
         final boolean asStatic;
-        Method method;
+        // The types come from the first declaration, the class's own when it has one, whose type
+        // variables are the ones the class declares. The parameter names come from the first
+        // declaration with a LocalVariableTable, which abstract methods lack.
+        final Method method;
+        Method namesFrom;
         ApiLevels.Tags tags;
         boolean returnNullable;
         final boolean[] parameterNullable;
@@ -752,6 +770,7 @@ public class DtsApi {
             this.typeDefinition = typeDefinition;
             this.tabs = tabs;
             this.method = method;
+            this.namesFrom = method;
             this.asStatic = asStatic;
             this.tags = tags;
             this.returnNullable = returnNullable;
@@ -776,9 +795,8 @@ public class DtsApi {
         for (int i = 0; i < existing.parameterNullable.length && i < declaration.parameterNullable.length; i++) {
             existing.parameterNullable[i] |= declaration.parameterNullable[i];
         }
-        // Abstract interface methods carry no parameter names, so a declaration with a body wins.
-        if (existing.method.getLocalVariableTable() == null && declaration.method.getLocalVariableTable() != null) {
-            existing.method = declaration.method;
+        if (existing.namesFrom.getLocalVariableTable() == null && declaration.method.getLocalVariableTable() != null) {
+            existing.namesFrom = declaration.method;
         }
     }
 
@@ -858,14 +876,26 @@ public class DtsApi {
         declaredReturnNullability.put(cacheKey, Optional.empty());
 
         KotlinTypeInfo kotlin = kotlinInfo(type);
+        String name = key.substring(0, key.indexOf('('));
         Boolean result = null;
+        boolean listsName = false;
         for (Method m : listedMethods(type)) {
+            listsName |= m.getName().equals(name) && isListedMember(m, kotlin);
             if (!(m.getName() + m.getSignature()).equals(key) || m.isStatic() || !isListedMember(m, kotlin)) {
                 continue;
             }
             Boolean kotlinNullable = kotlin.isReturnNullable(m.getName(), m.getSignature());
             boolean nullable = isNullable(m.getReturnType(), m.getAnnotationEntries(), kotlinNullable);
             result = (result != null && result) || nullable;
+        }
+        // processMethod declares a superclass's method again in a class that lists another of that
+        // name, unless the class declares that very method itself.
+        JavaClass superClass = type.isInterface() ? null : getSuperClass(type);
+        if (listsName && superClass != null && ownMethods(type).stream().noneMatch(m -> (m.getName() + m.getSignature()).equals(key))) {
+            Boolean inherited = returnNullabilityAlongChain(superClass, key);
+            if (inherited != null) {
+                result = (result != null && result) || inherited;
+            }
         }
         if (result != null && result && !supertypesAllowNullReturn(type, key)) {
             result = false;
@@ -875,11 +905,11 @@ public class DtsApi {
         return result;
     }
 
-    // The methods whose declarations a class's typings list, as generateDtsContent collects them:
-    // its own, those of every interface it implements, and those of the interfaces each class it
-    // extends implements directly. A superclass's own methods are not among them.
+    // The methods generateDtsContent collects for a class: its own, those of every interface it
+    // implements, and those of the interfaces each class it extends implements directly.
+    // processMethod adds superclass methods on top; declaredReturnNullability accounts for those.
     private List<Method> listedMethods(JavaClass type) {
-        List<Method> methods = new ArrayList<>(Arrays.asList(type.getMethods()));
+        List<Method> methods = ownMethods(type);
         Set<JavaClass> interfaces = new HashSet<>(getAllInterfaces(type));
         if (!type.isInterface()) {
             for (JavaClass superClass : getAllSuperClasses(type)) {
@@ -887,6 +917,17 @@ public class DtsApi {
             }
         }
         methods.addAll(getAllInterfacesMethods(interfaces));
+        return methods;
+    }
+
+    // With --merge-class-versions a class also lists the members only other versions of it declare.
+    private List<Method> ownMethods(JavaClass type) {
+        List<Method> methods = new ArrayList<>(Arrays.asList(type.getMethods()));
+        if (this.mergeClassVersions && !type.isInterface()) {
+            for (JavaClass version : ClassRepo.findAllVersions(type.getClassName())) {
+                methods.addAll(Arrays.asList(version.getMethods()));
+            }
+        }
         return methods;
     }
 
@@ -963,8 +1004,8 @@ public class DtsApi {
         return comment.append(" */").toString();
     }
 
-    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method, boolean asStatic,
-                                         boolean returnNullable, boolean[] parameterNullable) {
+    private String generateMethodContent(JavaClass clazz, TypeDefinition typeDefinition, String tabs, Method method, Method namesFrom,
+                                         boolean asStatic, boolean returnNullable, boolean[] parameterNullable) {
         StringBuilder2 sbTemp = new StringBuilder2();
 
         sbTemp.append(tabs + "public ");
@@ -973,7 +1014,7 @@ public class DtsApi {
             sbTemp.append("static ");
         }
 
-        sbTemp.append(getMethodName(method) + getMethodParamSignature(clazz, typeDefinition, method, parameterNullable));
+        sbTemp.append(getMethodName(method) + getMethodParamSignature(clazz, typeDefinition, method, namesFrom, parameterNullable));
         String bmSig = "";
         if (!isConstructor(method)) {
             bmSig += ": " + returnTypeOf(method, typeDefinition, returnNullable);
@@ -1083,7 +1124,7 @@ public class DtsApi {
         for (MethodDeclaration d : declarations.values()) {
             boolean returnNullable = d.returnNullable
                     && (d.asStatic || isConstructor(d.method) || supertypesAllowNullReturn(d.clazz, d.method.getName() + d.method.getSignature()));
-            String content = generateMethodContent(d.clazz, d.typeDefinition, d.tabs, d.method, d.asStatic,
+            String content = generateMethodContent(d.clazz, d.typeDefinition, d.tabs, d.method, d.namesFrom, d.asStatic,
                     returnNullable, d.parameterNullable);
             methods.merge(content, d.tags, ApiLevels.Tags::mergedWith);
         }
@@ -1196,12 +1237,12 @@ public class DtsApi {
     }
 
     private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m) {
-        return getMethodParamSignature(clazz, typeDefinition, m, parameterNullability(m));
+        return getMethodParamSignature(clazz, typeDefinition, m, m, parameterNullability(m));
     }
 
-    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m, boolean[] nullable) {
+    private String getMethodParamSignature(JavaClass clazz, TypeDefinition typeDefinition, Method m, Method namesFrom, boolean[] nullable) {
         Type[] types = parameterTypes(m);
-        String[] names = getParameterNames(m, types.length);
+        String[] names = getParameterNames(namesFrom, types.length);
 
         StringBuilder sb = new StringBuilder();
         sb.append("(");
