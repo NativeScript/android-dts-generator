@@ -145,7 +145,11 @@ test-kotlin-fixture:
 	java -jar dts-generator/build/libs/dts-generator.jar \
 	--input test/kotlin-fixture/build/libs/kotlin-fixture.jar --output out/kotlin-fixture
 	cmp out/kotlin-fixture/android.d.ts test/expected-output/kotlin-fixture/android.d.ts
+	cmp out/kotlin-fixture/android-declarations.d.ts test/expected-output/kotlin-fixture/android-declarations.d.ts
 
 test: test-compare-output test-kotlin-fixture
+
+test-typecheck:
+	cd test/typecheck && npm ci --no-audit --no-fund && node check.mjs
 
 androidx-all: androidx-17 androidx-23 androidx-26 androidx-28 androidx-29 androidx-30 androidx-31 androidx-32 androidx-33 androidx-34 androidx-35
