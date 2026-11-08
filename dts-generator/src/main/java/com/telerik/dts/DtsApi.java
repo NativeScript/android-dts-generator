@@ -4,6 +4,13 @@ import com.telerik.InputParameters;
 
 import org.apache.bcel.classfile.AnnotationEntry;
 import org.apache.bcel.classfile.Attribute;
+import org.apache.bcel.classfile.Constant;
+import org.apache.bcel.classfile.ConstantDouble;
+import org.apache.bcel.classfile.ConstantFloat;
+import org.apache.bcel.classfile.ConstantInteger;
+import org.apache.bcel.classfile.ConstantLong;
+import org.apache.bcel.classfile.ConstantString;
+import org.apache.bcel.classfile.ConstantValue;
 import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.FieldOrMethod;
 import org.apache.bcel.classfile.JavaClass;
@@ -1100,13 +1107,20 @@ public class DtsApi {
         }
 
         String tabs = getTabs(this.indent + 1);
+        Object constant = constantValue(f);
+        String literal = constant != null && f.isStatic() && f.isFinal() ? typeScriptLiteral(f.getType(), constant) : null;
+        List<String> commentLines = new ArrayList<>();
+        if (constant != null && literal == null) {
+            commentLines.add("Constant value: " + String.valueOf(constant).replace("*/", "*\\/"));
+        }
         // Only annotated with a versions file in hand: a field has never carried a bare
         // @deprecated, so deriving one from the bytecode alone would rewrite existing definitions.
         if (this.apiLevels != null) {
-            String fieldComment = apiLevelComment(tabs, memberTags(clazz, f.getName(), isDeprecated(f)).render());
-            if (!fieldComment.isEmpty()) {
-                sbContent.appendln(fieldComment);
-            }
+            commentLines.addAll(memberTags(clazz, f.getName(), isDeprecated(f)).render());
+        }
+        String fieldComment = apiLevelComment(tabs, commentLines);
+        if (!fieldComment.isEmpty()) {
+            sbContent.appendln(fieldComment);
         }
         sbContent.append(tabs + "public ");
         if (f.isStatic()) {
@@ -1117,13 +1131,80 @@ public class DtsApi {
             name = "\"" + name + "\"";
         }
 
-        sbContent.append(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition));
-        if (f.getConstantValue() != null) {
-            sbContent.appendln(" = " + f.getConstantValue() + ";");
+        // `readonly NAME = 1` rather than `NAME: 1`: the initializer gives a widening literal type,
+        // so `let v = View.VISIBLE` is still a number that View.GONE can be assigned to.
+        if (literal != null) {
+            sbContent.appendln("readonly " + name + " = " + literal + ";");
         } else {
-            sbContent.appendln(";");
-
+            sbContent.appendln(name + ": " + getTypeScriptTypeFromJavaType(this.getFieldType(f), typeDefinition) + ";");
         }
+    }
+
+    private static Object constantValue(Field f) {
+        ConstantValue attribute = f.getConstantValue();
+        if (attribute == null) {
+            return null;
+        }
+        Constant constant = f.getConstantPool().getConstant(attribute.getConstantValueIndex());
+        if (constant instanceof ConstantInteger) {
+            return ((ConstantInteger) constant).getBytes();
+        } else if (constant instanceof ConstantLong) {
+            return ((ConstantLong) constant).getBytes();
+        } else if (constant instanceof ConstantFloat) {
+            return ((ConstantFloat) constant).getBytes();
+        } else if (constant instanceof ConstantDouble) {
+            return ((ConstantDouble) constant).getBytes();
+        } else if (constant instanceof ConstantString) {
+            return ((ConstantString) constant).getBytes(f.getConstantPool());
+        }
+        return null;
+    }
+
+    private static final long MAX_SAFE_INTEGER = (1L << 53) - 1;
+
+    // The literal JavaScript sees when it reads the field, or null when it has none: NaN and the
+    // infinities have no literal type, and the runtime does not hand out longs beyond 2^53 as numbers.
+    private static String typeScriptLiteral(Type type, Object value) {
+        if (type.equals(Type.BOOLEAN)) {
+            return ((Integer) value) != 0 ? "true" : "false";
+        }
+        if (type.equals(Type.CHAR)) {
+            return javaScriptString(String.valueOf((char) ((Integer) value).intValue()));
+        }
+        if (value instanceof String) {
+            return javaScriptString((String) value);
+        }
+        if (value instanceof Long) {
+            long l = (Long) value;
+            return l >= -MAX_SAFE_INTEGER && l <= MAX_SAFE_INTEGER ? Long.toString(l) : null;
+        }
+        if (value instanceof Float || value instanceof Double) {
+            // A float reaches JavaScript widened to a double, so 0.1f reads as 0.10000000149011612.
+            double d = ((Number) value).doubleValue();
+            return Double.isFinite(d) ? Double.toString(d) : null;
+        }
+        return value.toString();
+    }
+
+    private static String javaScriptString(String value) {
+        StringBuilder sb = new StringBuilder("\"");
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            switch (c) {
+                case '"': sb.append("\\\""); break;
+                case '\\': sb.append("\\\\"); break;
+                case '\n': sb.append("\\n"); break;
+                case '\r': sb.append("\\r"); break;
+                case '\t': sb.append("\\t"); break;
+                default:
+                    if (c < 0x20 || c == 0x7f || c == '\u2028' || c == '\u2029' || Character.isSurrogate(c)) {
+                        sb.append(String.format("\\u%04x", (int) c));
+                    } else {
+                        sb.append(c);
+                    }
+            }
+        }
+        return sb.append('"').toString();
     }
 
     private void addClassField(JavaClass clazz) {

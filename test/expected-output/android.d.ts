@@ -72,12 +72,12 @@ declare module android {
 			export module media {
 				export class MediaBrowserCompat {
 					public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat>;
-					public static EXTRA_PAGE: string = "android.media.browse.extra.PAGE";
-					public static EXTRA_PAGE_SIZE: string = "android.media.browse.extra.PAGE_SIZE";
-					public static EXTRA_MEDIA_ID: string = "android.media.browse.extra.MEDIA_ID";
-					public static EXTRA_DOWNLOAD_PROGRESS: string = "android.media.browse.extra.DOWNLOAD_PROGRESS";
-					public static CUSTOM_ACTION_DOWNLOAD: string = "android.support.v4.media.action.DOWNLOAD";
-					public static CUSTOM_ACTION_REMOVE_DOWNLOADED_FILE: string = "android.support.v4.media.action.REMOVE_DOWNLOADED_FILE";
+					public static readonly EXTRA_PAGE = "android.media.browse.extra.PAGE";
+					public static readonly EXTRA_PAGE_SIZE = "android.media.browse.extra.PAGE_SIZE";
+					public static readonly EXTRA_MEDIA_ID = "android.media.browse.extra.MEDIA_ID";
+					public static readonly EXTRA_DOWNLOAD_PROGRESS = "android.media.browse.extra.DOWNLOAD_PROGRESS";
+					public static readonly CUSTOM_ACTION_DOWNLOAD = "android.support.v4.media.action.DOWNLOAD";
+					public static readonly CUSTOM_ACTION_REMOVE_DOWNLOADED_FILE = "android.support.v4.media.action.REMOVE_DOWNLOADED_FILE";
 					public constructor(context: android.content.Context, serviceComponent: android.content.ComponentName, callback: android.support.v4.media.MediaBrowserCompat.ConnectionCallback, rootHints: android.os.Bundle);
 					public connect(): void;
 					public disconnect(): void;
@@ -332,8 +332,8 @@ declare module android {
 					}
 					export class MediaItem {
 						public static class: java.lang.Class<android.support.v4.media.MediaBrowserCompat.MediaItem>;
-						public static FLAG_BROWSABLE: number = 1;
-						public static FLAG_PLAYABLE: number = 2;
+						public static readonly FLAG_BROWSABLE = 1;
+						public static readonly FLAG_PLAYABLE = 2;
 						public static CREATOR: android.os.Parcelable.Creator<android.support.v4.media.MediaBrowserCompat.MediaItem>;
 						public static fromMediaItem(itemObj: any): android.support.v4.media.MediaBrowserCompat.MediaItem;
 						public static fromMediaItemList(itemList: java.util.List<any>): java.util.List<android.support.v4.media.MediaBrowserCompat.MediaItem>;
@@ -571,20 +571,20 @@ declare module android {
 			export module media {
 				export class MediaDescriptionCompat {
 					public static class: java.lang.Class<android.support.v4.media.MediaDescriptionCompat>;
-					public static EXTRA_BT_FOLDER_TYPE: string = "android.media.extra.BT_FOLDER_TYPE";
-					public static BT_FOLDER_TYPE_MIXED: number = 0;
-					public static BT_FOLDER_TYPE_TITLES: number = 1;
-					public static BT_FOLDER_TYPE_ALBUMS: number = 2;
-					public static BT_FOLDER_TYPE_ARTISTS: number = 3;
-					public static BT_FOLDER_TYPE_GENRES: number = 4;
-					public static BT_FOLDER_TYPE_PLAYLISTS: number = 5;
-					public static BT_FOLDER_TYPE_YEARS: number = 6;
-					public static EXTRA_DOWNLOAD_STATUS: string = "android.media.extra.DOWNLOAD_STATUS";
-					public static STATUS_NOT_DOWNLOADED: number = 0;
-					public static STATUS_DOWNLOADING: number = 1;
-					public static STATUS_DOWNLOADED: number = 2;
-					public static DESCRIPTION_KEY_MEDIA_URI: string = "android.support.v4.media.description.MEDIA_URI";
-					public static DESCRIPTION_KEY_NULL_BUNDLE_FLAG: string = "android.support.v4.media.description.NULL_BUNDLE_FLAG";
+					public static readonly EXTRA_BT_FOLDER_TYPE = "android.media.extra.BT_FOLDER_TYPE";
+					public static readonly BT_FOLDER_TYPE_MIXED = 0;
+					public static readonly BT_FOLDER_TYPE_TITLES = 1;
+					public static readonly BT_FOLDER_TYPE_ALBUMS = 2;
+					public static readonly BT_FOLDER_TYPE_ARTISTS = 3;
+					public static readonly BT_FOLDER_TYPE_GENRES = 4;
+					public static readonly BT_FOLDER_TYPE_PLAYLISTS = 5;
+					public static readonly BT_FOLDER_TYPE_YEARS = 6;
+					public static readonly EXTRA_DOWNLOAD_STATUS = "android.media.extra.DOWNLOAD_STATUS";
+					public static readonly STATUS_NOT_DOWNLOADED = 0;
+					public static readonly STATUS_DOWNLOADING = 1;
+					public static readonly STATUS_DOWNLOADED = 2;
+					public static readonly DESCRIPTION_KEY_MEDIA_URI = "android.support.v4.media.description.MEDIA_URI";
+					public static readonly DESCRIPTION_KEY_NULL_BUNDLE_FLAG = "android.support.v4.media.description.NULL_BUNDLE_FLAG";
 					public static CREATOR: android.os.Parcelable.Creator<android.support.v4.media.MediaDescriptionCompat>;
 					public getMediaId(): string | null;
 					public getTitle(): string | null;
@@ -680,37 +680,37 @@ declare module android {
 			export module media {
 				export class MediaMetadataCompat {
 					public static class: java.lang.Class<android.support.v4.media.MediaMetadataCompat>;
-					public static METADATA_KEY_TITLE: string = "android.media.metadata.TITLE";
-					public static METADATA_KEY_ARTIST: string = "android.media.metadata.ARTIST";
-					public static METADATA_KEY_DURATION: string = "android.media.metadata.DURATION";
-					public static METADATA_KEY_ALBUM: string = "android.media.metadata.ALBUM";
-					public static METADATA_KEY_AUTHOR: string = "android.media.metadata.AUTHOR";
-					public static METADATA_KEY_WRITER: string = "android.media.metadata.WRITER";
-					public static METADATA_KEY_COMPOSER: string = "android.media.metadata.COMPOSER";
-					public static METADATA_KEY_COMPILATION: string = "android.media.metadata.COMPILATION";
-					public static METADATA_KEY_DATE: string = "android.media.metadata.DATE";
-					public static METADATA_KEY_YEAR: string = "android.media.metadata.YEAR";
-					public static METADATA_KEY_GENRE: string = "android.media.metadata.GENRE";
-					public static METADATA_KEY_TRACK_NUMBER: string = "android.media.metadata.TRACK_NUMBER";
-					public static METADATA_KEY_NUM_TRACKS: string = "android.media.metadata.NUM_TRACKS";
-					public static METADATA_KEY_DISC_NUMBER: string = "android.media.metadata.DISC_NUMBER";
-					public static METADATA_KEY_ALBUM_ARTIST: string = "android.media.metadata.ALBUM_ARTIST";
-					public static METADATA_KEY_ART: string = "android.media.metadata.ART";
-					public static METADATA_KEY_ART_URI: string = "android.media.metadata.ART_URI";
-					public static METADATA_KEY_ALBUM_ART: string = "android.media.metadata.ALBUM_ART";
-					public static METADATA_KEY_ALBUM_ART_URI: string = "android.media.metadata.ALBUM_ART_URI";
-					public static METADATA_KEY_USER_RATING: string = "android.media.metadata.USER_RATING";
-					public static METADATA_KEY_RATING: string = "android.media.metadata.RATING";
-					public static METADATA_KEY_DISPLAY_TITLE: string = "android.media.metadata.DISPLAY_TITLE";
-					public static METADATA_KEY_DISPLAY_SUBTITLE: string = "android.media.metadata.DISPLAY_SUBTITLE";
-					public static METADATA_KEY_DISPLAY_DESCRIPTION: string = "android.media.metadata.DISPLAY_DESCRIPTION";
-					public static METADATA_KEY_DISPLAY_ICON: string = "android.media.metadata.DISPLAY_ICON";
-					public static METADATA_KEY_DISPLAY_ICON_URI: string = "android.media.metadata.DISPLAY_ICON_URI";
-					public static METADATA_KEY_MEDIA_ID: string = "android.media.metadata.MEDIA_ID";
-					public static METADATA_KEY_MEDIA_URI: string = "android.media.metadata.MEDIA_URI";
-					public static METADATA_KEY_BT_FOLDER_TYPE: string = "android.media.metadata.BT_FOLDER_TYPE";
-					public static METADATA_KEY_ADVERTISEMENT: string = "android.media.metadata.ADVERTISEMENT";
-					public static METADATA_KEY_DOWNLOAD_STATUS: string = "android.media.metadata.DOWNLOAD_STATUS";
+					public static readonly METADATA_KEY_TITLE = "android.media.metadata.TITLE";
+					public static readonly METADATA_KEY_ARTIST = "android.media.metadata.ARTIST";
+					public static readonly METADATA_KEY_DURATION = "android.media.metadata.DURATION";
+					public static readonly METADATA_KEY_ALBUM = "android.media.metadata.ALBUM";
+					public static readonly METADATA_KEY_AUTHOR = "android.media.metadata.AUTHOR";
+					public static readonly METADATA_KEY_WRITER = "android.media.metadata.WRITER";
+					public static readonly METADATA_KEY_COMPOSER = "android.media.metadata.COMPOSER";
+					public static readonly METADATA_KEY_COMPILATION = "android.media.metadata.COMPILATION";
+					public static readonly METADATA_KEY_DATE = "android.media.metadata.DATE";
+					public static readonly METADATA_KEY_YEAR = "android.media.metadata.YEAR";
+					public static readonly METADATA_KEY_GENRE = "android.media.metadata.GENRE";
+					public static readonly METADATA_KEY_TRACK_NUMBER = "android.media.metadata.TRACK_NUMBER";
+					public static readonly METADATA_KEY_NUM_TRACKS = "android.media.metadata.NUM_TRACKS";
+					public static readonly METADATA_KEY_DISC_NUMBER = "android.media.metadata.DISC_NUMBER";
+					public static readonly METADATA_KEY_ALBUM_ARTIST = "android.media.metadata.ALBUM_ARTIST";
+					public static readonly METADATA_KEY_ART = "android.media.metadata.ART";
+					public static readonly METADATA_KEY_ART_URI = "android.media.metadata.ART_URI";
+					public static readonly METADATA_KEY_ALBUM_ART = "android.media.metadata.ALBUM_ART";
+					public static readonly METADATA_KEY_ALBUM_ART_URI = "android.media.metadata.ALBUM_ART_URI";
+					public static readonly METADATA_KEY_USER_RATING = "android.media.metadata.USER_RATING";
+					public static readonly METADATA_KEY_RATING = "android.media.metadata.RATING";
+					public static readonly METADATA_KEY_DISPLAY_TITLE = "android.media.metadata.DISPLAY_TITLE";
+					public static readonly METADATA_KEY_DISPLAY_SUBTITLE = "android.media.metadata.DISPLAY_SUBTITLE";
+					public static readonly METADATA_KEY_DISPLAY_DESCRIPTION = "android.media.metadata.DISPLAY_DESCRIPTION";
+					public static readonly METADATA_KEY_DISPLAY_ICON = "android.media.metadata.DISPLAY_ICON";
+					public static readonly METADATA_KEY_DISPLAY_ICON_URI = "android.media.metadata.DISPLAY_ICON_URI";
+					public static readonly METADATA_KEY_MEDIA_ID = "android.media.metadata.MEDIA_ID";
+					public static readonly METADATA_KEY_MEDIA_URI = "android.media.metadata.MEDIA_URI";
+					public static readonly METADATA_KEY_BT_FOLDER_TYPE = "android.media.metadata.BT_FOLDER_TYPE";
+					public static readonly METADATA_KEY_ADVERTISEMENT = "android.media.metadata.ADVERTISEMENT";
+					public static readonly METADATA_KEY_DOWNLOAD_STATUS = "android.media.metadata.DOWNLOAD_STATUS";
 					public static CREATOR: android.os.Parcelable.Creator<android.support.v4.media.MediaMetadataCompat>;
 					public containsKey(key: string): boolean;
 					public getText(key: string): string;
@@ -831,13 +831,13 @@ declare module android {
 			export module media {
 				export class RatingCompat {
 					public static class: java.lang.Class<android.support.v4.media.RatingCompat>;
-					public static RATING_NONE: number = 0;
-					public static RATING_HEART: number = 1;
-					public static RATING_THUMB_UP_DOWN: number = 2;
-					public static RATING_3_STARS: number = 3;
-					public static RATING_4_STARS: number = 4;
-					public static RATING_5_STARS: number = 5;
-					public static RATING_PERCENTAGE: number = 6;
+					public static readonly RATING_NONE = 0;
+					public static readonly RATING_HEART = 1;
+					public static readonly RATING_THUMB_UP_DOWN = 2;
+					public static readonly RATING_3_STARS = 3;
+					public static readonly RATING_4_STARS = 4;
+					public static readonly RATING_5_STARS = 5;
+					public static readonly RATING_PERCENTAGE = 6;
 					public static CREATOR: android.os.Parcelable.Creator<android.support.v4.media.RatingCompat>;
 					public toString(): string;
 					public describeContents(): number;
@@ -1244,13 +1244,13 @@ declare module android {
 				export module session {
 					export class MediaControllerCompat {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat>;
-						public static COMMAND_GET_EXTRA_BINDER: string = "android.support.v4.media.session.command.GET_EXTRA_BINDER";
-						public static COMMAND_ADD_QUEUE_ITEM: string = "android.support.v4.media.session.command.ADD_QUEUE_ITEM";
-						public static COMMAND_ADD_QUEUE_ITEM_AT: string = "android.support.v4.media.session.command.ADD_QUEUE_ITEM_AT";
-						public static COMMAND_REMOVE_QUEUE_ITEM: string = "android.support.v4.media.session.command.REMOVE_QUEUE_ITEM";
-						public static COMMAND_REMOVE_QUEUE_ITEM_AT: string = "android.support.v4.media.session.command.REMOVE_QUEUE_ITEM_AT";
-						public static COMMAND_ARGUMENT_MEDIA_DESCRIPTION: string = "android.support.v4.media.session.command.ARGUMENT_MEDIA_DESCRIPTION";
-						public static COMMAND_ARGUMENT_INDEX: string = "android.support.v4.media.session.command.ARGUMENT_INDEX";
+						public static readonly COMMAND_GET_EXTRA_BINDER = "android.support.v4.media.session.command.GET_EXTRA_BINDER";
+						public static readonly COMMAND_ADD_QUEUE_ITEM = "android.support.v4.media.session.command.ADD_QUEUE_ITEM";
+						public static readonly COMMAND_ADD_QUEUE_ITEM_AT = "android.support.v4.media.session.command.ADD_QUEUE_ITEM_AT";
+						public static readonly COMMAND_REMOVE_QUEUE_ITEM = "android.support.v4.media.session.command.REMOVE_QUEUE_ITEM";
+						public static readonly COMMAND_REMOVE_QUEUE_ITEM_AT = "android.support.v4.media.session.command.REMOVE_QUEUE_ITEM_AT";
+						public static readonly COMMAND_ARGUMENT_MEDIA_DESCRIPTION = "android.support.v4.media.session.command.ARGUMENT_MEDIA_DESCRIPTION";
+						public static readonly COMMAND_ARGUMENT_INDEX = "android.support.v4.media.session.command.ARGUMENT_INDEX";
 						public static setMediaController(activity: android.app.Activity, mediaController: android.support.v4.media.session.MediaControllerCompat): void;
 						public static getMediaController(activity: android.app.Activity): android.support.v4.media.session.MediaControllerCompat;
 						public constructor(context: android.content.Context, session: android.support.v4.media.session.MediaSessionCompat);
@@ -1584,8 +1584,8 @@ declare module android {
 						}
 						export class PlaybackInfo {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.PlaybackInfo>;
-							public static PLAYBACK_TYPE_LOCAL: number = 1;
-							public static PLAYBACK_TYPE_REMOTE: number = 2;
+							public static readonly PLAYBACK_TYPE_LOCAL = 1;
+							public static readonly PLAYBACK_TYPE_REMOTE = 2;
 							public getPlaybackType(): number;
 							public getAudioStream(): number;
 							public getVolumeControl(): number;
@@ -1594,7 +1594,7 @@ declare module android {
 						}
 						export abstract class TransportControls {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaControllerCompat.TransportControls>;
-							public static EXTRA_LEGACY_STREAM_TYPE: string = "android.media.session.extra.LEGACY_STREAM_TYPE";
+							public static readonly EXTRA_LEGACY_STREAM_TYPE = "android.media.session.extra.LEGACY_STREAM_TYPE";
 							public prepare(): void;
 							public prepareFromMediaId(param0: string, param1: android.os.Bundle): void;
 							public prepareFromSearch(param0: string, param1: android.os.Bundle): void;
@@ -1849,38 +1849,38 @@ declare module android {
 				export module session {
 					export class MediaSessionCompat {
 						public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat>;
-						public static FLAG_HANDLES_MEDIA_BUTTONS: number = 1;
-						public static FLAG_HANDLES_TRANSPORT_CONTROLS: number = 2;
-						public static FLAG_HANDLES_QUEUE_COMMANDS: number = 4;
-						public static ACTION_FLAG_AS_INAPPROPRIATE: string = "android.support.v4.media.session.action.FLAG_AS_INAPPROPRIATE";
-						public static ACTION_SKIP_AD: string = "android.support.v4.media.session.action.SKIP_AD";
-						public static ACTION_FOLLOW: string = "android.support.v4.media.session.action.FOLLOW";
-						public static ACTION_UNFOLLOW: string = "android.support.v4.media.session.action.UNFOLLOW";
-						public static ARGUMENT_MEDIA_ATTRIBUTE: string = "android.support.v4.media.session.ARGUMENT_MEDIA_ATTRIBUTE";
-						public static ARGUMENT_MEDIA_ATTRIBUTE_VALUE: string = "android.support.v4.media.session.ARGUMENT_MEDIA_ATTRIBUTE_VALUE";
-						public static MEDIA_ATTRIBUTE_ARTIST: number = 0;
-						public static MEDIA_ATTRIBUTE_ALBUM: number = 1;
-						public static MEDIA_ATTRIBUTE_PLAYLIST: number = 2;
-						public static ACTION_PLAY_FROM_URI: string = "android.support.v4.media.session.action.PLAY_FROM_URI";
-						public static ACTION_PREPARE: string = "android.support.v4.media.session.action.PREPARE";
-						public static ACTION_PREPARE_FROM_MEDIA_ID: string = "android.support.v4.media.session.action.PREPARE_FROM_MEDIA_ID";
-						public static ACTION_PREPARE_FROM_SEARCH: string = "android.support.v4.media.session.action.PREPARE_FROM_SEARCH";
-						public static ACTION_PREPARE_FROM_URI: string = "android.support.v4.media.session.action.PREPARE_FROM_URI";
-						public static ACTION_SET_CAPTIONING_ENABLED: string = "android.support.v4.media.session.action.SET_CAPTIONING_ENABLED";
-						public static ACTION_SET_REPEAT_MODE: string = "android.support.v4.media.session.action.SET_REPEAT_MODE";
-						public static ACTION_SET_SHUFFLE_MODE: string = "android.support.v4.media.session.action.SET_SHUFFLE_MODE";
-						public static ACTION_SET_RATING: string = "android.support.v4.media.session.action.SET_RATING";
-						public static ACTION_ARGUMENT_MEDIA_ID: string = "android.support.v4.media.session.action.ARGUMENT_MEDIA_ID";
-						public static ACTION_ARGUMENT_QUERY: string = "android.support.v4.media.session.action.ARGUMENT_QUERY";
-						public static ACTION_ARGUMENT_URI: string = "android.support.v4.media.session.action.ARGUMENT_URI";
-						public static ACTION_ARGUMENT_RATING: string = "android.support.v4.media.session.action.ARGUMENT_RATING";
-						public static ACTION_ARGUMENT_EXTRAS: string = "android.support.v4.media.session.action.ARGUMENT_EXTRAS";
-						public static ACTION_ARGUMENT_CAPTIONING_ENABLED: string = "android.support.v4.media.session.action.ARGUMENT_CAPTIONING_ENABLED";
-						public static ACTION_ARGUMENT_REPEAT_MODE: string = "android.support.v4.media.session.action.ARGUMENT_REPEAT_MODE";
-						public static ACTION_ARGUMENT_SHUFFLE_MODE: string = "android.support.v4.media.session.action.ARGUMENT_SHUFFLE_MODE";
-						public static KEY_TOKEN: string = "android.support.v4.media.session.TOKEN";
-						public static KEY_EXTRA_BINDER: string = "android.support.v4.media.session.EXTRA_BINDER";
-						public static KEY_SESSION_TOKEN2_BUNDLE: string = "android.support.v4.media.session.SESSION_TOKEN2_BUNDLE";
+						public static readonly FLAG_HANDLES_MEDIA_BUTTONS = 1;
+						public static readonly FLAG_HANDLES_TRANSPORT_CONTROLS = 2;
+						public static readonly FLAG_HANDLES_QUEUE_COMMANDS = 4;
+						public static readonly ACTION_FLAG_AS_INAPPROPRIATE = "android.support.v4.media.session.action.FLAG_AS_INAPPROPRIATE";
+						public static readonly ACTION_SKIP_AD = "android.support.v4.media.session.action.SKIP_AD";
+						public static readonly ACTION_FOLLOW = "android.support.v4.media.session.action.FOLLOW";
+						public static readonly ACTION_UNFOLLOW = "android.support.v4.media.session.action.UNFOLLOW";
+						public static readonly ARGUMENT_MEDIA_ATTRIBUTE = "android.support.v4.media.session.ARGUMENT_MEDIA_ATTRIBUTE";
+						public static readonly ARGUMENT_MEDIA_ATTRIBUTE_VALUE = "android.support.v4.media.session.ARGUMENT_MEDIA_ATTRIBUTE_VALUE";
+						public static readonly MEDIA_ATTRIBUTE_ARTIST = 0;
+						public static readonly MEDIA_ATTRIBUTE_ALBUM = 1;
+						public static readonly MEDIA_ATTRIBUTE_PLAYLIST = 2;
+						public static readonly ACTION_PLAY_FROM_URI = "android.support.v4.media.session.action.PLAY_FROM_URI";
+						public static readonly ACTION_PREPARE = "android.support.v4.media.session.action.PREPARE";
+						public static readonly ACTION_PREPARE_FROM_MEDIA_ID = "android.support.v4.media.session.action.PREPARE_FROM_MEDIA_ID";
+						public static readonly ACTION_PREPARE_FROM_SEARCH = "android.support.v4.media.session.action.PREPARE_FROM_SEARCH";
+						public static readonly ACTION_PREPARE_FROM_URI = "android.support.v4.media.session.action.PREPARE_FROM_URI";
+						public static readonly ACTION_SET_CAPTIONING_ENABLED = "android.support.v4.media.session.action.SET_CAPTIONING_ENABLED";
+						public static readonly ACTION_SET_REPEAT_MODE = "android.support.v4.media.session.action.SET_REPEAT_MODE";
+						public static readonly ACTION_SET_SHUFFLE_MODE = "android.support.v4.media.session.action.SET_SHUFFLE_MODE";
+						public static readonly ACTION_SET_RATING = "android.support.v4.media.session.action.SET_RATING";
+						public static readonly ACTION_ARGUMENT_MEDIA_ID = "android.support.v4.media.session.action.ARGUMENT_MEDIA_ID";
+						public static readonly ACTION_ARGUMENT_QUERY = "android.support.v4.media.session.action.ARGUMENT_QUERY";
+						public static readonly ACTION_ARGUMENT_URI = "android.support.v4.media.session.action.ARGUMENT_URI";
+						public static readonly ACTION_ARGUMENT_RATING = "android.support.v4.media.session.action.ARGUMENT_RATING";
+						public static readonly ACTION_ARGUMENT_EXTRAS = "android.support.v4.media.session.action.ARGUMENT_EXTRAS";
+						public static readonly ACTION_ARGUMENT_CAPTIONING_ENABLED = "android.support.v4.media.session.action.ARGUMENT_CAPTIONING_ENABLED";
+						public static readonly ACTION_ARGUMENT_REPEAT_MODE = "android.support.v4.media.session.action.ARGUMENT_REPEAT_MODE";
+						public static readonly ACTION_ARGUMENT_SHUFFLE_MODE = "android.support.v4.media.session.action.ARGUMENT_SHUFFLE_MODE";
+						public static readonly KEY_TOKEN = "android.support.v4.media.session.TOKEN";
+						public static readonly KEY_EXTRA_BINDER = "android.support.v4.media.session.EXTRA_BINDER";
+						public static readonly KEY_SESSION_TOKEN2_BUNDLE = "android.support.v4.media.session.SESSION_TOKEN2_BUNDLE";
 						public constructor(context: android.content.Context, tag: string);
 						public constructor(context: android.content.Context, tag: string, mbrComponent: android.content.ComponentName, mbrIntent: android.app.PendingIntent);
 						public constructor(context: android.content.Context, tag: string, token2Bundle: android.os.Bundle);
@@ -2462,7 +2462,7 @@ declare module android {
 						}
 						export class QueueItem {
 							public static class: java.lang.Class<android.support.v4.media.session.MediaSessionCompat.QueueItem>;
-							public static UNKNOWN_ID: number = -1;
+							public static readonly UNKNOWN_ID = -1;
 							public static CREATOR: android.os.Parcelable.Creator<android.support.v4.media.session.MediaSessionCompat.QueueItem>;
 							public constructor(description: android.support.v4.media.MediaDescriptionCompat, id: number);
 							public getDescription(): android.support.v4.media.MediaDescriptionCompat;
@@ -2806,62 +2806,62 @@ declare module android {
 				export module session {
 					export class PlaybackStateCompat {
 						public static class: java.lang.Class<android.support.v4.media.session.PlaybackStateCompat>;
-						public static ACTION_STOP: number = 1;
-						public static ACTION_PAUSE: number = 2;
-						public static ACTION_PLAY: number = 4;
-						public static ACTION_REWIND: number = 8;
-						public static ACTION_SKIP_TO_PREVIOUS: number = 16;
-						public static ACTION_SKIP_TO_NEXT: number = 32;
-						public static ACTION_FAST_FORWARD: number = 64;
-						public static ACTION_SET_RATING: number = 128;
-						public static ACTION_SEEK_TO: number = 256;
-						public static ACTION_PLAY_PAUSE: number = 512;
-						public static ACTION_PLAY_FROM_MEDIA_ID: number = 1024;
-						public static ACTION_PLAY_FROM_SEARCH: number = 2048;
-						public static ACTION_SKIP_TO_QUEUE_ITEM: number = 4096;
-						public static ACTION_PLAY_FROM_URI: number = 8192;
-						public static ACTION_PREPARE: number = 16384;
-						public static ACTION_PREPARE_FROM_MEDIA_ID: number = 32768;
-						public static ACTION_PREPARE_FROM_SEARCH: number = 65536;
-						public static ACTION_PREPARE_FROM_URI: number = 131072;
-						public static ACTION_SET_REPEAT_MODE: number = 262144;
-						public static ACTION_SET_SHUFFLE_MODE_ENABLED: number = 524288;
-						public static ACTION_SET_CAPTIONING_ENABLED: number = 1048576;
-						public static ACTION_SET_SHUFFLE_MODE: number = 2097152;
-						public static STATE_NONE: number = 0;
-						public static STATE_STOPPED: number = 1;
-						public static STATE_PAUSED: number = 2;
-						public static STATE_PLAYING: number = 3;
-						public static STATE_FAST_FORWARDING: number = 4;
-						public static STATE_REWINDING: number = 5;
-						public static STATE_BUFFERING: number = 6;
-						public static STATE_ERROR: number = 7;
-						public static STATE_CONNECTING: number = 8;
-						public static STATE_SKIPPING_TO_PREVIOUS: number = 9;
-						public static STATE_SKIPPING_TO_NEXT: number = 10;
-						public static STATE_SKIPPING_TO_QUEUE_ITEM: number = 11;
-						public static PLAYBACK_POSITION_UNKNOWN: number = -1;
-						public static REPEAT_MODE_INVALID: number = -1;
-						public static REPEAT_MODE_NONE: number = 0;
-						public static REPEAT_MODE_ONE: number = 1;
-						public static REPEAT_MODE_ALL: number = 2;
-						public static REPEAT_MODE_GROUP: number = 3;
-						public static SHUFFLE_MODE_INVALID: number = -1;
-						public static SHUFFLE_MODE_NONE: number = 0;
-						public static SHUFFLE_MODE_ALL: number = 1;
-						public static SHUFFLE_MODE_GROUP: number = 2;
-						public static ERROR_CODE_UNKNOWN_ERROR: number = 0;
-						public static ERROR_CODE_APP_ERROR: number = 1;
-						public static ERROR_CODE_NOT_SUPPORTED: number = 2;
-						public static ERROR_CODE_AUTHENTICATION_EXPIRED: number = 3;
-						public static ERROR_CODE_PREMIUM_ACCOUNT_REQUIRED: number = 4;
-						public static ERROR_CODE_CONCURRENT_STREAM_LIMIT: number = 5;
-						public static ERROR_CODE_PARENTAL_CONTROL_RESTRICTED: number = 6;
-						public static ERROR_CODE_NOT_AVAILABLE_IN_REGION: number = 7;
-						public static ERROR_CODE_CONTENT_ALREADY_PLAYING: number = 8;
-						public static ERROR_CODE_SKIP_LIMIT_REACHED: number = 9;
-						public static ERROR_CODE_ACTION_ABORTED: number = 10;
-						public static ERROR_CODE_END_OF_QUEUE: number = 11;
+						public static readonly ACTION_STOP = 1;
+						public static readonly ACTION_PAUSE = 2;
+						public static readonly ACTION_PLAY = 4;
+						public static readonly ACTION_REWIND = 8;
+						public static readonly ACTION_SKIP_TO_PREVIOUS = 16;
+						public static readonly ACTION_SKIP_TO_NEXT = 32;
+						public static readonly ACTION_FAST_FORWARD = 64;
+						public static readonly ACTION_SET_RATING = 128;
+						public static readonly ACTION_SEEK_TO = 256;
+						public static readonly ACTION_PLAY_PAUSE = 512;
+						public static readonly ACTION_PLAY_FROM_MEDIA_ID = 1024;
+						public static readonly ACTION_PLAY_FROM_SEARCH = 2048;
+						public static readonly ACTION_SKIP_TO_QUEUE_ITEM = 4096;
+						public static readonly ACTION_PLAY_FROM_URI = 8192;
+						public static readonly ACTION_PREPARE = 16384;
+						public static readonly ACTION_PREPARE_FROM_MEDIA_ID = 32768;
+						public static readonly ACTION_PREPARE_FROM_SEARCH = 65536;
+						public static readonly ACTION_PREPARE_FROM_URI = 131072;
+						public static readonly ACTION_SET_REPEAT_MODE = 262144;
+						public static readonly ACTION_SET_SHUFFLE_MODE_ENABLED = 524288;
+						public static readonly ACTION_SET_CAPTIONING_ENABLED = 1048576;
+						public static readonly ACTION_SET_SHUFFLE_MODE = 2097152;
+						public static readonly STATE_NONE = 0;
+						public static readonly STATE_STOPPED = 1;
+						public static readonly STATE_PAUSED = 2;
+						public static readonly STATE_PLAYING = 3;
+						public static readonly STATE_FAST_FORWARDING = 4;
+						public static readonly STATE_REWINDING = 5;
+						public static readonly STATE_BUFFERING = 6;
+						public static readonly STATE_ERROR = 7;
+						public static readonly STATE_CONNECTING = 8;
+						public static readonly STATE_SKIPPING_TO_PREVIOUS = 9;
+						public static readonly STATE_SKIPPING_TO_NEXT = 10;
+						public static readonly STATE_SKIPPING_TO_QUEUE_ITEM = 11;
+						public static readonly PLAYBACK_POSITION_UNKNOWN = -1;
+						public static readonly REPEAT_MODE_INVALID = -1;
+						public static readonly REPEAT_MODE_NONE = 0;
+						public static readonly REPEAT_MODE_ONE = 1;
+						public static readonly REPEAT_MODE_ALL = 2;
+						public static readonly REPEAT_MODE_GROUP = 3;
+						public static readonly SHUFFLE_MODE_INVALID = -1;
+						public static readonly SHUFFLE_MODE_NONE = 0;
+						public static readonly SHUFFLE_MODE_ALL = 1;
+						public static readonly SHUFFLE_MODE_GROUP = 2;
+						public static readonly ERROR_CODE_UNKNOWN_ERROR = 0;
+						public static readonly ERROR_CODE_APP_ERROR = 1;
+						public static readonly ERROR_CODE_NOT_SUPPORTED = 2;
+						public static readonly ERROR_CODE_AUTHENTICATION_EXPIRED = 3;
+						public static readonly ERROR_CODE_PREMIUM_ACCOUNT_REQUIRED = 4;
+						public static readonly ERROR_CODE_CONCURRENT_STREAM_LIMIT = 5;
+						public static readonly ERROR_CODE_PARENTAL_CONTROL_RESTRICTED = 6;
+						public static readonly ERROR_CODE_NOT_AVAILABLE_IN_REGION = 7;
+						public static readonly ERROR_CODE_CONTENT_ALREADY_PLAYING = 8;
+						public static readonly ERROR_CODE_SKIP_LIMIT_REACHED = 9;
+						public static readonly ERROR_CODE_ACTION_ABORTED = 10;
+						public static readonly ERROR_CODE_END_OF_QUEUE = 11;
 						public static CREATOR: android.os.Parcelable.Creator<android.support.v4.media.session.PlaybackStateCompat>;
 						public static toKeyCode(action: number): number;
 						public toString(): string;
@@ -3360,9 +3360,9 @@ declare module androidx {
 				unit(): number;
 			});
 			public constructor();
-			public static PX: number = 1;
-			public static DP: number = 0;
-			public static SP: number = 2;
+			public static readonly PX = 1;
+			public static readonly DP = 0;
+			public static readonly SP = 2;
 			public unit(): number;
 		}
 	}
@@ -3927,10 +3927,10 @@ declare module androidx {
 				otherwise(): number;
 			});
 			public constructor();
-			public static PROTECTED: number = 4;
-			public static NONE: number = 5;
-			public static PRIVATE: number = 2;
-			public static PACKAGE_PRIVATE: number = 3;
+			public static readonly PROTECTED = 4;
+			public static readonly NONE = 5;
+			public static readonly PRIVATE = 2;
+			public static readonly PACKAGE_PRIVATE = 3;
 			public otherwise(): number;
 		}
 	}
@@ -3969,14 +3969,14 @@ declare module androidx {
 		export module app {
 			export abstract class ActionBar {
 				public static class: java.lang.Class<androidx.appcompat.app.ActionBar>;
-				public static NAVIGATION_MODE_STANDARD: number = 0;
-				public static NAVIGATION_MODE_LIST: number = 1;
-				public static NAVIGATION_MODE_TABS: number = 2;
-				public static DISPLAY_USE_LOGO: number = 1;
-				public static DISPLAY_SHOW_HOME: number = 2;
-				public static DISPLAY_HOME_AS_UP: number = 4;
-				public static DISPLAY_SHOW_TITLE: number = 8;
-				public static DISPLAY_SHOW_CUSTOM: number = 16;
+				public static readonly NAVIGATION_MODE_STANDARD = 0;
+				public static readonly NAVIGATION_MODE_LIST = 1;
+				public static readonly NAVIGATION_MODE_TABS = 2;
+				public static readonly DISPLAY_USE_LOGO = 1;
+				public static readonly DISPLAY_SHOW_HOME = 2;
+				public static readonly DISPLAY_HOME_AS_UP = 4;
+				public static readonly DISPLAY_SHOW_TITLE = 8;
+				public static readonly DISPLAY_SHOW_CUSTOM = 16;
 				public constructor();
 				public setCustomView(param0: globalAndroid.view.View): void;
 				public setCustomView(param0: globalAndroid.view.View, param1: androidx.appcompat.app.ActionBar.LayoutParams): void;
@@ -4124,7 +4124,7 @@ declare module androidx {
 				}
 				export abstract class Tab {
 					public static class: java.lang.Class<androidx.appcompat.app.ActionBar.Tab>;
-					public static INVALID_POSITION: number = -1;
+					public static readonly INVALID_POSITION = -1;
 					public constructor();
 					public getPosition(): number;
 					public getIcon(): globalAndroid.graphics.drawable.Drawable;
@@ -4560,13 +4560,13 @@ declare module androidx {
 		export module app {
 			export abstract class AppCompatDelegate {
 				public static class: java.lang.Class<androidx.appcompat.app.AppCompatDelegate>;
-				public static MODE_NIGHT_NO: number = 1;
-				public static MODE_NIGHT_YES: number = 2;
-				public static MODE_NIGHT_AUTO: number = 0;
-				public static MODE_NIGHT_FOLLOW_SYSTEM: number = -1;
-				public static FEATURE_SUPPORT_ACTION_BAR: number = 108;
-				public static FEATURE_SUPPORT_ACTION_BAR_OVERLAY: number = 109;
-				public static FEATURE_ACTION_MODE_OVERLAY: number = 10;
+				public static readonly MODE_NIGHT_NO = 1;
+				public static readonly MODE_NIGHT_YES = 2;
+				public static readonly MODE_NIGHT_AUTO = 0;
+				public static readonly MODE_NIGHT_FOLLOW_SYSTEM = -1;
+				public static readonly FEATURE_SUPPORT_ACTION_BAR = 108;
+				public static readonly FEATURE_SUPPORT_ACTION_BAR_OVERLAY = 109;
+				public static readonly FEATURE_ACTION_MODE_OVERLAY = 10;
 				public static create(activity: globalAndroid.app.Activity, callback: androidx.appcompat.app.AppCompatCallback): androidx.appcompat.app.AppCompatDelegate;
 				public static create(dialog: globalAndroid.app.Dialog, callback: androidx.appcompat.app.AppCompatCallback): androidx.appcompat.app.AppCompatDelegate;
 				public static create(context: globalAndroid.content.Context, window: globalAndroid.view.Window, callback: androidx.appcompat.app.AppCompatCallback): androidx.appcompat.app.AppCompatDelegate;
@@ -4969,8 +4969,8 @@ declare module androidx {
 		export module app {
 			export class TwilightCalculator {
 				public static class: java.lang.Class<androidx.appcompat.app.TwilightCalculator>;
-				public static DAY: number = 0;
-				public static NIGHT: number = 1;
+				public static readonly DAY = 0;
+				public static readonly NIGHT = 1;
 				public sunset: number;
 				public sunrise: number;
 				public state: number;
@@ -5383,10 +5383,10 @@ declare module androidx {
 			export module drawable {
 				export class DrawerArrowDrawable {
 					public static class: java.lang.Class<androidx.appcompat.graphics.drawable.DrawerArrowDrawable>;
-					public static ARROW_DIRECTION_LEFT: number = 0;
-					public static ARROW_DIRECTION_RIGHT: number = 1;
-					public static ARROW_DIRECTION_START: number = 2;
-					public static ARROW_DIRECTION_END: number = 3;
+					public static readonly ARROW_DIRECTION_LEFT = 0;
+					public static readonly ARROW_DIRECTION_RIGHT = 1;
+					public static readonly ARROW_DIRECTION_START = 2;
+					public static readonly ARROW_DIRECTION_END = 3;
 					public constructor(context: globalAndroid.content.Context);
 					public setArrowHeadLength(length: number): void;
 					public getArrowHeadLength(): number;
@@ -6080,7 +6080,7 @@ declare module androidx {
 			export module menu {
 				export class ListMenuPresenter extends androidx.appcompat.view.menu.MenuPresenter {
 					public static class: java.lang.Class<androidx.appcompat.view.menu.ListMenuPresenter>;
-					public static VIEWS_TAG: string = "android:menu:list";
+					public static readonly VIEWS_TAG = "android:menu:list";
 					public constructor(context: globalAndroid.content.Context, itemLayoutRes: number);
 					public constructor(itemLayoutRes: number, themeRes: number);
 					public initForMenu(context: globalAndroid.content.Context, menu: androidx.appcompat.view.menu.MenuBuilder): void;
@@ -7335,8 +7335,8 @@ declare module androidx {
 		export module widget {
 			export class ActivityChooserModel {
 				public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserModel>;
-				public static DEFAULT_HISTORY_FILE_NAME: string = "activity_choser_model_history.xml";
-				public static DEFAULT_HISTORY_MAX_LENGTH: number = 50;
+				public static readonly DEFAULT_HISTORY_FILE_NAME = "activity_choser_model_history.xml";
+				public static readonly DEFAULT_HISTORY_MAX_LENGTH = 50;
 				public static get(context: globalAndroid.content.Context, historyFileName: string): androidx.appcompat.widget.ActivityChooserModel;
 				public setIntent(intent: globalAndroid.content.Intent): void;
 				public getIntent(): globalAndroid.content.Intent;
@@ -7449,8 +7449,8 @@ declare module androidx {
 			export module ActivityChooserView {
 				export class ActivityChooserViewAdapter {
 					public static class: java.lang.Class<androidx.appcompat.widget.ActivityChooserView.ActivityChooserViewAdapter>;
-					public static MAX_ACTIVITY_COUNT_UNLIMITED: number = 2147483647;
-					public static MAX_ACTIVITY_COUNT_DEFAULT: number = 4;
+					public static readonly MAX_ACTIVITY_COUNT_UNLIMITED = 2147483647;
+					public static readonly MAX_ACTIVITY_COUNT_DEFAULT = 4;
 					public setDataModel(dataModel: androidx.appcompat.widget.ActivityChooserModel): void;
 					public getItemViewType(position: number): number;
 					public getViewTypeCount(): number;
@@ -8376,8 +8376,8 @@ declare module androidx {
 		export module widget {
 			export class DropDownListView {
 				public static class: java.lang.Class<androidx.appcompat.widget.DropDownListView>;
-				public static INVALID_POSITION: number = -1;
-				public static NO_POSITION: number = -1;
+				public static readonly INVALID_POSITION = -1;
+				public static readonly NO_POSITION = -1;
 				public isInTouchMode(): boolean;
 				public hasWindowFocus(): boolean;
 				public isFocused(): boolean;
@@ -8505,12 +8505,12 @@ declare module androidx {
 		export module widget {
 			export class LinearLayoutCompat {
 				public static class: java.lang.Class<androidx.appcompat.widget.LinearLayoutCompat>;
-				public static HORIZONTAL: number = 0;
-				public static VERTICAL: number = 1;
-				public static SHOW_DIVIDER_NONE: number = 0;
-				public static SHOW_DIVIDER_BEGINNING: number = 1;
-				public static SHOW_DIVIDER_MIDDLE: number = 2;
-				public static SHOW_DIVIDER_END: number = 4;
+				public static readonly HORIZONTAL = 0;
+				public static readonly VERTICAL = 1;
+				public static readonly SHOW_DIVIDER_NONE = 0;
+				public static readonly SHOW_DIVIDER_BEGINNING = 1;
+				public static readonly SHOW_DIVIDER_MIDDLE = 2;
+				public static readonly SHOW_DIVIDER_END = 4;
 				public constructor(context: globalAndroid.content.Context);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
@@ -8588,13 +8588,13 @@ declare module androidx {
 		export module widget {
 			export class ListPopupWindow extends androidx.appcompat.view.menu.ShowableListMenu {
 				public static class: java.lang.Class<androidx.appcompat.widget.ListPopupWindow>;
-				public static POSITION_PROMPT_ABOVE: number = 0;
-				public static POSITION_PROMPT_BELOW: number = 1;
-				public static MATCH_PARENT: number = -1;
-				public static WRAP_CONTENT: number = -2;
-				public static INPUT_METHOD_FROM_FOCUSABLE: number = 0;
-				public static INPUT_METHOD_NEEDED: number = 1;
-				public static INPUT_METHOD_NOT_NEEDED: number = 2;
+				public static readonly POSITION_PROMPT_ABOVE = 0;
+				public static readonly POSITION_PROMPT_BELOW = 1;
+				public static readonly MATCH_PARENT = -1;
+				public static readonly WRAP_CONTENT = -2;
+				public static readonly INPUT_METHOD_FROM_FOCUSABLE = 0;
+				public static readonly INPUT_METHOD_NEEDED = 1;
+				public static readonly INPUT_METHOD_NOT_NEEDED = 2;
 				public constructor(context: globalAndroid.content.Context);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
@@ -8845,7 +8845,7 @@ declare module androidx {
 		export module widget {
 			export class RtlSpacingHelper {
 				public static class: java.lang.Class<androidx.appcompat.widget.RtlSpacingHelper>;
-				public static UNDEFINED: number = -2147483648;
+				public static readonly UNDEFINED = -2147483648;
 				public getLeft(): number;
 				public getRight(): number;
 				public getStart(): number;
@@ -9051,7 +9051,7 @@ declare module androidx {
 		export module widget {
 			export class ShareActionProvider extends androidx.core.view.ActionProvider {
 				public static class: java.lang.Class<androidx.appcompat.widget.ShareActionProvider>;
-				public static DEFAULT_SHARE_HISTORY_FILE_NAME: string = "share_history.xml";
+				public static readonly DEFAULT_SHARE_HISTORY_FILE_NAME = "share_history.xml";
 				public constructor(context: globalAndroid.content.Context);
 				public setOnShareTargetSelectedListener(listener: androidx.appcompat.widget.ShareActionProvider.OnShareTargetSelectedListener): void;
 				public onCreateActionView(forItem: globalAndroid.view.MenuItem): globalAndroid.view.View;
@@ -9623,7 +9623,7 @@ declare module androidx {
 		export module widget {
 			export class VectorEnabledTintResources {
 				public static class: java.lang.Class<androidx.appcompat.widget.VectorEnabledTintResources>;
-				public static MAX_SDK_WHERE_REQUIRED: number = 20;
+				public static readonly MAX_SDK_WHERE_REQUIRED = 20;
 				public static shouldBeUsed(): boolean;
 				public constructor(context: globalAndroid.content.Context, res: globalAndroid.content.res.Resources);
 				public getDrawable(id: number): globalAndroid.graphics.drawable.Drawable;
@@ -10731,17 +10731,17 @@ declare module androidx {
 		export module accessibilityservice {
 			export class AccessibilityServiceInfoCompat {
 				public static class: java.lang.Class<androidx.core.accessibilityservice.AccessibilityServiceInfoCompat>;
-				public static CAPABILITY_CAN_RETRIEVE_WINDOW_CONTENT: number = 1;
-				public static CAPABILITY_CAN_REQUEST_TOUCH_EXPLORATION: number = 2;
-				public static CAPABILITY_CAN_REQUEST_ENHANCED_WEB_ACCESSIBILITY: number = 4;
-				public static CAPABILITY_CAN_FILTER_KEY_EVENTS: number = 8;
-				public static FEEDBACK_BRAILLE: number = 32;
-				public static FEEDBACK_ALL_MASK: number = -1;
-				public static FLAG_INCLUDE_NOT_IMPORTANT_VIEWS: number = 2;
-				public static FLAG_REQUEST_TOUCH_EXPLORATION_MODE: number = 4;
-				public static FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY: number = 8;
-				public static FLAG_REPORT_VIEW_IDS: number = 16;
-				public static FLAG_REQUEST_FILTER_KEY_EVENTS: number = 32;
+				public static readonly CAPABILITY_CAN_RETRIEVE_WINDOW_CONTENT = 1;
+				public static readonly CAPABILITY_CAN_REQUEST_TOUCH_EXPLORATION = 2;
+				public static readonly CAPABILITY_CAN_REQUEST_ENHANCED_WEB_ACCESSIBILITY = 4;
+				public static readonly CAPABILITY_CAN_FILTER_KEY_EVENTS = 8;
+				public static readonly FEEDBACK_BRAILLE = 32;
+				public static readonly FEEDBACK_ALL_MASK = -1;
+				public static readonly FLAG_INCLUDE_NOT_IMPORTANT_VIEWS = 2;
+				public static readonly FLAG_REQUEST_TOUCH_EXPLORATION_MODE = 4;
+				public static readonly FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY = 8;
+				public static readonly FLAG_REPORT_VIEW_IDS = 16;
+				public static readonly FLAG_REQUEST_FILTER_KEY_EVENTS = 32;
 				public static loadDescription(info: globalAndroid.accessibilityservice.AccessibilityServiceInfo, packageManager: globalAndroid.content.pm.PackageManager): string | null;
 				public static feedbackTypeToString(feedbackType: number): string;
 				public static flagToString(flag: number): string | null;
@@ -10843,8 +10843,8 @@ declare module androidx {
 		export module app {
 			export class ActivityOptionsCompat {
 				public static class: java.lang.Class<androidx.core.app.ActivityOptionsCompat>;
-				public static EXTRA_USAGE_TIME_REPORT: string = "android.activity.usage_time";
-				public static EXTRA_USAGE_TIME_REPORT_PACKAGES: string = "android.usage_time_packages";
+				public static readonly EXTRA_USAGE_TIME_REPORT = "android.activity.usage_time";
+				public static readonly EXTRA_USAGE_TIME_REPORT_PACKAGES = "android.usage_time_packages";
 				public static makeCustomAnimation(context: globalAndroid.content.Context, enterResId: number, exitResId: number): androidx.core.app.ActivityOptionsCompat;
 				public static makeScaleUpAnimation(source: globalAndroid.view.View, startX: number, startY: number, startWidth: number, startHeight: number): androidx.core.app.ActivityOptionsCompat;
 				public static makeClipRevealAnimation(source: globalAndroid.view.View, startX: number, startY: number, width: number, height: number): androidx.core.app.ActivityOptionsCompat;
@@ -10928,10 +10928,10 @@ declare module androidx {
 		export module app {
 			export class AppOpsManagerCompat {
 				public static class: java.lang.Class<androidx.core.app.AppOpsManagerCompat>;
-				public static MODE_ALLOWED: number = 0;
-				public static MODE_IGNORED: number = 1;
-				public static MODE_ERRORED: number = 2;
-				public static MODE_DEFAULT: number = 3;
+				public static readonly MODE_ALLOWED = 0;
+				public static readonly MODE_IGNORED = 1;
+				public static readonly MODE_ERRORED = 2;
+				public static readonly MODE_DEFAULT = 3;
 				public static permissionToOp(permission: string): string | null;
 				public static noteOp(context: globalAndroid.content.Context, op: string, uid: number, packageName: string): number;
 				public static noteOpNoThrow(context: globalAndroid.content.Context, op: string, uid: number, packageName: string): number;
@@ -11029,25 +11029,25 @@ declare module androidx {
 		export module app {
 			export class FrameMetricsAggregator {
 				public static class: java.lang.Class<androidx.core.app.FrameMetricsAggregator>;
-				public static TOTAL_INDEX: number = 0;
-				public static INPUT_INDEX: number = 1;
-				public static LAYOUT_MEASURE_INDEX: number = 2;
-				public static DRAW_INDEX: number = 3;
-				public static SYNC_INDEX: number = 4;
-				public static COMMAND_INDEX: number = 5;
-				public static SWAP_INDEX: number = 6;
-				public static DELAY_INDEX: number = 7;
-				public static ANIMATION_INDEX: number = 8;
-				public static TOTAL_DURATION: number = 1;
-				public static INPUT_DURATION: number = 2;
-				public static LAYOUT_MEASURE_DURATION: number = 4;
-				public static DRAW_DURATION: number = 8;
-				public static SYNC_DURATION: number = 16;
-				public static COMMAND_DURATION: number = 32;
-				public static SWAP_DURATION: number = 64;
-				public static DELAY_DURATION: number = 128;
-				public static ANIMATION_DURATION: number = 256;
-				public static EVERY_DURATION: number = 511;
+				public static readonly TOTAL_INDEX = 0;
+				public static readonly INPUT_INDEX = 1;
+				public static readonly LAYOUT_MEASURE_INDEX = 2;
+				public static readonly DRAW_INDEX = 3;
+				public static readonly SYNC_INDEX = 4;
+				public static readonly COMMAND_INDEX = 5;
+				public static readonly SWAP_INDEX = 6;
+				public static readonly DELAY_INDEX = 7;
+				public static readonly ANIMATION_INDEX = 8;
+				public static readonly TOTAL_DURATION = 1;
+				public static readonly INPUT_DURATION = 2;
+				public static readonly LAYOUT_MEASURE_DURATION = 4;
+				public static readonly DRAW_DURATION = 8;
+				public static readonly SYNC_DURATION = 16;
+				public static readonly COMMAND_DURATION = 32;
+				public static readonly SWAP_DURATION = 64;
+				public static readonly DELAY_DURATION = 128;
+				public static readonly ANIMATION_DURATION = 256;
+				public static readonly EVERY_DURATION = 511;
 				public constructor();
 				public constructor(metricTypeFlags: number);
 				public add(activity: globalAndroid.app.Activity): void;
@@ -11181,7 +11181,7 @@ declare module androidx {
 		export module app {
 			export class NavUtils {
 				public static class: java.lang.Class<androidx.core.app.NavUtils>;
-				public static PARENT_ACTIVITY: string = "android.support.PARENT_ACTIVITY";
+				public static readonly PARENT_ACTIVITY = "android.support.PARENT_ACTIVITY";
 				public static shouldUpRecreateTask(sourceActivity: globalAndroid.app.Activity, targetIntent: globalAndroid.content.Intent): boolean;
 				public static navigateUpFromSameTask(sourceActivity: globalAndroid.app.Activity): void;
 				public static navigateUpTo(sourceActivity: globalAndroid.app.Activity, upIntent: globalAndroid.content.Intent): void;
@@ -11218,81 +11218,81 @@ declare module androidx {
 		export module app {
 			export class NotificationCompat {
 				public static class: java.lang.Class<androidx.core.app.NotificationCompat>;
-				public static DEFAULT_ALL: number = -1;
-				public static DEFAULT_SOUND: number = 1;
-				public static DEFAULT_VIBRATE: number = 2;
-				public static DEFAULT_LIGHTS: number = 4;
-				public static STREAM_DEFAULT: number = -1;
-				public static FLAG_SHOW_LIGHTS: number = 1;
-				public static FLAG_ONGOING_EVENT: number = 2;
-				public static FLAG_INSISTENT: number = 4;
-				public static FLAG_ONLY_ALERT_ONCE: number = 8;
-				public static FLAG_AUTO_CANCEL: number = 16;
-				public static FLAG_NO_CLEAR: number = 32;
-				public static FLAG_FOREGROUND_SERVICE: number = 64;
-				public static FLAG_HIGH_PRIORITY: number = 128;
-				public static FLAG_LOCAL_ONLY: number = 256;
-				public static FLAG_GROUP_SUMMARY: number = 512;
-				public static PRIORITY_DEFAULT: number = 0;
-				public static PRIORITY_LOW: number = -1;
-				public static PRIORITY_MIN: number = -2;
-				public static PRIORITY_HIGH: number = 1;
-				public static PRIORITY_MAX: number = 2;
-				public static EXTRA_TITLE: string = "android.title";
-				public static EXTRA_TITLE_BIG: string = "android.title.big";
-				public static EXTRA_TEXT: string = "android.text";
-				public static EXTRA_SUB_TEXT: string = "android.subText";
-				public static EXTRA_REMOTE_INPUT_HISTORY: string = "android.remoteInputHistory";
-				public static EXTRA_INFO_TEXT: string = "android.infoText";
-				public static EXTRA_SUMMARY_TEXT: string = "android.summaryText";
-				public static EXTRA_BIG_TEXT: string = "android.bigText";
-				public static EXTRA_SMALL_ICON: string = "android.icon";
-				public static EXTRA_LARGE_ICON: string = "android.largeIcon";
-				public static EXTRA_LARGE_ICON_BIG: string = "android.largeIcon.big";
-				public static EXTRA_PROGRESS: string = "android.progress";
-				public static EXTRA_PROGRESS_MAX: string = "android.progressMax";
-				public static EXTRA_PROGRESS_INDETERMINATE: string = "android.progressIndeterminate";
-				public static EXTRA_SHOW_CHRONOMETER: string = "android.showChronometer";
-				public static EXTRA_SHOW_WHEN: string = "android.showWhen";
-				public static EXTRA_PICTURE: string = "android.picture";
-				public static EXTRA_TEXT_LINES: string = "android.textLines";
-				public static EXTRA_TEMPLATE: string = "android.template";
-				public static EXTRA_PEOPLE: string = "android.people";
-				public static EXTRA_BACKGROUND_IMAGE_URI: string = "android.backgroundImageUri";
-				public static EXTRA_MEDIA_SESSION: string = "android.mediaSession";
-				public static EXTRA_COMPACT_ACTIONS: string = "android.compactActions";
-				public static EXTRA_SELF_DISPLAY_NAME: string = "android.selfDisplayName";
-				public static EXTRA_MESSAGING_STYLE_USER: string = "android.messagingStyleUser";
-				public static EXTRA_CONVERSATION_TITLE: string = "android.conversationTitle";
-				public static EXTRA_MESSAGES: string = "android.messages";
-				public static EXTRA_IS_GROUP_CONVERSATION: string = "android.isGroupConversation";
-				public static EXTRA_HIDDEN_CONVERSATION_TITLE: string = "android.hiddenConversationTitle";
-				public static EXTRA_AUDIO_CONTENTS_URI: string = "android.audioContents";
-				public static COLOR_DEFAULT: number = 0;
-				public static VISIBILITY_PUBLIC: number = 1;
-				public static VISIBILITY_PRIVATE: number = 0;
-				public static VISIBILITY_SECRET: number = -1;
-				public static CATEGORY_CALL: string = "call";
-				public static CATEGORY_MESSAGE: string = "msg";
-				public static CATEGORY_EMAIL: string = "email";
-				public static CATEGORY_EVENT: string = "event";
-				public static CATEGORY_PROMO: string = "promo";
-				public static CATEGORY_ALARM: string = "alarm";
-				public static CATEGORY_PROGRESS: string = "progress";
-				public static CATEGORY_SOCIAL: string = "social";
-				public static CATEGORY_ERROR: string = "err";
-				public static CATEGORY_TRANSPORT: string = "transport";
-				public static CATEGORY_SYSTEM: string = "sys";
-				public static CATEGORY_SERVICE: string = "service";
-				public static CATEGORY_REMINDER: string = "reminder";
-				public static CATEGORY_RECOMMENDATION: string = "recommendation";
-				public static CATEGORY_STATUS: string = "status";
-				public static BADGE_ICON_NONE: number = 0;
-				public static BADGE_ICON_SMALL: number = 1;
-				public static BADGE_ICON_LARGE: number = 2;
-				public static GROUP_ALERT_ALL: number = 0;
-				public static GROUP_ALERT_SUMMARY: number = 1;
-				public static GROUP_ALERT_CHILDREN: number = 2;
+				public static readonly DEFAULT_ALL = -1;
+				public static readonly DEFAULT_SOUND = 1;
+				public static readonly DEFAULT_VIBRATE = 2;
+				public static readonly DEFAULT_LIGHTS = 4;
+				public static readonly STREAM_DEFAULT = -1;
+				public static readonly FLAG_SHOW_LIGHTS = 1;
+				public static readonly FLAG_ONGOING_EVENT = 2;
+				public static readonly FLAG_INSISTENT = 4;
+				public static readonly FLAG_ONLY_ALERT_ONCE = 8;
+				public static readonly FLAG_AUTO_CANCEL = 16;
+				public static readonly FLAG_NO_CLEAR = 32;
+				public static readonly FLAG_FOREGROUND_SERVICE = 64;
+				public static readonly FLAG_HIGH_PRIORITY = 128;
+				public static readonly FLAG_LOCAL_ONLY = 256;
+				public static readonly FLAG_GROUP_SUMMARY = 512;
+				public static readonly PRIORITY_DEFAULT = 0;
+				public static readonly PRIORITY_LOW = -1;
+				public static readonly PRIORITY_MIN = -2;
+				public static readonly PRIORITY_HIGH = 1;
+				public static readonly PRIORITY_MAX = 2;
+				public static readonly EXTRA_TITLE = "android.title";
+				public static readonly EXTRA_TITLE_BIG = "android.title.big";
+				public static readonly EXTRA_TEXT = "android.text";
+				public static readonly EXTRA_SUB_TEXT = "android.subText";
+				public static readonly EXTRA_REMOTE_INPUT_HISTORY = "android.remoteInputHistory";
+				public static readonly EXTRA_INFO_TEXT = "android.infoText";
+				public static readonly EXTRA_SUMMARY_TEXT = "android.summaryText";
+				public static readonly EXTRA_BIG_TEXT = "android.bigText";
+				public static readonly EXTRA_SMALL_ICON = "android.icon";
+				public static readonly EXTRA_LARGE_ICON = "android.largeIcon";
+				public static readonly EXTRA_LARGE_ICON_BIG = "android.largeIcon.big";
+				public static readonly EXTRA_PROGRESS = "android.progress";
+				public static readonly EXTRA_PROGRESS_MAX = "android.progressMax";
+				public static readonly EXTRA_PROGRESS_INDETERMINATE = "android.progressIndeterminate";
+				public static readonly EXTRA_SHOW_CHRONOMETER = "android.showChronometer";
+				public static readonly EXTRA_SHOW_WHEN = "android.showWhen";
+				public static readonly EXTRA_PICTURE = "android.picture";
+				public static readonly EXTRA_TEXT_LINES = "android.textLines";
+				public static readonly EXTRA_TEMPLATE = "android.template";
+				public static readonly EXTRA_PEOPLE = "android.people";
+				public static readonly EXTRA_BACKGROUND_IMAGE_URI = "android.backgroundImageUri";
+				public static readonly EXTRA_MEDIA_SESSION = "android.mediaSession";
+				public static readonly EXTRA_COMPACT_ACTIONS = "android.compactActions";
+				public static readonly EXTRA_SELF_DISPLAY_NAME = "android.selfDisplayName";
+				public static readonly EXTRA_MESSAGING_STYLE_USER = "android.messagingStyleUser";
+				public static readonly EXTRA_CONVERSATION_TITLE = "android.conversationTitle";
+				public static readonly EXTRA_MESSAGES = "android.messages";
+				public static readonly EXTRA_IS_GROUP_CONVERSATION = "android.isGroupConversation";
+				public static readonly EXTRA_HIDDEN_CONVERSATION_TITLE = "android.hiddenConversationTitle";
+				public static readonly EXTRA_AUDIO_CONTENTS_URI = "android.audioContents";
+				public static readonly COLOR_DEFAULT = 0;
+				public static readonly VISIBILITY_PUBLIC = 1;
+				public static readonly VISIBILITY_PRIVATE = 0;
+				public static readonly VISIBILITY_SECRET = -1;
+				public static readonly CATEGORY_CALL = "call";
+				public static readonly CATEGORY_MESSAGE = "msg";
+				public static readonly CATEGORY_EMAIL = "email";
+				public static readonly CATEGORY_EVENT = "event";
+				public static readonly CATEGORY_PROMO = "promo";
+				public static readonly CATEGORY_ALARM = "alarm";
+				public static readonly CATEGORY_PROGRESS = "progress";
+				public static readonly CATEGORY_SOCIAL = "social";
+				public static readonly CATEGORY_ERROR = "err";
+				public static readonly CATEGORY_TRANSPORT = "transport";
+				public static readonly CATEGORY_SYSTEM = "sys";
+				public static readonly CATEGORY_SERVICE = "service";
+				public static readonly CATEGORY_REMINDER = "reminder";
+				public static readonly CATEGORY_RECOMMENDATION = "recommendation";
+				public static readonly CATEGORY_STATUS = "status";
+				public static readonly BADGE_ICON_NONE = 0;
+				public static readonly BADGE_ICON_SMALL = 1;
+				public static readonly BADGE_ICON_LARGE = 2;
+				public static readonly GROUP_ALERT_ALL = 0;
+				public static readonly GROUP_ALERT_SUMMARY = 1;
+				public static readonly GROUP_ALERT_CHILDREN = 2;
 				public static getExtras(notification: globalAndroid.app.Notification): globalAndroid.os.Bundle | null;
 				public static getActionCount(notification: globalAndroid.app.Notification): number;
 				public static getAction(notification: globalAndroid.app.Notification, actionIndex: number): androidx.core.app.NotificationCompat.Action;
@@ -11314,17 +11314,17 @@ declare module androidx {
 			export module NotificationCompat {
 				export class Action {
 					public static class: java.lang.Class<androidx.core.app.NotificationCompat.Action>;
-					public static SEMANTIC_ACTION_NONE: number = 0;
-					public static SEMANTIC_ACTION_REPLY: number = 1;
-					public static SEMANTIC_ACTION_MARK_AS_READ: number = 2;
-					public static SEMANTIC_ACTION_MARK_AS_UNREAD: number = 3;
-					public static SEMANTIC_ACTION_DELETE: number = 4;
-					public static SEMANTIC_ACTION_ARCHIVE: number = 5;
-					public static SEMANTIC_ACTION_MUTE: number = 6;
-					public static SEMANTIC_ACTION_UNMUTE: number = 7;
-					public static SEMANTIC_ACTION_THUMBS_UP: number = 8;
-					public static SEMANTIC_ACTION_THUMBS_DOWN: number = 9;
-					public static SEMANTIC_ACTION_CALL: number = 10;
+					public static readonly SEMANTIC_ACTION_NONE = 0;
+					public static readonly SEMANTIC_ACTION_REPLY = 1;
+					public static readonly SEMANTIC_ACTION_MARK_AS_READ = 2;
+					public static readonly SEMANTIC_ACTION_MARK_AS_UNREAD = 3;
+					public static readonly SEMANTIC_ACTION_DELETE = 4;
+					public static readonly SEMANTIC_ACTION_ARCHIVE = 5;
+					public static readonly SEMANTIC_ACTION_MUTE = 6;
+					public static readonly SEMANTIC_ACTION_UNMUTE = 7;
+					public static readonly SEMANTIC_ACTION_THUMBS_UP = 8;
+					public static readonly SEMANTIC_ACTION_THUMBS_DOWN = 9;
+					public static readonly SEMANTIC_ACTION_CALL = 10;
 					public icon: number;
 					public title: string;
 					public actionIntent: globalAndroid.app.PendingIntent;
@@ -11577,7 +11577,7 @@ declare module androidx {
 				}
 				export class MessagingStyle extends androidx.core.app.NotificationCompat.Style {
 					public static class: java.lang.Class<androidx.core.app.NotificationCompat.MessagingStyle>;
-					public static MAXIMUM_RETAINED_MESSAGES: number = 25;
+					public static readonly MAXIMUM_RETAINED_MESSAGES = 25;
 					public constructor();
 					/** @deprecated */
 					public constructor(userDisplayName: string);
@@ -11652,15 +11652,15 @@ declare module androidx {
 				}
 				export class WearableExtender extends androidx.core.app.NotificationCompat.Extender {
 					public static class: java.lang.Class<androidx.core.app.NotificationCompat.WearableExtender>;
-					public static UNSET_ACTION_INDEX: number = -1;
-					public static SIZE_DEFAULT: number = 0;
-					public static SIZE_XSMALL: number = 1;
-					public static SIZE_SMALL: number = 2;
-					public static SIZE_MEDIUM: number = 3;
-					public static SIZE_LARGE: number = 4;
-					public static SIZE_FULL_SCREEN: number = 5;
-					public static SCREEN_TIMEOUT_SHORT: number = 0;
-					public static SCREEN_TIMEOUT_LONG: number = -1;
+					public static readonly UNSET_ACTION_INDEX = -1;
+					public static readonly SIZE_DEFAULT = 0;
+					public static readonly SIZE_XSMALL = 1;
+					public static readonly SIZE_SMALL = 2;
+					public static readonly SIZE_MEDIUM = 3;
+					public static readonly SIZE_LARGE = 4;
+					public static readonly SIZE_FULL_SCREEN = 5;
+					public static readonly SCREEN_TIMEOUT_SHORT = 0;
+					public static readonly SCREEN_TIMEOUT_LONG = -1;
 					public constructor();
 					public constructor(notification: globalAndroid.app.Notification);
 					public extend(builder: androidx.core.app.NotificationCompat.Builder): androidx.core.app.NotificationCompat.Builder;
@@ -11762,12 +11762,12 @@ declare module androidx {
 		export module app {
 			export class NotificationCompatExtras {
 				public static class: java.lang.Class<androidx.core.app.NotificationCompatExtras>;
-				public static EXTRA_LOCAL_ONLY: string = "android.support.localOnly";
-				public static EXTRA_GROUP_KEY: string = "android.support.groupKey";
-				public static EXTRA_GROUP_SUMMARY: string = "android.support.isGroupSummary";
-				public static EXTRA_SORT_KEY: string = "android.support.sortKey";
-				public static EXTRA_ACTION_EXTRAS: string = "android.support.actionExtras";
-				public static EXTRA_REMOTE_INPUTS: string = "android.support.remoteInputs";
+				public static readonly EXTRA_LOCAL_ONLY = "android.support.localOnly";
+				public static readonly EXTRA_GROUP_KEY = "android.support.groupKey";
+				public static readonly EXTRA_GROUP_SUMMARY = "android.support.isGroupSummary";
+				public static readonly EXTRA_SORT_KEY = "android.support.sortKey";
+				public static readonly EXTRA_ACTION_EXTRAS = "android.support.actionExtras";
+				public static readonly EXTRA_REMOTE_INPUTS = "android.support.remoteInputs";
 			}
 		}
 	}
@@ -11778,7 +11778,7 @@ declare module androidx {
 		export module app {
 			export class NotificationCompatJellybean {
 				public static class: java.lang.Class<androidx.core.app.NotificationCompatJellybean>;
-				public static TAG: string = "NotificationCompat";
+				public static readonly TAG = "NotificationCompat";
 				public static buildActionExtrasMap(actionExtrasList: java.util.List<globalAndroid.os.Bundle>): globalAndroid.util.SparseArray<globalAndroid.os.Bundle>;
 				public static getExtras(notif: globalAndroid.app.Notification): globalAndroid.os.Bundle;
 				public static readAction(icon: number, title: string, actionIntent: globalAndroid.app.PendingIntent, extras: globalAndroid.os.Bundle): androidx.core.app.NotificationCompat.Action;
@@ -11821,15 +11821,15 @@ declare module androidx {
 		export module app {
 			export class NotificationManagerCompat {
 				public static class: java.lang.Class<androidx.core.app.NotificationManagerCompat>;
-				public static EXTRA_USE_SIDE_CHANNEL: string = "android.support.useSideChannel";
-				public static ACTION_BIND_SIDE_CHANNEL: string = "android.support.BIND_NOTIFICATION_SIDE_CHANNEL";
-				public static IMPORTANCE_UNSPECIFIED: number = -1000;
-				public static IMPORTANCE_NONE: number = 0;
-				public static IMPORTANCE_MIN: number = 1;
-				public static IMPORTANCE_LOW: number = 2;
-				public static IMPORTANCE_DEFAULT: number = 3;
-				public static IMPORTANCE_HIGH: number = 4;
-				public static IMPORTANCE_MAX: number = 5;
+				public static readonly EXTRA_USE_SIDE_CHANNEL = "android.support.useSideChannel";
+				public static readonly ACTION_BIND_SIDE_CHANNEL = "android.support.BIND_NOTIFICATION_SIDE_CHANNEL";
+				public static readonly IMPORTANCE_UNSPECIFIED = -1000;
+				public static readonly IMPORTANCE_NONE = 0;
+				public static readonly IMPORTANCE_MIN = 1;
+				public static readonly IMPORTANCE_LOW = 2;
+				public static readonly IMPORTANCE_DEFAULT = 3;
+				public static readonly IMPORTANCE_HIGH = 4;
+				public static readonly IMPORTANCE_MAX = 5;
 				public static from(context: globalAndroid.content.Context): androidx.core.app.NotificationManagerCompat;
 				public cancel(id: number): void;
 				public cancel(tag: string | null, id: number): void;
@@ -11949,10 +11949,10 @@ declare module androidx {
 		export module app {
 			export class RemoteInput {
 				public static class: java.lang.Class<androidx.core.app.RemoteInput>;
-				public static RESULTS_CLIP_LABEL: string = "android.remoteinput.results";
-				public static EXTRA_RESULTS_DATA: string = "android.remoteinput.resultsData";
-				public static SOURCE_FREE_FORM_INPUT: number = 0;
-				public static SOURCE_CHOICE: number = 1;
+				public static readonly RESULTS_CLIP_LABEL = "android.remoteinput.results";
+				public static readonly EXTRA_RESULTS_DATA = "android.remoteinput.resultsData";
+				public static readonly SOURCE_FREE_FORM_INPUT = 0;
+				public static readonly SOURCE_CHOICE = 1;
 				public getResultKey(): string;
 				public getLabel(): string;
 				public getChoices(): androidNative.Array<string>;
@@ -11998,9 +11998,9 @@ declare module androidx {
 		export module app {
 			export class ServiceCompat {
 				public static class: java.lang.Class<androidx.core.app.ServiceCompat>;
-				public static START_STICKY: number = 1;
-				public static STOP_FOREGROUND_REMOVE: number = 1;
-				public static STOP_FOREGROUND_DETACH: number = 2;
+				public static readonly START_STICKY = 1;
+				public static readonly STOP_FOREGROUND_REMOVE = 1;
+				public static readonly STOP_FOREGROUND_DETACH = 2;
 				public static stopForeground(service: globalAndroid.app.Service, flags: number): void;
 			}
 			export module ServiceCompat {
@@ -12023,8 +12023,8 @@ declare module androidx {
 		export module app {
 			export class ShareCompat {
 				public static class: java.lang.Class<androidx.core.app.ShareCompat>;
-				public static EXTRA_CALLING_PACKAGE: string = "androidx.core.app.EXTRA_CALLING_PACKAGE";
-				public static EXTRA_CALLING_ACTIVITY: string = "androidx.core.app.EXTRA_CALLING_ACTIVITY";
+				public static readonly EXTRA_CALLING_PACKAGE = "androidx.core.app.EXTRA_CALLING_PACKAGE";
+				public static readonly EXTRA_CALLING_ACTIVITY = "androidx.core.app.EXTRA_CALLING_ACTIVITY";
 				public static getCallingPackage(calledActivity: globalAndroid.app.Activity): string;
 				public static getCallingActivity(calledActivity: globalAndroid.app.Activity): globalAndroid.content.ComponentName;
 				public static configureMenuItem(item: globalAndroid.view.MenuItem, shareIntent: androidx.core.app.ShareCompat.IntentBuilder): void;
@@ -12252,9 +12252,9 @@ declare module androidx {
 		export module content {
 			export class IntentCompat {
 				public static class: java.lang.Class<androidx.core.content.IntentCompat>;
-				public static EXTRA_HTML_TEXT: string = "android.intent.extra.HTML_TEXT";
-				public static EXTRA_START_PLAYBACK: string = "android.intent.extra.START_PLAYBACK";
-				public static CATEGORY_LEANBACK_LAUNCHER: string = "android.intent.category.LEANBACK_LAUNCHER";
+				public static readonly EXTRA_HTML_TEXT = "android.intent.extra.HTML_TEXT";
+				public static readonly EXTRA_START_PLAYBACK = "android.intent.extra.START_PLAYBACK";
+				public static readonly CATEGORY_LEANBACK_LAUNCHER = "android.intent.category.LEANBACK_LAUNCHER";
 				public static makeMainSelectorActivity(selectorAction: string, selectorCategory: string): globalAndroid.content.Intent;
 			}
 		}
@@ -12280,9 +12280,9 @@ declare module androidx {
 		export module content {
 			export class PermissionChecker {
 				public static class: java.lang.Class<androidx.core.content.PermissionChecker>;
-				public static PERMISSION_GRANTED: number = 0;
-				public static PERMISSION_DENIED: number = -1;
-				public static PERMISSION_DENIED_APP_OP: number = -2;
+				public static readonly PERMISSION_GRANTED = 0;
+				public static readonly PERMISSION_DENIED = -1;
+				public static readonly PERMISSION_DENIED_APP_OP = -2;
 				public static checkPermission(context: globalAndroid.content.Context, permission: string, pid: number, uid: number, packageName: string | null): number;
 				public static checkSelfPermission(context: globalAndroid.content.Context, permission: string): number;
 				public static checkCallingPermission(context: globalAndroid.content.Context, permission: string, packageName: string | null): number;
@@ -12334,7 +12334,7 @@ declare module androidx {
 			export module pm {
 				export class ActivityInfoCompat {
 					public static class: java.lang.Class<androidx.core.content.pm.ActivityInfoCompat>;
-					public static CONFIG_UI_MODE: number = 512;
+					public static readonly CONFIG_UI_MODE = 512;
 				}
 			}
 		}
@@ -12497,9 +12497,9 @@ declare module androidx {
 			export module res {
 				export class FontResourcesParserCompat {
 					public static class: java.lang.Class<androidx.core.content.res.FontResourcesParserCompat>;
-					public static FETCH_STRATEGY_BLOCKING: number = 0;
-					public static FETCH_STRATEGY_ASYNC: number = 1;
-					public static INFINITE_TIMEOUT_VALUE: number = -1;
+					public static readonly FETCH_STRATEGY_BLOCKING = 0;
+					public static readonly FETCH_STRATEGY_ASYNC = 1;
+					public static readonly INFINITE_TIMEOUT_VALUE = -1;
 					public static parse(parser: org.xmlpull.v1.XmlPullParser, resources: globalAndroid.content.res.Resources): androidx.core.content.res.FontResourcesParserCompat.FamilyResourceEntry | null;
 					public static readCerts(resources: globalAndroid.content.res.Resources, certsId: number): java.util.List<java.util.List<androidNative.Array<number>>>;
 				}
@@ -12961,7 +12961,7 @@ declare module androidx {
 			export module drawable {
 				export class IconCompat extends androidx.versionedparcelable.CustomVersionedParcelable {
 					public static class: java.lang.Class<androidx.core.graphics.drawable.IconCompat>;
-					public static TYPE_UNKNOWN: number = -1;
+					public static readonly TYPE_UNKNOWN = -1;
 					public mType: number;
 					public mData: androidNative.Array<number>;
 					public mParcelable: globalAndroid.os.Parcelable;
@@ -13249,7 +13249,7 @@ declare module androidx {
 			export module display {
 				export class DisplayManagerCompat {
 					public static class: java.lang.Class<androidx.core.hardware.display.DisplayManagerCompat>;
-					public static DISPLAY_CATEGORY_PRESENTATION: string = "android.hardware.display.category.PRESENTATION";
+					public static readonly DISPLAY_CATEGORY_PRESENTATION = "android.hardware.display.category.PRESENTATION";
 					public static getInstance(context: globalAndroid.content.Context): androidx.core.hardware.display.DisplayManagerCompat;
 					public getDisplay(displayId: number): globalAndroid.view.Display | null;
 					public getDisplays(): androidNative.Array<globalAndroid.view.Display>;
@@ -13313,12 +13313,12 @@ declare module androidx {
 						setGroupDividerEnabled(param0: boolean): void;
 					});
 					public constructor();
-					public static FLAG_KEEP_OPEN_ON_SUBMENU_OPENED: number = 4;
-					public static USER_SHIFT: number = 0;
-					public static SUPPORTED_MODIFIERS_MASK: number = 69647;
-					public static CATEGORY_MASK: number = -65536;
-					public static USER_MASK: number = 65535;
-					public static CATEGORY_SHIFT: number = 16;
+					public static readonly FLAG_KEEP_OPEN_ON_SUBMENU_OPENED = 4;
+					public static readonly USER_SHIFT = 0;
+					public static readonly SUPPORTED_MODIFIERS_MASK = 69647;
+					public static readonly CATEGORY_MASK = -65536;
+					public static readonly USER_MASK = 65535;
+					public static readonly CATEGORY_SHIFT = 16;
 					public setGroupDividerEnabled(param0: boolean): void;
 				}
 			}
@@ -13363,11 +13363,11 @@ declare module androidx {
 						requiresOverflow(): boolean;
 					});
 					public constructor();
-					public static SHOW_AS_ACTION_NEVER: number = 0;
-					public static SHOW_AS_ACTION_ALWAYS: number = 2;
-					public static SHOW_AS_ACTION_IF_ROOM: number = 1;
-					public static SHOW_AS_ACTION_WITH_TEXT: number = 4;
-					public static SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW: number = 8;
+					public static readonly SHOW_AS_ACTION_NEVER = 0;
+					public static readonly SHOW_AS_ACTION_ALWAYS = 2;
+					public static readonly SHOW_AS_ACTION_IF_ROOM = 1;
+					public static readonly SHOW_AS_ACTION_WITH_TEXT = 4;
+					public static readonly SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW = 8;
 					public setShowAsAction(param0: number): void;
 					public setShowAsActionFlags(param0: number): globalAndroid.view.MenuItem;
 					public setActionView(param0: globalAndroid.view.View): globalAndroid.view.MenuItem;
@@ -13412,12 +13412,12 @@ declare module androidx {
 						setGroupDividerEnabled(param0: boolean): void;
 					});
 					public constructor();
-					public static FLAG_KEEP_OPEN_ON_SUBMENU_OPENED: number = 4;
-					public static USER_SHIFT: number = 0;
-					public static SUPPORTED_MODIFIERS_MASK: number = 69647;
-					public static CATEGORY_MASK: number = -65536;
-					public static USER_MASK: number = 65535;
-					public static CATEGORY_SHIFT: number = 16;
+					public static readonly FLAG_KEEP_OPEN_ON_SUBMENU_OPENED = 4;
+					public static readonly USER_SHIFT = 0;
+					public static readonly SUPPORTED_MODIFIERS_MASK = 69647;
+					public static readonly CATEGORY_MASK = -65536;
+					public static readonly USER_MASK = 65535;
+					public static readonly CATEGORY_SHIFT = 16;
 					public setGroupDividerEnabled(param0: boolean): void;
 				}
 			}
@@ -13441,9 +13441,9 @@ declare module androidx {
 		export module net {
 			export class ConnectivityManagerCompat {
 				public static class: java.lang.Class<androidx.core.net.ConnectivityManagerCompat>;
-				public static RESTRICT_BACKGROUND_STATUS_DISABLED: number = 1;
-				public static RESTRICT_BACKGROUND_STATUS_WHITELISTED: number = 2;
-				public static RESTRICT_BACKGROUND_STATUS_ENABLED: number = 3;
+				public static readonly RESTRICT_BACKGROUND_STATUS_DISABLED = 1;
+				public static readonly RESTRICT_BACKGROUND_STATUS_WHITELISTED = 2;
+				public static readonly RESTRICT_BACKGROUND_STATUS_ENABLED = 3;
 				public static isActiveNetworkMetered(cm: globalAndroid.net.ConnectivityManager): boolean;
 				public static getNetworkInfoFromBroadcast(cm: globalAndroid.net.ConnectivityManager, intent: globalAndroid.content.Intent): globalAndroid.net.NetworkInfo | null;
 				public static getRestrictBackgroundStatus(cm: globalAndroid.net.ConnectivityManager): number;
@@ -13584,7 +13584,7 @@ declare module androidx {
 		export module os {
 			export class EnvironmentCompat {
 				public static class: java.lang.Class<androidx.core.os.EnvironmentCompat>;
-				public static MEDIA_UNKNOWN: string = "unknown";
+				public static readonly MEDIA_UNKNOWN = "unknown";
 				public static getStorageState(path: java.io.File): string;
 			}
 		}
@@ -13829,7 +13829,7 @@ declare module androidx {
 		export module provider {
 			export class FontsContractCompat {
 				public static class: java.lang.Class<androidx.core.provider.FontsContractCompat>;
-				public static PARCEL_FONT_RESULTS: string = "font_results";
+				public static readonly PARCEL_FONT_RESULTS = "font_results";
 				public static resetCache(): void;
 				public static getFontSync(context: globalAndroid.content.Context, request: androidx.core.provider.FontRequest, fontCallback: androidx.core.content.res.ResourcesCompat.FontCallback | null, handler: globalAndroid.os.Handler | null, isBlockingFetch: boolean, timeout: number, style: number): globalAndroid.graphics.Typeface;
 				public static requestFont(context: globalAndroid.content.Context, request: androidx.core.provider.FontRequest, callback: androidx.core.provider.FontsContractCompat.FontRequestCallback, handler: globalAndroid.os.Handler): void;
@@ -13841,23 +13841,23 @@ declare module androidx {
 			export module FontsContractCompat {
 				export class Columns {
 					public static class: java.lang.Class<androidx.core.provider.FontsContractCompat.Columns>;
-					public static FILE_ID: string = "file_id";
-					public static TTC_INDEX: string = "font_ttc_index";
-					public static VARIATION_SETTINGS: string = "font_variation_settings";
-					public static WEIGHT: string = "font_weight";
-					public static ITALIC: string = "font_italic";
-					public static RESULT_CODE: string = "result_code";
-					public static RESULT_CODE_OK: number = 0;
-					public static RESULT_CODE_FONT_NOT_FOUND: number = 1;
-					public static RESULT_CODE_FONT_UNAVAILABLE: number = 2;
-					public static RESULT_CODE_MALFORMED_QUERY: number = 3;
+					public static readonly FILE_ID = "file_id";
+					public static readonly TTC_INDEX = "font_ttc_index";
+					public static readonly VARIATION_SETTINGS = "font_variation_settings";
+					public static readonly WEIGHT = "font_weight";
+					public static readonly ITALIC = "font_italic";
+					public static readonly RESULT_CODE = "result_code";
+					public static readonly RESULT_CODE_OK = 0;
+					public static readonly RESULT_CODE_FONT_NOT_FOUND = 1;
+					public static readonly RESULT_CODE_FONT_UNAVAILABLE = 2;
+					public static readonly RESULT_CODE_MALFORMED_QUERY = 3;
 					public constructor();
 				}
 				export class FontFamilyResult {
 					public static class: java.lang.Class<androidx.core.provider.FontsContractCompat.FontFamilyResult>;
-					public static STATUS_OK: number = 0;
-					public static STATUS_WRONG_CERTIFICATES: number = 1;
-					public static STATUS_UNEXPECTED_DATA_PROVIDED: number = 2;
+					public static readonly STATUS_OK = 0;
+					public static readonly STATUS_WRONG_CERTIFICATES = 1;
+					public static readonly STATUS_UNEXPECTED_DATA_PROVIDED = 2;
 					public constructor(statusCode: number, fonts: androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo> | null);
 					public getStatusCode(): number;
 					public getFonts(): androidNative.Array<androidx.core.provider.FontsContractCompat.FontInfo>;
@@ -13873,14 +13873,14 @@ declare module androidx {
 				}
 				export class FontRequestCallback {
 					public static class: java.lang.Class<androidx.core.provider.FontsContractCompat.FontRequestCallback>;
-					public static RESULT_OK: number = 0;
-					public static FAIL_REASON_PROVIDER_NOT_FOUND: number = -1;
-					public static FAIL_REASON_WRONG_CERTIFICATES: number = -2;
-					public static FAIL_REASON_FONT_LOAD_ERROR: number = -3;
-					public static FAIL_REASON_SECURITY_VIOLATION: number = -4;
-					public static FAIL_REASON_FONT_NOT_FOUND: number = 1;
-					public static FAIL_REASON_FONT_UNAVAILABLE: number = 2;
-					public static FAIL_REASON_MALFORMED_QUERY: number = 3;
+					public static readonly RESULT_OK = 0;
+					public static readonly FAIL_REASON_PROVIDER_NOT_FOUND = -1;
+					public static readonly FAIL_REASON_WRONG_CERTIFICATES = -2;
+					public static readonly FAIL_REASON_FONT_LOAD_ERROR = -3;
+					public static readonly FAIL_REASON_SECURITY_VIOLATION = -4;
+					public static readonly FAIL_REASON_FONT_NOT_FOUND = 1;
+					public static readonly FAIL_REASON_FONT_UNAVAILABLE = 2;
+					public static readonly FAIL_REASON_MALFORMED_QUERY = 3;
 					public constructor();
 					public onTypefaceRetrieved(typeface: globalAndroid.graphics.Typeface): void;
 					public onTypefaceRequestFailed(reason: number): void;
@@ -13984,17 +13984,17 @@ declare module androidx {
 		export module text {
 			export class HtmlCompat {
 				public static class: java.lang.Class<androidx.core.text.HtmlCompat>;
-				public static TO_HTML_PARAGRAPH_LINES_CONSECUTIVE: number = 0;
-				public static TO_HTML_PARAGRAPH_LINES_INDIVIDUAL: number = 1;
-				public static FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH: number = 1;
-				public static FROM_HTML_SEPARATOR_LINE_BREAK_HEADING: number = 2;
-				public static FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM: number = 4;
-				public static FROM_HTML_SEPARATOR_LINE_BREAK_LIST: number = 8;
-				public static FROM_HTML_SEPARATOR_LINE_BREAK_DIV: number = 16;
-				public static FROM_HTML_SEPARATOR_LINE_BREAK_BLOCKQUOTE: number = 32;
-				public static FROM_HTML_OPTION_USE_CSS_COLORS: number = 256;
-				public static FROM_HTML_MODE_LEGACY: number = 0;
-				public static FROM_HTML_MODE_COMPACT: number = 63;
+				public static readonly TO_HTML_PARAGRAPH_LINES_CONSECUTIVE = 0;
+				public static readonly TO_HTML_PARAGRAPH_LINES_INDIVIDUAL = 1;
+				public static readonly FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH = 1;
+				public static readonly FROM_HTML_SEPARATOR_LINE_BREAK_HEADING = 2;
+				public static readonly FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM = 4;
+				public static readonly FROM_HTML_SEPARATOR_LINE_BREAK_LIST = 8;
+				public static readonly FROM_HTML_SEPARATOR_LINE_BREAK_DIV = 16;
+				public static readonly FROM_HTML_SEPARATOR_LINE_BREAK_BLOCKQUOTE = 32;
+				public static readonly FROM_HTML_OPTION_USE_CSS_COLORS = 256;
+				public static readonly FROM_HTML_MODE_LEGACY = 0;
+				public static readonly FROM_HTML_MODE_COMPACT = 63;
 				public static fromHtml(source: string, flags: number): globalAndroid.text.Spanned;
 				public static fromHtml(source: string, flags: number, imageGetter: globalAndroid.text.Html.ImageGetter | null, tagHandler: globalAndroid.text.Html.TagHandler | null): globalAndroid.text.Spanned;
 				public static toHtml(text: globalAndroid.text.Spanned, options: number): string;
@@ -14411,7 +14411,7 @@ declare module androidx {
 		export module util {
 			export class TimeUtils {
 				public static class: java.lang.Class<androidx.core.util.TimeUtils>;
-				public static HUNDRED_DAY_FIELD_LEN: number = 19;
+				public static readonly HUNDRED_DAY_FIELD_LEN = 19;
 				public static formatDuration(duration: number, builder: java.lang.StringBuilder): void;
 				public static formatDuration(duration: number, pw: java.io.PrintWriter, fieldLen: number): void;
 				public static formatDuration(duration: number, pw: java.io.PrintWriter): void;
@@ -14630,10 +14630,10 @@ declare module androidx {
 		export module view {
 			export class GravityCompat {
 				public static class: java.lang.Class<androidx.core.view.GravityCompat>;
-				public static RELATIVE_LAYOUT_DIRECTION: number = 8388608;
-				public static START: number = 8388611;
-				public static END: number = 8388613;
-				public static RELATIVE_HORIZONTAL_GRAVITY_MASK: number = 8388615;
+				public static readonly RELATIVE_LAYOUT_DIRECTION = 8388608;
+				public static readonly START = 8388611;
+				public static readonly END = 8388613;
+				public static readonly RELATIVE_HORIZONTAL_GRAVITY_MASK = 8388615;
 				public static apply(gravity: number, w: number, h: number, container: globalAndroid.graphics.Rect, outRect: globalAndroid.graphics.Rect, layoutDirection: number): void;
 				public static apply(gravity: number, w: number, h: number, container: globalAndroid.graphics.Rect, xAdj: number, yAdj: number, outRect: globalAndroid.graphics.Rect, layoutDirection: number): void;
 				public static applyDisplay(gravity: number, display: globalAndroid.graphics.Rect, inoutObj: globalAndroid.graphics.Rect, layoutDirection: number): void;
@@ -14648,27 +14648,27 @@ declare module androidx {
 		export module view {
 			export class InputDeviceCompat {
 				public static class: java.lang.Class<androidx.core.view.InputDeviceCompat>;
-				public static SOURCE_CLASS_MASK: number = 255;
-				public static SOURCE_CLASS_NONE: number = 0;
-				public static SOURCE_CLASS_BUTTON: number = 1;
-				public static SOURCE_CLASS_POINTER: number = 2;
-				public static SOURCE_CLASS_TRACKBALL: number = 4;
-				public static SOURCE_CLASS_POSITION: number = 8;
-				public static SOURCE_CLASS_JOYSTICK: number = 16;
-				public static SOURCE_UNKNOWN: number = 0;
-				public static SOURCE_KEYBOARD: number = 257;
-				public static SOURCE_DPAD: number = 513;
-				public static SOURCE_GAMEPAD: number = 1025;
-				public static SOURCE_TOUCHSCREEN: number = 4098;
-				public static SOURCE_MOUSE: number = 8194;
-				public static SOURCE_STYLUS: number = 16386;
-				public static SOURCE_TRACKBALL: number = 65540;
-				public static SOURCE_TOUCHPAD: number = 1048584;
-				public static SOURCE_TOUCH_NAVIGATION: number = 2097152;
-				public static SOURCE_ROTARY_ENCODER: number = 4194304;
-				public static SOURCE_JOYSTICK: number = 16777232;
-				public static SOURCE_HDMI: number = 33554433;
-				public static SOURCE_ANY: number = -256;
+				public static readonly SOURCE_CLASS_MASK = 255;
+				public static readonly SOURCE_CLASS_NONE = 0;
+				public static readonly SOURCE_CLASS_BUTTON = 1;
+				public static readonly SOURCE_CLASS_POINTER = 2;
+				public static readonly SOURCE_CLASS_TRACKBALL = 4;
+				public static readonly SOURCE_CLASS_POSITION = 8;
+				public static readonly SOURCE_CLASS_JOYSTICK = 16;
+				public static readonly SOURCE_UNKNOWN = 0;
+				public static readonly SOURCE_KEYBOARD = 257;
+				public static readonly SOURCE_DPAD = 513;
+				public static readonly SOURCE_GAMEPAD = 1025;
+				public static readonly SOURCE_TOUCHSCREEN = 4098;
+				public static readonly SOURCE_MOUSE = 8194;
+				public static readonly SOURCE_STYLUS = 16386;
+				public static readonly SOURCE_TRACKBALL = 65540;
+				public static readonly SOURCE_TOUCHPAD = 1048584;
+				public static readonly SOURCE_TOUCH_NAVIGATION = 2097152;
+				public static readonly SOURCE_ROTARY_ENCODER = 4194304;
+				public static readonly SOURCE_JOYSTICK = 16777232;
+				public static readonly SOURCE_HDMI = 33554433;
+				public static readonly SOURCE_ANY = -256;
 			}
 		}
 	}
@@ -14776,11 +14776,11 @@ declare module androidx {
 		export module view {
 			export class MenuItemCompat {
 				public static class: java.lang.Class<androidx.core.view.MenuItemCompat>;
-				public static SHOW_AS_ACTION_NEVER: number = 0;
-				public static SHOW_AS_ACTION_IF_ROOM: number = 1;
-				public static SHOW_AS_ACTION_ALWAYS: number = 2;
-				public static SHOW_AS_ACTION_WITH_TEXT: number = 4;
-				public static SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW: number = 8;
+				public static readonly SHOW_AS_ACTION_NEVER = 0;
+				public static readonly SHOW_AS_ACTION_IF_ROOM = 1;
+				public static readonly SHOW_AS_ACTION_ALWAYS = 2;
+				public static readonly SHOW_AS_ACTION_WITH_TEXT = 4;
+				public static readonly SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW = 8;
 				/** @deprecated */
 				public static setShowAsAction(item: globalAndroid.view.MenuItem, actionEnum: number): void;
 				/** @deprecated */
@@ -14837,61 +14837,61 @@ declare module androidx {
 		export module view {
 			export class MotionEventCompat {
 				public static class: java.lang.Class<androidx.core.view.MotionEventCompat>;
-				public static ACTION_MASK: number = 255;
-				public static ACTION_POINTER_DOWN: number = 5;
-				public static ACTION_POINTER_UP: number = 6;
-				public static ACTION_HOVER_MOVE: number = 7;
-				public static ACTION_SCROLL: number = 8;
-				public static ACTION_POINTER_INDEX_MASK: number = 65280;
-				public static ACTION_POINTER_INDEX_SHIFT: number = 8;
-				public static ACTION_HOVER_ENTER: number = 9;
-				public static ACTION_HOVER_EXIT: number = 10;
-				public static AXIS_X: number = 0;
-				public static AXIS_Y: number = 1;
-				public static AXIS_PRESSURE: number = 2;
-				public static AXIS_SIZE: number = 3;
-				public static AXIS_TOUCH_MAJOR: number = 4;
-				public static AXIS_TOUCH_MINOR: number = 5;
-				public static AXIS_TOOL_MAJOR: number = 6;
-				public static AXIS_TOOL_MINOR: number = 7;
-				public static AXIS_ORIENTATION: number = 8;
-				public static AXIS_VSCROLL: number = 9;
-				public static AXIS_HSCROLL: number = 10;
-				public static AXIS_Z: number = 11;
-				public static AXIS_RX: number = 12;
-				public static AXIS_RY: number = 13;
-				public static AXIS_RZ: number = 14;
-				public static AXIS_HAT_X: number = 15;
-				public static AXIS_HAT_Y: number = 16;
-				public static AXIS_LTRIGGER: number = 17;
-				public static AXIS_RTRIGGER: number = 18;
-				public static AXIS_THROTTLE: number = 19;
-				public static AXIS_RUDDER: number = 20;
-				public static AXIS_WHEEL: number = 21;
-				public static AXIS_GAS: number = 22;
-				public static AXIS_BRAKE: number = 23;
-				public static AXIS_DISTANCE: number = 24;
-				public static AXIS_TILT: number = 25;
-				public static AXIS_SCROLL: number = 26;
-				public static AXIS_RELATIVE_X: number = 27;
-				public static AXIS_RELATIVE_Y: number = 28;
-				public static AXIS_GENERIC_1: number = 32;
-				public static AXIS_GENERIC_2: number = 33;
-				public static AXIS_GENERIC_3: number = 34;
-				public static AXIS_GENERIC_4: number = 35;
-				public static AXIS_GENERIC_5: number = 36;
-				public static AXIS_GENERIC_6: number = 37;
-				public static AXIS_GENERIC_7: number = 38;
-				public static AXIS_GENERIC_8: number = 39;
-				public static AXIS_GENERIC_9: number = 40;
-				public static AXIS_GENERIC_10: number = 41;
-				public static AXIS_GENERIC_11: number = 42;
-				public static AXIS_GENERIC_12: number = 43;
-				public static AXIS_GENERIC_13: number = 44;
-				public static AXIS_GENERIC_14: number = 45;
-				public static AXIS_GENERIC_15: number = 46;
-				public static AXIS_GENERIC_16: number = 47;
-				public static BUTTON_PRIMARY: number = 1;
+				public static readonly ACTION_MASK = 255;
+				public static readonly ACTION_POINTER_DOWN = 5;
+				public static readonly ACTION_POINTER_UP = 6;
+				public static readonly ACTION_HOVER_MOVE = 7;
+				public static readonly ACTION_SCROLL = 8;
+				public static readonly ACTION_POINTER_INDEX_MASK = 65280;
+				public static readonly ACTION_POINTER_INDEX_SHIFT = 8;
+				public static readonly ACTION_HOVER_ENTER = 9;
+				public static readonly ACTION_HOVER_EXIT = 10;
+				public static readonly AXIS_X = 0;
+				public static readonly AXIS_Y = 1;
+				public static readonly AXIS_PRESSURE = 2;
+				public static readonly AXIS_SIZE = 3;
+				public static readonly AXIS_TOUCH_MAJOR = 4;
+				public static readonly AXIS_TOUCH_MINOR = 5;
+				public static readonly AXIS_TOOL_MAJOR = 6;
+				public static readonly AXIS_TOOL_MINOR = 7;
+				public static readonly AXIS_ORIENTATION = 8;
+				public static readonly AXIS_VSCROLL = 9;
+				public static readonly AXIS_HSCROLL = 10;
+				public static readonly AXIS_Z = 11;
+				public static readonly AXIS_RX = 12;
+				public static readonly AXIS_RY = 13;
+				public static readonly AXIS_RZ = 14;
+				public static readonly AXIS_HAT_X = 15;
+				public static readonly AXIS_HAT_Y = 16;
+				public static readonly AXIS_LTRIGGER = 17;
+				public static readonly AXIS_RTRIGGER = 18;
+				public static readonly AXIS_THROTTLE = 19;
+				public static readonly AXIS_RUDDER = 20;
+				public static readonly AXIS_WHEEL = 21;
+				public static readonly AXIS_GAS = 22;
+				public static readonly AXIS_BRAKE = 23;
+				public static readonly AXIS_DISTANCE = 24;
+				public static readonly AXIS_TILT = 25;
+				public static readonly AXIS_SCROLL = 26;
+				public static readonly AXIS_RELATIVE_X = 27;
+				public static readonly AXIS_RELATIVE_Y = 28;
+				public static readonly AXIS_GENERIC_1 = 32;
+				public static readonly AXIS_GENERIC_2 = 33;
+				public static readonly AXIS_GENERIC_3 = 34;
+				public static readonly AXIS_GENERIC_4 = 35;
+				public static readonly AXIS_GENERIC_5 = 36;
+				public static readonly AXIS_GENERIC_6 = 37;
+				public static readonly AXIS_GENERIC_7 = 38;
+				public static readonly AXIS_GENERIC_8 = 39;
+				public static readonly AXIS_GENERIC_9 = 40;
+				public static readonly AXIS_GENERIC_10 = 41;
+				public static readonly AXIS_GENERIC_11 = 42;
+				public static readonly AXIS_GENERIC_12 = 43;
+				public static readonly AXIS_GENERIC_13 = 44;
+				public static readonly AXIS_GENERIC_14 = 45;
+				public static readonly AXIS_GENERIC_15 = 46;
+				public static readonly AXIS_GENERIC_16 = 47;
+				public static readonly BUTTON_PRIMARY = 1;
 				/** @deprecated */
 				public static getActionMasked(event: globalAndroid.view.MotionEvent): number;
 				/** @deprecated */
@@ -15244,29 +15244,29 @@ declare module androidx {
 		export module view {
 			export class PointerIconCompat {
 				public static class: java.lang.Class<androidx.core.view.PointerIconCompat>;
-				public static TYPE_NULL: number = 0;
-				public static TYPE_ARROW: number = 1000;
-				public static TYPE_CONTEXT_MENU: number = 1001;
-				public static TYPE_HAND: number = 1002;
-				public static TYPE_HELP: number = 1003;
-				public static TYPE_WAIT: number = 1004;
-				public static TYPE_CELL: number = 1006;
-				public static TYPE_CROSSHAIR: number = 1007;
-				public static TYPE_TEXT: number = 1008;
-				public static TYPE_VERTICAL_TEXT: number = 1009;
-				public static TYPE_ALIAS: number = 1010;
-				public static TYPE_COPY: number = 1011;
-				public static TYPE_NO_DROP: number = 1012;
-				public static TYPE_ALL_SCROLL: number = 1013;
-				public static TYPE_HORIZONTAL_DOUBLE_ARROW: number = 1014;
-				public static TYPE_VERTICAL_DOUBLE_ARROW: number = 1015;
-				public static TYPE_TOP_RIGHT_DIAGONAL_DOUBLE_ARROW: number = 1016;
-				public static TYPE_TOP_LEFT_DIAGONAL_DOUBLE_ARROW: number = 1017;
-				public static TYPE_ZOOM_IN: number = 1018;
-				public static TYPE_ZOOM_OUT: number = 1019;
-				public static TYPE_GRAB: number = 1020;
-				public static TYPE_GRABBING: number = 1021;
-				public static TYPE_DEFAULT: number = 1000;
+				public static readonly TYPE_NULL = 0;
+				public static readonly TYPE_ARROW = 1000;
+				public static readonly TYPE_CONTEXT_MENU = 1001;
+				public static readonly TYPE_HAND = 1002;
+				public static readonly TYPE_HELP = 1003;
+				public static readonly TYPE_WAIT = 1004;
+				public static readonly TYPE_CELL = 1006;
+				public static readonly TYPE_CROSSHAIR = 1007;
+				public static readonly TYPE_TEXT = 1008;
+				public static readonly TYPE_VERTICAL_TEXT = 1009;
+				public static readonly TYPE_ALIAS = 1010;
+				public static readonly TYPE_COPY = 1011;
+				public static readonly TYPE_NO_DROP = 1012;
+				public static readonly TYPE_ALL_SCROLL = 1013;
+				public static readonly TYPE_HORIZONTAL_DOUBLE_ARROW = 1014;
+				public static readonly TYPE_VERTICAL_DOUBLE_ARROW = 1015;
+				public static readonly TYPE_TOP_RIGHT_DIAGONAL_DOUBLE_ARROW = 1016;
+				public static readonly TYPE_TOP_LEFT_DIAGONAL_DOUBLE_ARROW = 1017;
+				public static readonly TYPE_ZOOM_IN = 1018;
+				public static readonly TYPE_ZOOM_OUT = 1019;
+				public static readonly TYPE_GRAB = 1020;
+				public static readonly TYPE_GRABBING = 1021;
+				public static readonly TYPE_DEFAULT = 1000;
 				public getPointerIcon(): any;
 				public static getSystemIcon(context: globalAndroid.content.Context, style: number): androidx.core.view.PointerIconCompat;
 				public static create(bitmap: globalAndroid.graphics.Bitmap, hotSpotX: number, hotSpotY: number): androidx.core.view.PointerIconCompat;
@@ -15363,38 +15363,38 @@ declare module androidx {
 		export module view {
 			export class ViewCompat {
 				public static class: java.lang.Class<androidx.core.view.ViewCompat>;
-				public static OVER_SCROLL_ALWAYS: number = 0;
-				public static OVER_SCROLL_IF_CONTENT_SCROLLS: number = 1;
-				public static OVER_SCROLL_NEVER: number = 2;
-				public static IMPORTANT_FOR_ACCESSIBILITY_AUTO: number = 0;
-				public static IMPORTANT_FOR_ACCESSIBILITY_YES: number = 1;
-				public static IMPORTANT_FOR_ACCESSIBILITY_NO: number = 2;
-				public static IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS: number = 4;
-				public static ACCESSIBILITY_LIVE_REGION_NONE: number = 0;
-				public static ACCESSIBILITY_LIVE_REGION_POLITE: number = 1;
-				public static ACCESSIBILITY_LIVE_REGION_ASSERTIVE: number = 2;
-				public static LAYER_TYPE_NONE: number = 0;
-				public static LAYER_TYPE_SOFTWARE: number = 1;
-				public static LAYER_TYPE_HARDWARE: number = 2;
-				public static LAYOUT_DIRECTION_LTR: number = 0;
-				public static LAYOUT_DIRECTION_RTL: number = 1;
-				public static LAYOUT_DIRECTION_INHERIT: number = 2;
-				public static LAYOUT_DIRECTION_LOCALE: number = 3;
-				public static MEASURED_SIZE_MASK: number = 16777215;
-				public static MEASURED_STATE_MASK: number = -16777216;
-				public static MEASURED_HEIGHT_STATE_SHIFT: number = 16;
-				public static MEASURED_STATE_TOO_SMALL: number = 16777216;
-				public static SCROLL_AXIS_NONE: number = 0;
-				public static SCROLL_AXIS_HORIZONTAL: number = 1;
-				public static SCROLL_AXIS_VERTICAL: number = 2;
-				public static TYPE_TOUCH: number = 0;
-				public static TYPE_NON_TOUCH: number = 1;
-				public static SCROLL_INDICATOR_TOP: number = 1;
-				public static SCROLL_INDICATOR_BOTTOM: number = 2;
-				public static SCROLL_INDICATOR_LEFT: number = 4;
-				public static SCROLL_INDICATOR_RIGHT: number = 8;
-				public static SCROLL_INDICATOR_START: number = 16;
-				public static SCROLL_INDICATOR_END: number = 32;
+				public static readonly OVER_SCROLL_ALWAYS = 0;
+				public static readonly OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
+				public static readonly OVER_SCROLL_NEVER = 2;
+				public static readonly IMPORTANT_FOR_ACCESSIBILITY_AUTO = 0;
+				public static readonly IMPORTANT_FOR_ACCESSIBILITY_YES = 1;
+				public static readonly IMPORTANT_FOR_ACCESSIBILITY_NO = 2;
+				public static readonly IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS = 4;
+				public static readonly ACCESSIBILITY_LIVE_REGION_NONE = 0;
+				public static readonly ACCESSIBILITY_LIVE_REGION_POLITE = 1;
+				public static readonly ACCESSIBILITY_LIVE_REGION_ASSERTIVE = 2;
+				public static readonly LAYER_TYPE_NONE = 0;
+				public static readonly LAYER_TYPE_SOFTWARE = 1;
+				public static readonly LAYER_TYPE_HARDWARE = 2;
+				public static readonly LAYOUT_DIRECTION_LTR = 0;
+				public static readonly LAYOUT_DIRECTION_RTL = 1;
+				public static readonly LAYOUT_DIRECTION_INHERIT = 2;
+				public static readonly LAYOUT_DIRECTION_LOCALE = 3;
+				public static readonly MEASURED_SIZE_MASK = 16777215;
+				public static readonly MEASURED_STATE_MASK = -16777216;
+				public static readonly MEASURED_HEIGHT_STATE_SHIFT = 16;
+				public static readonly MEASURED_STATE_TOO_SMALL = 16777216;
+				public static readonly SCROLL_AXIS_NONE = 0;
+				public static readonly SCROLL_AXIS_HORIZONTAL = 1;
+				public static readonly SCROLL_AXIS_VERTICAL = 2;
+				public static readonly TYPE_TOUCH = 0;
+				public static readonly TYPE_NON_TOUCH = 1;
+				public static readonly SCROLL_INDICATOR_TOP = 1;
+				public static readonly SCROLL_INDICATOR_BOTTOM = 2;
+				public static readonly SCROLL_INDICATOR_LEFT = 4;
+				public static readonly SCROLL_INDICATOR_RIGHT = 8;
+				public static readonly SCROLL_INDICATOR_START = 16;
+				public static readonly SCROLL_INDICATOR_END = 32;
 				/** @deprecated */
 				public static canScrollHorizontally(view: globalAndroid.view.View, direction: number): boolean;
 				/** @deprecated */
@@ -15705,8 +15705,8 @@ declare module androidx {
 		export module view {
 			export class ViewGroupCompat {
 				public static class: java.lang.Class<androidx.core.view.ViewGroupCompat>;
-				public static LAYOUT_MODE_CLIP_BOUNDS: number = 0;
-				public static LAYOUT_MODE_OPTICAL_BOUNDS: number = 1;
+				public static readonly LAYOUT_MODE_CLIP_BOUNDS = 0;
+				public static readonly LAYOUT_MODE_OPTICAL_BOUNDS = 1;
 				/** @deprecated */
 				public static onRequestSendAccessibilityEvent(group: globalAndroid.view.ViewGroup, child: globalAndroid.view.View, event: globalAndroid.view.accessibility.AccessibilityEvent): boolean;
 				/** @deprecated */
@@ -15867,9 +15867,9 @@ declare module androidx {
 		export module view {
 			export class WindowCompat {
 				public static class: java.lang.Class<androidx.core.view.WindowCompat>;
-				public static FEATURE_ACTION_BAR: number = 8;
-				public static FEATURE_ACTION_BAR_OVERLAY: number = 9;
-				public static FEATURE_ACTION_MODE_OVERLAY: number = 10;
+				public static readonly FEATURE_ACTION_BAR = 8;
+				public static readonly FEATURE_ACTION_BAR_OVERLAY = 9;
+				public static readonly FEATURE_ACTION_MODE_OVERLAY = 10;
 				public static requireViewById(window: globalAndroid.view.Window, id: number): globalAndroid.view.View;
 			}
 		}
@@ -15914,7 +15914,7 @@ declare module androidx {
 			export module accessibility {
 				export class AccessibilityClickableSpanCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityClickableSpanCompat>;
-					public static SPAN_ID: string = "ACCESSIBILITY_CLICKABLE_SPAN_ID";
+					public static readonly SPAN_ID = "ACCESSIBILITY_CLICKABLE_SPAN_ID";
 					public constructor(originalClickableSpanId: number, nodeInfoCompat: androidx.core.view.accessibility.AccessibilityNodeInfoCompat, clickableSpanActionId: number);
 					public onClick(unused: globalAndroid.view.View): void;
 				}
@@ -15929,32 +15929,32 @@ declare module androidx {
 			export module accessibility {
 				export class AccessibilityEventCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityEventCompat>;
-					public static TYPE_VIEW_HOVER_ENTER: number = 128;
-					public static TYPE_VIEW_HOVER_EXIT: number = 256;
-					public static TYPE_TOUCH_EXPLORATION_GESTURE_START: number = 512;
-					public static TYPE_TOUCH_EXPLORATION_GESTURE_END: number = 1024;
-					public static TYPE_WINDOW_CONTENT_CHANGED: number = 2048;
-					public static TYPE_VIEW_SCROLLED: number = 4096;
-					public static TYPE_VIEW_TEXT_SELECTION_CHANGED: number = 8192;
-					public static TYPE_ANNOUNCEMENT: number = 16384;
-					public static TYPE_VIEW_ACCESSIBILITY_FOCUSED: number = 32768;
-					public static TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED: number = 65536;
-					public static TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY: number = 131072;
-					public static TYPE_GESTURE_DETECTION_START: number = 262144;
-					public static TYPE_GESTURE_DETECTION_END: number = 524288;
-					public static TYPE_TOUCH_INTERACTION_START: number = 1048576;
-					public static TYPE_TOUCH_INTERACTION_END: number = 2097152;
-					public static TYPE_WINDOWS_CHANGED: number = 4194304;
-					public static TYPE_VIEW_CONTEXT_CLICKED: number = 8388608;
-					public static TYPE_ASSIST_READING_CONTEXT: number = 16777216;
-					public static CONTENT_CHANGE_TYPE_UNDEFINED: number = 0;
-					public static CONTENT_CHANGE_TYPE_SUBTREE: number = 1;
-					public static CONTENT_CHANGE_TYPE_TEXT: number = 2;
-					public static CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION: number = 4;
-					public static CONTENT_CHANGE_TYPE_PANE_TITLE: number = 8;
-					public static CONTENT_CHANGE_TYPE_PANE_APPEARED: number = 16;
-					public static CONTENT_CHANGE_TYPE_PANE_DISAPPEARED: number = 32;
-					public static TYPES_ALL_MASK: number = -1;
+					public static readonly TYPE_VIEW_HOVER_ENTER = 128;
+					public static readonly TYPE_VIEW_HOVER_EXIT = 256;
+					public static readonly TYPE_TOUCH_EXPLORATION_GESTURE_START = 512;
+					public static readonly TYPE_TOUCH_EXPLORATION_GESTURE_END = 1024;
+					public static readonly TYPE_WINDOW_CONTENT_CHANGED = 2048;
+					public static readonly TYPE_VIEW_SCROLLED = 4096;
+					public static readonly TYPE_VIEW_TEXT_SELECTION_CHANGED = 8192;
+					public static readonly TYPE_ANNOUNCEMENT = 16384;
+					public static readonly TYPE_VIEW_ACCESSIBILITY_FOCUSED = 32768;
+					public static readonly TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED = 65536;
+					public static readonly TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY = 131072;
+					public static readonly TYPE_GESTURE_DETECTION_START = 262144;
+					public static readonly TYPE_GESTURE_DETECTION_END = 524288;
+					public static readonly TYPE_TOUCH_INTERACTION_START = 1048576;
+					public static readonly TYPE_TOUCH_INTERACTION_END = 2097152;
+					public static readonly TYPE_WINDOWS_CHANGED = 4194304;
+					public static readonly TYPE_VIEW_CONTEXT_CLICKED = 8388608;
+					public static readonly TYPE_ASSIST_READING_CONTEXT = 16777216;
+					public static readonly CONTENT_CHANGE_TYPE_UNDEFINED = 0;
+					public static readonly CONTENT_CHANGE_TYPE_SUBTREE = 1;
+					public static readonly CONTENT_CHANGE_TYPE_TEXT = 2;
+					public static readonly CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION = 4;
+					public static readonly CONTENT_CHANGE_TYPE_PANE_TITLE = 8;
+					public static readonly CONTENT_CHANGE_TYPE_PANE_APPEARED = 16;
+					public static readonly CONTENT_CHANGE_TYPE_PANE_DISAPPEARED = 32;
+					public static readonly TYPES_ALL_MASK = -1;
 					/** @deprecated */
 					public static getRecordCount(event: globalAndroid.view.accessibility.AccessibilityEvent): number;
 					/** @deprecated */
@@ -16049,46 +16049,46 @@ declare module androidx {
 				export class AccessibilityNodeInfoCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityNodeInfoCompat>;
 					public mParentVirtualDescendantId: number;
-					public static ACTION_FOCUS: number = 1;
-					public static ACTION_CLEAR_FOCUS: number = 2;
-					public static ACTION_SELECT: number = 4;
-					public static ACTION_CLEAR_SELECTION: number = 8;
-					public static ACTION_CLICK: number = 16;
-					public static ACTION_LONG_CLICK: number = 32;
-					public static ACTION_ACCESSIBILITY_FOCUS: number = 64;
-					public static ACTION_CLEAR_ACCESSIBILITY_FOCUS: number = 128;
-					public static ACTION_NEXT_AT_MOVEMENT_GRANULARITY: number = 256;
-					public static ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY: number = 512;
-					public static ACTION_NEXT_HTML_ELEMENT: number = 1024;
-					public static ACTION_PREVIOUS_HTML_ELEMENT: number = 2048;
-					public static ACTION_SCROLL_FORWARD: number = 4096;
-					public static ACTION_SCROLL_BACKWARD: number = 8192;
-					public static ACTION_COPY: number = 16384;
-					public static ACTION_PASTE: number = 32768;
-					public static ACTION_CUT: number = 65536;
-					public static ACTION_SET_SELECTION: number = 131072;
-					public static ACTION_EXPAND: number = 262144;
-					public static ACTION_COLLAPSE: number = 524288;
-					public static ACTION_DISMISS: number = 1048576;
-					public static ACTION_SET_TEXT: number = 2097152;
-					public static ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT: string = "ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT";
-					public static ACTION_ARGUMENT_HTML_ELEMENT_STRING: string = "ACTION_ARGUMENT_HTML_ELEMENT_STRING";
-					public static ACTION_ARGUMENT_EXTEND_SELECTION_BOOLEAN: string = "ACTION_ARGUMENT_EXTEND_SELECTION_BOOLEAN";
-					public static ACTION_ARGUMENT_SELECTION_START_INT: string = "ACTION_ARGUMENT_SELECTION_START_INT";
-					public static ACTION_ARGUMENT_SELECTION_END_INT: string = "ACTION_ARGUMENT_SELECTION_END_INT";
-					public static ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE: string = "ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE";
-					public static ACTION_ARGUMENT_ROW_INT: string = "android.view.accessibility.action.ARGUMENT_ROW_INT";
-					public static ACTION_ARGUMENT_COLUMN_INT: string = "android.view.accessibility.action.ARGUMENT_COLUMN_INT";
-					public static ACTION_ARGUMENT_PROGRESS_VALUE: string = "android.view.accessibility.action.ARGUMENT_PROGRESS_VALUE";
-					public static ACTION_ARGUMENT_MOVE_WINDOW_X: string = "ACTION_ARGUMENT_MOVE_WINDOW_X";
-					public static ACTION_ARGUMENT_MOVE_WINDOW_Y: string = "ACTION_ARGUMENT_MOVE_WINDOW_Y";
-					public static FOCUS_INPUT: number = 1;
-					public static FOCUS_ACCESSIBILITY: number = 2;
-					public static MOVEMENT_GRANULARITY_CHARACTER: number = 1;
-					public static MOVEMENT_GRANULARITY_WORD: number = 2;
-					public static MOVEMENT_GRANULARITY_LINE: number = 4;
-					public static MOVEMENT_GRANULARITY_PARAGRAPH: number = 8;
-					public static MOVEMENT_GRANULARITY_PAGE: number = 16;
+					public static readonly ACTION_FOCUS = 1;
+					public static readonly ACTION_CLEAR_FOCUS = 2;
+					public static readonly ACTION_SELECT = 4;
+					public static readonly ACTION_CLEAR_SELECTION = 8;
+					public static readonly ACTION_CLICK = 16;
+					public static readonly ACTION_LONG_CLICK = 32;
+					public static readonly ACTION_ACCESSIBILITY_FOCUS = 64;
+					public static readonly ACTION_CLEAR_ACCESSIBILITY_FOCUS = 128;
+					public static readonly ACTION_NEXT_AT_MOVEMENT_GRANULARITY = 256;
+					public static readonly ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY = 512;
+					public static readonly ACTION_NEXT_HTML_ELEMENT = 1024;
+					public static readonly ACTION_PREVIOUS_HTML_ELEMENT = 2048;
+					public static readonly ACTION_SCROLL_FORWARD = 4096;
+					public static readonly ACTION_SCROLL_BACKWARD = 8192;
+					public static readonly ACTION_COPY = 16384;
+					public static readonly ACTION_PASTE = 32768;
+					public static readonly ACTION_CUT = 65536;
+					public static readonly ACTION_SET_SELECTION = 131072;
+					public static readonly ACTION_EXPAND = 262144;
+					public static readonly ACTION_COLLAPSE = 524288;
+					public static readonly ACTION_DISMISS = 1048576;
+					public static readonly ACTION_SET_TEXT = 2097152;
+					public static readonly ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT = "ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT";
+					public static readonly ACTION_ARGUMENT_HTML_ELEMENT_STRING = "ACTION_ARGUMENT_HTML_ELEMENT_STRING";
+					public static readonly ACTION_ARGUMENT_EXTEND_SELECTION_BOOLEAN = "ACTION_ARGUMENT_EXTEND_SELECTION_BOOLEAN";
+					public static readonly ACTION_ARGUMENT_SELECTION_START_INT = "ACTION_ARGUMENT_SELECTION_START_INT";
+					public static readonly ACTION_ARGUMENT_SELECTION_END_INT = "ACTION_ARGUMENT_SELECTION_END_INT";
+					public static readonly ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE = "ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE";
+					public static readonly ACTION_ARGUMENT_ROW_INT = "android.view.accessibility.action.ARGUMENT_ROW_INT";
+					public static readonly ACTION_ARGUMENT_COLUMN_INT = "android.view.accessibility.action.ARGUMENT_COLUMN_INT";
+					public static readonly ACTION_ARGUMENT_PROGRESS_VALUE = "android.view.accessibility.action.ARGUMENT_PROGRESS_VALUE";
+					public static readonly ACTION_ARGUMENT_MOVE_WINDOW_X = "ACTION_ARGUMENT_MOVE_WINDOW_X";
+					public static readonly ACTION_ARGUMENT_MOVE_WINDOW_Y = "ACTION_ARGUMENT_MOVE_WINDOW_Y";
+					public static readonly FOCUS_INPUT = 1;
+					public static readonly FOCUS_ACCESSIBILITY = 2;
+					public static readonly MOVEMENT_GRANULARITY_CHARACTER = 1;
+					public static readonly MOVEMENT_GRANULARITY_WORD = 2;
+					public static readonly MOVEMENT_GRANULARITY_LINE = 4;
+					public static readonly MOVEMENT_GRANULARITY_PARAGRAPH = 8;
+					public static readonly MOVEMENT_GRANULARITY_PAGE = 16;
 					/** @deprecated */
 					public constructor(info: any);
 					public static wrap(info: globalAndroid.view.accessibility.AccessibilityNodeInfo): androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
@@ -16278,9 +16278,9 @@ declare module androidx {
 					}
 					export class CollectionInfoCompat {
 						public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionInfoCompat>;
-						public static SELECTION_MODE_NONE: number = 0;
-						public static SELECTION_MODE_SINGLE: number = 1;
-						public static SELECTION_MODE_MULTIPLE: number = 2;
+						public static readonly SELECTION_MODE_NONE = 0;
+						public static readonly SELECTION_MODE_SINGLE = 1;
+						public static readonly SELECTION_MODE_MULTIPLE = 2;
 						public static obtain(rowCount: number, columnCount: number, hierarchical: boolean, selectionMode: number): androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionInfoCompat;
 						public static obtain(rowCount: number, columnCount: number, hierarchical: boolean): androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionInfoCompat;
 						public getColumnCount(): number;
@@ -16302,9 +16302,9 @@ declare module androidx {
 					}
 					export class RangeInfoCompat {
 						public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityNodeInfoCompat.RangeInfoCompat>;
-						public static RANGE_TYPE_INT: number = 0;
-						public static RANGE_TYPE_FLOAT: number = 1;
-						public static RANGE_TYPE_PERCENT: number = 2;
+						public static readonly RANGE_TYPE_INT = 0;
+						public static readonly RANGE_TYPE_FLOAT = 1;
+						public static readonly RANGE_TYPE_PERCENT = 2;
 						public static obtain(type: number, min: number, max: number, current: number): androidx.core.view.accessibility.AccessibilityNodeInfoCompat.RangeInfoCompat;
 						public getCurrent(): number;
 						public getMax(): number;
@@ -16323,7 +16323,7 @@ declare module androidx {
 			export module accessibility {
 				export class AccessibilityNodeProviderCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityNodeProviderCompat>;
-					public static HOST_VIEW_ID: number = -1;
+					public static readonly HOST_VIEW_ID = -1;
 					public constructor();
 					public constructor(provider: any);
 					public getProvider(): any;
@@ -16472,11 +16472,11 @@ declare module androidx {
 			export module accessibility {
 				export class AccessibilityWindowInfoCompat {
 					public static class: java.lang.Class<androidx.core.view.accessibility.AccessibilityWindowInfoCompat>;
-					public static TYPE_APPLICATION: number = 1;
-					public static TYPE_INPUT_METHOD: number = 2;
-					public static TYPE_SYSTEM: number = 3;
-					public static TYPE_ACCESSIBILITY_OVERLAY: number = 4;
-					public static TYPE_SPLIT_SCREEN_DIVIDER: number = 5;
+					public static readonly TYPE_APPLICATION = 1;
+					public static readonly TYPE_INPUT_METHOD = 2;
+					public static readonly TYPE_SYSTEM = 3;
+					public static readonly TYPE_ACCESSIBILITY_OVERLAY = 4;
+					public static readonly TYPE_SPLIT_SCREEN_DIVIDER = 5;
 					public getType(): number;
 					public getLayer(): number;
 					public getRoot(): androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
@@ -16536,8 +16536,8 @@ declare module androidx {
 			export module inputmethod {
 				export class EditorInfoCompat {
 					public static class: java.lang.Class<androidx.core.view.inputmethod.EditorInfoCompat>;
-					public static IME_FLAG_NO_PERSONALIZED_LEARNING: number = 16777216;
-					public static IME_FLAG_FORCE_ASCII: number = -2147483648;
+					public static readonly IME_FLAG_NO_PERSONALIZED_LEARNING = 16777216;
+					public static readonly IME_FLAG_FORCE_ASCII = -2147483648;
 					public static setContentMimeTypes(editorInfo: globalAndroid.view.inputmethod.EditorInfo, contentMimeTypes: androidNative.Array<string> | null): void;
 					public static getContentMimeTypes(editorInfo: globalAndroid.view.inputmethod.EditorInfo): androidNative.Array<string>;
 					/** @deprecated */
@@ -16554,7 +16554,7 @@ declare module androidx {
 			export module inputmethod {
 				export class InputConnectionCompat {
 					public static class: java.lang.Class<androidx.core.view.inputmethod.InputConnectionCompat>;
-					public static INPUT_CONTENT_GRANT_READ_URI_PERMISSION: number = 1;
+					public static readonly INPUT_CONTENT_GRANT_READ_URI_PERMISSION = 1;
 					public static commitContent(inputConnection: globalAndroid.view.inputmethod.InputConnection, editorInfo: globalAndroid.view.inputmethod.EditorInfo, inputContentInfo: androidx.core.view.inputmethod.InputContentInfoCompat, flags: number, opts: globalAndroid.os.Bundle | null): boolean;
 					public static createWrapper(inputConnection: globalAndroid.view.inputmethod.InputConnection, editorInfo: globalAndroid.view.inputmethod.EditorInfo, onCommitContentListener: androidx.core.view.inputmethod.InputConnectionCompat.OnCommitContentListener): globalAndroid.view.inputmethod.InputConnection;
 					/** @deprecated */
@@ -16644,12 +16644,12 @@ declare module androidx {
 		export module widget {
 			export abstract class AutoScrollHelper {
 				public static class: java.lang.Class<androidx.core.widget.AutoScrollHelper>;
-				public static RELATIVE_UNSPECIFIED: number = 0.0;
-				public static NO_MAX: number = 3.4028235E38;
-				public static NO_MIN: number = 0.0;
-				public static EDGE_TYPE_INSIDE: number = 0;
-				public static EDGE_TYPE_INSIDE_EXTEND: number = 1;
-				public static EDGE_TYPE_OUTSIDE: number = 2;
+				public static readonly RELATIVE_UNSPECIFIED = 0.0;
+				public static readonly NO_MAX = 3.4028234663852886E38;
+				public static readonly NO_MIN = 0.0;
+				public static readonly EDGE_TYPE_INSIDE = 0;
+				public static readonly EDGE_TYPE_INSIDE_EXTEND = 1;
+				public static readonly EDGE_TYPE_OUTSIDE = 2;
 				public constructor(target: globalAndroid.view.View);
 				public setEnabled(enabled: boolean): androidx.core.widget.AutoScrollHelper;
 				public isEnabled(): boolean;
@@ -17061,8 +17061,8 @@ declare module androidx {
 		export module widget {
 			export class TextViewCompat {
 				public static class: java.lang.Class<androidx.core.widget.TextViewCompat>;
-				public static AUTO_SIZE_TEXT_TYPE_NONE: number = 0;
-				public static AUTO_SIZE_TEXT_TYPE_UNIFORM: number = 1;
+				public static readonly AUTO_SIZE_TEXT_TYPE_NONE = 0;
+				public static readonly AUTO_SIZE_TEXT_TYPE_UNIFORM = 1;
 				public static setCompoundDrawablesRelative(textView: globalAndroid.widget.TextView, start: globalAndroid.graphics.drawable.Drawable | null, top: globalAndroid.graphics.drawable.Drawable | null, end: globalAndroid.graphics.drawable.Drawable | null, bottom: globalAndroid.graphics.drawable.Drawable | null): void;
 				public static setCompoundDrawablesRelativeWithIntrinsicBounds(textView: globalAndroid.widget.TextView, start: globalAndroid.graphics.drawable.Drawable | null, top: globalAndroid.graphics.drawable.Drawable | null, end: globalAndroid.graphics.drawable.Drawable | null, bottom: globalAndroid.graphics.drawable.Drawable | null): void;
 				public static setCompoundDrawablesRelativeWithIntrinsicBounds(textView: globalAndroid.widget.TextView, start: number, top: number, end: number, bottom: number): void;
@@ -17173,8 +17173,8 @@ declare module androidx {
 				public mDataSetObserver: globalAndroid.database.DataSetObserver;
 				public mCursorFilter: androidx.cursoradapter.widget.CursorFilter;
 				public mFilterQueryProvider: globalAndroid.widget.FilterQueryProvider;
-				public static FLAG_AUTO_REQUERY: number = 1;
-				public static FLAG_REGISTER_CONTENT_OBSERVER: number = 2;
+				public static readonly FLAG_AUTO_REQUERY = 1;
+				public static readonly FLAG_REGISTER_CONTENT_OBSERVER = 2;
 				/** @deprecated */
 				public constructor(context: globalAndroid.content.Context, c: globalAndroid.database.Cursor);
 				public constructor(context: globalAndroid.content.Context, c: globalAndroid.database.Cursor, autoRequery: boolean);
@@ -17365,8 +17365,8 @@ declare module androidx {
 		export module widget {
 			export abstract class ExploreByTouchHelper extends androidx.core.view.AccessibilityDelegateCompat {
 				public static class: java.lang.Class<androidx.customview.widget.ExploreByTouchHelper>;
-				public static INVALID_ID: number = -2147483648;
-				public static HOST_ID: number = -1;
+				public static readonly INVALID_ID = -2147483648;
+				public static readonly HOST_ID = -1;
 				public constructor();
 				public constructor(originalDelegate: any);
 				public constructor(host: globalAndroid.view.View);
@@ -17454,18 +17454,18 @@ declare module androidx {
 		export module widget {
 			export class ViewDragHelper {
 				public static class: java.lang.Class<androidx.customview.widget.ViewDragHelper>;
-				public static INVALID_POINTER: number = -1;
-				public static STATE_IDLE: number = 0;
-				public static STATE_DRAGGING: number = 1;
-				public static STATE_SETTLING: number = 2;
-				public static EDGE_LEFT: number = 1;
-				public static EDGE_RIGHT: number = 2;
-				public static EDGE_TOP: number = 4;
-				public static EDGE_BOTTOM: number = 8;
-				public static EDGE_ALL: number = 15;
-				public static DIRECTION_HORIZONTAL: number = 1;
-				public static DIRECTION_VERTICAL: number = 2;
-				public static DIRECTION_ALL: number = 3;
+				public static readonly INVALID_POINTER = -1;
+				public static readonly STATE_IDLE = 0;
+				public static readonly STATE_DRAGGING = 1;
+				public static readonly STATE_SETTLING = 2;
+				public static readonly EDGE_LEFT = 1;
+				public static readonly EDGE_RIGHT = 2;
+				public static readonly EDGE_TOP = 4;
+				public static readonly EDGE_BOTTOM = 8;
+				public static readonly EDGE_ALL = 15;
+				public static readonly DIRECTION_HORIZONTAL = 1;
+				public static readonly DIRECTION_VERTICAL = 2;
+				public static readonly DIRECTION_ALL = 3;
 				public static create(forParent: globalAndroid.view.ViewGroup, cb: androidx.customview.widget.ViewDragHelper.Callback): androidx.customview.widget.ViewDragHelper;
 				public static create(forParent: globalAndroid.view.ViewGroup, sensitivity: number, cb: androidx.customview.widget.ViewDragHelper.Callback): androidx.customview.widget.ViewDragHelper;
 				public setMinVelocity(minVel: number): void;
@@ -17654,13 +17654,13 @@ declare module androidx {
 		export module widget {
 			export class DrawerLayout {
 				public static class: java.lang.Class<androidx.drawerlayout.widget.DrawerLayout>;
-				public static STATE_IDLE: number = 0;
-				public static STATE_DRAGGING: number = 1;
-				public static STATE_SETTLING: number = 2;
-				public static LOCK_MODE_UNLOCKED: number = 0;
-				public static LOCK_MODE_LOCKED_CLOSED: number = 1;
-				public static LOCK_MODE_LOCKED_OPEN: number = 2;
-				public static LOCK_MODE_UNDEFINED: number = 3;
+				public static readonly STATE_IDLE = 0;
+				public static readonly STATE_DRAGGING = 1;
+				public static readonly STATE_SETTLING = 2;
+				public static readonly LOCK_MODE_UNLOCKED = 0;
+				public static readonly LOCK_MODE_LOCKED_CLOSED = 1;
+				public static readonly LOCK_MODE_LOCKED_OPEN = 2;
+				public static readonly LOCK_MODE_UNDEFINED = 3;
 				public constructor(context: globalAndroid.content.Context);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyle: number);
@@ -17890,10 +17890,10 @@ declare module androidx {
 		export module app {
 			export class DialogFragment extends androidx.fragment.app.Fragment {
 				public static class: java.lang.Class<androidx.fragment.app.DialogFragment>;
-				public static STYLE_NORMAL: number = 0;
-				public static STYLE_NO_TITLE: number = 1;
-				public static STYLE_NO_FRAME: number = 2;
-				public static STYLE_NO_INPUT: number = 3;
+				public static readonly STYLE_NORMAL = 0;
+				public static readonly STYLE_NO_TITLE = 1;
+				public static readonly STYLE_NO_FRAME = 2;
+				public static readonly STYLE_NO_INPUT = 3;
 				public constructor();
 				public setStyle(style: number, theme: number): void;
 				public show(manager: androidx.fragment.app.FragmentManager, tag: string | null): void;
@@ -18303,7 +18303,7 @@ declare module androidx {
 		export module app {
 			export abstract class FragmentManager {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentManager>;
-				public static POP_BACK_STACK_INCLUSIVE: number = 1;
+				public static readonly POP_BACK_STACK_INCLUSIVE = 1;
 				public constructor();
 				public beginTransaction(): androidx.fragment.app.FragmentTransaction;
 				/** @deprecated */
@@ -18396,12 +18396,12 @@ declare module androidx {
 		export module app {
 			export class FragmentManagerImpl extends androidx.fragment.app.FragmentManager {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentManagerImpl>;
-				public static ANIM_STYLE_OPEN_ENTER: number = 1;
-				public static ANIM_STYLE_OPEN_EXIT: number = 2;
-				public static ANIM_STYLE_CLOSE_ENTER: number = 3;
-				public static ANIM_STYLE_CLOSE_EXIT: number = 4;
-				public static ANIM_STYLE_FADE_ENTER: number = 5;
-				public static ANIM_STYLE_FADE_EXIT: number = 6;
+				public static readonly ANIM_STYLE_OPEN_ENTER = 1;
+				public static readonly ANIM_STYLE_OPEN_EXIT = 2;
+				public static readonly ANIM_STYLE_CLOSE_ENTER = 3;
+				public static readonly ANIM_STYLE_CLOSE_EXIT = 4;
+				public static readonly ANIM_STYLE_FADE_ENTER = 5;
+				public static readonly ANIM_STYLE_FADE_EXIT = 6;
 				public beginTransaction(): androidx.fragment.app.FragmentTransaction;
 				public executePendingTransactions(): boolean;
 				public popBackStack(param0: string | null, param1: number): void;
@@ -18505,9 +18505,9 @@ declare module androidx {
 				export class FragmentTag {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentManagerImpl.FragmentTag>;
 					public static Fragment: androidNative.Array<number>;
-					public static Fragment_id: number = 1;
-					public static Fragment_name: number = 0;
-					public static Fragment_tag: number = 2;
+					public static readonly Fragment_id = 1;
+					public static readonly Fragment_name = 0;
+					public static readonly Fragment_tag = 2;
 				}
 				export class OpGenerator {
 					public static class: java.lang.Class<androidx.fragment.app.FragmentManagerImpl.OpGenerator>;
@@ -18698,13 +18698,13 @@ declare module androidx {
 		export module app {
 			export abstract class FragmentTransaction {
 				public static class: java.lang.Class<androidx.fragment.app.FragmentTransaction>;
-				public static TRANSIT_ENTER_MASK: number = 4096;
-				public static TRANSIT_EXIT_MASK: number = 8192;
-				public static TRANSIT_UNSET: number = -1;
-				public static TRANSIT_NONE: number = 0;
-				public static TRANSIT_FRAGMENT_OPEN: number = 4097;
-				public static TRANSIT_FRAGMENT_CLOSE: number = 8194;
-				public static TRANSIT_FRAGMENT_FADE: number = 4099;
+				public static readonly TRANSIT_ENTER_MASK = 4096;
+				public static readonly TRANSIT_EXIT_MASK = 8192;
+				public static readonly TRANSIT_UNSET = -1;
+				public static readonly TRANSIT_NONE = 0;
+				public static readonly TRANSIT_FRAGMENT_OPEN = 4097;
+				public static readonly TRANSIT_FRAGMENT_CLOSE = 8194;
+				public static readonly TRANSIT_FRAGMENT_FADE = 4099;
 				public constructor();
 				public add(param0: androidx.fragment.app.Fragment, param1: string | null): androidx.fragment.app.FragmentTransaction;
 				public add(param0: number, param1: androidx.fragment.app.Fragment): androidx.fragment.app.FragmentTransaction;
@@ -19791,29 +19791,29 @@ declare module androidx {
 	export module media {
 		export class AudioAttributesCompat extends androidx.versionedparcelable.VersionedParcelable {
 			public static class: java.lang.Class<androidx.media.AudioAttributesCompat>;
-			public static CONTENT_TYPE_UNKNOWN: number = 0;
-			public static CONTENT_TYPE_SPEECH: number = 1;
-			public static CONTENT_TYPE_MUSIC: number = 2;
-			public static CONTENT_TYPE_MOVIE: number = 3;
-			public static CONTENT_TYPE_SONIFICATION: number = 4;
-			public static USAGE_UNKNOWN: number = 0;
-			public static USAGE_MEDIA: number = 1;
-			public static USAGE_VOICE_COMMUNICATION: number = 2;
-			public static USAGE_VOICE_COMMUNICATION_SIGNALLING: number = 3;
-			public static USAGE_ALARM: number = 4;
-			public static USAGE_NOTIFICATION: number = 5;
-			public static USAGE_NOTIFICATION_RINGTONE: number = 6;
-			public static USAGE_NOTIFICATION_COMMUNICATION_REQUEST: number = 7;
-			public static USAGE_NOTIFICATION_COMMUNICATION_INSTANT: number = 8;
-			public static USAGE_NOTIFICATION_COMMUNICATION_DELAYED: number = 9;
-			public static USAGE_NOTIFICATION_EVENT: number = 10;
-			public static USAGE_ASSISTANCE_ACCESSIBILITY: number = 11;
-			public static USAGE_ASSISTANCE_NAVIGATION_GUIDANCE: number = 12;
-			public static USAGE_ASSISTANCE_SONIFICATION: number = 13;
-			public static USAGE_GAME: number = 14;
-			public static USAGE_ASSISTANT: number = 16;
-			public static FLAG_AUDIBILITY_ENFORCED: number = 1;
-			public static FLAG_HW_AV_SYNC: number = 16;
+			public static readonly CONTENT_TYPE_UNKNOWN = 0;
+			public static readonly CONTENT_TYPE_SPEECH = 1;
+			public static readonly CONTENT_TYPE_MUSIC = 2;
+			public static readonly CONTENT_TYPE_MOVIE = 3;
+			public static readonly CONTENT_TYPE_SONIFICATION = 4;
+			public static readonly USAGE_UNKNOWN = 0;
+			public static readonly USAGE_MEDIA = 1;
+			public static readonly USAGE_VOICE_COMMUNICATION = 2;
+			public static readonly USAGE_VOICE_COMMUNICATION_SIGNALLING = 3;
+			public static readonly USAGE_ALARM = 4;
+			public static readonly USAGE_NOTIFICATION = 5;
+			public static readonly USAGE_NOTIFICATION_RINGTONE = 6;
+			public static readonly USAGE_NOTIFICATION_COMMUNICATION_REQUEST = 7;
+			public static readonly USAGE_NOTIFICATION_COMMUNICATION_INSTANT = 8;
+			public static readonly USAGE_NOTIFICATION_COMMUNICATION_DELAYED = 9;
+			public static readonly USAGE_NOTIFICATION_EVENT = 10;
+			public static readonly USAGE_ASSISTANCE_ACCESSIBILITY = 11;
+			public static readonly USAGE_ASSISTANCE_NAVIGATION_GUIDANCE = 12;
+			public static readonly USAGE_ASSISTANCE_SONIFICATION = 13;
+			public static readonly USAGE_GAME = 14;
+			public static readonly USAGE_ASSISTANT = 16;
+			public static readonly FLAG_AUDIBILITY_ENFORCED = 1;
+			public static readonly FLAG_HW_AV_SYNC = 16;
 			public getVolumeControlStream(): number;
 			public unwrap(): any;
 			public getLegacyStreamType(): number;
@@ -19849,10 +19849,10 @@ declare module androidx {
 			}
 			export abstract class AudioManagerHidden {
 				public static class: java.lang.Class<androidx.media.AudioAttributesCompat.AudioManagerHidden>;
-				public static STREAM_BLUETOOTH_SCO: number = 6;
-				public static STREAM_SYSTEM_ENFORCED: number = 7;
-				public static STREAM_TTS: number = 9;
-				public static STREAM_ACCESSIBILITY: number = 10;
+				public static readonly STREAM_BLUETOOTH_SCO = 6;
+				public static readonly STREAM_SYSTEM_ENFORCED = 7;
+				public static readonly STREAM_TTS = 9;
+				public static readonly STREAM_ACCESSIBILITY = 10;
 			}
 			export class Builder {
 				public static class: java.lang.Class<androidx.media.AudioAttributesCompat.Builder>;
@@ -19985,42 +19985,42 @@ declare module androidx {
 	export module media {
 		export class MediaBrowserProtocol {
 			public static class: java.lang.Class<androidx.media.MediaBrowserProtocol>;
-			public static DATA_CALLBACK_TOKEN: string = "data_callback_token";
-			public static DATA_CALLING_UID: string = "data_calling_uid";
-			public static DATA_CALLING_PID: string = "data_calling_pid";
-			public static DATA_MEDIA_ITEM_ID: string = "data_media_item_id";
-			public static DATA_MEDIA_ITEM_LIST: string = "data_media_item_list";
-			public static DATA_MEDIA_SESSION_TOKEN: string = "data_media_session_token";
-			public static DATA_OPTIONS: string = "data_options";
-			public static DATA_NOTIFY_CHILDREN_CHANGED_OPTIONS: string = "data_notify_children_changed_options";
-			public static DATA_PACKAGE_NAME: string = "data_package_name";
-			public static DATA_RESULT_RECEIVER: string = "data_result_receiver";
-			public static DATA_ROOT_HINTS: string = "data_root_hints";
-			public static DATA_SEARCH_EXTRAS: string = "data_search_extras";
-			public static DATA_SEARCH_QUERY: string = "data_search_query";
-			public static DATA_CUSTOM_ACTION: string = "data_custom_action";
-			public static DATA_CUSTOM_ACTION_EXTRAS: string = "data_custom_action_extras";
-			public static EXTRA_CLIENT_VERSION: string = "extra_client_version";
-			public static EXTRA_SERVICE_VERSION: string = "extra_service_version";
-			public static EXTRA_MESSENGER_BINDER: string = "extra_messenger";
-			public static EXTRA_SESSION_BINDER: string = "extra_session_binder";
-			public static SERVICE_VERSION_1: number = 1;
-			public static SERVICE_VERSION_2: number = 2;
-			public static SERVICE_VERSION_CURRENT: number = 2;
-			public static SERVICE_MSG_ON_CONNECT: number = 1;
-			public static SERVICE_MSG_ON_CONNECT_FAILED: number = 2;
-			public static SERVICE_MSG_ON_LOAD_CHILDREN: number = 3;
-			public static CLIENT_VERSION_1: number = 1;
-			public static CLIENT_VERSION_CURRENT: number = 1;
-			public static CLIENT_MSG_CONNECT: number = 1;
-			public static CLIENT_MSG_DISCONNECT: number = 2;
-			public static CLIENT_MSG_ADD_SUBSCRIPTION: number = 3;
-			public static CLIENT_MSG_REMOVE_SUBSCRIPTION: number = 4;
-			public static CLIENT_MSG_GET_MEDIA_ITEM: number = 5;
-			public static CLIENT_MSG_REGISTER_CALLBACK_MESSENGER: number = 6;
-			public static CLIENT_MSG_UNREGISTER_CALLBACK_MESSENGER: number = 7;
-			public static CLIENT_MSG_SEARCH: number = 8;
-			public static CLIENT_MSG_SEND_CUSTOM_ACTION: number = 9;
+			public static readonly DATA_CALLBACK_TOKEN = "data_callback_token";
+			public static readonly DATA_CALLING_UID = "data_calling_uid";
+			public static readonly DATA_CALLING_PID = "data_calling_pid";
+			public static readonly DATA_MEDIA_ITEM_ID = "data_media_item_id";
+			public static readonly DATA_MEDIA_ITEM_LIST = "data_media_item_list";
+			public static readonly DATA_MEDIA_SESSION_TOKEN = "data_media_session_token";
+			public static readonly DATA_OPTIONS = "data_options";
+			public static readonly DATA_NOTIFY_CHILDREN_CHANGED_OPTIONS = "data_notify_children_changed_options";
+			public static readonly DATA_PACKAGE_NAME = "data_package_name";
+			public static readonly DATA_RESULT_RECEIVER = "data_result_receiver";
+			public static readonly DATA_ROOT_HINTS = "data_root_hints";
+			public static readonly DATA_SEARCH_EXTRAS = "data_search_extras";
+			public static readonly DATA_SEARCH_QUERY = "data_search_query";
+			public static readonly DATA_CUSTOM_ACTION = "data_custom_action";
+			public static readonly DATA_CUSTOM_ACTION_EXTRAS = "data_custom_action_extras";
+			public static readonly EXTRA_CLIENT_VERSION = "extra_client_version";
+			public static readonly EXTRA_SERVICE_VERSION = "extra_service_version";
+			public static readonly EXTRA_MESSENGER_BINDER = "extra_messenger";
+			public static readonly EXTRA_SESSION_BINDER = "extra_session_binder";
+			public static readonly SERVICE_VERSION_1 = 1;
+			public static readonly SERVICE_VERSION_2 = 2;
+			public static readonly SERVICE_VERSION_CURRENT = 2;
+			public static readonly SERVICE_MSG_ON_CONNECT = 1;
+			public static readonly SERVICE_MSG_ON_CONNECT_FAILED = 2;
+			public static readonly SERVICE_MSG_ON_LOAD_CHILDREN = 3;
+			public static readonly CLIENT_VERSION_1 = 1;
+			public static readonly CLIENT_VERSION_CURRENT = 1;
+			public static readonly CLIENT_MSG_CONNECT = 1;
+			public static readonly CLIENT_MSG_DISCONNECT = 2;
+			public static readonly CLIENT_MSG_ADD_SUBSCRIPTION = 3;
+			public static readonly CLIENT_MSG_REMOVE_SUBSCRIPTION = 4;
+			public static readonly CLIENT_MSG_GET_MEDIA_ITEM = 5;
+			public static readonly CLIENT_MSG_REGISTER_CALLBACK_MESSENGER = 6;
+			public static readonly CLIENT_MSG_UNREGISTER_CALLBACK_MESSENGER = 7;
+			public static readonly CLIENT_MSG_SEARCH = 8;
+			public static readonly CLIENT_MSG_SEND_CUSTOM_ACTION = 9;
 		}
 	}
 }
@@ -20029,12 +20029,12 @@ declare module androidx {
 	export module media {
 		export abstract class MediaBrowserServiceCompat {
 			public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat>;
-			public static SERVICE_INTERFACE: string = "android.media.browse.MediaBrowserService";
-			public static KEY_MEDIA_ITEM: string = "media_item";
-			public static KEY_SEARCH_RESULTS: string = "search_results";
-			public static RESULT_ERROR: number = -1;
-			public static RESULT_OK: number = 0;
-			public static RESULT_PROGRESS_UPDATE: number = 1;
+			public static readonly SERVICE_INTERFACE = "android.media.browse.MediaBrowserService";
+			public static readonly KEY_MEDIA_ITEM = "media_item";
+			public static readonly KEY_SEARCH_RESULTS = "search_results";
+			public static readonly RESULT_ERROR = -1;
+			public static readonly RESULT_OK = 0;
+			public static readonly RESULT_PROGRESS_UPDATE = 1;
 			public constructor();
 			public attachToBaseContext(base: globalAndroid.content.Context): void;
 			public onCreate(): void;
@@ -20059,10 +20059,10 @@ declare module androidx {
 		export module MediaBrowserServiceCompat {
 			export class BrowserRoot {
 				public static class: java.lang.Class<androidx.media.MediaBrowserServiceCompat.BrowserRoot>;
-				public static EXTRA_RECENT: string = "android.service.media.extra.RECENT";
-				public static EXTRA_OFFLINE: string = "android.service.media.extra.OFFLINE";
-				public static EXTRA_SUGGESTED: string = "android.service.media.extra.SUGGESTED";
-				public static EXTRA_SUGGESTION_KEYWORDS: string = "android.service.media.extra.SUGGESTION_KEYWORDS";
+				public static readonly EXTRA_RECENT = "android.service.media.extra.RECENT";
+				public static readonly EXTRA_OFFLINE = "android.service.media.extra.OFFLINE";
+				public static readonly EXTRA_SUGGESTED = "android.service.media.extra.SUGGESTED";
+				public static readonly EXTRA_SUGGESTION_KEYWORDS = "android.service.media.extra.SUGGESTION_KEYWORDS";
 				public constructor(rootId: string, extras: globalAndroid.os.Bundle | null);
 				public getRootId(): string;
 				public getExtras(): globalAndroid.os.Bundle;
@@ -20371,7 +20371,7 @@ declare module androidx {
 			}
 			export class RemoteUserInfo {
 				public static class: java.lang.Class<androidx.media.MediaSessionManager.RemoteUserInfo>;
-				public static LEGACY_CONTROLLER: string = "android.media.session.MediaController";
+				public static readonly LEGACY_CONTROLLER = "android.media.session.MediaController";
 				public constructor(packageName: string, pid: number, uid: number);
 				public constructor(remoteUserInfo: any);
 				public getPackageName(): string;
@@ -20456,9 +20456,9 @@ declare module androidx {
 	export module media {
 		export abstract class VolumeProviderCompat {
 			public static class: java.lang.Class<androidx.media.VolumeProviderCompat>;
-			public static VOLUME_CONTROL_FIXED: number = 0;
-			public static VOLUME_CONTROL_RELATIVE: number = 1;
-			public static VOLUME_CONTROL_ABSOLUTE: number = 2;
+			public static readonly VOLUME_CONTROL_FIXED = 0;
+			public static readonly VOLUME_CONTROL_RELATIVE = 1;
+			public static readonly VOLUME_CONTROL_ABSOLUTE = 2;
 			public constructor(volumeControl: number, maxVolume: number, currentVolume: number);
 			public getCurrentVolume(): number;
 			public getVolumeControl(): number;
@@ -20575,12 +20575,12 @@ declare module androidx {
 	export module print {
 		export class PrintHelper {
 			public static class: java.lang.Class<androidx.print.PrintHelper>;
-			public static SCALE_MODE_FIT: number = 1;
-			public static SCALE_MODE_FILL: number = 2;
-			public static COLOR_MODE_MONOCHROME: number = 1;
-			public static COLOR_MODE_COLOR: number = 2;
-			public static ORIENTATION_LANDSCAPE: number = 1;
-			public static ORIENTATION_PORTRAIT: number = 2;
+			public static readonly SCALE_MODE_FIT = 1;
+			public static readonly SCALE_MODE_FILL = 2;
+			public static readonly COLOR_MODE_MONOCHROME = 1;
+			public static readonly COLOR_MODE_COLOR = 2;
+			public static readonly ORIENTATION_LANDSCAPE = 1;
+			public static readonly ORIENTATION_PORTRAIT = 2;
 			public static systemSupportsPrint(): boolean;
 			public constructor(context: globalAndroid.content.Context);
 			public setScaleMode(scaleMode: number): void;
@@ -20753,9 +20753,9 @@ declare module androidx {
 				}
 				export abstract class ViewCallback {
 					public static class: java.lang.Class<androidx.recyclerview.widget.AsyncListUtil.ViewCallback>;
-					public static HINT_SCROLL_NONE: number = 0;
-					public static HINT_SCROLL_DESC: number = 1;
-					public static HINT_SCROLL_ASC: number = 2;
+					public static readonly HINT_SCROLL_NONE = 0;
+					public static readonly HINT_SCROLL_DESC = 1;
+					public static readonly HINT_SCROLL_ASC = 2;
 					public constructor();
 					public getItemRangeInto(param0: androidNative.Array<number>): void;
 					public extendRangeInto(range: androidNative.Array<number>, outRange: androidNative.Array<number>, scrollHint: number): void;
@@ -20898,7 +20898,7 @@ declare module androidx {
 				}
 				export class DiffResult {
 					public static class: java.lang.Class<androidx.recyclerview.widget.DiffUtil.DiffResult>;
-					public static NO_POSITION: number = -1;
+					public static readonly NO_POSITION = -1;
 					public convertOldPositionToNew(oldListPosition: number): number;
 					public convertNewPositionToOld(newListPosition: number): number;
 					public dispatchUpdatesTo(adapter: androidx.recyclerview.widget.RecyclerView.Adapter<any>): void;
@@ -20933,8 +20933,8 @@ declare module androidx {
 		export module widget {
 			export class DividerItemDecoration extends androidx.recyclerview.widget.RecyclerView.ItemDecoration {
 				public static class: java.lang.Class<androidx.recyclerview.widget.DividerItemDecoration>;
-				public static HORIZONTAL: number = 0;
-				public static VERTICAL: number = 1;
+				public static readonly HORIZONTAL = 0;
+				public static readonly VERTICAL = 1;
 				public constructor();
 				public constructor(context: globalAndroid.content.Context, orientation: number);
 				public setOrientation(orientation: number): void;
@@ -21018,7 +21018,7 @@ declare module androidx {
 		export module widget {
 			export class GridLayoutManager extends androidx.recyclerview.widget.LinearLayoutManager {
 				public static class: java.lang.Class<androidx.recyclerview.widget.GridLayoutManager>;
-				public static DEFAULT_SPAN_COUNT: number = -1;
+				public static readonly DEFAULT_SPAN_COUNT = -1;
 				public constructor(context: globalAndroid.content.Context);
 				public constructor(context: globalAndroid.content.Context, orientation: number, reverseLayout: boolean);
 				public constructor();
@@ -21063,7 +21063,7 @@ declare module androidx {
 				}
 				export class LayoutParams extends androidx.recyclerview.widget.RecyclerView.LayoutParams {
 					public static class: java.lang.Class<androidx.recyclerview.widget.GridLayoutManager.LayoutParams>;
-					public static INVALID_SPAN_ID: number = -1;
+					public static readonly INVALID_SPAN_ID = -1;
 					public constructor(width: number, height: number);
 					public constructor(source: globalAndroid.view.ViewGroup.MarginLayoutParams);
 					public constructor(source: globalAndroid.view.ViewGroup.LayoutParams);
@@ -21092,18 +21092,18 @@ declare module androidx {
 		export module widget {
 			export class ItemTouchHelper extends androidx.recyclerview.widget.RecyclerView.ItemDecoration implements androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener {
 				public static class: java.lang.Class<androidx.recyclerview.widget.ItemTouchHelper>;
-				public static UP: number = 1;
-				public static DOWN: number = 2;
-				public static LEFT: number = 4;
-				public static RIGHT: number = 8;
-				public static START: number = 16;
-				public static END: number = 32;
-				public static ACTION_STATE_IDLE: number = 0;
-				public static ACTION_STATE_SWIPE: number = 1;
-				public static ACTION_STATE_DRAG: number = 2;
-				public static ANIMATION_TYPE_SWIPE_SUCCESS: number = 2;
-				public static ANIMATION_TYPE_SWIPE_CANCEL: number = 4;
-				public static ANIMATION_TYPE_DRAG: number = 8;
+				public static readonly UP = 1;
+				public static readonly DOWN = 2;
+				public static readonly LEFT = 4;
+				public static readonly RIGHT = 8;
+				public static readonly START = 16;
+				public static readonly END = 32;
+				public static readonly ACTION_STATE_IDLE = 0;
+				public static readonly ACTION_STATE_SWIPE = 1;
+				public static readonly ACTION_STATE_DRAG = 2;
+				public static readonly ANIMATION_TYPE_SWIPE_SUCCESS = 2;
+				public static readonly ANIMATION_TYPE_SWIPE_CANCEL = 4;
+				public static readonly ANIMATION_TYPE_DRAG = 8;
 				public constructor();
 				public constructor(callback: androidx.recyclerview.widget.ItemTouchHelper.Callback);
 				public attachToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView | null): void;
@@ -21126,8 +21126,8 @@ declare module androidx {
 			export module ItemTouchHelper {
 				export abstract class Callback {
 					public static class: java.lang.Class<androidx.recyclerview.widget.ItemTouchHelper.Callback>;
-					public static DEFAULT_DRAG_ANIMATION_DURATION: number = 200;
-					public static DEFAULT_SWIPE_ANIMATION_DURATION: number = 250;
+					public static readonly DEFAULT_DRAG_ANIMATION_DURATION = 200;
+					public static readonly DEFAULT_SWIPE_ANIMATION_DURATION = 250;
 					public constructor();
 					public static getDefaultUIUtil(): androidx.recyclerview.widget.ItemTouchUIUtil;
 					public static convertToRelativeDirection(flags: number, layoutDirection: number): number;
@@ -21255,9 +21255,9 @@ declare module androidx {
 		export module widget {
 			export class LinearLayoutManager extends androidx.recyclerview.widget.RecyclerView.LayoutManager implements androidx.recyclerview.widget.ItemTouchHelper.ViewDropHandler, androidx.recyclerview.widget.RecyclerView.SmoothScroller.ScrollVectorProvider {
 				public static class: java.lang.Class<androidx.recyclerview.widget.LinearLayoutManager>;
-				public static HORIZONTAL: number = 0;
-				public static VERTICAL: number = 1;
-				public static INVALID_OFFSET: number = -2147483648;
+				public static readonly HORIZONTAL = 0;
+				public static readonly VERTICAL = 1;
+				public static readonly INVALID_OFFSET = -2147483648;
 				public constructor();
 				public constructor(context: globalAndroid.content.Context);
 				public constructor(context: globalAndroid.content.Context, orientation: number, reverseLayout: boolean);
@@ -21354,9 +21354,9 @@ declare module androidx {
 		export module widget {
 			export class LinearSmoothScroller extends androidx.recyclerview.widget.RecyclerView.SmoothScroller {
 				public static class: java.lang.Class<androidx.recyclerview.widget.LinearSmoothScroller>;
-				public static SNAP_TO_START: number = -1;
-				public static SNAP_TO_END: number = 1;
-				public static SNAP_TO_ANY: number = 0;
+				public static readonly SNAP_TO_START = -1;
+				public static readonly SNAP_TO_END = 1;
+				public static readonly SNAP_TO_ANY = 0;
 				public mLinearInterpolator: globalAndroid.view.animation.LinearInterpolator;
 				public mDecelerateInterpolator: globalAndroid.view.animation.DecelerateInterpolator;
 				public mTargetVector: globalAndroid.graphics.PointF;
@@ -21496,8 +21496,8 @@ declare module androidx {
 			export abstract class OrientationHelper {
 				public static class: java.lang.Class<androidx.recyclerview.widget.OrientationHelper>;
 				public mLayoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager;
-				public static HORIZONTAL: number = 0;
-				public static VERTICAL: number = 1;
+				public static readonly HORIZONTAL = 0;
+				public static readonly VERTICAL = 1;
 				public getLayoutManager(): androidx.recyclerview.widget.RecyclerView.LayoutManager;
 				public onLayoutComplete(): void;
 				public getTotalSpaceChange(): number;
@@ -21544,16 +21544,16 @@ declare module androidx {
 		export module widget {
 			export class RecyclerView implements androidx.core.view.ScrollingView, androidx.core.view.NestedScrollingChild2 {
 				public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView>;
-				public static HORIZONTAL: number = 0;
-				public static VERTICAL: number = 1;
-				public static NO_POSITION: number = -1;
-				public static NO_ID: number = -1;
-				public static INVALID_TYPE: number = -1;
-				public static TOUCH_SLOP_DEFAULT: number = 0;
-				public static TOUCH_SLOP_PAGING: number = 1;
-				public static SCROLL_STATE_IDLE: number = 0;
-				public static SCROLL_STATE_DRAGGING: number = 1;
-				public static SCROLL_STATE_SETTLING: number = 2;
+				public static readonly HORIZONTAL = 0;
+				public static readonly VERTICAL = 1;
+				public static readonly NO_POSITION = -1;
+				public static readonly NO_ID = -1;
+				public static readonly INVALID_TYPE = -1;
+				public static readonly TOUCH_SLOP_DEFAULT = 0;
+				public static readonly TOUCH_SLOP_PAGING = 1;
+				public static readonly SCROLL_STATE_IDLE = 0;
+				public static readonly SCROLL_STATE_DRAGGING = 1;
+				public static readonly SCROLL_STATE_SETTLING = 2;
 				public constructor(context: globalAndroid.content.Context);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyle: number);
@@ -21767,10 +21767,10 @@ declare module androidx {
 				}
 				export class EdgeEffectFactory {
 					public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.EdgeEffectFactory>;
-					public static DIRECTION_LEFT: number = 0;
-					public static DIRECTION_TOP: number = 1;
-					public static DIRECTION_RIGHT: number = 2;
-					public static DIRECTION_BOTTOM: number = 3;
+					public static readonly DIRECTION_LEFT = 0;
+					public static readonly DIRECTION_TOP = 1;
+					public static readonly DIRECTION_RIGHT = 2;
+					public static readonly DIRECTION_BOTTOM = 3;
 					public constructor();
 					public createEdgeEffect(view: androidx.recyclerview.widget.RecyclerView, direction: number): globalAndroid.widget.EdgeEffect;
 				}
@@ -21787,11 +21787,11 @@ declare module androidx {
 				}
 				export abstract class ItemAnimator {
 					public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.ItemAnimator>;
-					public static FLAG_CHANGED: number = 2;
-					public static FLAG_REMOVED: number = 8;
-					public static FLAG_INVALIDATED: number = 4;
-					public static FLAG_MOVED: number = 2048;
-					public static FLAG_APPEARED_IN_PRE_LAYOUT: number = 4096;
+					public static readonly FLAG_CHANGED = 2;
+					public static readonly FLAG_REMOVED = 8;
+					public static readonly FLAG_INVALIDATED = 4;
+					public static readonly FLAG_MOVED = 2048;
+					public static readonly FLAG_APPEARED_IN_PRE_LAYOUT = 4096;
 					public constructor();
 					public getMoveDuration(): number;
 					public setMoveDuration(moveDuration: number): void;
@@ -22202,7 +22202,7 @@ declare module androidx {
 				export module SmoothScroller {
 					export class Action {
 						public static class: java.lang.Class<androidx.recyclerview.widget.RecyclerView.SmoothScroller.Action>;
-						public static UNDEFINED_DURATION: number = -2147483648;
+						public static readonly UNDEFINED_DURATION = -2147483648;
 						public constructor(dx: number, dy: number);
 						public constructor(dx: number, dy: number, duration: number);
 						public constructor(dx: number, dy: number, duration: number, interpolator: globalAndroid.view.animation.Interpolator | null);
@@ -22384,7 +22384,7 @@ declare module androidx {
 		export module widget {
 			export class SortedList<T>  extends java.lang.Object {
 				public static class: java.lang.Class<androidx.recyclerview.widget.SortedList<any>>;
-				public static INVALID_POSITION: number = -1;
+				public static readonly INVALID_POSITION = -1;
 				public constructor(klass: java.lang.Class<T>, callback: androidx.recyclerview.widget.SortedList.Callback<T>);
 				public constructor(klass: java.lang.Class<T>, callback: androidx.recyclerview.widget.SortedList.Callback<T>, initialCapacity: number);
 				public size(): number;
@@ -22470,11 +22470,11 @@ declare module androidx {
 		export module widget {
 			export class StaggeredGridLayoutManager extends androidx.recyclerview.widget.RecyclerView.LayoutManager implements androidx.recyclerview.widget.RecyclerView.SmoothScroller.ScrollVectorProvider {
 				public static class: java.lang.Class<androidx.recyclerview.widget.StaggeredGridLayoutManager>;
-				public static HORIZONTAL: number = 0;
-				public static VERTICAL: number = 1;
-				public static GAP_HANDLING_NONE: number = 0;
-				public static GAP_HANDLING_LAZY: number = 1;
-				public static GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS: number = 2;
+				public static readonly HORIZONTAL = 0;
+				public static readonly VERTICAL = 1;
+				public static readonly GAP_HANDLING_NONE = 0;
+				public static readonly GAP_HANDLING_LAZY = 1;
+				public static readonly GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS = 2;
 				public constructor();
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number, defStyleRes: number);
 				public constructor(spanCount: number, orientation: number);
@@ -22545,7 +22545,7 @@ declare module androidx {
 				}
 				export class LayoutParams extends androidx.recyclerview.widget.RecyclerView.LayoutParams {
 					public static class: java.lang.Class<androidx.recyclerview.widget.StaggeredGridLayoutManager.LayoutParams>;
-					public static INVALID_SPAN_ID: number = -1;
+					public static readonly INVALID_SPAN_ID = -1;
 					public constructor(width: number, height: number);
 					public constructor(source: globalAndroid.view.ViewGroup.MarginLayoutParams);
 					public constructor(source: globalAndroid.view.ViewGroup.LayoutParams);
@@ -22904,8 +22904,8 @@ declare module androidx {
 		export module widget {
 			export class CircularProgressDrawable {
 				public static class: java.lang.Class<androidx.swiperefreshlayout.widget.CircularProgressDrawable>;
-				public static LARGE: number = 0;
-				public static DEFAULT: number = 1;
+				public static readonly LARGE = 0;
+				public static readonly DEFAULT = 1;
 				public constructor(context: globalAndroid.content.Context);
 				public setStyle(size: number): void;
 				public getStrokeWidth(): number;
@@ -22962,9 +22962,9 @@ declare module androidx {
 		export module widget {
 			export class SwipeRefreshLayout implements androidx.core.view.NestedScrollingParent, androidx.core.view.NestedScrollingChild {
 				public static class: java.lang.Class<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>;
-				public static LARGE: number = 0;
-				public static DEFAULT: number = 1;
-				public static DEFAULT_SLINGSHOT_DISTANCE: number = -1;
+				public static readonly LARGE = 0;
+				public static readonly DEFAULT = 1;
+				public static readonly DEFAULT_SLINGSHOT_DISTANCE = -1;
 				public mFrom: number;
 				public mOriginalOffsetTop: number;
 				public setEnabled(enabled: boolean): void;
@@ -23241,8 +23241,8 @@ declare module androidx {
 	export module transition {
 		export class Fade extends androidx.transition.Visibility {
 			public static class: java.lang.Class<androidx.transition.Fade>;
-			public static IN: number = 1;
-			public static OUT: number = 2;
+			public static readonly IN = 1;
+			public static readonly OUT = 2;
 			public constructor();
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 			public constructor(fadingMode: number);
@@ -23523,9 +23523,9 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static MINIMUM_VERTICAL_ANGLE: number = 1;
-				public static MAXIMUM_ANGLE: number = 2;
-				public static MINIMUM_HORIZONTAL_ANGLE: number = 0;
+				public static readonly MINIMUM_VERTICAL_ANGLE = 1;
+				public static readonly MAXIMUM_ANGLE = 2;
+				public static readonly MINIMUM_HORIZONTAL_ANGLE = 0;
 			}
 			export class ChangeBounds {
 				public static class: java.lang.Class<androidx.transition.Styleable.ChangeBounds>;
@@ -23535,7 +23535,7 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static RESIZE_CLIP: number = 0;
+				public static readonly RESIZE_CLIP = 0;
 			}
 			export class ChangeTransform {
 				public static class: java.lang.Class<androidx.transition.Styleable.ChangeTransform>;
@@ -23545,8 +23545,8 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static REPARENT: number = 0;
-				public static REPARENT_WITH_OVERLAY: number = 1;
+				public static readonly REPARENT = 0;
+				public static readonly REPARENT_WITH_OVERLAY = 1;
 			}
 			export class Fade {
 				public static class: java.lang.Class<androidx.transition.Styleable.Fade>;
@@ -23556,7 +23556,7 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static FADING_MODE: number = 0;
+				public static readonly FADING_MODE = 0;
 			}
 			export class PatternPathMotion {
 				public static class: java.lang.Class<androidx.transition.Styleable.PatternPathMotion>;
@@ -23566,7 +23566,7 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static PATTERN_PATH_DATA: number = 0;
+				public static readonly PATTERN_PATH_DATA = 0;
 			}
 			export class Slide {
 				public static class: java.lang.Class<androidx.transition.Styleable.Slide>;
@@ -23576,7 +23576,7 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static SLIDE_EDGE: number = 0;
+				public static readonly SLIDE_EDGE = 0;
 			}
 			export class Transition {
 				public static class: java.lang.Class<androidx.transition.Styleable.Transition>;
@@ -23586,10 +23586,10 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static MATCH_ORDER: number = 3;
-				public static DURATION: number = 1;
-				public static START_DELAY: number = 2;
-				public static INTERPOLATOR: number = 0;
+				public static readonly MATCH_ORDER = 3;
+				public static readonly DURATION = 1;
+				public static readonly START_DELAY = 2;
+				public static readonly INTERPOLATOR = 0;
 			}
 			export class TransitionManager {
 				public static class: java.lang.Class<androidx.transition.Styleable.TransitionManager>;
@@ -23599,9 +23599,9 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static FROM_SCENE: number = 0;
-				public static TRANSITION: number = 2;
-				public static TO_SCENE: number = 1;
+				public static readonly FROM_SCENE = 0;
+				public static readonly TRANSITION = 2;
+				public static readonly TO_SCENE = 1;
 			}
 			export class TransitionSet {
 				public static class: java.lang.Class<androidx.transition.Styleable.TransitionSet>;
@@ -23611,7 +23611,7 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static TRANSITION_ORDERING: number = 0;
+				public static readonly TRANSITION_ORDERING = 0;
 			}
 			export class TransitionTarget {
 				public static class: java.lang.Class<androidx.transition.Styleable.TransitionTarget>;
@@ -23621,12 +23621,12 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static TARGET_NAME: number = 4;
-				public static EXCLUDE_NAME: number = 5;
-				public static TARGET_ID: number = 1;
-				public static TARGET_CLASS: number = 0;
-				public static EXCLUDE_CLASS: number = 3;
-				public static EXCLUDE_ID: number = 2;
+				public static readonly TARGET_NAME = 4;
+				public static readonly EXCLUDE_NAME = 5;
+				public static readonly TARGET_ID = 1;
+				public static readonly TARGET_CLASS = 0;
+				public static readonly EXCLUDE_CLASS = 3;
+				public static readonly EXCLUDE_ID = 2;
 			}
 			export class VisibilityTransition {
 				public static class: java.lang.Class<androidx.transition.Styleable.VisibilityTransition>;
@@ -23636,7 +23636,7 @@ declare module androidx {
 				public constructor(implementation: {
 				});
 				public constructor();
-				public static TRANSITION_VISIBILITY_MODE: number = 0;
+				public static readonly TRANSITION_VISIBILITY_MODE = 0;
 			}
 		}
 	}
@@ -23646,10 +23646,10 @@ declare module androidx {
 	export module transition {
 		export abstract class Transition {
 			public static class: java.lang.Class<androidx.transition.Transition>;
-			public static MATCH_INSTANCE: number = 1;
-			public static MATCH_NAME: number = 2;
-			public static MATCH_ID: number = 3;
-			public static MATCH_ITEM_ID: number = 4;
+			public static readonly MATCH_INSTANCE = 1;
+			public static readonly MATCH_NAME = 2;
+			public static readonly MATCH_ID = 3;
+			public static readonly MATCH_ITEM_ID = 4;
 			public constructor();
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 			public setDuration(duration: number): androidx.transition.Transition;
@@ -23820,8 +23820,8 @@ declare module androidx {
 	export module transition {
 		export class TransitionSet extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.TransitionSet>;
-			public static ORDERING_TOGETHER: number = 0;
-			public static ORDERING_SEQUENTIAL: number = 1;
+			public static readonly ORDERING_TOGETHER = 0;
+			public static readonly ORDERING_SEQUENTIAL = 1;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 			public constructor();
 			public setOrdering(ordering: number): androidx.transition.TransitionSet;
@@ -24152,8 +24152,8 @@ declare module androidx {
 	export module transition {
 		export abstract class Visibility extends androidx.transition.Transition {
 			public static class: java.lang.Class<androidx.transition.Visibility>;
-			public static MODE_IN: number = 1;
-			public static MODE_OUT: number = 2;
+			public static readonly MODE_IN = 1;
+			public static readonly MODE_OUT = 2;
 			public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 			public constructor();
 			public setMode(mode: number): void;
@@ -24262,40 +24262,40 @@ declare module androidx {
 				export class AndroidResources {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.AndroidResources>;
 					public static STYLEABLE_ANIMATOR: androidNative.Array<number>;
-					public static STYLEABLE_ANIMATOR_INTERPOLATOR: number = 0;
-					public static STYLEABLE_ANIMATOR_DURATION: number = 1;
-					public static STYLEABLE_ANIMATOR_START_OFFSET: number = 2;
-					public static STYLEABLE_ANIMATOR_REPEAT_COUNT: number = 3;
-					public static STYLEABLE_ANIMATOR_REPEAT_MODE: number = 4;
-					public static STYLEABLE_ANIMATOR_VALUE_FROM: number = 5;
-					public static STYLEABLE_ANIMATOR_VALUE_TO: number = 6;
-					public static STYLEABLE_ANIMATOR_VALUE_TYPE: number = 7;
+					public static readonly STYLEABLE_ANIMATOR_INTERPOLATOR = 0;
+					public static readonly STYLEABLE_ANIMATOR_DURATION = 1;
+					public static readonly STYLEABLE_ANIMATOR_START_OFFSET = 2;
+					public static readonly STYLEABLE_ANIMATOR_REPEAT_COUNT = 3;
+					public static readonly STYLEABLE_ANIMATOR_REPEAT_MODE = 4;
+					public static readonly STYLEABLE_ANIMATOR_VALUE_FROM = 5;
+					public static readonly STYLEABLE_ANIMATOR_VALUE_TO = 6;
+					public static readonly STYLEABLE_ANIMATOR_VALUE_TYPE = 7;
 					public static STYLEABLE_ANIMATOR_SET: androidNative.Array<number>;
-					public static STYLEABLE_ANIMATOR_SET_ORDERING: number = 0;
+					public static readonly STYLEABLE_ANIMATOR_SET_ORDERING = 0;
 					public static STYLEABLE_PROPERTY_VALUES_HOLDER: androidNative.Array<number>;
-					public static STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_FROM: number = 0;
-					public static STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_TO: number = 1;
-					public static STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_TYPE: number = 2;
-					public static STYLEABLE_PROPERTY_VALUES_HOLDER_PROPERTY_NAME: number = 3;
+					public static readonly STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_FROM = 0;
+					public static readonly STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_TO = 1;
+					public static readonly STYLEABLE_PROPERTY_VALUES_HOLDER_VALUE_TYPE = 2;
+					public static readonly STYLEABLE_PROPERTY_VALUES_HOLDER_PROPERTY_NAME = 3;
 					public static STYLEABLE_KEYFRAME: androidNative.Array<number>;
-					public static STYLEABLE_KEYFRAME_VALUE: number = 0;
-					public static STYLEABLE_KEYFRAME_INTERPOLATOR: number = 1;
-					public static STYLEABLE_KEYFRAME_VALUE_TYPE: number = 2;
-					public static STYLEABLE_KEYFRAME_FRACTION: number = 3;
+					public static readonly STYLEABLE_KEYFRAME_VALUE = 0;
+					public static readonly STYLEABLE_KEYFRAME_INTERPOLATOR = 1;
+					public static readonly STYLEABLE_KEYFRAME_VALUE_TYPE = 2;
+					public static readonly STYLEABLE_KEYFRAME_FRACTION = 3;
 					public static STYLEABLE_PROPERTY_ANIMATOR: androidNative.Array<number>;
-					public static STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_NAME: number = 0;
-					public static STYLEABLE_PROPERTY_ANIMATOR_PATH_DATA: number = 1;
-					public static STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_X_NAME: number = 2;
-					public static STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_Y_NAME: number = 3;
+					public static readonly STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_NAME = 0;
+					public static readonly STYLEABLE_PROPERTY_ANIMATOR_PATH_DATA = 1;
+					public static readonly STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_X_NAME = 2;
+					public static readonly STYLEABLE_PROPERTY_ANIMATOR_PROPERTY_Y_NAME = 3;
 					public static STYLEABLE_PATH_INTERPOLATOR: androidNative.Array<number>;
-					public static STYLEABLE_PATH_INTERPOLATOR_CONTROL_X_1: number = 0;
-					public static STYLEABLE_PATH_INTERPOLATOR_CONTROL_Y_1: number = 1;
-					public static STYLEABLE_PATH_INTERPOLATOR_CONTROL_X_2: number = 2;
-					public static STYLEABLE_PATH_INTERPOLATOR_CONTROL_Y_2: number = 3;
-					public static STYLEABLE_PATH_INTERPOLATOR_PATH_DATA: number = 4;
-					public static FAST_OUT_LINEAR_IN: number = 17563663;
-					public static FAST_OUT_SLOW_IN: number = 17563661;
-					public static LINEAR_OUT_SLOW_IN: number = 17563662;
+					public static readonly STYLEABLE_PATH_INTERPOLATOR_CONTROL_X_1 = 0;
+					public static readonly STYLEABLE_PATH_INTERPOLATOR_CONTROL_Y_1 = 1;
+					public static readonly STYLEABLE_PATH_INTERPOLATOR_CONTROL_X_2 = 2;
+					public static readonly STYLEABLE_PATH_INTERPOLATOR_CONTROL_Y_2 = 3;
+					public static readonly STYLEABLE_PATH_INTERPOLATOR_PATH_DATA = 4;
+					public static readonly FAST_OUT_LINEAR_IN = 17563663;
+					public static readonly FAST_OUT_SLOW_IN = 17563661;
+					public static readonly LINEAR_OUT_SLOW_IN = 17563662;
 				}
 			}
 		}
@@ -24461,8 +24461,8 @@ declare module androidx {
 			export module drawable {
 				export class PathInterpolatorCompat {
 					public static class: java.lang.Class<androidx.vectordrawable.graphics.drawable.PathInterpolatorCompat>;
-					public static MAX_NUM_POINTS: number = 3000;
-					public static EPSILON: number = 1.0E-5;
+					public static readonly MAX_NUM_POINTS = 3000;
+					public static readonly EPSILON = 1.0E-5;
 					public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, parser: org.xmlpull.v1.XmlPullParser);
 					public constructor(res: globalAndroid.content.res.Resources, theme: globalAndroid.content.res.Resources.Theme, attrs: globalAndroid.util.AttributeSet, parser: org.xmlpull.v1.XmlPullParser);
 					public getInterpolation(t: number): number;
@@ -25024,8 +25024,8 @@ declare module androidx {
 		export module widget {
 			export abstract class PagerAdapter {
 				public static class: java.lang.Class<androidx.viewpager.widget.PagerAdapter>;
-				public static POSITION_UNCHANGED: number = -1;
-				public static POSITION_NONE: number = -2;
+				public static readonly POSITION_UNCHANGED = -1;
+				public static readonly POSITION_NONE = -2;
 				public constructor();
 				public getCount(): number;
 				public startUpdate(container: globalAndroid.view.ViewGroup): void;
@@ -25127,9 +25127,9 @@ declare module androidx {
 		export module widget {
 			export class ViewPager {
 				public static class: java.lang.Class<androidx.viewpager.widget.ViewPager>;
-				public static SCROLL_STATE_IDLE: number = 0;
-				public static SCROLL_STATE_DRAGGING: number = 1;
-				public static SCROLL_STATE_SETTLING: number = 2;
+				public static readonly SCROLL_STATE_IDLE = 0;
+				public static readonly SCROLL_STATE_DRAGGING = 1;
+				public static readonly SCROLL_STATE_SETTLING = 2;
 				public constructor(context: globalAndroid.content.Context);
 				public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 				public onDetachedFromWindow(): void;
@@ -25601,12 +25601,12 @@ declare module com {
 						}
 						export class LayoutParams {
 							public static class: java.lang.Class<com.google.android.material.appbar.AppBarLayout.LayoutParams>;
-							public static SCROLL_FLAG_SCROLL: number = 1;
-							public static SCROLL_FLAG_EXIT_UNTIL_COLLAPSED: number = 2;
-							public static SCROLL_FLAG_ENTER_ALWAYS: number = 4;
-							public static SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED: number = 8;
-							public static SCROLL_FLAG_SNAP: number = 16;
-							public static SCROLL_FLAG_SNAP_MARGINS: number = 32;
+							public static readonly SCROLL_FLAG_SCROLL = 1;
+							public static readonly SCROLL_FLAG_EXIT_UNTIL_COLLAPSED = 2;
+							public static readonly SCROLL_FLAG_ENTER_ALWAYS = 4;
+							public static readonly SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED = 8;
+							public static readonly SCROLL_FLAG_SNAP = 16;
+							public static readonly SCROLL_FLAG_SNAP_MARGINS = 32;
 							public constructor(c: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 							public constructor(width: number, height: number);
 							public constructor(width: number, height: number, weight: number);
@@ -25727,9 +25727,9 @@ declare module com {
 					export module CollapsingToolbarLayout {
 						export class LayoutParams {
 							public static class: java.lang.Class<com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams>;
-							public static COLLAPSE_MODE_OFF: number = 0;
-							public static COLLAPSE_MODE_PIN: number = 1;
-							public static COLLAPSE_MODE_PARALLAX: number = 2;
+							public static readonly COLLAPSE_MODE_OFF = 0;
+							public static readonly COLLAPSE_MODE_PIN = 1;
+							public static readonly COLLAPSE_MODE_PARALLAX = 2;
 							public constructor(c: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 							public constructor(width: number, height: number);
 							public constructor(width: number, height: number, gravity: number);
@@ -25872,8 +25872,8 @@ declare module com {
 				export module behavior {
 					export class HideBottomViewOnScrollBehavior<V>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
 						public static class: java.lang.Class<com.google.android.material.behavior.HideBottomViewOnScrollBehavior<any>>;
-						public static ENTER_ANIMATION_DURATION: number = 225;
-						public static EXIT_ANIMATION_DURATION: number = 175;
+						public static readonly ENTER_ANIMATION_DURATION = 225;
+						public static readonly EXIT_ANIMATION_DURATION = 175;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor();
 						public onLayoutChild(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: any, layoutDirection: number): boolean;
@@ -25897,12 +25897,12 @@ declare module com {
 				export module behavior {
 					export class SwipeDismissBehavior<V>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
 						public static class: java.lang.Class<com.google.android.material.behavior.SwipeDismissBehavior<any>>;
-						public static STATE_IDLE: number = 0;
-						public static STATE_DRAGGING: number = 1;
-						public static STATE_SETTLING: number = 2;
-						public static SWIPE_DIRECTION_START_TO_END: number = 0;
-						public static SWIPE_DIRECTION_END_TO_START: number = 1;
-						public static SWIPE_DIRECTION_ANY: number = 2;
+						public static readonly STATE_IDLE = 0;
+						public static readonly STATE_DRAGGING = 1;
+						public static readonly STATE_SETTLING = 2;
+						public static readonly SWIPE_DIRECTION_START_TO_END = 0;
+						public static readonly SWIPE_DIRECTION_END_TO_START = 1;
+						public static readonly SWIPE_DIRECTION_ANY = 2;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor();
 						public setListener(listener: com.google.android.material.behavior.SwipeDismissBehavior.OnDismissListener): void;
@@ -25948,10 +25948,10 @@ declare module com {
 				export module bottomappbar {
 					export class BottomAppBar extends androidx.appcompat.widget.Toolbar implements androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior {
 						public static class: java.lang.Class<com.google.android.material.bottomappbar.BottomAppBar>;
-						public static FAB_ALIGNMENT_MODE_CENTER: number = 0;
-						public static FAB_ALIGNMENT_MODE_END: number = 1;
-						public static FAB_ANIMATION_MODE_SCALE: number = 0;
-						public static FAB_ANIMATION_MODE_SLIDE: number = 1;
+						public static readonly FAB_ALIGNMENT_MODE_CENTER = 0;
+						public static readonly FAB_ALIGNMENT_MODE_END = 1;
+						public static readonly FAB_ANIMATION_MODE_SCALE = 0;
+						public static readonly FAB_ANIMATION_MODE_SLIDE = 1;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
 						public constructor(context: globalAndroid.content.Context);
@@ -26055,7 +26055,7 @@ declare module com {
 				export module bottomnavigation {
 					export class BottomNavigationItemView implements androidx.appcompat.view.menu.MenuView.ItemView {
 						public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationItemView>;
-						public static INVALID_ITEM_POSITION: number = -1;
+						public static readonly INVALID_ITEM_POSITION = -1;
 						public constructor(context: globalAndroid.content.Context);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
@@ -26102,7 +26102,7 @@ declare module com {
 				export module bottomnavigation {
 					export class BottomNavigationMenu extends androidx.appcompat.view.menu.MenuBuilder {
 						public static class: java.lang.Class<com.google.android.material.bottomnavigation.BottomNavigationMenu>;
-						public static MAX_ITEM_COUNT: number = 5;
+						public static readonly MAX_ITEM_COUNT = 5;
 						public constructor(context: globalAndroid.content.Context);
 						public addSubMenu(title: string): globalAndroid.view.SubMenu;
 						public addSubMenu(titleRes: number): globalAndroid.view.SubMenu;
@@ -26301,10 +26301,10 @@ declare module com {
 						public constructor(implementation: {
 						});
 						public constructor();
-						public static LABEL_VISIBILITY_AUTO: number = -1;
-						public static LABEL_VISIBILITY_SELECTED: number = 0;
-						public static LABEL_VISIBILITY_LABELED: number = 1;
-						public static LABEL_VISIBILITY_UNLABELED: number = 2;
+						public static readonly LABEL_VISIBILITY_AUTO = -1;
+						public static readonly LABEL_VISIBILITY_SELECTED = 0;
+						public static readonly LABEL_VISIBILITY_LABELED = 1;
+						public static readonly LABEL_VISIBILITY_UNLABELED = 2;
 					}
 				}
 			}
@@ -26319,13 +26319,13 @@ declare module com {
 				export module bottomsheet {
 					export class BottomSheetBehavior<V>  extends androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<any> {
 						public static class: java.lang.Class<com.google.android.material.bottomsheet.BottomSheetBehavior<any>>;
-						public static STATE_DRAGGING: number = 1;
-						public static STATE_SETTLING: number = 2;
-						public static STATE_EXPANDED: number = 3;
-						public static STATE_COLLAPSED: number = 4;
-						public static STATE_HIDDEN: number = 5;
-						public static STATE_HALF_EXPANDED: number = 6;
-						public static PEEK_HEIGHT_AUTO: number = -1;
+						public static readonly STATE_DRAGGING = 1;
+						public static readonly STATE_SETTLING = 2;
+						public static readonly STATE_EXPANDED = 3;
+						public static readonly STATE_COLLAPSED = 4;
+						public static readonly STATE_HIDDEN = 5;
+						public static readonly STATE_HALF_EXPANDED = 6;
+						public static readonly PEEK_HEIGHT_AUTO = -1;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor();
 						public onSaveInstanceState(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: any): globalAndroid.os.Parcelable;
@@ -26446,8 +26446,8 @@ declare module com {
 				export module button {
 					export class MaterialButton extends androidx.appcompat.widget.AppCompatButton {
 						public static class: java.lang.Class<com.google.android.material.button.MaterialButton>;
-						public static ICON_GRAVITY_START: number = 1;
-						public static ICON_GRAVITY_TEXT_START: number = 2;
+						public static readonly ICON_GRAVITY_START = 1;
+						public static readonly ICON_GRAVITY_TEXT_START = 2;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 						public constructor(context: globalAndroid.content.Context);
@@ -27163,9 +27163,9 @@ declare module com {
 				export module circularreveal {
 					export class CircularRevealHelper {
 						public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealHelper>;
-						public static BITMAP_SHADER: number = 0;
-						public static CLIP_PATH: number = 1;
-						public static REVEAL_ANIMATOR: number = 2;
+						public static readonly BITMAP_SHADER = 0;
+						public static readonly CLIP_PATH = 1;
+						public static readonly REVEAL_ANIMATOR = 2;
 						public static STRATEGY: number;
 						public constructor(delegate: com.google.android.material.circularreveal.CircularRevealHelper.Delegate);
 						public buildCircularRevealCache(): void;
@@ -27334,7 +27334,7 @@ declare module com {
 						}
 						export class RevealInfo {
 							public static class: java.lang.Class<com.google.android.material.circularreveal.CircularRevealWidget.RevealInfo>;
-							public static INVALID_RADIUS: number = 3.4028235E38;
+							public static readonly INVALID_RADIUS = 3.4028234663852886E38;
 							public centerX: number;
 							public centerY: number;
 							public radius: number;
@@ -27442,11 +27442,11 @@ declare module com {
 				export module color {
 					export class MaterialColors {
 						public static class: java.lang.Class<com.google.android.material.color.MaterialColors>;
-						public static ALPHA_FULL: number = 1.0;
-						public static ALPHA_MEDIUM: number = 0.54;
-						public static ALPHA_DISABLED: number = 0.38;
-						public static ALPHA_LOW: number = 0.32;
-						public static ALPHA_DISABLED_LOW: number = 0.12;
+						public static readonly ALPHA_FULL = 1.0;
+						public static readonly ALPHA_MEDIUM = 0.5400000214576721;
+						public static readonly ALPHA_DISABLED = 0.3799999952316284;
+						public static readonly ALPHA_LOW = 0.3199999928474426;
+						public static readonly ALPHA_DISABLED_LOW = 0.11999999731779099;
 						public constructor();
 						public static getColor(view: globalAndroid.view.View, colorAttributeResId: number): number;
 						public static getColor(view: globalAndroid.view.View, colorAttributeResId: number, defaultValue: number): number;
@@ -27556,10 +27556,10 @@ declare module com {
 				export module floatingactionbutton {
 					export class FloatingActionButton extends com.google.android.material.internal.VisibilityAwareImageButton implements androidx.core.view.TintableBackgroundView, androidx.core.widget.TintableImageSourceView, com.google.android.material.expandable.ExpandableTransformationWidget {
 						public static class: java.lang.Class<com.google.android.material.floatingactionbutton.FloatingActionButton>;
-						public static SIZE_MINI: number = 1;
-						public static SIZE_NORMAL: number = 0;
-						public static SIZE_AUTO: number = -1;
-						public static NO_CUSTOM_SIZE: number = 0;
+						public static readonly SIZE_MINI = 1;
+						public static readonly SIZE_NORMAL = 0;
+						public static readonly SIZE_AUTO = -1;
+						public static readonly NO_CUSTOM_SIZE = 0;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
 						public constructor(context: globalAndroid.content.Context);
@@ -28500,7 +28500,7 @@ declare module com {
 				export module math {
 					export class MathUtils {
 						public static class: java.lang.Class<com.google.android.material.math.MathUtils>;
-						public static DEFAULT_EPSILON: number = 1.0E-4;
+						public static readonly DEFAULT_EPSILON = 9.999999747378752E-5;
 						public static dist(x1: number, y1: number, x2: number, y2: number): number;
 						public static lerp(start: number, stop: number, amount: number): number;
 						public static geq(a: number, b: number, epsilon: number): boolean;
@@ -28850,8 +28850,8 @@ declare module com {
 						public constructor(implementation: {
 						});
 						public constructor();
-						public static ROUNDED: number = 0;
-						public static CUT: number = 1;
+						public static readonly ROUNDED = 0;
+						public static readonly CUT = 1;
 					}
 				}
 			}
@@ -28939,9 +28939,9 @@ declare module com {
 				export module shape {
 					export class MaterialShapeDrawable implements androidx.core.graphics.drawable.TintAwareDrawable {
 						public static class: java.lang.Class<com.google.android.material.shape.MaterialShapeDrawable>;
-						public static SHADOW_COMPAT_MODE_DEFAULT: number = 0;
-						public static SHADOW_COMPAT_MODE_NEVER: number = 1;
-						public static SHADOW_COMPAT_MODE_ALWAYS: number = 2;
+						public static readonly SHADOW_COMPAT_MODE_DEFAULT = 0;
+						public static readonly SHADOW_COMPAT_MODE_NEVER = 1;
+						public static readonly SHADOW_COMPAT_MODE_ALWAYS = 2;
 						public constructor();
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number, defStyleRes: number);
 						public constructor(shapeAppearanceModel: com.google.android.material.shape.ShapeAppearanceModel);
@@ -29228,11 +29228,11 @@ declare module com {
 				export module snackbar {
 					export abstract class BaseTransientBottomBar<B>  extends java.lang.Object {
 						public static class: java.lang.Class<com.google.android.material.snackbar.BaseTransientBottomBar<any>>;
-						public static ANIMATION_MODE_SLIDE: number = 0;
-						public static ANIMATION_MODE_FADE: number = 1;
-						public static LENGTH_INDEFINITE: number = -2;
-						public static LENGTH_SHORT: number = -1;
-						public static LENGTH_LONG: number = 0;
+						public static readonly ANIMATION_MODE_SLIDE = 0;
+						public static readonly ANIMATION_MODE_FADE = 1;
+						public static readonly LENGTH_INDEFINITE = -2;
+						public static readonly LENGTH_SHORT = -1;
+						public static readonly LENGTH_LONG = 0;
 						public view: com.google.android.material.snackbar.BaseTransientBottomBar.SnackbarBaseLayout;
 						public constructor(parent: globalAndroid.view.ViewGroup, content: globalAndroid.view.View, contentViewCallback: com.google.android.material.snackbar.ContentViewCallback);
 						public getSnackbarBaseLayoutResId(): number;
@@ -29269,11 +29269,11 @@ declare module com {
 						}
 						export abstract class BaseCallback<B>  extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback<any>>;
-							public static DISMISS_EVENT_SWIPE: number = 0;
-							public static DISMISS_EVENT_ACTION: number = 1;
-							public static DISMISS_EVENT_TIMEOUT: number = 2;
-							public static DISMISS_EVENT_MANUAL: number = 3;
-							public static DISMISS_EVENT_CONSECUTIVE: number = 4;
+							public static readonly DISMISS_EVENT_SWIPE = 0;
+							public static readonly DISMISS_EVENT_ACTION = 1;
+							public static readonly DISMISS_EVENT_TIMEOUT = 2;
+							public static readonly DISMISS_EVENT_MANUAL = 3;
+							public static readonly DISMISS_EVENT_CONSECUTIVE = 4;
 							public constructor();
 							public onDismissed(transientBottomBar: B, event: number): void;
 							public onShown(transientBottomBar: B): void;
@@ -29396,9 +29396,9 @@ declare module com {
 				export module snackbar {
 					export class Snackbar extends com.google.android.material.snackbar.BaseTransientBottomBar<com.google.android.material.snackbar.Snackbar> {
 						public static class: java.lang.Class<com.google.android.material.snackbar.Snackbar>;
-						public static LENGTH_INDEFINITE: number = -2;
-						public static LENGTH_SHORT: number = -1;
-						public static LENGTH_LONG: number = 0;
+						public static readonly LENGTH_INDEFINITE = -2;
+						public static readonly LENGTH_SHORT = -1;
+						public static readonly LENGTH_LONG = 0;
 						public show(): void;
 						public dismiss(): void;
 						public isShown(): boolean;
@@ -29418,11 +29418,11 @@ declare module com {
 					export module Snackbar {
 						export class Callback extends com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback<com.google.android.material.snackbar.Snackbar> {
 							public static class: java.lang.Class<com.google.android.material.snackbar.Snackbar.Callback>;
-							public static DISMISS_EVENT_SWIPE: number = 0;
-							public static DISMISS_EVENT_ACTION: number = 1;
-							public static DISMISS_EVENT_TIMEOUT: number = 2;
-							public static DISMISS_EVENT_MANUAL: number = 3;
-							public static DISMISS_EVENT_CONSECUTIVE: number = 4;
+							public static readonly DISMISS_EVENT_SWIPE = 0;
+							public static readonly DISMISS_EVENT_ACTION = 1;
+							public static readonly DISMISS_EVENT_TIMEOUT = 2;
+							public static readonly DISMISS_EVENT_MANUAL = 3;
+							public static readonly DISMISS_EVENT_CONSECUTIVE = 4;
 							public constructor();
 							public onShown(transientBottomBar: any): void;
 							public onShown(sb: com.google.android.material.snackbar.Snackbar): void;
@@ -29581,16 +29581,16 @@ declare module com {
 				export module tabs {
 					export class TabLayout {
 						public static class: java.lang.Class<com.google.android.material.tabs.TabLayout>;
-						public static MODE_SCROLLABLE: number = 0;
-						public static MODE_FIXED: number = 1;
-						public static TAB_LABEL_VISIBILITY_UNLABELED: number = 0;
-						public static TAB_LABEL_VISIBILITY_LABELED: number = 1;
-						public static GRAVITY_FILL: number = 0;
-						public static GRAVITY_CENTER: number = 1;
-						public static INDICATOR_GRAVITY_BOTTOM: number = 0;
-						public static INDICATOR_GRAVITY_CENTER: number = 1;
-						public static INDICATOR_GRAVITY_TOP: number = 2;
-						public static INDICATOR_GRAVITY_STRETCH: number = 3;
+						public static readonly MODE_SCROLLABLE = 0;
+						public static readonly MODE_FIXED = 1;
+						public static readonly TAB_LABEL_VISIBILITY_UNLABELED = 0;
+						public static readonly TAB_LABEL_VISIBILITY_LABELED = 1;
+						public static readonly GRAVITY_FILL = 0;
+						public static readonly GRAVITY_CENTER = 1;
+						public static readonly INDICATOR_GRAVITY_BOTTOM = 0;
+						public static readonly INDICATOR_GRAVITY_CENTER = 1;
+						public static readonly INDICATOR_GRAVITY_TOP = 2;
+						public static readonly INDICATOR_GRAVITY_STRETCH = 3;
 						public constructor(context: globalAndroid.content.Context);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet, defStyleAttr: number);
@@ -29725,7 +29725,7 @@ declare module com {
 						}
 						export class Tab {
 							public static class: java.lang.Class<com.google.android.material.tabs.TabLayout.Tab>;
-							public static INVALID_POSITION: number = -1;
+							public static readonly INVALID_POSITION = -1;
 							public parent: com.google.android.material.tabs.TabLayout;
 							public view: com.google.android.material.tabs.TabLayout.TabView;
 							public constructor();
@@ -29864,9 +29864,9 @@ declare module com {
 				export module textfield {
 					export class TextInputLayout {
 						public static class: java.lang.Class<com.google.android.material.textfield.TextInputLayout>;
-						public static BOX_BACKGROUND_NONE: number = 0;
-						public static BOX_BACKGROUND_FILLED: number = 1;
-						public static BOX_BACKGROUND_OUTLINE: number = 2;
+						public static readonly BOX_BACKGROUND_NONE = 0;
+						public static readonly BOX_BACKGROUND_FILLED = 1;
+						public static readonly BOX_BACKGROUND_OUTLINE = 2;
 						public constructor(context: globalAndroid.content.Context);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null);
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet | null, defStyleAttr: number);
@@ -30061,10 +30061,10 @@ declare module com {
 				export module transformation {
 					export class FabTransformationScrimBehavior extends com.google.android.material.transformation.ExpandableTransformationBehavior {
 						public static class: java.lang.Class<com.google.android.material.transformation.FabTransformationScrimBehavior>;
-						public static EXPAND_DELAY: number = 75;
-						public static EXPAND_DURATION: number = 150;
-						public static COLLAPSE_DELAY: number = 0;
-						public static COLLAPSE_DURATION: number = 150;
+						public static readonly EXPAND_DELAY = 75;
+						public static readonly EXPAND_DURATION = 150;
+						public static readonly COLLAPSE_DELAY = 0;
+						public static readonly COLLAPSE_DURATION = 150;
 						public constructor(context: globalAndroid.content.Context, attrs: globalAndroid.util.AttributeSet);
 						public constructor();
 						public layoutDependsOn(parent: androidx.coordinatorlayout.widget.CoordinatorLayout, child: globalAndroid.view.View, dependency: globalAndroid.view.View): boolean;
